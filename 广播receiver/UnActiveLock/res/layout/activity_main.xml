@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_active"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="激活该app" />
+
+    <Button
+        android:id="@+id/btn_unactive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="取消激活该app" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="测试方式:先激活,再在设置-安全-设备管理器设置-取消激活" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="卸载方式1):覆盖安装该app" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="卸载方式2):app中取消激活【就不会触发广播】" />
+
+</LinearLayout>
