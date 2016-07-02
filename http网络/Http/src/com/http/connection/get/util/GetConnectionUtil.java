@@ -37,6 +37,11 @@ public class GetConnectionUtil
         doGetAsyn(httpUrl, callback);
     }
     
+    /**
+     * Get 异步请求
+     * @param httpUrl   URL
+     * @param callback  网络请求回调
+     */
     private static void doGetAsyn(final String httpUrl, final GetConnectionCallback callback)
     {
         LogFileUtil.v(TAG, "doGetAsyn -> in -> " + httpUrl);
@@ -65,21 +70,10 @@ public class GetConnectionUtil
                     // HttpURLConnection默认就是用GET发送请求,因此也可省略
                     httpURLConnection.setRequestMethod("GET");
                     initHttpConnection(httpURLConnection);
-                    LogFileUtil.v(TAG, "doGetAsyn -> initHttpConnection over");
-                    /*
-                    // 在对各种参数配置完成后，通过调用connect方法建立TCP连接，但是并未真正获取数据
-                    // conn.connect()方法不必显式调用，当调用conn.getInputStream()方法时内部也会自动调用connect方法
-                    httpURLConnection.connect();
+                    /** 请求头,日志 */
+                    String requestHeader = HttpHelperUtils.getHttpRequestHeader(httpURLConnection);
+                    LogFileUtil.v(TAG, "doGetAsyn -> initHttpConnection over requestHeader\n" + requestHeader);
                     
-                    // 调用getInputStream方法后，服务端才会收到请求，并阻塞式地接收服务端返回的数据
-                    InputStream inputStream = httpURLConnection.getInputStream();
-                    
-                    // 将InputStream转换成byte数组,getBytesByInputStream会关闭输入流
-                    byte[] responseBody = getBytesFromInputStream(inputStream);
-                    
-                    // 获得响应头
-                    String responseHeader = getResponseHeader(httpURLConnection);
-                    */
                     int responseCode = httpURLConnection.getResponseCode();
                     LogFileUtil.i(TAG, "doGetAsyn -> responseCode = " + responseCode);
                     
@@ -92,6 +86,10 @@ public class GetConnectionUtil
                         {
                             result.append(line);
                         }
+                        
+                        /** 响应头,日志 */
+                        String responseHeader = HttpHelperUtils.getHttpResponseHeader(httpURLConnection);
+                        LogFileUtil.i(TAG, "doGetAsyn -> responseHeader\n" + responseHeader);
                         
                         handleSuccess(callback, result.toString());
                     }
@@ -141,6 +139,8 @@ public class GetConnectionUtil
     
     /**
      * http 链接  设置
+     * RequestHeader : setRequestProperty
+     * parameter     : 直接在后面加的参数
      * @param connection 
      */
     private static HttpURLConnection initHttpConnection(HttpURLConnection connection)
@@ -150,6 +150,7 @@ public class GetConnectionUtil
         connection.setRequestProperty("connection", "Keep-Alive");
         connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         connection.setRequestProperty("charset", "utf-8");
+        connection.setRequestProperty("action", "get");
         
         // 禁用网络缓存
         connection.setUseCaches(false);
@@ -160,12 +161,6 @@ public class GetConnectionUtil
         connection.setDoInput(true);
         connection.setReadTimeout(READ_TIMEOUT); // 设置读取超时为5秒
         connection.setConnectTimeout(CONNNECT_TIMEOUT); // 设置连接网络超时为5秒
-        
-        /** 为了日志 */
-        // 获取请求头
-        String requestHeader = HttpHelperUtils.getHttpRequestHeader(connection);
-        LogFileUtil.v(TAG, "doGetAsyn -> initHttpConnection requestHeader = " + requestHeader);
-        
         return connection;
     }
     

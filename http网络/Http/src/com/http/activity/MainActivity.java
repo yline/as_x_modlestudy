@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity
             {
                 String ip = mEtInputIp.getText().toString().trim();
                 String className = mEtInputClass.getText().toString().trim();
+                className += "?json=\"json\""; // 加一个拼接
                 LogFileUtil.v(MainApplication.TAG, "ip = " + ip + ",className = " + className);
                 
                 GetConnectionUtil.doLocal(ip, WEB_PROJECT_NAME, className, new GetConnectionUtil.GetConnectionCallback()

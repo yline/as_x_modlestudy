@@ -1,6 +1,9 @@
 package com.connection;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +34,9 @@ public class HttpGetConnection extends HttpServlet
         throws ServletException, IOException
     {
         System.out.println("doGet in");
+        doLogRequestHeader(request);
+        doLogRequestParameter(request);
+        
         response.getWriter().append("Served at: ").append(request.getContextPath());
     }
     
@@ -41,6 +47,50 @@ public class HttpGetConnection extends HttpServlet
         throws ServletException, IOException
     {
         doGet(request, response);
+    }
+    
+    /**
+     * 打印请求头,日志
+     * @param request
+     */
+    public static void doLogRequestHeader(HttpServletRequest request)
+    {
+        Enumeration<String> list = request.getHeaderNames();
+        String key = "";
+        String value = "";
+        while (list.hasMoreElements())
+        {
+            key = list.nextElement();
+            value = request.getHeader(key);
+            System.out.println("header,key = " + key + ",value = " + value);
+        }
+    }
+    
+    /**
+     * 打印请求参数,日志
+     * @param request
+     */
+    public static void doLogRequestParameter(HttpServletRequest request)
+    {
+        Map<String, String[]> requestMap = request.getParameterMap();
+        Set<String> keySet = requestMap.keySet();
+        String[] values = {};
+        for (String key : keySet)
+        {
+            values = requestMap.get(key);
+            System.out.println("parameter,key = " + key + ",value = " + getString(values));
+        }
+    }
+    
+    public static String getString(String[] values)
+    {
+        StringBuffer buffer = new StringBuffer();
+        for (String value : values)
+        {
+            buffer.append(value);
+        }
+        
+        return buffer.toString();
     }
     
 }
