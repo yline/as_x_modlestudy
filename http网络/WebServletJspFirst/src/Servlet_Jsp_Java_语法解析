@@ -1,8 +1,9 @@
 执行顺序:WelcomeWeb.jsp -> web.xml映射 -> Welcom.java处理 -> WelcomeWeb.jsp处理
 
 WelcomeWeb.jsp 运行: http://localhost:8080/WebServletJspFirst/WelcomeWeb.jsp		有界面
-web.xml 运行:		http://localhost:8080/WebServletJspFirst/WEB-INF/web.xml; 无效
-Welcome.java 运行:	http://localhost:8080/WebServletJspFirst/login;	无效
+web.xml 运行:		http://localhost:8080/WebServletJspFirst/WEB-INF/web.xml;  不可直接运行
+Welcome.java 运行:	http://localhost:8080/WebServletJspFirst/login;	不可直接运行
+					或http://localhost:8080/WebServletJspFirst/Welcome;
 
 一、WelcomeWeb.jsp 和 web.xml关联【action与URL相呼应,表示请求】
 1)前缀都一样,都是http://localhost:8080/WebServletJspFirst

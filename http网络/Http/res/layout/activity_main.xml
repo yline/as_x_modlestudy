@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:lines="2"
-        android:text="Welcome" />
+        android:text="HttpGetConnection" />
 
     <Button
         android:id="@+id/btn_get_connection"

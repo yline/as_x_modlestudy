@@ -1,4 +1,4 @@
-package com.test.servlet;
+package com.connection;
 
 import java.io.IOException;
 
