@@ -1,21 +1,14 @@
 package com.http.connection.get.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
+import com.http.help.util.HttpHelperUtils;
 import com.yline.log.LogFileUtil;
 
 import android.os.Handler;
@@ -38,9 +31,9 @@ public class GetConnectionUtil
     
     private static Handler mHandler = new Handler();
     
-    public static void doLocal(String ip, String endStr, final GetConnectionCallback callback)
+    public static void doLocal(String ip, String projectName, String classStr, final GetConnectionCallback callback)
     {
-        String httpUrl = String.format("http://%s:8080/WebServletJspFirst/%s", ip, endStr);
+        String httpUrl = String.format("http://%s:8080/%s/%s", ip, projectName, classStr);
         doGetAsyn(httpUrl, callback);
     }
     
@@ -170,117 +163,10 @@ public class GetConnectionUtil
         
         /** 为了日志 */
         // 获取请求头
-        String requestHeader = getRequestHeader(connection);
+        String requestHeader = HttpHelperUtils.getHttpRequestHeader(connection);
         LogFileUtil.v(TAG, "doGetAsyn -> initHttpConnection requestHeader = " + requestHeader);
         
         return connection;
-    }
-    
-    /**
-     * 读取请求头
-     * @param connection
-     * @return null if connection is null
-     */
-    private static String getRequestHeader(HttpURLConnection connection)
-    {
-        if (null != connection)
-        {
-            Map<String, List<String>> requestHeaderMap = connection.getRequestProperties();
-            Iterator<String> requestHeaderIterator = requestHeaderMap.keySet().iterator();
-            StringBuilder requestHeaderStringBuilder = new StringBuilder();
-            while (requestHeaderIterator.hasNext())
-            {
-                String requestHeaderKey = requestHeaderIterator.next();
-                String requestHeaderValue = connection.getRequestProperty(requestHeaderKey);
-                requestHeaderStringBuilder.append(requestHeaderKey);
-                requestHeaderStringBuilder.append(":");
-                requestHeaderStringBuilder.append(requestHeaderValue);
-                requestHeaderStringBuilder.append("\n");
-            }
-            return requestHeaderStringBuilder.toString();
-        }
-        else
-        {
-            return null;
-        }
-    }
-    
-    /**
-     * 读取响应头
-     * @param connection
-     * @return
-     */
-    private static String getResponseHeader(HttpURLConnection connection)
-    {
-        if (null != connection)
-        {
-            Map<String, List<String>> responseHeaderMap = connection.getHeaderFields();
-            int size = responseHeaderMap.size();
-            StringBuilder responseHeaderStringBuilder = new StringBuilder();
-            for (int i = 0; i < size; i++)
-            {
-                String responseHeaderKey = connection.getHeaderFieldKey(i);
-                String responseHeaderValue = connection.getHeaderField(i);
-                responseHeaderStringBuilder.append(responseHeaderKey);
-                responseHeaderStringBuilder.append(":");
-                responseHeaderStringBuilder.append(responseHeaderValue);
-                responseHeaderStringBuilder.append("\n");
-            }
-            return responseHeaderStringBuilder.toString();
-        }
-        else
-        {
-            return null;
-        }
-    }
-    
-    /**
-     * 从InputStream中读取数据，转换成byte数组，最后关闭InputStream
-     * @param inputStream
-     * @return null if error
-     * @throws IOException IO流错误
-     */
-    private byte[] getBytesFromInputStream(InputStream inputStream)
-        throws IOException
-    {
-        byte[] bytes = null;
-        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-        
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
-        
-        byte[] buffer = new byte[1024];
-        int length = 0;
-        while ((length = bufferedInputStream.read(buffer)) > 0)
-        {
-            bufferedOutputStream.write(buffer, 0, length);
-        }
-        bufferedOutputStream.flush();
-        
-        bytes = byteArrayOutputStream.toByteArray();
-        
-        bufferedOutputStream.close();
-        bufferedInputStream.close();
-        
-        return bytes;
-    }
-    
-    /**
-     * @param data
-     * @return null if UnsupportedEncodingException happened 
-     */
-    private String getStringFromBytes(byte[] data)
-    {
-        String tempStr = null;
-        try
-        {
-            tempStr = new String(data, "utf-8");
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            LogFileUtil.v(TAG, "UnsupportedEncodingException -> ", e);
-        }
-        return tempStr;
     }
     
     /**

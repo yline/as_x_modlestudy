@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class HttpGetConnection
+ * http://192.168.1.102:8080/WebHttp/HttpGetConnection
  */
 @WebServlet("/HttpGetConnection")
 public class HttpGetConnection extends HttpServlet

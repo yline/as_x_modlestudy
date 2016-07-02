@@ -12,9 +12,11 @@ import android.widget.EditText;
 
 public class MainActivity extends BaseActivity
 {
-    private EditText mEtInputIp, mEtInputStr;
+    private static final String WEB_PROJECT_NAME = "WebHttp";
     
-    private Button mBtnGetConnectionSubmit;
+    private EditText mEtInputIp, mEtInputClass;
+    
+    private Button mBtnGetConnectionSubmit, mBtnPostConnectionSubmit;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,8 +31,9 @@ public class MainActivity extends BaseActivity
     private void initView()
     {
         mEtInputIp = (EditText)findViewById(R.id.et_input_ip);
-        mEtInputStr = (EditText)findViewById(R.id.et_input_end);
+        mEtInputClass = (EditText)findViewById(R.id.et_input_class);
         mBtnGetConnectionSubmit = (Button)findViewById(R.id.btn_get_connection);
+        mBtnPostConnectionSubmit = (Button)findViewById(R.id.btn_post_connection);
     }
     
     private void initData()
@@ -42,9 +45,10 @@ public class MainActivity extends BaseActivity
             public void onClick(View v)
             {
                 String ip = mEtInputIp.getText().toString().trim();
-                String str = mEtInputStr.getText().toString().trim();
-                LogFileUtil.v(MainApplication.TAG, "ip = " + ip + ",str = " + str);
-                GetConnectionUtil.doLocal(ip, str, new GetConnectionUtil.GetConnectionCallback()
+                String className = mEtInputClass.getText().toString().trim();
+                LogFileUtil.v(MainApplication.TAG, "ip = " + ip + ",className = " + className);
+                
+                GetConnectionUtil.doLocal(ip, WEB_PROJECT_NAME, className, new GetConnectionUtil.GetConnectionCallback()
                 {
                     
                     @Override
@@ -59,6 +63,16 @@ public class MainActivity extends BaseActivity
                         
                     }
                 });
+            }
+        });
+        
+        mBtnPostConnectionSubmit.setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                
             }
         });
     }
