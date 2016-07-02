@@ -1,0 +1,21 @@
+执行顺序:WelcomeWeb.jsp -> web.xml映射 -> Welcom.java处理 -> WelcomeWeb.jsp处理
+
+WelcomeWeb.jsp 运行: http://localhost:8080/WebServletJspFirst/WelcomeWeb.jsp		有界面
+web.xml 运行:		http://localhost:8080/WebServletJspFirst/WEB-INF/web.xml; 无效
+Welcome.java 运行:	http://localhost:8080/WebServletJspFirst/login;	无效
+
+一、WelcomeWeb.jsp 和 web.xml关联【action与URL相呼应,表示请求】
+1)前缀都一样,都是http://localhost:8080/WebServletJspFirst
+2)action="login"  ->  <url-pattern>/login<url-pattern>  对应
+
+二、web.xml 和 Welcome.java关联【绑定URL,到具体的类位置】
+1)前缀都一样,都是http://localhost:8080/WebServletJspFirst
+2)<servlet-name>Welcome</servlet-name>  ->  类名,Welcome
+3)<servlet-class>com.test.servlet.Welcome</servlet-class>  ->  包名+类名,com.test.servlet.Welcome
+
+三、WelcomeWeb.jsp 和 Welcome.java关联【请求者[C],和,响应者[S]】
+1)method="post"  ->  doPost中执行方案
+2)name="select"  ->  request.getParameter(select);  请求参数
+
+
+

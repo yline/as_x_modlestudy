@@ -1,0 +1,54 @@
+1-1,新建工程
+1)File -> new -> project -> web -> Dynamic Web Project
+2)填写工程名  +   选择Tomcat【要求本地安装过Tomcat】
+
+1-2,工程介绍
+1)Java Resources【jaca源代码,Servlet程序】
+2)WebContent【Jsp程序及网页文件夹】
+
+
+
+2-1,新建JSP页面
+1)【WebContent 右键】 -> 填入文件名
+2)编写程序
+3)文件 右键 -> run as -> run on server -> 选择 tomcat
+
+2-2,运行结果:
+1)http://localhost:8080/WebServletJspFirst/WelcomeWeb.jsp
+2)运行的localhost为ip; ip可用ipconfig在cmd中查看
+
+
+
+3-1,新建servlet文件
+1)【Java Resources 右键】 -> 填入包名、工程名
+2)编写程序
+3)文件 右键 -> run as -> run on server -> 选择 tomcat
+
+3-2,运行结果
+1)这个是被请求的程序,因此不能够运行看结果...只能其它地方来请求这里,做验证
+2)http://localhost:8080/WebServletJspFirst/login
+3)该界面空指针,因为它只是用来处理请求,然后给一个返回值的
+
+
+
+4-1,编写xml,建立servlet和jsp之前的关系
+1)【WebContent/WEB-INF 右键】 -> 新建web.xml
+2)编写程序
+
+4-2,运行结果
+1)http://localhost:8080/WebServletJspFirst/WEB-INF/web.xml
+2)该界面无结果,只是为了后续分析
+
+
+
+5-1,运行整个程序:
+1)运行,jsp文件,通过web映射
+2)经过java文件处理,返回jsp文件,显示到界面上
+
+
+
+
+
+
+
+
