@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="1"
-        android:text="192.168.1.102" />
+        android:text="192.168.1.101" />
 
     <EditText
         android:id="@+id/et_input_class"
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:lines="2"
-        android:text="HttpGetConnection" />
+        android:text="HttpConnection" />
 
     <Button
         android:id="@+id/btn_get_connection"

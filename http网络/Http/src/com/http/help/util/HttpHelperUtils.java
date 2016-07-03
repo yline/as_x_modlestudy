@@ -9,10 +9,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.http.connection.post.bean.PostTestBean;
 import com.yline.log.LogFileUtil;
 
 public class HttpHelperUtils
@@ -159,6 +162,17 @@ public class HttpHelperUtils
     }
     
     /**
+     * @param json
+     * @return null if exception
+     * @throws UnsupportedEncodingException
+     */
+    public static byte[] getByteFromString(String json)
+        throws UnsupportedEncodingException
+    {
+        return json.getBytes("utf-8");
+    }
+    
+    /**
      * byte[] 转 String
      * @param data
      * @return null if UnsupportedEncodingException happened
@@ -178,4 +192,22 @@ public class HttpHelperUtils
         return tempStr;
     }
     
+    public static String getJsonStr(int length, String name, String number)
+    {
+        Gson gson = new Gson();
+        
+        ArrayList<PostTestBean> postTestBeans = new ArrayList<PostTestBean>();
+        PostTestBean postTestBean;
+        for (int i = 0; i < length; i++)
+        {
+            postTestBean = new PostTestBean();
+            postTestBean.setId(i);
+            postTestBean.setName(name + "_" + i);
+            postTestBean.setNumber(number + "_" + i);
+            
+            postTestBeans.add(postTestBean);
+        }
+        
+        return gson.toJson(postTestBeans);
+    }
 }

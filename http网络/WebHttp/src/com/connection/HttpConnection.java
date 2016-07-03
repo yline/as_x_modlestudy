@@ -14,15 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * http://192.168.1.102:8080/WebHttp/HttpGetConnection?json="json"
  */
-@WebServlet("/HttpGetConnection")
-public class HttpGetConnection extends HttpServlet
+@WebServlet("/HttpConnection")
+public class HttpConnection extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
     
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HttpGetConnection()
+    public HttpConnection()
     {
         super();
     }
@@ -52,6 +52,7 @@ public class HttpGetConnection extends HttpServlet
         doLogRequestParameter(request);
         
         // 这里处理返回码
+        response.getWriter().append("doPost success\n");
     }
     
     /**

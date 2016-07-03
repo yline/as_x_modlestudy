@@ -1,11 +1,11 @@
-package com.http.connection.get.util;
+package com.http.connection.post.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 
 import com.http.help.util.HttpHelperUtils;
@@ -17,11 +17,11 @@ import android.os.Handler;
  * 请求的URL,区分大小写
  * @author YLine
  *
- * 2016年7月2日 下午12:04:15
+ * 2016年7月3日 上午9:40:08
  */
-public class GetConnectionUtil
+public class PostConnectionUtil
 {
-    private static final String TAG = "connection_get";
+    private static final String TAG = "connection_post";
     
     private static final int HTTPCONNECT_SUCCESS_CODE = 200; // 网络请求,正确返回码
     
@@ -31,24 +31,23 @@ public class GetConnectionUtil
     
     private static Handler mHandler = new Handler();
     
-    public static void doLocal(String ip, String projectName, String classStr, final GetConnectionCallback callback)
+    public static void doLocal(String ip, String projectName, String classStr, final PostConnectionCallback callback)
     {
         String httpUrl = String.format("http://%s:8080/%s/%s", ip, projectName, classStr);
-        doGetAsyn(httpUrl, callback);
+        doPostAsyn(httpUrl, callback);
     }
     
     /**
-     * Get 异步请求
+     * Post 异步请求
      * @param httpUrl   URL
      * @param callback  网络请求回调
      */
-    private static void doGetAsyn(final String httpUrl, final GetConnectionCallback callback)
+    private static void doPostAsyn(final String httpUrl, final PostConnectionCallback callback)
     {
-        LogFileUtil.v(TAG, "doGetAsyn -> in -> http:" + httpUrl);
+        LogFileUtil.v(TAG, "doPostAsyn -> in -> http:" + httpUrl);
         
         new Thread(new Runnable()
         {
-            
             @Override
             public void run()
             {
@@ -61,21 +60,23 @@ public class GetConnectionUtil
                 
                 try
                 {
-                    url = new URL(httpUrl); // 创建一个URL对象
-                    LogFileUtil.v(TAG, "doGetAsyn -> new url over");
+                    url = new URL(httpUrl);
+                    LogFileUtil.v(TAG, "doPostAsyn -> new url over");
                     
-                    // 调用URL的openConnection()方法,获取HttpURLConnection对象
                     httpURLConnection = (HttpURLConnection)url.openConnection();
-                    
-                    // HttpURLConnection默认就是用GET发送请求,因此也可省略
-                    httpURLConnection.setRequestMethod("GET");
+                    httpURLConnection.setRequestMethod("POST");
                     initHttpConnection(httpURLConnection);
+                    
                     /** 请求头,日志 */
                     String requestHeader = HttpHelperUtils.getHttpRequestHeader(httpURLConnection);
-                    LogFileUtil.i(TAG, "doGetAsyn -> initHttpConnection over requestHeader\n" + requestHeader);
+                    LogFileUtil.i(TAG, "doPostAsyn -> initHttpConnection over requestHeader\n" + requestHeader);
+                    
+                    /** 设置参数体 */
+                    String json = HttpHelperUtils.getJsonStr(10, "yline", "1378709");
+                    initHttpConnectionBody(httpURLConnection, json);
                     
                     int responseCode = httpURLConnection.getResponseCode();
-                    LogFileUtil.i(TAG, "doGetAsyn -> responseCode = " + responseCode);
+                    LogFileUtil.i(TAG, "doPostAsyn -> responseCode = " + responseCode);
                     
                     if (HTTPCONNECT_SUCCESS_CODE == responseCode) // 连接成功
                     {
@@ -89,29 +90,24 @@ public class GetConnectionUtil
                         
                         /** 响应头,日志 */
                         String responseHeader = HttpHelperUtils.getHttpResponseHeader(httpURLConnection);
-                        LogFileUtil.i(TAG, "doGetAsyn -> responseHeader\n" + responseHeader);
+                        LogFileUtil.i(TAG, "doPostAsyn -> responseHeader\n" + responseHeader);
                         
                         handleSuccess(callback, result.toString());
                     }
                     else
                     {
-                        LogFileUtil.e(TAG, "doGetAsyn -> responseCode error");
-                        handleError(callback, new Exception("doGetAsyn -> responseCode error code = " + responseCode));
+                        LogFileUtil.e(TAG, "doPostAsyn -> responseCode error");
+                        handleError(callback, new Exception("doPostAsyn -> responseCode error code = " + responseCode));
                     }
                 }
                 catch (MalformedURLException e)
                 {
-                    LogFileUtil.e(TAG, "doGetAsyn -> MalformedURLException", e);
-                    handleError(callback, e);
-                }
-                catch (ProtocolException e)
-                {
-                    LogFileUtil.e(TAG, "doGetAsyn -> ProtocolException", e);
+                    LogFileUtil.e(TAG, "doPostAsyn -> ProtocolException", e);
                     handleError(callback, e);
                 }
                 catch (IOException e)
                 {
-                    LogFileUtil.e(TAG, "doGetAsyn -> IOException", e);
+                    LogFileUtil.e(TAG, "doPostAsyn -> IOException", e);
                     handleError(callback, e);
                 }
                 finally
@@ -124,7 +120,7 @@ public class GetConnectionUtil
                         }
                         catch (IOException e)
                         {
-                            LogFileUtil.e(TAG, "doGetAsyn -> close IOException", e);
+                            LogFileUtil.e(TAG, "doPostAsyn -> close IOException", e);
                             handleError(callback, e);
                         }
                     }
@@ -143,25 +139,55 @@ public class GetConnectionUtil
      * parameter     : 直接在后面加的参数
      * @param connection 
      */
-    private static HttpURLConnection initHttpConnection(HttpURLConnection connection)
+    private static void initHttpConnection(HttpURLConnection connection)
     {
         // 用setRequestProperty方法设置多个自定义的请求头:action，用于后端判断
         connection.setRequestProperty("accept", "*/*");
         connection.setRequestProperty("connection", "Keep-Alive");
         connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         connection.setRequestProperty("charset", "utf-8");
-        connection.setRequestProperty("action", "get");
+        connection.setRequestProperty("action", "post");
         
         // 禁用网络缓存
         connection.setUseCaches(false);
-        // 定制,只要设置了下面这句话,系统就会自动改为POST请求..因此,必须注释掉
-        // connection.setDoOutput(true); // 设置此方法,允许向服务器输出内容
+        // 定制
+        connection.setDoOutput(true); // 设置此方法,允许向服务器输出内容
         
         // HttpURLConnection默认也支持从服务端读取结果流，因此也可省略
         connection.setDoInput(true);
         connection.setReadTimeout(READ_TIMEOUT); // 设置读取超时为5秒
         connection.setConnectTimeout(CONNNECT_TIMEOUT); // 设置连接网络超时为5秒
-        return connection;
+    }
+    
+    /**
+     * 设置请求体
+     * @param connection
+     * @param json  json字符串
+     */
+    private static void initHttpConnectionBody(HttpURLConnection connection, String json)
+    {
+        OutputStream outputStream = null;
+        try
+        {
+            outputStream = connection.getOutputStream();
+            byte[] bytes = HttpHelperUtils.getByteFromString(json);
+            outputStream.write(bytes);
+        }
+        catch (IOException e)
+        {
+            LogFileUtil.e(TAG, "initHttpConnectionBody -> IOException", e);
+        }
+        finally
+        {
+            try
+            {
+                outputStream.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
     
     /**
@@ -169,7 +195,7 @@ public class GetConnectionUtil
      * @param callback
      * @param e
      */
-    private static void handleError(final GetConnectionCallback callback, final Exception e)
+    private static void handleError(final PostConnectionCallback callback, final Exception e)
     {
         mHandler.post(new Runnable()
         {
@@ -190,7 +216,7 @@ public class GetConnectionUtil
      * @param callback
      * @param result
      */
-    private static void handleSuccess(final GetConnectionCallback callback, final String result)
+    private static void handleSuccess(final PostConnectionCallback callback, final String result)
     {
         mHandler.post(new Runnable()
         {
@@ -206,7 +232,7 @@ public class GetConnectionUtil
         });
     }
     
-    public interface GetConnectionCallback
+    public interface PostConnectionCallback
     {
         /**
          * 请求成功,返回结果
@@ -220,4 +246,5 @@ public class GetConnectionUtil
          */
         void onError(Exception e);
     }
+    
 }

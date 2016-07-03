@@ -2,6 +2,7 @@ package com.http.activity;
 
 import com.http.R;
 import com.http.connection.get.util.GetConnectionUtil;
+import com.http.connection.post.util.PostConnectionUtil;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
 
@@ -61,7 +62,7 @@ public class MainActivity extends BaseActivity
                     @Override
                     public void onError(Exception e)
                     {
-                        LogFileUtil.i(MainApplication.TAG, "网络错误\n", e);
+                        LogFileUtil.e(MainApplication.TAG, "网络错误\n", e);
                     }
                 });
             }
@@ -73,7 +74,29 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View v)
             {
+                String ip = mEtInputIp.getText().toString().trim();
+                String className = mEtInputClass.getText().toString().trim();
+                className += "?json=\"json\""; // 加一个拼接
+                LogFileUtil.v(MainApplication.TAG, "ip = " + ip + ",className = " + className);
                 
+                PostConnectionUtil.doLocal(ip,
+                    WEB_PROJECT_NAME,
+                    className,
+                    new PostConnectionUtil.PostConnectionCallback()
+                    {
+                        
+                        @Override
+                        public void onSuccess(String result)
+                        {
+                            LogFileUtil.i(MainApplication.TAG, "请求成功\nresult = " + result);
+                        }
+                        
+                        @Override
+                        public void onError(Exception e)
+                        {
+                            LogFileUtil.e(MainApplication.TAG, "网络错误\n", e);
+                        }
+                    });
             }
         });
     }
