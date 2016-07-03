@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * http://192.168.1.102:8080/WebHttp/HttpGetConnection
+ * http://192.168.1.102:8080/WebHttp/HttpGetConnection?json="json"
  */
 @WebServlet("/HttpGetConnection")
 public class HttpGetConnection extends HttpServlet
@@ -36,8 +36,9 @@ public class HttpGetConnection extends HttpServlet
         System.out.println("doGet in");
         doLogRequestHeader(request);
         doLogRequestParameter(request);
-        
-        response.getWriter().append("Served at: ").append(request.getContextPath());
+        // 这里就可以直接写入json字符串,那边拿到的就是一个json字符串了
+        String json = "json";
+        response.getWriter().append(json);
     }
     
     /**
@@ -46,14 +47,18 @@ public class HttpGetConnection extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException
     {
-        doGet(request, response);
+        System.out.println("doPost in");
+        doLogRequestHeader(request);
+        doLogRequestParameter(request);
+        
+        // 这里处理返回码
     }
     
     /**
      * 打印请求头,日志
      * @param request
      */
-    public static void doLogRequestHeader(HttpServletRequest request)
+    public void doLogRequestHeader(HttpServletRequest request)
     {
         Enumeration<String> list = request.getHeaderNames();
         String key = "";
@@ -70,7 +75,7 @@ public class HttpGetConnection extends HttpServlet
      * 打印请求参数,日志
      * @param request
      */
-    public static void doLogRequestParameter(HttpServletRequest request)
+    public void doLogRequestParameter(HttpServletRequest request)
     {
         Map<String, String[]> requestMap = request.getParameterMap();
         Set<String> keySet = requestMap.keySet();
@@ -82,7 +87,11 @@ public class HttpGetConnection extends HttpServlet
         }
     }
     
-    public static String getString(String[] values)
+    /**
+     * @param values String[] 数组
+     * @return  String 字符串
+     */
+    public String getString(String[] values)
     {
         StringBuffer buffer = new StringBuffer();
         for (String value : values)

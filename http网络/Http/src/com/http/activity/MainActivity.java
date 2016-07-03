@@ -55,13 +55,13 @@ public class MainActivity extends BaseActivity
                     @Override
                     public void onSuccess(String result)
                     {
-                        
+                        LogFileUtil.i(MainApplication.TAG, "请求成功\nresult = " + result);
                     }
                     
                     @Override
                     public void onError(Exception e)
                     {
-                        
+                        LogFileUtil.i(MainApplication.TAG, "网络错误\n", e);
                     }
                 });
             }

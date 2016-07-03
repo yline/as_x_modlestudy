@@ -44,7 +44,7 @@ public class GetConnectionUtil
      */
     private static void doGetAsyn(final String httpUrl, final GetConnectionCallback callback)
     {
-        LogFileUtil.v(TAG, "doGetAsyn -> in -> " + httpUrl);
+        LogFileUtil.v(TAG, "doGetAsyn -> in -> http:" + httpUrl);
         
         new Thread(new Runnable()
         {
@@ -72,7 +72,7 @@ public class GetConnectionUtil
                     initHttpConnection(httpURLConnection);
                     /** 请求头,日志 */
                     String requestHeader = HttpHelperUtils.getHttpRequestHeader(httpURLConnection);
-                    LogFileUtil.v(TAG, "doGetAsyn -> initHttpConnection over requestHeader\n" + requestHeader);
+                    LogFileUtil.i(TAG, "doGetAsyn -> initHttpConnection over requestHeader\n" + requestHeader);
                     
                     int responseCode = httpURLConnection.getResponseCode();
                     LogFileUtil.i(TAG, "doGetAsyn -> responseCode = " + responseCode);
