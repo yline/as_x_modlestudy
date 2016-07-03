@@ -1,0 +1,69 @@
+doPost in
+【请求头:9条】
+// 增加
+header,key = accept,value = */*
+header,key = connection,value = Keep-Alive
+header,key = content-type,value = application/x-www-form-urlencoded
+header,key = charset,value = utf-8
+header,key = action,value = post
+// 自带
+header,key = user-agent,value = Dalvik/1.6.0 (Linux; U; Android 4.4.2; HUAWEI P7-L05 Build/HuaweiP7-L05)
+header,key = host,value = 192.168.1.101:8080
+header,key = accept-encoding,value = gzip
+header,key = content-length,value = 471
+【请求参数,长连接中的拼接部分】
+parameter,key = json,value = "json"
+parameter,key = 
+[
+    {
+        "number": "1378709_0", 
+        "name": "yline_0", 
+        "id": 0
+    }, 
+    {
+        "number": "1378709_1", 
+        "name": "yline_1", 
+        "id": 1
+    }, 
+    {
+        "number": "1378709_2", 
+        "name": "yline_2", 
+        "id": 2
+    }, 
+    {
+        "number": "1378709_3", 
+        "name": "yline_3", 
+        "id": 3
+    }, 
+    {
+        "number": "1378709_4", 
+        "name": "yline_4", 
+        "id": 4
+    }, 
+    {
+        "number": "1378709_5", 
+        "name": "yline_5", 
+        "id": 5
+    }, 
+    {
+        "number": "1378709_6", 
+        "name": "yline_6", 
+        "id": 6
+    }, 
+    {
+        "number": "1378709_7", 
+        "name": "yline_7", 
+        "id": 7
+    }, 
+    {
+        "number": "1378709_8", 
+        "name": "yline_8", 
+        "id": 8
+    }, 
+    {
+        "number": "1378709_9", 
+        "name": "yline_9", 
+        "id": 9
+    }
+]
+,value = 
