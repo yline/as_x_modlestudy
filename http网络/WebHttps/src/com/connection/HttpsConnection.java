@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * http://192.168.1.102:8080/WebHttps/HttpsConnection?json="json"
+ * 
+ * 这个不是Https的后台,只能作为Http,因此不能成为测试对象
+ * Blog:http://blog.csdn.net/iispring/article/details/51615631
+ * 作为问题遗留
  */
 @WebServlet("/HttpsConnection")
 public class HttpsConnection extends HttpServlet
@@ -22,7 +26,6 @@ public class HttpsConnection extends HttpServlet
     public HttpsConnection()
     {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     /**
@@ -42,7 +45,7 @@ public class HttpsConnection extends HttpServlet
         throws ServletException, IOException
     {
         System.out.println("doPost in");
-        doGet(request, response);
+        response.getWriter().append("Served at: ").append(request.getContextPath());
     }
     
 }

@@ -44,7 +44,7 @@ public class GetConnectionUtil
      */
     private static void doGetAsyn(final String httpUrl, final GetConnectionCallback callback)
     {
-        LogFileUtil.v(TAG, "doGetAsyn -> in -> http:" + httpUrl);
+        LogFileUtil.v(TAG, "doGetAsyn -> in -> httpUrl:" + httpUrl);
         
         new Thread(new Runnable()
         {
@@ -143,7 +143,7 @@ public class GetConnectionUtil
      * parameter     : 直接在后面加的参数
      * @param connection 
      */
-    private static HttpURLConnection initHttpConnection(HttpURLConnection connection)
+    private static void initHttpConnection(HttpURLConnection connection)
     {
         // 用setRequestProperty方法设置多个自定义的请求头:action，用于后端判断
         connection.setRequestProperty("accept", "*/*");
@@ -161,7 +161,6 @@ public class GetConnectionUtil
         connection.setDoInput(true);
         connection.setReadTimeout(READ_TIMEOUT); // 设置读取超时为5秒
         connection.setConnectTimeout(CONNNECT_TIMEOUT); // 设置连接网络超时为5秒
-        return connection;
     }
     
     /**
