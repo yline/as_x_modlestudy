@@ -1,6 +1,4 @@
-package com.lock.activity;
-
-import java.io.File;
+package com.lock.object.activity;
 
 import com.yline.application.AppConfig;
 import com.yline.application.BaseApplication;
@@ -9,6 +7,8 @@ import android.os.Message;
 
 public class MainApplication extends BaseApplication
 {
+    public static final String TAG = "LockObject";
+    
     public static Object lock = new Object();
     
     @Override
@@ -27,7 +27,7 @@ public class MainApplication extends BaseApplication
     protected AppConfig initConfig()
     {
         AppConfig appConfig = new AppConfig();
-        appConfig.setFileLogPath("lockObject" + File.separator);
+        appConfig.setFileLogPath("lockObject");
         appConfig.setLogLocation(true);
         return appConfig;
     }

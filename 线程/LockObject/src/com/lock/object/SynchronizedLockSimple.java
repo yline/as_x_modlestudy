@@ -1,12 +1,12 @@
 package com.lock.object;
 
-import com.lock.activity.MainApplication;
+import com.lock.object.activity.MainApplication;
 import com.yline.log.LogFileUtil;
 
 /**
  * 调用代码:
- * new LockSimple().testSimple(3000,"1");
- * new LockSimple().testSimple(500,"2");
+ * new SynchronizedLockSimple().testSimple(3000,"1");
+ * new SynchronizedLockSimple().testSimple(500,"2");
  * 
  * 上述代码执行步骤分析:
  * 前部代码块代号:"A"; 内部代码块代号"B",后部代码块"C"
@@ -34,6 +34,7 @@ import com.yline.log.LogFileUtil;
  * 1,synchronized会阻塞 内部代码块以及后部代码块
  * 2,synchronized能够保证同一时刻最多只有一个线程执行该段代码
  * 3,并不一定先创建线程的代码就一定是先拿到锁...具有一定的随机性
+ * 
  * @author YLine
  * 2016年6月26日 下午9:10:29
  */

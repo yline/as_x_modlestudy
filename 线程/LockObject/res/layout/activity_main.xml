@@ -8,6 +8,20 @@
         android:id="@+id/btn_one"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="one" />
+        android:text="synchronized + object_lock 效果,无wait&amp;notifyall" />
+
+    <Button
+        android:id="@+id/btn_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="synchronized + object_lock 有 wait&amp;notifyall" />
+    
+    <Button
+        android:id="@+id/btn_three"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="synchronized + object_lock 实现多线程同步" />
 
 </LinearLayout>
