@@ -3,6 +3,7 @@ package com.lock.object.activity;
 import com.lock.object.R;
 import com.lock.object.SynchronizedLock;
 import com.lock.object.SynchronizedLockSimple;
+import com.lock.object.tag.synchronize.InitConfig;
 import com.yline.log.LogFileUtil;
 
 import android.app.Activity;
@@ -52,6 +53,7 @@ public class MainActivity extends Activity
             public void onClick(View v)
             {
                 LogFileUtil.v(MainApplication.TAG, "onClick btn_three");
+                new InitConfig(MainActivity.this);
             }
         });
     }

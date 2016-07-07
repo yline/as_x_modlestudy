@@ -1,0 +1,48 @@
+// InitConfig执行
+07-08 00:37:20.910: V/x->InitConfig.startWork(L:25):(20330): LockObject -> startWork -> start
+07-08 00:37:20.920: V/x->InitConfig$1.run(L:33):(20330): LockObject -> startWork -> start
+07-08 00:37:20.920: V/x->InitConfig.startWork(L:70):(20330): LockObject -> startWork -> end
+
+// 进入:startWork synchronized,wait
+07-08 00:37:20.920: V/x->InitConfig$1.run(L:36):(20330): LockObject -> startWork -> lock in
+07-08 00:37:20.930: V/x->InitConfig$1.run(L:42):(20330): LockObject -> startWork -> lock in -> before wait
+
+// 进入:LoadSoRunnable run
+07-08 00:37:20.930: V/x->InitService.onCreate(L:41):(20330): InitService -> onCreate -> before Load.So
+07-08 00:37:20.940: V/x->InitService.onCreate(L:43):(20330): InitService -> onCreate -> after Load.So
+07-08 00:37:20.940: V/x->InitService$LoadSoRunnable.run(L:70):(20330): InitService -> LoadSoRunnable -> run start
+07-08 00:37:20.940: V/x->InitService$LoadSoRunnable.run(L:73):(20330): InitService -> LoadSoRunnable -> lock in
+07-08 00:37:20.950: V/x->InitService.onCreate(L:45):(20330): InitService -> onCreate -> before InitSDK
+07-08 00:37:20.950: V/x->InitService$LoadSoRunnable.run(L:76):(20330): InitService -> LoadSoRunnable -> lock in -> before sleep
+07-08 00:37:20.950: V/x->InitService$InitSDKRunnable.run(L:109):(20330): InitService -> InitSDKRunnable -> run start
+07-08 00:37:20.950: V/x->InitService.onCreate(L:47):(20330): InitService -> onCreate -> after InitSDK
+07-08 00:37:20.960: V/x->InitService.workAfterInit(L:152):(20330): InitService -> onStartCommand -> workAfterInit -> start
+07-08 00:37:22.960: V/x->InitService$LoadSoRunnable.run(L:78):(20330): InitService -> LoadSoRunnable -> lock in -> after sleep
+07-08 00:37:22.970: V/x->InitService$LoadSoRunnable.run(L:88):(20330): InitService -> LoadSoRunnable -> lock in -> before notifyAll,IS_SO_LOADED = true
+07-08 00:37:22.980: V/x->InitService$LoadSoRunnable.run(L:90):(20330): InitService -> LoadSoRunnable -> lock in -> after notifyAll
+07-08 00:37:22.980: V/x->InitService$LoadSoRunnable.run(L:93):(20330): InitService -> LoadSoRunnable -> run end
+
+// 进入:InitSDKRunnable run
+07-08 00:37:22.980: V/x->InitService$InitSDKRunnable.run(L:112):(20330): InitService -> InitSDKRunnable -> lock in
+07-08 00:37:22.990: V/x->InitService$InitSDKRunnable.run(L:128):(20330): InitService -> InitSDKRunnable -> lock in
+07-08 00:37:23.000: V/x->InitService$InitSDKRunnable.run(L:131):(20330): InitService -> InitSDKRunnable -> lock in -> before sleep
+07-08 00:37:24.010: V/x->InitService$InitSDKRunnable.run(L:133):(20330): InitService -> InitSDKRunnable -> lock in -> after sleep
+07-08 00:37:24.020: V/x->InitService$InitSDKRunnable.run(L:142):(20330): InitService -> InitSDKRunnable -> lock in -> before notifyAll,IS_SDK_INIT = true
+07-08 00:37:24.040: V/x->InitService$InitSDKRunnable.run(L:144):(20330): InitService -> InitSDKRunnable -> lock in -> after notifyAll
+
+// 进入:workAfterInit run
+07-08 00:37:24.050: V/x->InitService.workAfterInit(L:155):(20330): InitService -> onStartCommand -> workAfterInit -> lock in
+07-08 00:37:24.050: V/x->InitService$InitSDKRunnable.run(L:146):(20330): InitService -> InitSDKRunnable -> run end
+07-08 00:37:24.110: V/x->InitService.workAfterInit(L:173):(20330): InitService -> onStartCommand -> workAfterInit -> lock in -> before sleep
+07-08 00:37:24.620: V/x->InitService.workAfterInit(L:175):(20330): InitService -> onStartCommand -> workAfterInit -> lock in ->after sleep
+07-08 00:37:24.620: V/x->InitService.workAfterInit(L:182):(20330): InitService -> onStartCommand -> workAfterInit -> lock in -> before notifyAll
+07-08 00:37:24.630: V/x->InitService.workAfterInit(L:184):(20330): InitService -> onStartCommand -> workAfterInit -> lock in -> after notifyAll
+
+// 进入:startWork synchronized,wait end
+07-08 00:37:24.640: V/x->InitConfig$1.run(L:44):(20330): LockObject -> startWork -> lock in -> after wait
+07-08 00:37:24.640: V/x->InitService.workAfterInit(L:186):(20330): InitService -> onStartCommand -> workAfterInit -> end
+07-08 00:37:24.640: V/x->InitConfig$1.run(L:54):(20330): LockObject -> startWork -> lock in -> before sleep
+07-08 00:37:24.650: I/Choreographer(20330): Skipped 223 frames!  The application may be doing too much work on its main thread.
+07-08 00:37:25.160: V/x->InitConfig$1.run(L:56):(20330): LockObject -> startWork -> lock in ->after sleep
+07-08 00:37:25.170: V/x->InitConfig$1.run(L:63):(20330): LockObject -> startWork -> lock in -> before notifyAll
+07-08 00:37:25.180: V/x->InitConfig$1.run(L:65):(20330): LockObject -> startWork -> lock in -> after notifyAll

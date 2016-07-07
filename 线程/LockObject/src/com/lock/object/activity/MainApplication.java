@@ -9,6 +9,8 @@ public class MainApplication extends BaseApplication
 {
     public static final String TAG = "LockObject";
     
+    public static final Object initLock = new Object();
+    
     public static Object lock = new Object();
     
     @Override
@@ -27,7 +29,7 @@ public class MainApplication extends BaseApplication
     protected AppConfig initConfig()
     {
         AppConfig appConfig = new AppConfig();
-        appConfig.setFileLogPath("lockObject");
+        appConfig.setFileLogPath("LockObject");
         appConfig.setLogLocation(true);
         return appConfig;
     }

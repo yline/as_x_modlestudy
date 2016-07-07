@@ -13,7 +13,7 @@ package com.lock.object.tag.synchronize;	synchronized 应用,同步【最广泛�
 5,wait和notify要求在Synchronized内部调用才能保证不出错;即:它要求在具有控制权的线程中执行对象的wait或notify方法.
  否则报错:java.lang.IllegalMonitorStateException:object not locked by thread before notify()
 
-6,
+6,synchronized可以理解成将之后的代码,暂时看做"串行"状态
 
 
 
