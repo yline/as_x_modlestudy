@@ -1,4 +1,4 @@
-package test.junit;
+package com.junit.test;
 
 import junit.framework.JUnit4TestAdapter;
 import junit.framework.Test;

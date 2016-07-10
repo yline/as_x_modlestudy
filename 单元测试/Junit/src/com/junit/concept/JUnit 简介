@@ -1,0 +1,23 @@
+运行要求:
+1,java代码,且仅含java自带的import包
+
+优点:
+1,运行非常快,不需要安装到手机上
+
+运行:
+1,设置环境
+<工程右键,properties> -- <Java Build Path; Libraries; Add Library> -- <Junit> -- <JUnit4>
+2,
+<工程右键.run as> -- <Junit Test; user configuration specific setting; Android Junit Test>
+
+
+断言语句:
+assertEquals(0, adder.add(0, 0)); // 判值是否相等
+assertEquals(1, adder.add(1, 0));  
+assertTrue(true); // 判真假
+assertNull(null); // 判null or not
+assertNotSame(new String(), new String()); // 判对象是否相等
+failNotEquals("类型不一样", new String(), new String());
+failNotSame("类型不一样", new String(), new String());
+fail("错误"); // 抛出错误信息
+
