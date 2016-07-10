@@ -1,0 +1,17 @@
+介绍:
+Mockito	  (模拟测试)框架  使用Mockito，就有一个问题，那就是static method和final class、final method没有办法mock
+JMockito  跟robolectric的结合也有一些bug，同时使用姿势跟Mockito有较大的不同
+
+运行方法:
+1,运行方法:
+<工程右键.run as> -- <Junit Test; user configuration specific setting; Android Junit Test>
+
+jar包:
+dexmaker-1.0.jar	可以不要
+dexmaker-mockito-1.0.jar	可以不要
+mockito-all-1.9.0
+
+工程介绍:
+package com.java.mockito.unit;		被测试部分
+package com.java.mockito.unit.test;	测试文件
+
