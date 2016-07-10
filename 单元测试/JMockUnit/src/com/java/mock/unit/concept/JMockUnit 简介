@@ -1,0 +1,14 @@
+准备条件:
+1,Junit4类库
+
+本质:
+1,忽略中间过程
+2,自己建立了未完成功能的开头和结尾
+3,用于测试其它的部分
+
+工程分布:
+package com.java.mock.unit;		提供login接口,NoteDAO实际功能,
+package com.java.mock.unit.test;	提供"自定义Mock",以及NoteTest测试文件
+
+
+
