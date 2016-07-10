@@ -6,3 +6,10 @@
 安装时间(较长)+运行时间(0.5s一个Activity,较快)
 
 
+包含测试对象以及对应的分包:
+
+Activity			package com.android.unit.activity;	package com.android.unit.activity.test;
+Context				package com.android.unit.context.test;
+ContentProvider		package com.android.unit.provider;	package com.android.unit.provider.test;
+Server				package com.android.unit.server;	package com.android.unit.server.test;
+

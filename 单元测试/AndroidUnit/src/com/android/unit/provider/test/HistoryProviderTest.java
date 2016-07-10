@@ -1,7 +1,7 @@
-package test.android.contentprovider;
+package com.android.unit.provider.test;
 
-import com.android.contentprovider.DbHelper;
-import com.android.contentprovider.HistoryProvider;
+import com.android.unit.provider.DbHelper;
+import com.android.unit.provider.HistoryProvider;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
