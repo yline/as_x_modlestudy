@@ -1,7 +1,7 @@
-package test.android.activity;
+package com.android.unit.activity.test;
 
-import com.android.activity.CaculateActivity;
-import com.ziptestunit.R;
+import com.android.unit.R;
+import com.android.unit.activity.MainActivity;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class CaculateActivityTest extends ActivityUnitTestCase<CaculateActivity>
+public class MainActivityTest extends ActivityUnitTestCase<MainActivity>
 {
     private EditText mETParams1;
     
@@ -18,14 +18,15 @@ public class CaculateActivityTest extends ActivityUnitTestCase<CaculateActivity>
     
     private Button mBtnCaculate;
     
-    private TextView mTVResult; // 计算结果
+    /** 计算结果 */
+    private TextView mTVResult;
     
-    public CaculateActivityTest()
+    public MainActivityTest()
     {
-        super(CaculateActivity.class);
+        super(MainActivity.class);
     }
     
-    public CaculateActivityTest(Class<CaculateActivity> activityClass)
+    public MainActivityTest(Class<MainActivity> activityClass)
     {
         super(activityClass);
     }
@@ -36,7 +37,7 @@ public class CaculateActivityTest extends ActivityUnitTestCase<CaculateActivity>
     {
         super.setUp();
         
-        Intent intent = new Intent(getInstrumentation().getTargetContext(), CaculateActivity.class);
+        Intent intent = new Intent(getInstrumentation().getTargetContext(), MainActivity.class);
         startActivity(intent, null, null);
         
         checkWidgets();

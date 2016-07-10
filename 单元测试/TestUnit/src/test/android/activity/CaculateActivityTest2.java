@@ -53,7 +53,7 @@ public class CaculateActivityTest2 extends ActivityInstrumentationTestCase2<Cacu
         assertEquals("", mETParams2.getText().toString());
         
         mBtnCaculate = (Button)findViewById(R.id.btn_caculate);
-        assertNotNull(mETParams1);
+        assertNotNull(mBtnCaculate);
         
         mTVResult = (TextView)findViewById(R.id.tv_result);
         assertNotNull(mTVResult);

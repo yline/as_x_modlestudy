@@ -1,16 +1,16 @@
-package test.android.activity;
+package com.android.unit.activity.test;
 
-import com.android.activity.CaculateActivity;
-import com.ziptestunit.R;
+import com.android.unit.R;
+import com.android.unit.activity.MainActivity;
 
-import android.content.Intent;
-import android.test.ActivityUnitTestCase;
+import android.test.ActivityInstrumentationTestCase2;
+import android.test.TouchUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class CaculateActivityTest extends ActivityUnitTestCase<CaculateActivity>
+public class MainActivityTest2 extends ActivityInstrumentationTestCase2<MainActivity>
 {
     private EditText mETParams1;
     
@@ -18,14 +18,15 @@ public class CaculateActivityTest extends ActivityUnitTestCase<CaculateActivity>
     
     private Button mBtnCaculate;
     
-    private TextView mTVResult; // 计算结果
+    /** 计算结果 */
+    private TextView mTVResult;
     
-    public CaculateActivityTest()
+    public MainActivityTest2()
     {
-        super(CaculateActivity.class);
+        super(MainActivity.class);
     }
     
-    public CaculateActivityTest(Class<CaculateActivity> activityClass)
+    public MainActivityTest2(Class<MainActivity> activityClass)
     {
         super(activityClass);
     }
@@ -35,10 +36,10 @@ public class CaculateActivityTest extends ActivityUnitTestCase<CaculateActivity>
         throws Exception
     {
         super.setUp();
-        
+        /*
         Intent intent = new Intent(getInstrumentation().getTargetContext(), CaculateActivity.class);
         startActivity(intent, null, null);
-        
+        */
         checkWidgets();
     }
     
@@ -62,10 +63,23 @@ public class CaculateActivityTest extends ActivityUnitTestCase<CaculateActivity>
     public void testAdd()
     {
         // 更新UI
-        mETParams1.setText("2");
-        mETParams2.setText("3");
+        getActivity().runOnUiThread(new Runnable()
+        {
+            
+            @Override
+            public void run()
+            {
+                mETParams1.setText("2");
+                mETParams2.setText("3");
+            }
+        });
+        
+        // 等待UI线程空闲之后再继续执行
+        getInstrumentation().waitForIdleSync();
+        
         // 执行点击
-        mBtnCaculate.performClick();
+        TouchUtils.clickView(MainActivityTest2.this, mBtnCaculate);
+        
         // 判断
         assertEquals("5", mTVResult.getText().toString());
     }
