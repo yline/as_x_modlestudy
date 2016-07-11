@@ -1,0 +1,22 @@
+定义:
+使用解释器来表示解释语言中的句子
+
+使用场景:
+1,某个简单的语言需要解释执行,而且可以将该语言中的语句表示为一个抽象语法树时
+2,在某些特定领域出现不断重复的问题时.例如字符串大小写
+
+工程分布:
+package com.dm.interpreter.activity;		Activity入口
+package com.dm.interpreter.arithmetic;		单个数字表达式
+package com.dm.interpreter.operator;		组合数字,进行加法和减法表达
+package com.dm.interpreter.operator.caculator;	将之前的每个部分,组合起来
+
+Android源码:
+1,对AndroidManifest的解析
+
+优点:
+1,灵活的扩展性
+缺点:
+1,每一条文法都对应一个解释器,会生成大量的类,后期维护困难
+2,对于复杂的文法,构建抽象语法树异常繁琐.
+

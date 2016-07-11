@@ -1,0 +1,23 @@
+定义:
+为创建一组相关或者是相互依赖的对象提供接口，而不需要指定它们的具体类
+
+使用场景:
+一个对象族有相同的约束时可以使用抽象工厂模式
+
+工程分布:
+package com.dm.abstracts.factory.activity;			入口
+package com.dm.abstracts.factory;					工厂,包含interface + Impl
+package com.dm.abstracts.factory.product.brake;		产品1,包含interface + Impl
+package com.dm.abstracts.factory.product.engine;	产品2,包含interface + Impl
+package com.dm.abstracts.factory.product.tire;		产品3,包含interface + Impl
+
+与工厂模式对比:
+1,工厂模式: 1个factory,对应一个product
+2,抽象工厂模式: 1个factory,对应一个product最终产品,同时组装多个product零件
+
+优点:
+1,接口和实现分离
+2,没有具体实现,只有零件实现,使得切换最终产品更加灵活
+缺点：
+1,对类文件的爆炸性增加
+2,不太容易扩展新的产品,扩展一样,就需要对所有的具体实现的工厂类全部修改
