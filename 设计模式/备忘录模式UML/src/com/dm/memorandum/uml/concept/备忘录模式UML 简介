@@ -1,0 +1,25 @@
+定义:
+在不破坏封闭的前提下,捕获一个对象的内部状态,并在该对象之外保存这个状态.
+因此,以后就可以将该对象恢复到原先保存的状态.
+
+使用场景:
+1,需要保存一个对象在某一个时刻的状态或部分状态
+2,如果用一个接口来让其他对象得到这些状态,将会暴露对象的实现细节并破坏对象的封装性,
+一个对象不希望外界直接访问其内部状态,通过中间对象可以间接访问其内部状态
+
+工程分布:
+package com.dm.memorandum.uml.activity;		Activity入口
+package com.dm.memorandum.uml.originator;	调用者,它需要保存数据
+package com.dm.memorandum.uml.memoto;		保存的数据,bean
+package com.dm.memorandum.uml.caretaker;	保存的位置,这里可以使用sp来进一步保存
+
+Android源码:
+1,Activity onSave、onRestoreInstanceState
+
+优点:
+1,给用户提供了一种可以恢复状态的机制,可以使用用户能够比较方便的回到某个历史状态
+2,实现了信息的封装,使用户不需要关心状态的保存细节
+缺点:
+1,消耗资源,类成员变量过多,占用比较大的资源
+2,每次保存消耗一定的内存
+
