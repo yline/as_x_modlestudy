@@ -7,6 +7,7 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.WindowManager;
 
@@ -146,8 +147,16 @@ public class PassViewReceiver extends DeviceAdminReceiver
     private WindowManager.LayoutParams getLayoutParams()
     {
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        //params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-        params.type = WindowManager.LayoutParams.TYPE_TOAST; // 避免悬浮框权限
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2)
+        {
+            // 可以避免悬浮框权限,但api18及以下无法点击
+            params.type = WindowManager.LayoutParams.TYPE_TOAST;
+        }
+        else
+        {
+            params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        }
+        
         params.format = android.graphics.PixelFormat.RGBA_8888;
         params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         params.flags = (0x40000 | params.flags);
