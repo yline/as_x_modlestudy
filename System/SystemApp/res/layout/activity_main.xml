@@ -27,6 +27,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="contacter_insert" />
+        
+        <Button
+            android:id="@+id/btn_msg_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="msg_send" />
+        
+        <Button
+            android:id="@+id/btn_msg_read"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="msg_read" />
+        
+        <Button
+            android:id="@+id/btn_wifi_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="wifi_test" />
     </LinearLayout>
 
 </ScrollView>

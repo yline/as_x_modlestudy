@@ -10,4 +10,9 @@ public class AppConstant
     /** 联系人 */
     public static final String TAG_CONTACTER = "contacter";
     
+    /** 短信 */
+    public static final String TAG_MSG = "message";
+    
+    /** WIfi */
+    public static final String TAG_WIFI = "wifi";
 }
