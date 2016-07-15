@@ -6,6 +6,12 @@
 
     <!-- log日志 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 拨打电话 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 读取联系人 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 写入联系人 -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <uses-sdk
         android:minSdkVersion="14"

@@ -1,13 +1,15 @@
 package com.system.app.activity;
 
 import com.system.app.R;
+import com.system.app.caller.CallHelper;
+import com.system.app.contacter.ContacterHelper;
+import com.yline.base.BaseActivity;
+import com.yline.log.LogFileUtil;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 
-public class MainActivity extends Activity
+public class MainActivity extends BaseActivity
 {
     
     @Override
@@ -15,27 +17,39 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings)
+        
+        findViewById(R.id.btn_call).setOnClickListener(new View.OnClickListener()
         {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(AppConstant.TAG_CLICK, "btn_call");
+                new CallHelper().call(MainActivity.this, "563850");
+            }
+        });
+        
+        findViewById(R.id.btn_contacter_query).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(AppConstant.TAG_CLICK, "btn_contacter_query");
+                new ContacterHelper().queryContacter(MainApplication.getApplication());
+            }
+        });
+        
+        findViewById(R.id.btn_contacter_insert).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(AppConstant.TAG_CLICK, "btn_contacter_insert");
+                new ContacterHelper().insertContacter(MainApplication.getApplication());
+            }
+        });
     }
+    
 }
