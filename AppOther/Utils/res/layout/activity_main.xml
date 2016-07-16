@@ -47,10 +47,15 @@
         
         <Button
             android:id="@+id/btn_screen_util"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="screen_util" />
+        
+        <Button
+            android:id="@+id/btn_timestamp_util"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="timestamp_util" />
     </LinearLayout>
 
 </ScrollView>

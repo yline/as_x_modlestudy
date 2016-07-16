@@ -6,6 +6,7 @@ import com.utils.KeyBoardUtil;
 import com.utils.MD5Util;
 import com.utils.R;
 import com.utils.ScreenUtil;
+import com.utils.TimeStampUtil;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
 
@@ -116,6 +117,38 @@ public class MainActivity extends BaseActivity
                 Bitmap bitmap2 = ScreenUtil.snapShotWithoutStatusBar(MainActivity.this);
                 LogFileUtil.v(MainApplication.TAG,
                     "getWidth2 = " + bitmap2.getWidth() + ",getHeight2 = " + bitmap2.getHeight());
+            }
+        });
+        
+        findViewById(R.id.btn_timestamp_util).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "onClick -> btn_timestamp_util");
+                
+                long currentStamp = TimeStampUtil.getCurrentStamp();
+                String timeStandard = TimeStampUtil.getTimeStandard(currentStamp);
+                LogFileUtil.v(MainApplication.TAG,
+                    "currentStamp = " + currentStamp + ",timeStandard = " + timeStandard);
+                
+                int year = TimeStampUtil.getYear(currentStamp);
+                int month = TimeStampUtil.getMonth(currentStamp);
+                int day = TimeStampUtil.getDay(currentStamp);
+                int hour = TimeStampUtil.getHour(currentStamp);
+                int minute = TimeStampUtil.getMinute(currentStamp);
+                int second = TimeStampUtil.getSecond(currentStamp);
+                int dayOfWeekEnglish = TimeStampUtil.getDayOfWeekEnglish(currentStamp);
+                int dayOfWeek = TimeStampUtil.getDayOfWeek(currentStamp);
+                LogFileUtil.v(MainApplication.TAG,
+                    "year = " + year + ",month = " + month + "day = " + day + ",hour = " + hour + ",minute = " + minute
+                        + ",second = " + second + ",dayOfWeekEnglish = " + dayOfWeekEnglish + ",dayOfWeek = "
+                        + dayOfWeek);
+                
+                long diffStamp = TimeStampUtil.getDiffStamp(currentStamp);
+                boolean isStampTimeOut = TimeStampUtil.isStampTimeOut(currentStamp, 20);
+                LogFileUtil.v(MainApplication.TAG, "diffStamp = " + diffStamp + ",isStampTimeOut = " + isStampTimeOut);
             }
         });
     }
