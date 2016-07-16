@@ -1,12 +1,49 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/btn_"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="util" />
+        android:orientation="vertical" >
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/btn_app_util"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="app_util" />
+
+        <Button
+            android:id="@+id/btn_density_util"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="density_util" />
+
+        <EditText
+            android:id="@+id/et_keyboard_util"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" />
+
+        <Button
+            android:id="@+id/btn_keyboard_open"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="keyboard_open" />
+        
+        <Button
+            android:id="@+id/btn_keyboard_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="keyboard_close" />
+        
+        <Button
+            android:id="@+id/btn_md5_util"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="md5_util" />
+    </LinearLayout>
+
+</ScrollView>
