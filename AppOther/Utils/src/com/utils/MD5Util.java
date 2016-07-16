@@ -16,10 +16,10 @@ import com.yline.log.LogFileUtil;
 /**
  * 算法加密
  */
-public final class MD5Utils
+public final class MD5Util
 {
     
-    private MD5Utils()
+    private MD5Util()
     {
     }
     

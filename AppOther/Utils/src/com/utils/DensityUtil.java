@@ -6,10 +6,10 @@ import android.util.TypedValue;
 /**
  * 常用单位转换的辅助类
  */
-public class DensityUtils
+public class DensityUtil
 {
     
-    public DensityUtils()
+    public DensityUtil()
     {
         /** 实例化失败 */
         throw new UnsupportedOperationException("cannot be instantiated");

@@ -7,10 +7,10 @@ import android.widget.EditText;
 /**
  * 软键盘
  */
-public class KeyBoardUtils
+public class KeyBoardUtil
 {
     
-    public KeyBoardUtils()
+    public KeyBoardUtil()
     {
         /** 实例化失败 */
         throw new UnsupportedOperationException("cannot be instantiated");
