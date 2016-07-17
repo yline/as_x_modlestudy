@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="#eee"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="37dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/ll_tab_one"
+            android:layout_width="3dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_tab_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="视图部分" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/fragment_main_tab_vline" />
+
+        <LinearLayout
+            android:id="@+id/ll_tab_two"
+            android:layout_width="3dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv_tab_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="google类" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/fragment_main_tab_vline" />
+
+        <LinearLayout
+            android:id="@+id/ll_tab_three"
+            android:layout_width="3dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv_tab_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="备用" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/fragment_main_tab_vline" />
+
+        <LinearLayout
+            android:id="@+id/ll_tab_four"
+            android:layout_width="3dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_tab_four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_tab_line"
+        android:layout_width="80dp"
+        android:layout_height="3dp"
+        android:background="@drawable/fragment_main_tab_hline" />
+
+</LinearLayout>
