@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <yline.ui.carouselgallery.view.GalleryView
+        android:id="@+id/carousel_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical" />
+
+    <LinearLayout
+        android:id="@+id/carousel_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal|bottom"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp" >
+    </LinearLayout>
+
+</RelativeLayout>
