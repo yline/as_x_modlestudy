@@ -110,6 +110,11 @@ public class MainActivity extends BaseActivity
                     "screenWidth = " + screenWidth + ",screenHeight = " + screenHeight + ",statusheight = "
                         + statusheight);
                 
+                int absoluteWidth = ScreenUtil.getAbsoluteScreenWidth(MainApplication.getApplication());
+                int absoluteHeight = ScreenUtil.getAbsoluteScreenHeight(MainApplication.getApplication());
+                LogFileUtil.v(MainApplication.TAG,
+                    "absoluteWidth = " + absoluteWidth + ",absoluteHeight = " + absoluteHeight);
+                
                 Bitmap bitmap1 = ScreenUtil.snapShotWithStatusBar(MainActivity.this);
                 LogFileUtil.v(MainApplication.TAG,
                     "getWidth1 = " + bitmap1.getWidth() + ",getHeight1 = " + bitmap1.getHeight());
@@ -149,6 +154,16 @@ public class MainActivity extends BaseActivity
                 long diffStamp = TimeStampUtil.getDiffStamp(currentStamp);
                 boolean isStampTimeOut = TimeStampUtil.isStampTimeOut(currentStamp, 20);
                 LogFileUtil.v(MainApplication.TAG, "diffStamp = " + diffStamp + ",isStampTimeOut = " + isStampTimeOut);
+            }
+        });
+        
+        findViewById(R.id.btn_unkown_util).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "onClick -> btn_unkown_util");
             }
         });
     }
