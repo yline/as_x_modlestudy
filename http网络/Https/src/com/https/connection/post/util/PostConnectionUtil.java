@@ -11,6 +11,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -19,6 +20,7 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
 import com.https.activity.MainApplication;
@@ -230,7 +232,16 @@ public class PostConnectionUtil
         
         // 创建一个TLS类型的SSLContext实例，并用之前的TrustManager数组初始化sslContext实例，这样该sslContext实例也会信任CA.cer证书
         SSLContext sslContext = SSLContext.getInstance("TLS");
-        sslContext.init(null, tmf.getTrustManagers(), null);
+        
+        TrustManager[] trustManagers = tmf.getTrustManagers();
+        if (null != trustManagers)
+        {
+            sslContext.init(null, trustManagers, new SecureRandom());
+        }
+        else
+        {
+            LogFileUtil.e(MainApplication.TAG, "PostConnectionUtil -> initHttpsConnection trustManagers is null");
+        }
         
         return sslContext;
     }
