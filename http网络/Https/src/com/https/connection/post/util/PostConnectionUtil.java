@@ -234,14 +234,9 @@ public class PostConnectionUtil
         SSLContext sslContext = SSLContext.getInstance("TLS");
         
         TrustManager[] trustManagers = tmf.getTrustManagers();
-        if (null != trustManagers)
-        {
-            sslContext.init(null, trustManagers, new SecureRandom());
-        }
-        else
-        {
-            LogFileUtil.e(MainApplication.TAG, "PostConnectionUtil -> initHttpsConnection trustManagers is null");
-        }
+        LogFileUtil.e(MainApplication.TAG,
+            "PostConnectionUtil -> initHttpsConnection trustManagers = " + trustManagers);
+        sslContext.init(null, trustManagers, new SecureRandom());
         
         return sslContext;
     }
