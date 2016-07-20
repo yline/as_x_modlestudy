@@ -1,5 +1,7 @@
 package com.utils;
 
+import java.lang.reflect.InvocationTargetException;
+
 import com.utils.activity.MainApplication;
 import com.yline.log.LogFileUtil;
 
@@ -60,9 +62,21 @@ public class ScreenUtil
                 widthPixels = (Integer)Display.class.getMethod("getRawWidth").invoke(display);
                 heightPixels = (Integer)Display.class.getMethod("getRawHeight").invoke(display);
             }
-            catch (Exception ignored)
+            catch (IllegalAccessException e)
             {
-                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenWidth < 17 Exception", ignored);
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenWidth<17 IllegalAccessException", e);
+            }
+            catch (IllegalArgumentException e)
+            {
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenWidth<17 IllegalArgumentException", e);
+            }
+            catch (InvocationTargetException e)
+            {
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenWidth<17 InvocationTargetException", e);
+            }
+            catch (NoSuchMethodException e)
+            {
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenWidth<17 NoSuchMethodException", e);
             }
         }
         
@@ -76,9 +90,23 @@ public class ScreenUtil
                 widthPixels = realSize.x;
                 heightPixels = realSize.y;
             }
-            catch (Exception ignored)
+            catch (IllegalAccessException e)
             {
-                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenWidth >= 17 Exception", ignored);
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenWidth>=17 IllegalAccessException", e);
+            }
+            catch (IllegalArgumentException e)
+            {
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenWidth>=17 IllegalArgumentException", e);
+            }
+            catch (InvocationTargetException e)
+            {
+                LogFileUtil.e(MainApplication.TAG,
+                    "ScreenUtil getAbsoluteScreenWidth>=17 InvocationTargetException",
+                    e);
+            }
+            catch (NoSuchMethodException e)
+            {
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenWidth>=17 NoSuchMethodException", e);
             }
         }
         
@@ -105,9 +133,23 @@ public class ScreenUtil
                 widthPixels = (Integer)Display.class.getMethod("getRawWidth").invoke(display);
                 heightPixels = (Integer)Display.class.getMethod("getRawHeight").invoke(display);
             }
-            catch (Exception ignored)
+            catch (IllegalAccessException e)
             {
-                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenHeight < 17 Exception", ignored);
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenHeight<17 IllegalAccessException", e);
+            }
+            catch (IllegalArgumentException e)
+            {
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenHeight<17 IllegalArgumentException", e);
+            }
+            catch (InvocationTargetException e)
+            {
+                LogFileUtil.e(MainApplication.TAG,
+                    "ScreenUtil getAbsoluteScreenHeight<17 InvocationTargetException",
+                    e);
+            }
+            catch (NoSuchMethodException e)
+            {
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenHeight<17 NoSuchMethodException", e);
             }
         }
         
@@ -121,9 +163,25 @@ public class ScreenUtil
                 widthPixels = realSize.x;
                 heightPixels = realSize.y;
             }
-            catch (Exception ignored)
+            catch (IllegalAccessException e)
             {
-                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenHeight >= 17 Exception", ignored);
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenHeight>=17 IllegalAccessException", e);
+            }
+            catch (IllegalArgumentException e)
+            {
+                LogFileUtil.e(MainApplication.TAG,
+                    "ScreenUtil getAbsoluteScreenHeight>=17 IllegalArgumentException",
+                    e);
+            }
+            catch (InvocationTargetException e)
+            {
+                LogFileUtil.e(MainApplication.TAG,
+                    "ScreenUtil getAbsoluteScreenHeight>=17 InvocationTargetException",
+                    e);
+            }
+            catch (NoSuchMethodException e)
+            {
+                LogFileUtil.e(MainApplication.TAG, "ScreenUtil getAbsoluteScreenHeight>=17 NoSuchMethodException", e);
             }
         }
         
