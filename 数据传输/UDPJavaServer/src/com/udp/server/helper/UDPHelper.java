@@ -1,4 +1,4 @@
-package com.udp.demo.helper;
+package com.udp.server.helper;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -6,9 +6,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-
-import com.udp.demo.activity.MainApplication;
-import com.yline.log.LogFileUtil;
 
 /**
  * 负责提供工具类
@@ -48,25 +45,21 @@ public class UDPHelper
                 mSendDatagramPacket = new DatagramPacket(data, data.length, inetAddress, port);
             }
             
-            LogFileUtil.v(MainApplication.TAG,
-                "UDPHelper -> before send mSendDatagramSocket = " + mSendDatagramSocket + ",mSendDatagramPacket = "
-                    + mSendDatagramPacket + ",data = " + new String(data) + ",inetAddress = " + inetAddress + ",port = "
-                    + port);
             mSendDatagramSocket.send(mSendDatagramPacket);
             
             return true;
         }
         catch (SocketException e)
         {
-            LogFileUtil.e(MainApplication.TAG, "UDPHelper -> send SocketException", e);
+            e.printStackTrace();
         }
         catch (UnknownHostException e)
         {
-            LogFileUtil.e(MainApplication.TAG, "UDPHelper -> send UnknownHostException", e);
+            e.printStackTrace();
         }
         catch (IOException e)
         {
-            LogFileUtil.e(MainApplication.TAG, "UDPHelper -> send IOException", e);
+            e.printStackTrace();
         }
         
         return false;
@@ -74,7 +67,7 @@ public class UDPHelper
     
     /**
      * @param aPort  本地接收用的端口
-     * @param timeout 超时时间
+     * @param timeout 超时时间; if 0 无限超时
      * @return
      */
     public byte[] receiver(int aPort, int timeout)
@@ -92,6 +85,7 @@ public class UDPHelper
                 mReceiverDatagramPacket = new DatagramPacket(data, data.length);
             }
             
+            System.out.println("receive waiting");
             mReceiverDatagramSocket.receive(mReceiverDatagramPacket);
             // mReceiverDatagramSocket.setSoTimeout(timeout);
             
@@ -103,11 +97,11 @@ public class UDPHelper
         }
         catch (SocketException e)
         {
-            LogFileUtil.e(MainApplication.TAG, "UDPHelper -> receiver SocketException", e);
+            e.printStackTrace();
         }
         catch (IOException e)
         {
-            LogFileUtil.e(MainApplication.TAG, "UDPHelper -> receiver IOException", e);
+            e.printStackTrace();
         }
         
         return null;
