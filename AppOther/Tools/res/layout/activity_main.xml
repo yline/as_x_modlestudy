@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_brower_web"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="浏览器,打开网页" />
+
+    <Button
+        android:id="@+id/btn_album_pick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="系统相册,选取照片" />
+
+    <Button
+        android:id="@+id/btn_audio_pick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="音乐播放器,选取音频" />
+
+    <Button
+        android:id="@+id/btn_file_choose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="文件浏览器,选择文件" />
+
+    <Button
+        android:id="@+id/btn_setting_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置,打开Wifi设置" />
+
+</LinearLayout>
