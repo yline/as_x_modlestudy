@@ -1,6 +1,10 @@
 package com.utils;
 
 import android.content.Context;
+import android.content.CursorLoader;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.TypedValue;
 
 /**
@@ -66,5 +70,28 @@ public class DensityUtil
     public static float px2sp(Context context, float pxValue)
     {
         return (pxValue / context.getResources().getDisplayMetrics().scaledDensity);
+    }
+    
+    /**
+     * Uri --> path
+     * @param context       上下文
+     * @param contentUri    content:// 路径
+     * @return      String类型的的file路径
+     */
+    public static String Uri2Path(Context context, Uri imageContentUri)
+    {
+        String imagePath = "";
+        
+        String[] projection = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(context, imageContentUri, projection, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        
+        int column_index = cursor.getColumnIndex(projection[0]);
+        cursor.moveToFirst();
+        imagePath = cursor.getString(column_index);
+        
+        cursor.close();
+        
+        return imagePath;
     }
 }

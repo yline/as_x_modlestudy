@@ -51,6 +51,8 @@ public class MainActivity extends BaseActivity
                 float pxd = DensityUtil.px2dp(MainApplication.getApplication(), 100);
                 float pxs = DensityUtil.px2sp(MainApplication.getApplication(), 100);
                 LogFileUtil.i(MainApplication.TAG, "dp = " + dp + ",sp = " + sp + ",pxd = " + pxd + ",pxs = " + pxs);
+                
+                LogFileUtil.v(MainApplication.TAG, "路径转换的不便于测试,略过");
             }
         });
         
