@@ -4,12 +4,15 @@ import com.dialog.MainApplication;
 import com.dialog.R;
 import com.yline.log.LogFileUtil;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class CustomDialogUtil
 {
@@ -24,13 +27,29 @@ public class CustomDialogUtil
         dialog.create().show();
     }
     
+    @SuppressLint("InflateParams")
+    public static void showDialogNotitle(Context context, String msg, boolean cancelable)
+    {
+        Dialog noTitleDialog = new Dialog(context, android.R.style.Theme_Holo_Dialog_NoActionBar);
+        
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(R.layout.dialog_custom_notitle, null);
+        TextView text = (TextView)v.findViewById(R.id.dialog_tv_title);
+        text.setText(msg);
+        
+        noTitleDialog.setContentView(v);
+        noTitleDialog.show();
+        noTitleDialog.setCanceledOnTouchOutside(cancelable);
+    }
+    
     /**
      * 自定义dialog
      */
+    @SuppressLint("InflateParams")
     public static void showDialogDesign(Context context, int iconId, String title, boolean cancelable,
         final String oKText, final String cancelText)
     {
-        final View mDisignDialogContainer = LayoutInflater.from(context).inflate(R.layout.dialog_custom, null);
+        final View mDisignDialogContainer = LayoutInflater.from(context).inflate(R.layout.dialog_custom_design, null);
         
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setIcon(iconId);

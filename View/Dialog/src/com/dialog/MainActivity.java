@@ -132,6 +132,18 @@ public class MainActivity extends BaseActivity
             }
         });
         
+        findViewById(R.id.btn_customdialog_notitle).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "btn_customdialog_notitle");
+                
+                CustomDialogUtil.showDialogNotitle(MainActivity.this, "message", true);
+            }
+        });
+        
         findViewById(R.id.btn_customdialog_design).setOnClickListener(new View.OnClickListener()
         {
             

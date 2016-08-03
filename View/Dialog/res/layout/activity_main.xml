@@ -58,12 +58,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="自定义，提示" />
-
+        
+        <Button
+            android:id="@+id/btn_customdialog_notitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="自定义，用户自定义，notitle" />
+        
         <Button
             android:id="@+id/btn_customdialog_design"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="自定义，用户自定义" />
+            android:text="自定义，用户自定义，输入" />
     </LinearLayout>
 
 </ScrollView>
