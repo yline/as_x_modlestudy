@@ -1,26 +1,33 @@
 package com.tools.activity;
 
+import java.io.File;
+
 import com.tools.R;
 import com.tools.SystemSkipTool;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 
 public class MainActivity extends BaseActivity
 {
-    
     private SystemSkipTool mSystemSkipTool;
     
     private static final int ALBUM_PICK = 1;
     
-    private static final int AUDIO_PICK = 2;
+    private static final int ALBUM_PICK_ZOOM = 2;
     
-    private static final int FILE_CHOOSE = 3;
+    private final String backUri = Environment.getExternalStorageDirectory() + "/temp.jpg";
     
-    private static final int SETTING_WIFI = 4;
+    private static final int AUDIO_PICK = 3;
+    
+    private static final int FILE_CHOOSE = 5;
+    
+    private static final int SETTING_WIFI = 7;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -101,7 +108,14 @@ public class MainActivity extends BaseActivity
             switch (requestCode)
             {
                 case ALBUM_PICK:
-                    LogFileUtil.v(MainApplication.TAG, "ALBUM_PICK -> " + data.getExtras());
+                    LogFileUtil.v(MainApplication.TAG, "ALBUM_PICK -> " + data.getData());
+                    mSystemSkipTool.openAlbumZoom(MainActivity.this,
+                        data.getData(),
+                        Uri.fromFile(new File(backUri)),
+                        ALBUM_PICK_ZOOM);
+                    break;
+                case ALBUM_PICK_ZOOM:
+                    LogFileUtil.v(MainApplication.TAG, "ALBUM_PICK_ZOOM -> " + backUri);
                     break;
                 case AUDIO_PICK:
                     LogFileUtil.v(MainApplication.TAG, "AUDIO_PICK -> " + data.getExtras());

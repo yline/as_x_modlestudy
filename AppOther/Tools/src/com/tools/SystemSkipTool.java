@@ -5,7 +5,9 @@ import com.tools.activity.MainApplication;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.provider.Settings;
 
 /**
@@ -67,6 +69,24 @@ public class SystemSkipTool
         {
             MainApplication.toast("跳转失败");
         }
+    }
+    
+    /**
+     * @param uri 被裁减的照片的url
+     * @param backUri 裁剪后照片存放位置的uri
+     */
+    public void openAlbumZoom(Activity activity, Uri uri, Uri backUri, int requestCode)
+    {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("inputX", 400);
+        intent.putExtra("inputY", 400);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, backUri);//图像输出
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true);
+        intent.putExtra("return-data", false);//回调方法data.getExtras().getParcelable("data")返回数据为空
+        activity.startActivityForResult(intent, requestCode);
     }
     
     /**
