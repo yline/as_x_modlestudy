@@ -6,6 +6,7 @@ import com.utils.KeyBoardUtil;
 import com.utils.MD5Util;
 import com.utils.R;
 import com.utils.ScreenUtil;
+import com.utils.TimeConvertUtil;
 import com.utils.TimeStampUtil;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
@@ -124,6 +125,19 @@ public class MainActivity extends BaseActivity
                 Bitmap bitmap2 = ScreenUtil.snapShotWithoutStatusBar(MainActivity.this);
                 LogFileUtil.v(MainApplication.TAG,
                     "getWidth2 = " + bitmap2.getWidth() + ",getHeight2 = " + bitmap2.getHeight());
+            }
+        });
+        
+        findViewById(R.id.btn_timeconvert_util).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "onClick -> btn_timeconvert_util");
+                
+                String formateMinute = TimeConvertUtil.ms2FormatMinute(12223000);
+                LogFileUtil.v(MainApplication.TAG, "formateMinute = " + formateMinute);
             }
         });
         
