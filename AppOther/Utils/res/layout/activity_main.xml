@@ -31,38 +31,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="keyboard_open" />
-        
+
         <Button
             android:id="@+id/btn_keyboard_close"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="keyboard_close" />
-        
+
         <Button
             android:id="@+id/btn_md5_util"
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="md5_util" />
-        
+
         <Button
             android:id="@+id/btn_screen_util"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="screen_util" />
-        
+
         <Button
             android:id="@+id/btn_timeconvert_util"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="timeconvert util" />
-        
+
         <Button
             android:id="@+id/btn_timestamp_util"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="timestamp_util" />
-        
+
+        <Button
+            android:id="@+id/btn_toast_util"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="toast util" />
+
         <Button
             android:id="@+id/btn_unkown_util"
             android:layout_width="match_parent"

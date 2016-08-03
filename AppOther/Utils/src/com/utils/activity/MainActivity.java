@@ -8,6 +8,7 @@ import com.utils.R;
 import com.utils.ScreenUtil;
 import com.utils.TimeConvertUtil;
 import com.utils.TimeStampUtil;
+import com.utils.ToastUtil;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
 
@@ -170,6 +171,19 @@ public class MainActivity extends BaseActivity
                 long diffStamp = TimeStampUtil.getDiffStamp(currentStamp);
                 boolean isStampTimeOut = TimeStampUtil.isStampTimeOut(currentStamp, 20);
                 LogFileUtil.v(MainApplication.TAG, "diffStamp = " + diffStamp + ",isStampTimeOut = " + isStampTimeOut);
+            }
+        });
+        
+        findViewById(R.id.btn_toast_util).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                String content = "多的是你不知道的事";
+                LogFileUtil.v(MainApplication.TAG, "onClick -> btn_toast_util content = " + content);
+                
+                ToastUtil.show(MainActivity.this, content);
             }
         });
         
