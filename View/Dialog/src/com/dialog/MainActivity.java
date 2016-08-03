@@ -1,7 +1,9 @@
 package com.dialog;
 
 import com.dialog.style.ButtonDialogUtil;
+import com.dialog.style.CustomDialogUtil;
 import com.dialog.style.ListDialogUtil;
+import com.dialog.style.ProgressDialogUtil;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
 
@@ -94,6 +96,66 @@ public class MainActivity extends BaseActivity
             }
         });
         
+        findViewById(R.id.btn_progressdialog_line).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "btn_progressdialog_line");
+                
+                ProgressDialogUtil.showDialogLine(MainActivity.this, R.drawable.ic_launcher, "进度条", true);
+            }
+        });
+        
+        findViewById(R.id.btn_progressdialog_round).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "btn_progressdialog_round");
+                
+                ProgressDialogUtil.showDialogRound(MainActivity.this, R.drawable.ic_launcher, "进度条", true);
+            }
+        });
+        
+        findViewById(R.id.btn_customdialog_hint).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "btn_customdialog_hint");
+                
+                CustomDialogUtil.showDialogHint(MainActivity.this, "就是吐丝啊");
+            }
+        });
+        
+        findViewById(R.id.btn_customdialog_design).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "btn_customdialog_design");
+                
+                CustomDialogUtil.showDialogDesign(MainActivity.this,
+                    R.drawable.ic_launcher,
+                    "标题",
+                    true,
+                    "Ok",
+                    "Cancle");
+            }
+        });
+        
+    }
+    
+    @Override
+    public void onBackPressed()
+    {
+        LogFileUtil.v(MainApplication.TAG, "onBackPressed"); // 若为false,并不会被执行
+        super.onBackPressed();
     }
     
 }
