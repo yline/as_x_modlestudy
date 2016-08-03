@@ -1,0 +1,99 @@
+package com.dialog;
+
+import com.dialog.style.ButtonDialogUtil;
+import com.dialog.style.ListDialogUtil;
+import com.yline.base.BaseActivity;
+import com.yline.log.LogFileUtil;
+
+import android.os.Bundle;
+import android.view.View;
+
+public class MainActivity extends BaseActivity
+{
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        findViewById(R.id.btn_buttondialog_two).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "btn_buttondialog_two");
+                
+                ButtonDialogUtil.showDialogTwo(MainActivity.this,
+                    R.drawable.ic_launcher,
+                    "标题",
+                    "提示信息",
+                    false,
+                    "确定",
+                    "取消");
+            }
+        });
+        
+        findViewById(R.id.btn_buttondialog_three).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "btn_buttondialog_three");
+                
+                ButtonDialogUtil.showDialogThree(MainActivity.this,
+                    R.drawable.ic_launcher,
+                    "标题",
+                    "提示信息",
+                    false,
+                    "one",
+                    "two",
+                    "three");
+            }
+        });
+        
+        findViewById(R.id.btn_listdialog_select).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "btn_listdialog_select");
+                
+                String[] strs = {"list1", "list2", "list3", "list4"};
+                ListDialogUtil.showDialogSelect(MainActivity.this, "标题", strs);
+            }
+        });
+        
+        findViewById(R.id.btn_listdialog_radio).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "btn_listdialog_radio");
+                
+                String[] strs1 = {"list11", "list12", "list13", "list14"};
+                ListDialogUtil.showDialogRadio(MainActivity.this, R.drawable.ic_launcher, "单选标题", strs1, "确定", "取消");
+                
+            }
+        });
+        
+        findViewById(R.id.btn_listdialog_check).setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                LogFileUtil.v(MainApplication.TAG, "btn_listdialog_check");
+                
+                String[] strs2 = {"list21", "list22", "list23", "list24"};
+                ListDialogUtil.showtDialogCheck(MainActivity.this, R.drawable.ic_launcher, "多选标题", strs2, "确定", "取消");
+            }
+        });
+        
+    }
+    
+}
