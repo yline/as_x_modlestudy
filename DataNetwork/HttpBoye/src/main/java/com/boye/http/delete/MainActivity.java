@@ -10,7 +10,7 @@ import com.boye.http.manager.NetManager.OnPictureUploadCallback;
 import com.boye.http.manager.NetManager.OnTokenCallback;
 import com.boye.http.manager.NetManager.OnUserLoginCallback;
 import com.boye.http.obtain.NetAttachObtainParams;
-import com.data.network.boyehttp.R;
+import com.data.network.httpboye.R;
 
 import org.xutils.common.util.LogUtil;
 import org.xutils.view.annotation.ContentView;

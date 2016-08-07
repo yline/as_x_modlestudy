@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BoyeHttp/BoyeHttp.iml" filepath="$PROJECT_DIR$/BoyeHttp/BoyeHttp.iml" />
       <module fileurl="file://$PROJECT_DIR$/DataNetwork.iml" filepath="$PROJECT_DIR$/DataNetwork.iml" />
       <module fileurl="file://$PROJECT_DIR$/Http/Http.iml" filepath="$PROJECT_DIR$/Http/Http.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HttpBoye/HttpBoye.iml" filepath="$PROJECT_DIR$/HttpBoye/HttpBoye.iml" />
       <module fileurl="file://$PROJECT_DIR$/Https/Https.iml" filepath="$PROJECT_DIR$/Https/Https.iml" />
     </modules>
   </component>

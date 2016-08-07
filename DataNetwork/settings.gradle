@@ -1,1 +1,1 @@
-include ':Http', ':Https', ':BoyeHttp'
+include ':Http', ':Https', ':HttpBoye'

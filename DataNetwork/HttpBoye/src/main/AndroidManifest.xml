@@ -1,5 +1,5 @@
 <manifest
-    package="com.data.network.boyehttp"
+    package="com.data.network.httpboye"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- 网络 -->
