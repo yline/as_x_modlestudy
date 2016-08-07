@@ -15,6 +15,12 @@
             <option value="$PROJECT_DIR$/04Prototype" />
             <option value="$PROJECT_DIR$/05Factory" />
             <option value="$PROJECT_DIR$/06AbstractFactory" />
+            <option value="$PROJECT_DIR$/07Strategy" />
+            <option value="$PROJECT_DIR$/08State" />
+            <option value="$PROJECT_DIR$/09DutyChain" />
+            <option value="$PROJECT_DIR$/10Interpreter" />
+            <option value="$PROJECT_DIR$/11Command" />
+            <option value="$PROJECT_DIR$/11Command&amp;Draw" />
           </set>
         </option>
       </GradleProjectSettings>

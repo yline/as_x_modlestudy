@@ -1,1 +1,1 @@
-include ':02Sington', ':03Builder', ':04Prototype', ':05Factory', ':06AbstractFactory'
+include ':02Sington', ':03Builder', ':04Prototype', ':05Factory', ':06AbstractFactory', ':07Strategy', ':08State', ':09DutyChain', ':10Interpreter', ':11Command', ':11Command&Draw'
