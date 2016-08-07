@@ -11,7 +11,7 @@ import com.yline.log.LogFileUtil;
  * 提供者aidl文件包名要求和使用者一模一样
  *
  * @author YLine
- *         <p/>
+ *         <p>
  *         2016年7月30日 下午4:16:30
  */
 public class MainActivity extends BaseActivity

@@ -10,6 +10,7 @@ import com.utils.AppUtil;
 import com.utils.DensityUtil;
 import com.utils.KeyBoardUtil;
 import com.utils.MD5Util;
+import com.utils.SDCardUtil;
 import com.utils.ScreenUtil;
 import com.utils.TimeConvertUtil;
 import com.utils.TimeStampUtil;
@@ -19,7 +20,6 @@ import com.yline.log.LogFileUtil;
 
 public class MainActivity extends BaseActivity
 {
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -126,6 +126,23 @@ public class MainActivity extends BaseActivity
 			}
 		});
 
+		findViewById(R.id.btn_sdcard_util).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(MainApplication.TAG, "onClick -> btn_sdcard");
+
+				LogFileUtil.i(MainApplication.TAG, "SDCardUtil.isSDCardEnable() = " + SDCardUtil.isSDCardEnable());
+
+				LogFileUtil.i(MainApplication.TAG, "SDCardUtil.getRootDirectoryPath() = " + SDCardUtil.getRootDirectoryPath());
+				LogFileUtil.i(MainApplication.TAG, "SDCardUtil.getSDCardPath() = " + SDCardUtil.getSDCardPath());
+
+				LogFileUtil.i(MainApplication.TAG, "SDCardUtil.getSDCardAvailableSize() = " + SDCardUtil.getSDCardAvailableSize() * 1.0f / (1024 * 1024 * 1024));
+				LogFileUtil.i(MainApplication.TAG, "SDCardUtil.getSDCardBlockSize() = " + SDCardUtil.getSDCardBlockSize() * 1.0f / (1024 * 1024 * 1024));
+			}
+		});
+
 		findViewById(R.id.btn_timeconvert_util).setOnClickListener(new View.OnClickListener()
 		{
 
@@ -190,5 +207,4 @@ public class MainActivity extends BaseActivity
 			}
 		});
 	}
-
 }

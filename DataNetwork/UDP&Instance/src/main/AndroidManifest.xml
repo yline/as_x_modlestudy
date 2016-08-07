@@ -1,15 +1,19 @@
 <manifest
-    package="com.appother.utils"
+    package="com.data.network.udp.instance"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- 网络 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
-        android:name="com.utils.activity.MainApplication"
+        android:name="com.udp.demo.activity.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.utils.activity.MainActivity"
+            android:name="com.udp.demo.activity.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -17,11 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
     </application>
 
 </manifest>

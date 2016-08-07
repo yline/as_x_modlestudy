@@ -1,1 +1,1 @@
-include ':Http', ':Https', ':HttpBoye', ':Json', ':AIDL&Provider', ':AIDL&User', ':XML'
+include ':Http', ':Https', ':HttpBoye', ':Json', ':AIDL&Provider', ':AIDL&User', ':XML', ':SharePeference', ':UDP&Instance'
