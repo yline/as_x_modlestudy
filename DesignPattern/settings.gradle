@@ -1,0 +1,1 @@
+include ':02Sington', ':03Builder', ':04Prototype', ':05Factory', ':06AbstractFactory'
