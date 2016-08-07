@@ -17,6 +17,10 @@
       <module fileurl="file://$PROJECT_DIR$/12Observer&amp;EventBus/12Observer&amp;EventBus.iml" filepath="$PROJECT_DIR$/12Observer&amp;EventBus/12Observer&amp;EventBus.iml" />
       <module fileurl="file://$PROJECT_DIR$/13Memorandum/13Memorandum.iml" filepath="$PROJECT_DIR$/13Memorandum/13Memorandum.iml" />
       <module fileurl="file://$PROJECT_DIR$/13Memrandum&amp;Note/13Memrandum&amp;Note.iml" filepath="$PROJECT_DIR$/13Memrandum&amp;Note/13Memrandum&amp;Note.iml" />
+      <module fileurl="file://$PROJECT_DIR$/14Iterator/14Iterator.iml" filepath="$PROJECT_DIR$/14Iterator/14Iterator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/15Template/15Template.iml" filepath="$PROJECT_DIR$/15Template/15Template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/16Visitor/16Visitor.iml" filepath="$PROJECT_DIR$/16Visitor/16Visitor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/17Mediator/17Mediator.iml" filepath="$PROJECT_DIR$/17Mediator/17Mediator.iml" />
       <module fileurl="file://$PROJECT_DIR$/DesignPattern.iml" filepath="$PROJECT_DIR$/DesignPattern.iml" />
     </modules>
   </component>

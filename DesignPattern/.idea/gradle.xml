@@ -25,6 +25,10 @@
             <option value="$PROJECT_DIR$/12Observer&amp;EventBus" />
             <option value="$PROJECT_DIR$/13Memorandum" />
             <option value="$PROJECT_DIR$/13Memrandum&amp;Note" />
+            <option value="$PROJECT_DIR$/14Iterator" />
+            <option value="$PROJECT_DIR$/15Template" />
+            <option value="$PROJECT_DIR$/16Visitor" />
+            <option value="$PROJECT_DIR$/17Mediator" />
           </set>
         </option>
       </GradleProjectSettings>
