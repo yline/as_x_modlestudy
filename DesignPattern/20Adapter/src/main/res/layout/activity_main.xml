@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_extend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="adapter by extend" />
+
+    <Button
+        android:id="@+id/btn_composite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="adapter by composite" />
+    
+</LinearLayout>

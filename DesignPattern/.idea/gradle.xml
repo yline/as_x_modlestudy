@@ -29,6 +29,15 @@
             <option value="$PROJECT_DIR$/15Template" />
             <option value="$PROJECT_DIR$/16Visitor" />
             <option value="$PROJECT_DIR$/17Mediator" />
+            <option value="$PROJECT_DIR$/18Proxy" />
+            <option value="$PROJECT_DIR$/18Proxy&amp;Notification" />
+            <option value="$PROJECT_DIR$/19Combine" />
+            <option value="$PROJECT_DIR$/20Adapter" />
+            <option value="$PROJECT_DIR$/21Decorate" />
+            <option value="$PROJECT_DIR$/22flyweight" />
+            <option value="$PROJECT_DIR$/23facade" />
+            <option value="$PROJECT_DIR$/24bridge" />
+            <option value="$PROJECT_DIR$/25mvp" />
           </set>
         </option>
       </GradleProjectSettings>

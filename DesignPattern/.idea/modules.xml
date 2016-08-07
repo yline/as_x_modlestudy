@@ -21,6 +21,15 @@
       <module fileurl="file://$PROJECT_DIR$/15Template/15Template.iml" filepath="$PROJECT_DIR$/15Template/15Template.iml" />
       <module fileurl="file://$PROJECT_DIR$/16Visitor/16Visitor.iml" filepath="$PROJECT_DIR$/16Visitor/16Visitor.iml" />
       <module fileurl="file://$PROJECT_DIR$/17Mediator/17Mediator.iml" filepath="$PROJECT_DIR$/17Mediator/17Mediator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/18Proxy/18Proxy.iml" filepath="$PROJECT_DIR$/18Proxy/18Proxy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/18Proxy&amp;Notification/18Proxy&amp;Notification.iml" filepath="$PROJECT_DIR$/18Proxy&amp;Notification/18Proxy&amp;Notification.iml" />
+      <module fileurl="file://$PROJECT_DIR$/19Combine/19Combine.iml" filepath="$PROJECT_DIR$/19Combine/19Combine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/20Adapter/20Adapter.iml" filepath="$PROJECT_DIR$/20Adapter/20Adapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/21Decorate/21Decorate.iml" filepath="$PROJECT_DIR$/21Decorate/21Decorate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/22flyweight/22flyweight.iml" filepath="$PROJECT_DIR$/22flyweight/22flyweight.iml" />
+      <module fileurl="file://$PROJECT_DIR$/23facade/23facade.iml" filepath="$PROJECT_DIR$/23facade/23facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/24bridge/24bridge.iml" filepath="$PROJECT_DIR$/24bridge/24bridge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/25mvp/25mvp.iml" filepath="$PROJECT_DIR$/25mvp/25mvp.iml" />
       <module fileurl="file://$PROJECT_DIR$/DesignPattern.iml" filepath="$PROJECT_DIR$/DesignPattern.iml" />
     </modules>
   </component>
