@@ -13,7 +13,7 @@ import com.yline.log.LogFileUtil;
 
 public class MainActivity extends BaseActivity
 {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{

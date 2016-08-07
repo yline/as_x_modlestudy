@@ -14,7 +14,7 @@ public class MainApplication extends BaseApplication
 	{
 		super.onCreate();
 	}
-
+	
 	@Override
 	protected void handlerDefault(Message msg)
 	{

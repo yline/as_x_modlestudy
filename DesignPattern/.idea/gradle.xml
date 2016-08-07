@@ -21,6 +21,10 @@
             <option value="$PROJECT_DIR$/10Interpreter" />
             <option value="$PROJECT_DIR$/11Command" />
             <option value="$PROJECT_DIR$/11Command&amp;Draw" />
+            <option value="$PROJECT_DIR$/12Observer" />
+            <option value="$PROJECT_DIR$/12Observer&amp;EventBus" />
+            <option value="$PROJECT_DIR$/13Memorandum" />
+            <option value="$PROJECT_DIR$/13Memrandum&amp;Note" />
           </set>
         </option>
       </GradleProjectSettings>

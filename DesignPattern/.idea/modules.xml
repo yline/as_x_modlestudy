@@ -13,6 +13,10 @@
       <module fileurl="file://$PROJECT_DIR$/10Interpreter/10Interpreter.iml" filepath="$PROJECT_DIR$/10Interpreter/10Interpreter.iml" />
       <module fileurl="file://$PROJECT_DIR$/11Command/11Command.iml" filepath="$PROJECT_DIR$/11Command/11Command.iml" />
       <module fileurl="file://$PROJECT_DIR$/11Command&amp;Draw/11Command&amp;Draw.iml" filepath="$PROJECT_DIR$/11Command&amp;Draw/11Command&amp;Draw.iml" />
+      <module fileurl="file://$PROJECT_DIR$/12Observer/12Observer.iml" filepath="$PROJECT_DIR$/12Observer/12Observer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/12Observer&amp;EventBus/12Observer&amp;EventBus.iml" filepath="$PROJECT_DIR$/12Observer&amp;EventBus/12Observer&amp;EventBus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/13Memorandum/13Memorandum.iml" filepath="$PROJECT_DIR$/13Memorandum/13Memorandum.iml" />
+      <module fileurl="file://$PROJECT_DIR$/13Memrandum&amp;Note/13Memrandum&amp;Note.iml" filepath="$PROJECT_DIR$/13Memrandum&amp;Note/13Memrandum&amp;Note.iml" />
       <module fileurl="file://$PROJECT_DIR$/DesignPattern.iml" filepath="$PROJECT_DIR$/DesignPattern.iml" />
     </modules>
   </component>

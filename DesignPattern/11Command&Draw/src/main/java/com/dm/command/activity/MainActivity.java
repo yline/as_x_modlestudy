@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener
 
 	private class DrawTouchListener implements View.OnTouchListener
 	{
-
+		
 		@Override
 		public boolean onTouch(View v, MotionEvent event)
 		{
