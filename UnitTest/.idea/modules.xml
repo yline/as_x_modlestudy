@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidUnit/AndroidUnit.iml" filepath="$PROJECT_DIR$/AndroidUnit/AndroidUnit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JMockUnit/JMockUnit.iml" filepath="$PROJECT_DIR$/JMockUnit/JMockUnit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JMockitoUnit/JMockitoUnit.iml" filepath="$PROJECT_DIR$/JMockitoUnit/JMockitoUnit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JUnit/JUnit.iml" filepath="$PROJECT_DIR$/JUnit/JUnit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UnitTest.iml" filepath="$PROJECT_DIR$/UnitTest.iml" />
+    </modules>
+  </component>
+</project>
