@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/HScroll/HScroll.iml" filepath="$PROJECT_DIR$/HScroll/HScroll.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lib/Lib.iml" filepath="$PROJECT_DIR$/Lib/Lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LibDemo/LibDemo.iml" filepath="$PROJECT_DIR$/LibDemo/LibDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SlidingMenu.iml" filepath="$PROJECT_DIR$/SlidingMenu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tab/Tab.iml" filepath="$PROJECT_DIR$/Tab/Tab.iml" />
+    </modules>
+  </component>
+</project>

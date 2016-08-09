@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_bynew"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="新建的方式" />
+    
+    <Button
+        android:id="@+id/btn_byextends_sliding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="继承SlidingActivity" />
+    
+    <Button
+        android:id="@+id/btn_byextends_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="继承SlidingFragmentActivity" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="跳转界面"
+        android:textSize="40sp" />
+
+</LinearLayout>
