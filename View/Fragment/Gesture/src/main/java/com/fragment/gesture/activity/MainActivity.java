@@ -12,7 +12,7 @@ import com.yline.base.BaseFragmentActivity;
  * 实现接口
  *
  * @author YLine
- *         <p/>
+ *         <p>
  *         2016年8月4日 上午7:39:15
  */
 public class MainActivity extends BaseFragmentActivity implements GestureFragment.onGestureJugdeCallback
