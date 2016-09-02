@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/TabHost.iml" filepath="$PROJECT_DIR$/TabHost.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TabHost&amp;Viewpager/TabHost&amp;Viewpager.iml" filepath="$PROJECT_DIR$/TabHost&amp;Viewpager/TabHost&amp;Viewpager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TabHostSample/TabHostSample.iml" filepath="$PROJECT_DIR$/TabHostSample/TabHostSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TabHostSample/app.iml" filepath="$PROJECT_DIR$/TabHostSample/app.iml" />
+    </modules>
+  </component>
+</project>
