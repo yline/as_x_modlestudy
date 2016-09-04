@@ -3,22 +3,21 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="D:\study_adt_studio\studio\gradle\gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Manager" />
-            <option value="$PROJECT_DIR$/Tools" />
-            <option value="$PROJECT_DIR$/Utils" />
+            <option value="$PROJECT_DIR$/PercentLib" />
+            <option value="$PROJECT_DIR$/PercentLibDemo" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Manager" />
-            <option value="$PROJECT_DIR$/Tools" />
-            <option value="$PROJECT_DIR$/Utils" />
+            <option value="$PROJECT_DIR$/PercentLib" />
+            <option value="$PROJECT_DIR$/PercentLibDemo" />
           </set>
         </option>
       </GradleProjectSettings>
