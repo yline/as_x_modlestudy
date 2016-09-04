@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Carousel/Carousel.iml" filepath="$PROJECT_DIR$/Carousel/Carousel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PagerAdapter/PagerAdapter.iml" filepath="$PROJECT_DIR$/PagerAdapter/PagerAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tab/Tab.iml" filepath="$PROJECT_DIR$/Tab/Tab.iml" />
       <module fileurl="file://$PROJECT_DIR$/ViewPager.iml" filepath="$PROJECT_DIR$/ViewPager.iml" />
     </modules>

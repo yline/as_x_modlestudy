@@ -1,1 +1,1 @@
-include ':Tab', ':Carousel'
+include ':Tab', ':Carousel', ':PagerAdapter'

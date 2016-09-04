@@ -1,19 +1,11 @@
 package com.viewpager.tab.activity;
 
-import android.os.Message;
-
 import com.yline.application.BaseApplication;
 import com.yline.application.SDKConfig;
 
 public class MainApplication extends BaseApplication
 {
 	public static final String TAG = "ViewPagerTab";
-
-	@Override
-	protected void handlerDefault(Message msg)
-	{
-
-	}
 
 	@Override
 	protected SDKConfig initConfig()
