@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Carousel" />
+            <option value="$PROJECT_DIR$/IndicatorHelper" />
             <option value="$PROJECT_DIR$/PagerAdapter" />
             <option value="$PROJECT_DIR$/SlipStyle" />
             <option value="$PROJECT_DIR$/Tab" />
@@ -19,6 +20,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Carousel" />
+            <option value="$PROJECT_DIR$/IndicatorHelper" />
             <option value="$PROJECT_DIR$/PagerAdapter" />
             <option value="$PROJECT_DIR$/SlipStyle" />
             <option value="$PROJECT_DIR$/Tab" />
