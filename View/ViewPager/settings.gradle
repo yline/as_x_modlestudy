@@ -1,1 +1,1 @@
-include ':Tab', ':Carousel', ':PagerAdapter'
+include ':Tab', ':Carousel', ':PagerAdapter', ':SlipStyle'
