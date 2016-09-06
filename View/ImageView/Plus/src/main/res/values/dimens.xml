@@ -1,0 +1,4 @@
+<resources>
+
+    <dimen name="rectRoundRadius">10dp</dimen>
+</resources>
