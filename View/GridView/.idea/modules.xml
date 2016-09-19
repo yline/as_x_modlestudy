@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DragExchange/app.iml" filepath="$PROJECT_DIR$/DragExchange/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DragExchange/DragExchange.iml" filepath="$PROJECT_DIR$/DragExchange/DragExchange.iml" />
       <module fileurl="file://$PROJECT_DIR$/GridView.iml" filepath="$PROJECT_DIR$/GridView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ThresHold/ThresHold.iml" filepath="$PROJECT_DIR$/ThresHold/ThresHold.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DragExchange/app.iml" filepath="$PROJECT_DIR$/DragExchange/app.iml" />
     </modules>
   </component>
 </project>
