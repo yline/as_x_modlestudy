@@ -31,11 +31,11 @@ public class APNManagerUser
 
 				LogFileUtil.v(APNManager.TAG, "-------------------WAP APN ID----------------------------");
 				APNManager.getWapApnId(context);
-				/* 权限被否 */
+				/* 权限被否
 				LogFileUtil.v(APNManager.TAG, "-------------------Switch APN By Name----------------------------");
 				boolean resultSwitchByName = APNManager.switchApnByName(context, "公安接入点");
 				LogFileUtil.v(APNManager.TAG, "The Result of switch by name = " + currentId);
-
+				*/
 				LogFileUtil.v(APNManager.TAG, "-------------------Switch APN By ID----------------------------");
 				APNManager.setCurrentApn(context, "-1");
 				LogFileUtil.v(APNManager.TAG, "The Result of switch by name = " + currentId);

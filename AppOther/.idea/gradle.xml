@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Manager" />
+            <option value="$PROJECT_DIR$/SubUnit" />
             <option value="$PROJECT_DIR$/Tools" />
             <option value="$PROJECT_DIR$/Utils" />
           </set>
@@ -17,6 +18,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Manager" />
+            <option value="$PROJECT_DIR$/SubUnit" />
             <option value="$PROJECT_DIR$/Tools" />
             <option value="$PROJECT_DIR$/Utils" />
           </set>
