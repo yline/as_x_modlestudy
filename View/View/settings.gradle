@@ -1,1 +1,1 @@
-include ':WaveView'
+include ':WaveView', ':SliderBar'
