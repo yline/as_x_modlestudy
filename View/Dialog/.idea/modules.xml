@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Dialog.iml" filepath="$PROJECT_DIR$/Dialog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DialogFragment/DialogFragment.iml" filepath="$PROJECT_DIR$/DialogFragment/DialogFragment.iml" />
       <module fileurl="file://$PROJECT_DIR$/Dialogs/Dialogs.iml" filepath="$PROJECT_DIR$/Dialogs/Dialogs.iml" />
     </modules>
   </component>
