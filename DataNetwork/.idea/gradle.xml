@@ -3,11 +3,23 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="LOCAL" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="D:\study_as\gradle\gradle-2.8" />
-        <option name="gradleJvm" value="1.8" />
         <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/AIDL&amp;Provider" />
+            <option value="$PROJECT_DIR$/AIDL&amp;User" />
+            <option value="$PROJECT_DIR$/Http" />
+            <option value="$PROJECT_DIR$/HttpBoye" />
+            <option value="$PROJECT_DIR$/Https" />
+            <option value="$PROJECT_DIR$/Json" />
+            <option value="$PROJECT_DIR$/SharePeference" />
+            <option value="$PROJECT_DIR$/UDP&amp;Instance" />
+            <option value="$PROJECT_DIR$/XML" />
+          </set>
+        </option>
+        <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AIDL&amp;Provider" />

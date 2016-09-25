@@ -1,8 +1,6 @@
-package com.xml.parse.pull;
+package com.xml.parse;
 
 import android.util.Xml;
-
-import com.xml.parse.ParseInfo;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -12,13 +10,18 @@ import java.util.List;
 
 /**
  * simple introduction
- *
  * @author YLine 2016-5-1 -> 上午9:18:50
  */
-public class ParseUtil
+public class PullParseUtil
 {
 	public static final String PARSE_FORMATTER = "utf-8";
 
+	/**
+	 * Pull 方式解析
+	 * @param fis
+	 * @return
+	 * @throws Exception
+	 */
 	public static List<ParseInfo> getWeatherInfo(InputStream fis) throws Exception
 	{
 		/**
@@ -29,7 +32,7 @@ public class ParseUtil
 		XmlPullParser parser = Xml.newPullParser();
 
 		//初始化解析器  为 UTF-8 格式
-		parser.setInput(fis, ParseUtil.PARSE_FORMATTER);
+		parser.setInput(fis, PullParseUtil.PARSE_FORMATTER);
 
 		List<ParseInfo> weatherInfo = null;
 		ParseInfo info = null;

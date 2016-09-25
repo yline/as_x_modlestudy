@@ -1,7 +1,5 @@
 package com.boye.http.delete;
 
-import android.os.Message;
-
 import com.yline.application.BaseApplication;
 import com.yline.application.SDKConfig;
 
@@ -21,12 +19,6 @@ public class MainApplication extends BaseApplication
 
 		x.Ext.init(this);
 		x.Ext.setDebug(true);
-	}
-
-	@Override
-	protected void handlerDefault(Message arg0)
-	{
-
 	}
 
 	@Override

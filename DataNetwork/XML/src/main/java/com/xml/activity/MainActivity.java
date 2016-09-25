@@ -8,7 +8,8 @@ import com.xml.general.GenInfo;
 import com.xml.general.append.XmlGenWithAppend;
 import com.xml.general.serializer.XmlGenWithSerializer;
 import com.xml.parse.ParseInfo;
-import com.xml.parse.pull.ParseUtil;
+import com.xml.parse.PullParseUtil;
+import com.xml.parse.SaxParseUtil;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
 
@@ -19,6 +20,7 @@ import java.util.Random;
 
 public class MainActivity extends BaseActivity
 {
+	private SaxParseUtil saxParseUtil;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -64,7 +66,7 @@ public class MainActivity extends BaseActivity
 			}
 		});
 
-		findViewById(R.id.btn_pull).setOnClickListener(new View.OnClickListener()
+		findViewById(R.id.btn_parse_pull).setOnClickListener(new View.OnClickListener()
 		{
 
 			@Override
@@ -78,7 +80,7 @@ public class MainActivity extends BaseActivity
 				
 				try
 				{
-					List<ParseInfo> infos = ParseUtil.getWeatherInfo(inputStream);
+					List<ParseInfo> infos = PullParseUtil.getWeatherInfo(inputStream);
 
 					StringBuffer sBuffer = new StringBuffer();
 					for (ParseInfo weatherInfo : infos)
@@ -93,6 +95,21 @@ public class MainActivity extends BaseActivity
 				{
 					LogFileUtil.e(MainApplication.TAG, "解析出错", e);
 				}
+			}
+		});
+
+		saxParseUtil = new SaxParseUtil();
+		findViewById(R.id.btn_parse_sax).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(MainApplication.TAG, "btn_parse_sax");
+				InputStream inputStream = MainActivity.this.getClassLoader().getResourceAsStream("assets/weather.xml");
+				// java 目录下,读取会失败,必须新建assets目录
+				// InputStream inputStream = MainActivity.this.getClassLoader().getResourceAsStream("java/weather.xml");
+
+				saxParseUtil.parseXmlWithSAX(inputStream);
 			}
 		});
 	}

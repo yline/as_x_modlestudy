@@ -1,27 +1,34 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/btn_general_append"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="parse general append" />
+        android:text="parse general append"/>
 
     <Button
         android:id="@+id/btn_general_serializer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="parse general serializer" />
+        android:text="parse general serializer"/>
 
     <Button
-        android:id="@+id/btn_pull"
+        android:id="@+id/btn_parse_pull"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="parse pull" />
+        android:text="parse pull"/>
+
+    <Button
+        android:id="@+id/btn_parse_sax"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="parse sax"/>
 
 </LinearLayout>
