@@ -31,14 +31,25 @@ public class MainActivity extends BaseActivity
 			}
 		});
 
-		findViewById(R.id.btn_contacter_query).setOnClickListener(new View.OnClickListener()
+		findViewById(R.id.btn_contacter_query_type1).setOnClickListener(new View.OnClickListener()
 		{
 
 			@Override
 			public void onClick(View v)
 			{
-				LogFileUtil.v(AppConstant.TAG_CLICK, "btn_contacter_query");
+				LogFileUtil.v(AppConstant.TAG_CLICK, "btn_contacter_query_type1");
 				new ContacterHelper().queryContacter(MainApplication.getApplication());
+			}
+		});
+
+		findViewById(R.id.btn_contacter_query_type2).setOnClickListener(new View.OnClickListener()
+		{
+
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(AppConstant.TAG_CLICK, "btn_contacter_query_type2");
+				new ContacterHelper().queryContacterInfo(MainApplication.getApplication());
 			}
 		});
 
