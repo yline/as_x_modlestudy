@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ObjectActivity"></activity>
+        <activity android:name=".activity.SimpleValueAnimatorActivity"></activity>
+        <activity android:name=".activity.ColorValueAnimatorActivity"></activity>
     </application>
 
 </manifest>
