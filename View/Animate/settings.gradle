@@ -1,1 +1,1 @@
-include ':Animation'
+include ':Animation', ':ValueAnimator'

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.2"
 
     defaultConfig {
-        applicationId "com.view.animate"
+        applicationId "com.view.valueanimator"
         minSdkVersion 14
         targetSdkVersion 24
         versionCode 1
