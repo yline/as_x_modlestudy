@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EventTouch/EventTouch.iml" filepath="$PROJECT_DIR$/EventTouch/EventTouch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GestureListener/GestureListener.iml" filepath="$PROJECT_DIR$/GestureListener/GestureListener.iml" />
       <module fileurl="file://$PROJECT_DIR$/_Theory.iml" filepath="$PROJECT_DIR$/_Theory.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EventTouch/app.iml" filepath="$PROJECT_DIR$/EventTouch/app.iml" />
     </modules>
   </component>
 </project>

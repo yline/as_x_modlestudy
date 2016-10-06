@@ -10,12 +10,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/EventTouch" />
+            <option value="$PROJECT_DIR$/GestureListener" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/EventTouch" />
+            <option value="$PROJECT_DIR$/GestureListener" />
           </set>
         </option>
       </GradleProjectSettings>

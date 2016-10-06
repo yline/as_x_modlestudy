@@ -1,1 +1,1 @@
-include ':EventTouch'
+include ':EventTouch', ':GestureListener'
