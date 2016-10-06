@@ -1,1 +1,1 @@
-include ':Tab', ':Carousel', ':PagerAdapter', ':SlipStyle', ':IndicatorHelper'
+include ':Tab', ':Carousel', ':PagerAdapter', ':SlipStyle', ':IndicatorHelper', ':CustomViewPager'

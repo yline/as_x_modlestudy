@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Carousel/Carousel.iml" filepath="$PROJECT_DIR$/Carousel/Carousel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CustomViewPager/CustomViewPager.iml" filepath="$PROJECT_DIR$/CustomViewPager/CustomViewPager.iml" />
       <module fileurl="file://$PROJECT_DIR$/IndicatorHelper/IndicatorHelper.iml" filepath="$PROJECT_DIR$/IndicatorHelper/IndicatorHelper.iml" />
       <module fileurl="file://$PROJECT_DIR$/PagerAdapter/PagerAdapter.iml" filepath="$PROJECT_DIR$/PagerAdapter/PagerAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/SlipStyle/SlipStyle.iml" filepath="$PROJECT_DIR$/SlipStyle/SlipStyle.iml" />
