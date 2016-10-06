@@ -1,37 +1,55 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/btn_simple_adapter_instance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SimpleAdapter instance" />
+        android:text="SimpleAdapter instance"/>
 
     <Button
         android:id="@+id/btn_array_adapter_instance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ArrayAdapter instance" />
+        android:text="ArrayAdapter instance"/>
 
     <Button
         android:id="@+id/btn_base_adapter_instance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BaseAdapter instance" />
+        android:text="BaseAdapter instance"/>
 
     <Button
         android:id="@+id/btn_common_listadapter_instance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CommonListAdapter instance" />
-    
+        android:text="CommonListAdapter instance"/>
+
+    <Button
+        android:id="@+id/btn_column_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ColumnsAdapter one"/>
+
+    <Button
+        android:id="@+id/btn_column_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ColumnsAdapter two"/>
+
+    <Button
+        android:id="@+id/btn_column_three"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ColumnsAdapter three"/>
+
     <ListView
         android:id="@+id/lv_show"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
     </ListView>
 
 </LinearLayout>
