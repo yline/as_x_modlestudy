@@ -1,4 +1,4 @@
-package com.gallery.carousel.view.utils;
+package com.gallery.carousel.utils;
 
 import android.util.Log;
 import android.view.View;

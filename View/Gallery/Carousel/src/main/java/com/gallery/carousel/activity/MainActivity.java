@@ -1,4 +1,4 @@
-package com.gallery.carousel;
+package com.gallery.carousel.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.gallery.carousel.fragment.GalleryFragment;
 import com.gallery.carousel.fragment.GalleryFragmentParams;
@@ -18,7 +17,6 @@ import com.yline.base.BaseFragmentActivity;
 
 /**
  * 这一块,需要修改的地方还挺多
- *
  * @author YLine 2016/8/9 --> 20:28
  * @version 1.0.0
  */
@@ -80,7 +78,7 @@ public class MainActivity extends BaseFragmentActivity implements GalleryFragmen
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
-		Toast.makeText(getApplicationContext(), "item = " + position, Toast.LENGTH_SHORT).show();
+		MainApplication.toast("item = " + position);
 	}
 
 }

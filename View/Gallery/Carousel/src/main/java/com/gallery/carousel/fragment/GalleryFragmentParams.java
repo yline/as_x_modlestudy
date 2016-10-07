@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.gallery.carousel.view.utils.UILayoutUtils;
+import com.gallery.carousel.utils.UILayoutUtils;
 import com.view.gallery.test.R;
 
 import java.util.ArrayList;

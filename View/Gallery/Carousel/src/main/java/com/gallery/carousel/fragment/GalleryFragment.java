@@ -18,8 +18,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 
+import com.gallery.carousel.utils.UILayoutUtils;
 import com.gallery.carousel.view.GalleryView;
-import com.gallery.carousel.view.utils.UILayoutUtils;
 import com.view.gallery.test.R;
 import com.yline.base.BaseFragment;
 
@@ -328,7 +328,6 @@ public class GalleryFragment extends BaseFragment
 
 	/**
 	 * 添加指示点
-	 *
 	 * @param context   本Activity
 	 * @param viewGroup 指示点父框体(此处LinearLayout)
 	 * @param count     指示点个数
@@ -361,7 +360,6 @@ public class GalleryFragment extends BaseFragment
 
 	/**
 	 * 指示点状态
-	 *
 	 * @param viewGroup 指示点父框体(此处LinearLayout)
 	 * @param position  当前的指示点
 	 */
