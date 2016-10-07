@@ -44,9 +44,9 @@ public class ColumnsAdapter extends CommonListAdapter<TestBean>
 			return lines;
 		}
 	}
-
+	
 	@Override
-	protected int getItemRes()
+	protected int getItemRes(int position)
 	{
 		if (2 == sCloumn)
 		{

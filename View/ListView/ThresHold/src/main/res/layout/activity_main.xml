@@ -46,6 +46,33 @@
         android:layout_height="wrap_content"
         android:text="ColumnsAdapter three"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_init"
+            android:text="初始化"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_add_from"
+            android:text="增加到来的消息"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_add_to"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="发送消息"/>
+    </LinearLayout>
+
     <ListView
         android:id="@+id/lv_show"
         android:layout_width="match_parent"

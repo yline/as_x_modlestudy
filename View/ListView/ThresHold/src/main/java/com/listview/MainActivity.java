@@ -6,6 +6,7 @@ import android.widget.ListView;
 
 import com.listview.columns.instance.ColumnsAdapterInstance;
 import com.listview.common.CommonListAdapterInstance;
+import com.listview.difftype.instance.DiffAdapterInstance;
 import com.listview.threshold.instance.ArrayAdapterInstance;
 import com.listview.threshold.instance.BaseAdapterInstance;
 import com.listview.threshold.instance.SimpleAdapterInstance;
@@ -18,6 +19,8 @@ public class MainActivity extends BaseActivity
 	private ListView mLv;
 
 	private ColumnsAdapterInstance columnsAdapterInstance;
+
+	private DiffAdapterInstance diffAdapterInstance;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -81,6 +84,7 @@ public class MainActivity extends BaseActivity
 			}
 		});
 
+		// ColumnAdapter
 		columnsAdapterInstance = new ColumnsAdapterInstance();
 		findViewById(R.id.btn_column_one).setOnClickListener(new View.OnClickListener()
 		{
@@ -109,6 +113,36 @@ public class MainActivity extends BaseActivity
 			{
 				LogFileUtil.v(MainApplication.TAG, "btn_column_three");
 				columnsAdapterInstance.show(MainActivity.this, mLv, 3);
+			}
+		});
+
+		// DiffAdapter
+		diffAdapterInstance = new DiffAdapterInstance();
+		findViewById(R.id.btn_init).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(MainApplication.TAG, "btn_init");
+				diffAdapterInstance.init(MainActivity.this, mLv);
+			}
+		});
+		findViewById(R.id.btn_add_from).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(MainApplication.TAG, "btn_add_from");
+				diffAdapterInstance.addFrom();
+			}
+		});
+		findViewById(R.id.btn_add_to).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(MainApplication.TAG, "btn_add_to");
+				diffAdapterInstance.addTo();
 			}
 		});
 	}
