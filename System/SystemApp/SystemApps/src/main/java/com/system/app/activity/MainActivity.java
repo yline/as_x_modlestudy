@@ -6,6 +6,7 @@ import android.view.View;
 import com.system.app.caller.CallHelper;
 import com.system.app.contacter.ContacterHelper;
 import com.system.app.msg.MsgHelper;
+import com.system.app.music.MusicHelper;
 import com.system.app.wifi.WifiHelper;
 import com.system.apps.R;
 import com.yline.base.BaseActivity;
@@ -95,6 +96,16 @@ public class MainActivity extends BaseActivity
 			{
 				LogFileUtil.v(AppConstant.TAG_CLICK, "btn_wifi_test");
 				new WifiHelper().testWifi(MainActivity.this);
+			}
+		});
+
+		findViewById(R.id.btn_music_test).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(AppConstant.TAG_CLICK, "btn_music_test");
+				MusicHelper.getInstance().test(MainActivity.this);
 			}
 		});
 	}
