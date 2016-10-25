@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BroadCastReceiver.iml" filepath="$PROJECT_DIR$/BroadCastReceiver.iml" />
       <module fileurl="file://$PROJECT_DIR$/MessagerReceiver/MessagerReceiver.iml" filepath="$PROJECT_DIR$/MessagerReceiver/MessagerReceiver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MultiFilterThresHold/MultiFilterThresHold.iml" filepath="$PROJECT_DIR$/MultiFilterThresHold/MultiFilterThresHold.iml" />
       <module fileurl="file://$PROJECT_DIR$/UnActiveLock/UnActiveLock.iml" filepath="$PROJECT_DIR$/UnActiveLock/UnActiveLock.iml" />
       <module fileurl="file://$PROJECT_DIR$/UnActiveManager/UnActiveManager.iml" filepath="$PROJECT_DIR$/UnActiveManager/UnActiveManager.iml" />
     </modules>
