@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/LocalThresHold" />
             <option value="$PROJECT_DIR$/MessagerReceiver" />
             <option value="$PROJECT_DIR$/MultiFilterThresHold" />
             <option value="$PROJECT_DIR$/UnActiveLock" />
@@ -17,6 +18,7 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/LocalThresHold" />
             <option value="$PROJECT_DIR$/MessagerReceiver" />
             <option value="$PROJECT_DIR$/MultiFilterThresHold" />
             <option value="$PROJECT_DIR$/UnActiveLock" />
