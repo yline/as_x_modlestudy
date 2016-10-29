@@ -10,8 +10,8 @@ public class MainApplication extends BaseApplication
 	@Override
 	protected SDKConfig initConfig()
 	{
-		SDKConfig appConfig = new SDKConfig();
-		appConfig.setLogFilePath("Tools"); // 默认开启日志,并写到文件中
-		return appConfig;
+		SDKConfig sdkConfig = new SDKConfig();
+		sdkConfig.setLogFilePath(TAG);
+		return sdkConfig;
 	}
 }
