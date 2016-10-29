@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/OrientationSensor/OrientationSensor.iml" filepath="$PROJECT_DIR$/OrientationSensor/OrientationSensor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Sensors.iml" filepath="$PROJECT_DIR$/Sensors.iml" />
+    </modules>
+  </component>
+</project>
