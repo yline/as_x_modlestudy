@@ -1,5 +1,6 @@
 package com.manager.activity;
 
+import com.manager.NotifyManager;
 import com.yline.application.BaseApplication;
 import com.yline.application.SDKConfig;
 
@@ -9,6 +10,13 @@ import com.yline.application.SDKConfig;
 public class MainApplication extends BaseApplication
 {
 	public static final String TAG = "Manager";
+
+	@Override
+	public void onCreate()
+	{
+		super.onCreate();
+		NotifyManager.setApplicationContext(this);
+	}
 
 	@Override
 	protected SDKConfig initConfig()

@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btn_apn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
-</RelativeLayout>
+        android:text="test APN Manager"/>
+
+    <Button
+        android:id="@+id/btn_notify_build"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Notification 自定义"/>
+
+    <Button
+        android:id="@+id/btn_notify_buildin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notification + 系统Build"/>
+
+    <Button
+        android:id="@+id/btn_notify_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notification cancel"/>
+</LinearLayout>
