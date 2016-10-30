@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AsyncTaskThresHold/AsyncTaskThresHold.iml" filepath="$PROJECT_DIR$/AsyncTaskThresHold/AsyncTaskThresHold.iml" />
       <module fileurl="file://$PROJECT_DIR$/LockObject/LockObject.iml" filepath="$PROJECT_DIR$/LockObject/LockObject.iml" />
       <module fileurl="file://$PROJECT_DIR$/Thread.iml" filepath="$PROJECT_DIR$/Thread.iml" />
     </modules>

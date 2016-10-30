@@ -4,7 +4,6 @@ package com.lock.object;					写的synchronized 介绍  demo
 
 package com.lock.object.tag.synchronize;	synchronized 应用,同步【最广泛的应用】
 
-
 基本总结点:
 1,synchronized会阻塞 内部代码块以及后部代码块
 2,synchronized能够保证同一时刻最多只有一个线程执行该段代码
