@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="attributeset_relation">
+        <enum name="icon_left" value="0"/>
+        <enum name="icon_right" value="1"/>
+        <enum name="icon_above" value="2"/>
+        <enum name="icon_below" value="3"/>
+    </attr>
+    <declare-styleable name="attributeset_iconText">
+        <attr name="attributeset_relation"/>
+        <attr name="icon" format="reference"/>
+        <attr name="text" format="string"/>
+        <attr name="text_size" format="dimension"/>
+        <attr name="text_color" format="integer"/>
+        <attr name="space" format="dimension"/>
+    </declare-styleable>
+</resources>

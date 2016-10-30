@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AttributeSet/AttributeSet.iml" filepath="$PROJECT_DIR$/AttributeSet/AttributeSet.iml" />
       <module fileurl="file://$PROJECT_DIR$/EventTouch/EventTouch.iml" filepath="$PROJECT_DIR$/EventTouch/EventTouch.iml" />
       <module fileurl="file://$PROJECT_DIR$/GestureListener/GestureListener.iml" filepath="$PROJECT_DIR$/GestureListener/GestureListener.iml" />
       <module fileurl="file://$PROJECT_DIR$/Style&amp;Theme/Style&amp;Theme.iml" filepath="$PROJECT_DIR$/Style&amp;Theme/Style&amp;Theme.iml" />
