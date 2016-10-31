@@ -13,6 +13,9 @@ import com.yline.log.LogFileUtil;
 
 import java.io.File;
 
+/**
+ * http://blog.csdn.net/wl455624651/article/details/7943252  各种跳转
+ */
 public class MainActivity extends BaseActivity
 {
 	private SystemSkipTool mSystemSkipTool;
@@ -115,7 +118,7 @@ public class MainActivity extends BaseActivity
 					LogFileUtil.v(MainApplication.TAG, "ALBUM_PICK_ZOOM -> " + backUri);
 					break;
 				case AUDIO_PICK:
-					LogFileUtil.v(MainApplication.TAG, "AUDIO_PICK -> " + data.getExtras());
+					LogFileUtil.v(MainApplication.TAG, "AUDIO_PICK -> " + data.getData().getPath());
 					break;
 				case FILE_CHOOSE:
 					LogFileUtil.v(MainApplication.TAG, "FILE_CHOOSE -> " + data.getExtras());

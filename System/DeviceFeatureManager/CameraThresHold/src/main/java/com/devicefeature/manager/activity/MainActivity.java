@@ -20,6 +20,7 @@ public class MainActivity extends BaseAppCompatActivity
 		setContentView(R.layout.activity_main);
 
 		cameraHelper = new CameraHelper();
+
 		findViewById(R.id.btn_take_photo).setOnClickListener(new View.OnClickListener()
 		{
 			@Override

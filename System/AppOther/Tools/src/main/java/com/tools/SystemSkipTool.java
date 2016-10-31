@@ -55,6 +55,7 @@ public class SystemSkipTool
 	}
 
 	/**
+	 * 打开相册
 	 * @param requestCode 请求码
 	 */
 	public void openAlbum(Activity activity, int requestCode)
@@ -73,6 +74,7 @@ public class SystemSkipTool
 	}
 
 	/**
+	 * 裁剪图片
 	 * @param uri     被裁减的照片的url
 	 * @param backUri 裁剪后照片存放位置的uri
 	 */

@@ -1,4 +1,4 @@
-package com.devicefeature.manager.activity;
+package com.mediaplay.activity;
 
 import com.yline.application.BaseApplication;
 import com.yline.application.SDKConfig;
@@ -8,7 +8,7 @@ import com.yline.application.SDKConfig;
  */
 public class MainApplication extends BaseApplication
 {
-	public static final String TAG = "Camera";
+	public static final String TAG = "MediaPlayThresHold";
 
 	@Override
 	protected SDKConfig initConfig()

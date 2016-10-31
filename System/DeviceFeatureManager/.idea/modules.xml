@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Camera/app.iml" filepath="$PROJECT_DIR$/Camera/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CameraThresHold/Camera.iml" filepath="$PROJECT_DIR$/CameraThresHold/Camera.iml" />
       <module fileurl="file://$PROJECT_DIR$/DeviceFeatureManager.iml" filepath="$PROJECT_DIR$/DeviceFeatureManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MediaPlayThresHold/MediaPlayThresHold.iml" filepath="$PROJECT_DIR$/MediaPlayThresHold/MediaPlayThresHold.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Camera/app.iml" filepath="$PROJECT_DIR$/Camera/app.iml" />
     </modules>
   </component>
 </project>
