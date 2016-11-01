@@ -11,7 +11,7 @@ import com.yline.log.LogFileUtil;
 public class MainActivity extends BaseAppCompatActivity
 {
 	private NotifyManagerUser notifyManagerUser;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
