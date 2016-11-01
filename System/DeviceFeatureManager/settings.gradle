@@ -1,1 +1,1 @@
-include ':CameraThresHold', ':MediaPlayThresHold'
+include ':CameraThresHold', ':MediaPlayThresHold', ':MediaRecorderThresHold'
