@@ -1,4 +1,4 @@
-package com.manager;
+package com.notify;
 
 import android.annotation.TargetApi;
 import android.app.Notification;

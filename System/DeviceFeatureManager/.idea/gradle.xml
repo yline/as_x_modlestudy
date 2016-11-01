@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/CameraThresHold" />
             <option value="$PROJECT_DIR$/MediaPlayThresHold" />
             <option value="$PROJECT_DIR$/MediaRecorderThresHold" />
+            <option value="$PROJECT_DIR$/NotificationThresHold" />
           </set>
         </option>
         <option name="myModules">
@@ -20,6 +21,7 @@
             <option value="$PROJECT_DIR$/CameraThresHold" />
             <option value="$PROJECT_DIR$/MediaPlayThresHold" />
             <option value="$PROJECT_DIR$/MediaRecorderThresHold" />
+            <option value="$PROJECT_DIR$/NotificationThresHold" />
           </set>
         </option>
       </GradleProjectSettings>

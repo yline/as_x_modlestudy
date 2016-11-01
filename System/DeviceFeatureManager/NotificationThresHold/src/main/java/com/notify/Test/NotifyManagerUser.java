@@ -1,13 +1,13 @@
-package com.manager.Test;
+package com.notify.Test;
 
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import com.manager.NotifyManager;
-import com.manager.R;
-import com.manager.activity.MainActivity;
+import com.notify.NotifyManager;
+import com.notify.R;
+import com.notify.activity.MainActivity;
 
 /**
  * Created by yline on 2016/10/29.
