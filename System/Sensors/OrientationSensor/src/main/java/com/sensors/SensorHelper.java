@@ -35,7 +35,7 @@ public class SensorHelper
 	 * 老方式;实现方向传感器
 	 * @param listener
 	 */
-	public void registerOrientationOldListener(SensorEventListener listener)
+	public void registerOrientationListener(SensorEventListener listener)
 	{
 		this.orientationOldListener = listener;
 		// 方向传感器
@@ -48,7 +48,7 @@ public class SensorHelper
 	 * @param event
 	 * @return
 	 */
-	public float dealWithOrientationOld(SensorEvent event)
+	public float dealWithOrientation(SensorEvent event)
 	{
 		float afterAngle = BigDecimal.valueOf(event.values[0]).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 		LogFileUtil.v("dealWithAccelerometer afterAngle : " + afterAngle);
@@ -59,7 +59,7 @@ public class SensorHelper
 	 * 新方式;实现方向(地磁)传感器
 	 * @param listener
 	 */
-	public void registerOrientationNewListener(SensorEventListener listener)
+	public void registerMagneticListener(SensorEventListener listener)
 	{
 		this.orientationNewListener = listener;
 		// 地磁传感器
@@ -72,7 +72,7 @@ public class SensorHelper
 	 * @param event
 	 * @return
 	 */
-	public float dealWithOrientationNew(SensorEvent event)
+	public float dealWithMagnetic(SensorEvent event)
 	{
 		/**
 		 * values[0] 记录着手机围绕Z轴的旋转角度

@@ -31,20 +31,20 @@ public class MainActivity extends BaseAppCompatActivity
 		sensorHelper = new SensorHelper(MainActivity.this);
 
 		// 指南针,老的方式
-		final TextView tvOrientationOld = (TextView) findViewById(R.id.tv_orientation_old);
-		findViewById(R.id.btn_orientation_old).setOnClickListener(new View.OnClickListener()
+		final TextView tvOrientation = (TextView) findViewById(R.id.tv_orientation);
+		findViewById(R.id.btn_orientation).setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				LogFileUtil.v("btn_orientation_old");
-				sensorHelper.registerOrientationOldListener(new SensorEventListener()
+				LogFileUtil.v("tv_orientation");
+				sensorHelper.registerOrientationListener(new SensorEventListener()
 				{
 					@Override
 					public void onSensorChanged(SensorEvent event)
 					{
-						float afterAngle = sensorHelper.dealWithOrientationOld(event);
-						tvOrientationOld.setText("afterAngle : " + afterAngle);
+						float afterAngle = sensorHelper.dealWithOrientation(event);
+						tvOrientation.setText("afterAngle : " + afterAngle);
 					}
 
 					@Override // 当传感器的精度发生变化时就会调用
@@ -55,23 +55,23 @@ public class MainActivity extends BaseAppCompatActivity
 				});
 			}
 		});
-
-		// 指南针,新的方式
-		final TextView tvOrientationNew = (TextView) findViewById(R.id.tv_orientation_new);
-		findViewById(R.id.btn_orientation_new).setOnClickListener(new View.OnClickListener()
+		
+		// 地磁传感器
+		final TextView tvMagnetic = (TextView) findViewById(R.id.tv_magnetic);
+		findViewById(R.id.btn_magnetic).setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				LogFileUtil.v("btn_orientation_new");
-				sensorHelper.registerOrientationNewListener(new SensorEventListener()
+				LogFileUtil.v("btn_magnetic");
+				sensorHelper.registerMagneticListener(new SensorEventListener()
 				{
 
 					@Override
 					public void onSensorChanged(SensorEvent event)
 					{
-						double afterAngle = sensorHelper.dealWithOrientationNew(event);
-						tvOrientationNew.setText("afterAngle : " + afterAngle);
+						double afterAngle = sensorHelper.dealWithMagnetic(event);
+						tvMagnetic.setText("afterAngle : " + afterAngle);
 					}
 
 					@Override // 当传感器的精度发生变化时就会调用
