@@ -23,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
+ * 系统Camera
  * Created by yline on 2016/10/31.
  */
 public class CameraHelper
