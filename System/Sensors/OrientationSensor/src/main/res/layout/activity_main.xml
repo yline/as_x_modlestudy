@@ -8,9 +8,58 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <TextView
-        android:id="@+id/tv_test"
+    <Button
+        android:id="@+id/btn_orientation_old"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:text="方向传感器(指南针,老方式)"/>
+
+    <TextView
+        android:id="@+id/tv_orientation_old"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_orientation_old"
+        android:text="empty"/>
+
+    <Button
+        android:id="@+id/btn_orientation_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_orientation_old"
+        android:text="地磁传感器"/>
+
+    <TextView
+        android:id="@+id/tv_orientation_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_orientation_new"
+        android:text="empty"/>
+
+    <Button
+        android:id="@+id/btn_accelerometer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_orientation_new"
+        android:text="加速度传感器"/>
+
+    <TextView
+        android:id="@+id/tv_accelerometer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_accelerometer"
+        android:text="empty"/>
+
+    <Button
+        android:id="@+id/btn_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_accelerometer"
+        android:text="光传感器"/>
+
+    <TextView
+        android:id="@+id/tv_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_light"
+        android:text="empty"/>
 </RelativeLayout>
