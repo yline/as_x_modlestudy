@@ -1,1 +1,1 @@
-include ':CameraThresHold', ':MediaPlayThresHold', ':MediaRecorderThresHold', ':NotificationThresHold'
+include ':CameraThresHold', ':MediaPlayThresHold', ':MediaRecorderThresHold', ':NotificationThresHold', ':BlueToothSample'

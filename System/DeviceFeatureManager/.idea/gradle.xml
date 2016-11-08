@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/BlueToothSample" />
             <option value="$PROJECT_DIR$/CameraThresHold" />
             <option value="$PROJECT_DIR$/MediaPlayThresHold" />
             <option value="$PROJECT_DIR$/MediaRecorderThresHold" />
@@ -18,6 +19,7 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/BlueToothSample" />
             <option value="$PROJECT_DIR$/CameraThresHold" />
             <option value="$PROJECT_DIR$/MediaPlayThresHold" />
             <option value="$PROJECT_DIR$/MediaRecorderThresHold" />

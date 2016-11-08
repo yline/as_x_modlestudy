@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/BlueToothSample/bluetooth.iml" filepath="$PROJECT_DIR$/BlueToothSample/bluetooth.iml" />
       <module fileurl="file://$PROJECT_DIR$/CameraThresHold/Camera.iml" filepath="$PROJECT_DIR$/CameraThresHold/Camera.iml" />
       <module fileurl="file://$PROJECT_DIR$/CameraThresHold/CameraThresHold.iml" filepath="$PROJECT_DIR$/CameraThresHold/CameraThresHold.iml" />
       <module fileurl="file://$PROJECT_DIR$/DeviceFeatureManager.iml" filepath="$PROJECT_DIR$/DeviceFeatureManager.iml" />
