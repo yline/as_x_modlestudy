@@ -19,7 +19,7 @@ public class SDKExecutor implements Executor
 
 	private static final int MAXIMUM_POOL_SIZE = 256;
 
-	private static final int KEEP_ALIVE = 1;
+	private static final int KEEP_ALIVE = 5;
 
 	private final ThreadPoolExecutor mThreadPoolExecutor;
 
@@ -97,6 +97,14 @@ public class SDKExecutor implements Executor
 	{
 		BlockingQueue<Runnable> mPoolWorkQueue = new PriorityBlockingQueue<Runnable>(MAXIMUM_POOL_SIZE, fifo ? FIFO_CMP : FILO_CMP);
 		// BlockingQueue<Runnable> mPoolWorkQueue = new ArrayBlockingQueue<>(MAXIMUM_POOL_SIZE);
+		/**
+		 * poolSize 核心池	同时活动的线程
+		 * MAXIMUM_POOL_SIZE 最大池	线程池的上限
+		 * KEEP_ALIVE 存活时间  一个线程已经闲置的时间超过了存活时间，它将成为一个被回收的候选者
+		 * TimeUnit.SECONDS 存活时间单位
+		 * TimeUnit.mPoolWorkQueue 工作队列		持有等待执行的任务	-- 任务排队有3种基本方法：无限队列、有限队列和同步移交
+		 * sThreadFactory 创建新线程时,调用该方法
+		 */
 		mThreadPoolExecutor = new ThreadPoolExecutor(poolSize, MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS, mPoolWorkQueue, sThreadFactory);
 	}
 
