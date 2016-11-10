@@ -7,7 +7,6 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.Arrays;
 import java.util.Enumeration;
 
 /**
@@ -24,7 +23,9 @@ public class UDPUser
 		LogFileUtil.v(MainApplication.TAG, "LocalIPAddress = " + getLocalIPAddress());
 		
 		final String content = "我在测试" + System.currentTimeMillis(); // 发送的数据
-		final String host = "255.255.255.255"; // 服务端host
+		// final String host = "255.255.255.255"; // 服务端host
+		final String host = "192.168.1.106"; // 服务端host
+
 		final int port = 1001; // 服务端端口
 		udpHelper.sendMessage(content, host, port);
 	}
@@ -43,7 +44,7 @@ public class UDPUser
 			@Override
 			public void onFinish(byte[] result)
 			{
-				LogFileUtil.v(MainApplication.TAG, "receiverMessage onFinish result = " + Arrays.toString(result));
+				LogFileUtil.v(MainApplication.TAG, "receiverMessage onFinish result = " + new String(result));
 			}
 		});
 	}

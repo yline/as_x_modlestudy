@@ -13,7 +13,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Arrays;
 
 /**
  * UDP Socket帮助类
@@ -232,7 +231,10 @@ public class UDPHelper
 
 				if (DEBUG)
 				{
-					LogFileUtil.v(TAG, toString());
+					LogFileUtil.v(TAG, "DatagramSocket -> " + "LocalPort = " + sendDatagramSocket.getLocalPort() + ",Port = " + sendDatagramSocket.getPort()
+							+ ",Timeout = " + sendDatagramSocket.getSoTimeout());
+					LogFileUtil.v(TAG, "DatagramPacket -> " + new String(sendDatagramPacket.getData()) + ",HostAddress = " + sendDatagramPacket.getAddress().getHostAddress()
+							+ ",Port = " + sendDatagramPacket.getPort());
 				}
 
 				sendDatagramSocket.send(sendDatagramPacket);
@@ -254,18 +256,7 @@ public class UDPHelper
 				handler.obtainMessage(SEND_CODE_FINISH, (SEND_CODE_FINISH - 1), -1).sendToTarget();
 			}
 		}
-
-		@Override
-		public String toString()
-		{
-			return "SendRunnable{" +
-					"host='" + host + '\'' +
-					", data=" + Arrays.toString(data) +
-					", port=" + port +
-					'}';
-		}
 	}
-
 
 	/**
 	 * @param callback
@@ -357,7 +348,7 @@ public class UDPHelper
 					{
 						receiverDatagramSocket = new DatagramSocket(aPort);
 					}
-					else if (receiverDatagramSocket.getPort() != aPort)
+					else if (receiverDatagramSocket.getLocalPort() != aPort)
 					{
 						// 若端口变化了,则重新新建
 						receiverDatagramSocket = new DatagramSocket(aPort);
@@ -371,9 +362,13 @@ public class UDPHelper
 
 					if (DEBUG)
 					{
-						LogFileUtil.v(TAG, "before receive");
+						LogFileUtil.v(TAG, " DatagramSocket -> " + "LocalPort = "
+								+ receiverDatagramSocket.getLocalPort() + ",Port = " + receiverDatagramSocket.getPort()
+								+ ",Timeout = " + receiverDatagramSocket.getSoTimeout());
+						LogFileUtil.v(TAG, " DatagramPacket -> " + "Port = " + receiverDatagramPacket.getPort()
+								+ ",data = " + new String(receiverDatagramPacket.getData()));
 					}
-
+					
 					receiverDatagramSocket.receive(receiverDatagramPacket);
 					receiverDatagramSocket.setSoTimeout(timeout);
 
