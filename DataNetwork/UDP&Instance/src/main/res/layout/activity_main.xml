@@ -1,25 +1,19 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <EditText
-        android:id="@+id/et_server_ip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true" />
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/btn_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="send msg" />
+        android:text="send msg"/>
 
     <Button
-        android:id="@+id/btn_start_receiver"
+        android:id="@+id/btn_receiver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="start_receiver" />
+        android:text="start_receiver"/>
 
 </LinearLayout>

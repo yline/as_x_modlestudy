@@ -1,76 +1,80 @@
 package com.udp.demo.helper;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-
 import com.udp.demo.activity.MainApplication;
 import com.yline.log.LogFileUtil;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Arrays;
+import java.util.Enumeration;
+
 /**
  * 不能使用单例模式,因为两个方法会异步被阻塞
- *
  * @author YLine 2016/8/7 --> 19:31
  * @version 1.0.0
  */
 public class UDPUser
 {
-	private static final Handler sHandler = new InternalHandler();
+	private UDPHelper udpHelper = UDPHelper.getInstance();
 
-	private UDPHelper mUdpHelper = new UDPHelper();
+	public void sendMessage()
+	{
+		LogFileUtil.v(MainApplication.TAG, "LocalIPAddress = " + getLocalIPAddress());
+		
+		final String content = "我在测试" + System.currentTimeMillis(); // 发送的数据
+		final String host = "255.255.255.255"; // 服务端host
+		final int port = 1001; // 服务端端口
+		udpHelper.sendMessage(content, host, port);
+	}
+
+	public void receiverMessage()
+	{
+		final int aPort = 2002;
+		udpHelper.startListener(aPort, new UDPHelper.OnUDPReceiverCallback()
+		{
+			@Override
+			public void onStart(boolean isStartSuccess)
+			{
+				LogFileUtil.v(MainApplication.TAG, "receiverMessage onStart isStartSuccess = " + isStartSuccess);
+			}
+
+			@Override
+			public void onFinish(byte[] result)
+			{
+				LogFileUtil.v(MainApplication.TAG, "receiverMessage onFinish result = " + Arrays.toString(result));
+			}
+		});
+	}
 
 	/**
-	 * @param content 发送的数据
-	 * @param host    服务端host
-	 * @param port    服务端端口
+	 * 获取本地IP函数
+	 * @return
 	 */
-	public void sendMessage(final String content, final String host, final int port)
+	private String getLocalIPAddress()
 	{
-		new Thread(new Runnable()
+		try
 		{
-
-			@Override
-			public void run()
+			for (Enumeration<NetworkInterface> mEnumeration = NetworkInterface.getNetworkInterfaces(); mEnumeration.hasMoreElements(); )
 			{
-				LogFileUtil.v(MainApplication.TAG, "content = " + content + ",host = " + host + ",port = " + port);
-
-				boolean result = mUdpHelper.send(content.getBytes(), host, port);
-				
-				LogFileUtil.v(MainApplication.TAG, (result ? "success" : "failed"));
-			}
-		}).start();
-	}
-
-	public void receiverMessage(final int aPort, final int timeout)
-	{
-		new Thread(new Runnable()
-		{
-
-			@Override
-			public void run()
-			{
-				while (true)
+				NetworkInterface intf = mEnumeration.nextElement();
+				for (Enumeration<InetAddress> enumIPAddr = intf.getInetAddresses(); enumIPAddr.hasMoreElements(); )
 				{
-					LogFileUtil.v(MainApplication.TAG, "aPort = " + aPort + ",timeout = " + timeout);
-
-					byte[] result = mUdpHelper.receiver(aPort, timeout);
-					LogFileUtil.v(MainApplication.TAG, (null != result ? new String(result) : "failed"));
+					InetAddress inetAddress = enumIPAddr.nextElement();
+					//如果不是回环地址
+					if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address)
+					{
+						//直接返回本地IP地址
+						return inetAddress.getHostAddress();
+					}
 				}
 			}
-		}).start();
-	}
-
-	final static class InternalHandler extends Handler
-	{
-		public InternalHandler()
-		{
-			super(Looper.getMainLooper());
 		}
-
-		@Override
-		public void handleMessage(Message msg)
+		catch (SocketException ex)
 		{
-			super.handleMessage(msg);
+			LogFileUtil.e(MainApplication.TAG, "SocketException", ex);
 		}
+		return null;
 	}
 }
