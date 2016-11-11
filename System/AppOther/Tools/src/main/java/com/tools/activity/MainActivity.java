@@ -7,7 +7,7 @@ import android.os.Environment;
 import android.view.View;
 
 import com.appother.tools.R;
-import com.tools.SystemSkipTool;
+import com.tools.IntentHelper;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
 
@@ -18,8 +18,6 @@ import java.io.File;
  */
 public class MainActivity extends BaseActivity
 {
-	private SystemSkipTool mSystemSkipTool;
-
 	private static final int ALBUM_PICK = 1;
 
 	private static final int ALBUM_PICK_ZOOM = 2;
@@ -32,26 +30,17 @@ public class MainActivity extends BaseActivity
 
 	private static final int SETTING_WIFI = 7;
 
+	private static final int CAMERA = 8;
+
+	private IntentHelper helper = IntentHelper.getInstance();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mSystemSkipTool = new SystemSkipTool();
-
-		findViewById(R.id.btn_brower_web).setOnClickListener(new View.OnClickListener()
-		{
-
-			@Override
-			public void onClick(View v)
-			{
-				LogFileUtil.v(MainApplication.TAG, "btn_brower_web");
-
-				mSystemSkipTool.openBrower(MainActivity.this, "www.baidu.com");
-			}
-		});
-
+		// 打开相册、图片裁剪
 		findViewById(R.id.btn_album_pick).setOnClickListener(new View.OnClickListener()
 		{
 
@@ -60,10 +49,11 @@ public class MainActivity extends BaseActivity
 			{
 				LogFileUtil.v(MainApplication.TAG, "btn_album_pick");
 
-				mSystemSkipTool.openAlbum(MainActivity.this, ALBUM_PICK);
+				helper.openAlbum(MainActivity.this, ALBUM_PICK);
 			}
 		});
 
+		// 打开音乐播放器
 		findViewById(R.id.btn_audio_pick).setOnClickListener(new View.OnClickListener()
 		{
 
@@ -72,10 +62,48 @@ public class MainActivity extends BaseActivity
 			{
 				LogFileUtil.v(MainApplication.TAG, "btn_audio_pick");
 
-				mSystemSkipTool.openAudio(MainActivity.this, AUDIO_PICK);
+				helper.openAudio(MainActivity.this, AUDIO_PICK);
 			}
 		});
 
+		// 打开浏览器
+		findViewById(R.id.btn_brower_web).setOnClickListener(new View.OnClickListener()
+		{
+
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(MainApplication.TAG, "btn_brower_web");
+
+				helper.openBrower(MainActivity.this, "www.baidu.com");
+			}
+		});
+
+		// 打开照相机
+		findViewById(R.id.btn_camera).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(MainApplication.TAG, "btn_camera");
+
+				helper.openCamera(MainActivity.this, Uri.parse(backUri), CAMERA);
+			}
+		});
+
+		// 打开联系人界面
+		findViewById(R.id.btn_contact).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(MainApplication.TAG, "btn_contact");
+
+				helper.openContact(MainActivity.this);
+			}
+		});
+
+		// 打开文件管理器
 		findViewById(R.id.btn_file_choose).setOnClickListener(new View.OnClickListener()
 		{
 
@@ -84,10 +112,23 @@ public class MainActivity extends BaseActivity
 			{
 				LogFileUtil.v(MainApplication.TAG, "btn_file_choose");
 
-				mSystemSkipTool.openFile(MainActivity.this, FILE_CHOOSE);
+				helper.openFile(MainActivity.this, FILE_CHOOSE);
 			}
 		});
 
+		// 打开录音器
+		findViewById(R.id.btn_record).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				LogFileUtil.v(MainApplication.TAG, "btn_record");
+
+				helper.openRecord(MainActivity.this);
+			}
+		});
+
+		// 打开设置界面的Wifi界面
 		findViewById(R.id.btn_setting_wifi).setOnClickListener(new View.OnClickListener()
 		{
 
@@ -95,7 +136,7 @@ public class MainActivity extends BaseActivity
 			public void onClick(View v)
 			{
 				LogFileUtil.v(MainApplication.TAG, "btn_setting_wifi");
-				mSystemSkipTool.openSetting(MainActivity.this, SETTING_WIFI);
+				helper.openSettingWifi(MainActivity.this, SETTING_WIFI);
 			}
 		});
 	}
@@ -112,7 +153,7 @@ public class MainActivity extends BaseActivity
 			{
 				case ALBUM_PICK:
 					LogFileUtil.v(MainApplication.TAG, "ALBUM_PICK -> " + data.getData());
-					mSystemSkipTool.openAlbumZoom(MainActivity.this, data.getData(), Uri.fromFile(new File(backUri)), ALBUM_PICK_ZOOM);
+					helper.openAlbumZoom(MainActivity.this, data.getData(), Uri.fromFile(new File(backUri)), ALBUM_PICK_ZOOM);
 					break;
 				case ALBUM_PICK_ZOOM:
 					LogFileUtil.v(MainApplication.TAG, "ALBUM_PICK_ZOOM -> " + backUri);
@@ -125,6 +166,9 @@ public class MainActivity extends BaseActivity
 					break;
 				case SETTING_WIFI:
 					LogFileUtil.v(MainApplication.TAG, "SETTING_WIFI -> " + data.getExtras());
+					break;
+				case CAMERA:
+					LogFileUtil.v(MainApplication.TAG, "CAMERA -> " + data.getExtras());
 					break;
 				default:
 					LogFileUtil.e(MainApplication.TAG, "onActivityResult requestCode exception");
