@@ -15,6 +15,7 @@ public class MainApplication extends BaseApplication
 	{
 		SDKConfig sdkConfig = new SDKConfig();
 		sdkConfig.setLogFilePath(TAG);
+		sdkConfig.setLogSystem(true);
 		return sdkConfig;
 	}
 }
