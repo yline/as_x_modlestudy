@@ -3,11 +3,42 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="LOCAL" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="D:\study_as\gradle\gradle-2.8" />
-        <option name="gradleJvm" value="1.8" />
         <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/02Sington" />
+            <option value="$PROJECT_DIR$/03Builder" />
+            <option value="$PROJECT_DIR$/04Prototype" />
+            <option value="$PROJECT_DIR$/05Factory" />
+            <option value="$PROJECT_DIR$/06AbstractFactory" />
+            <option value="$PROJECT_DIR$/07Strategy" />
+            <option value="$PROJECT_DIR$/08State" />
+            <option value="$PROJECT_DIR$/09DutyChain" />
+            <option value="$PROJECT_DIR$/10Interpreter" />
+            <option value="$PROJECT_DIR$/11Command" />
+            <option value="$PROJECT_DIR$/11Command&amp;Draw" />
+            <option value="$PROJECT_DIR$/12Observer" />
+            <option value="$PROJECT_DIR$/12Observer&amp;EventBus" />
+            <option value="$PROJECT_DIR$/13Memorandum" />
+            <option value="$PROJECT_DIR$/13Memrandum&amp;Note" />
+            <option value="$PROJECT_DIR$/14Iterator" />
+            <option value="$PROJECT_DIR$/15Template" />
+            <option value="$PROJECT_DIR$/16Visitor" />
+            <option value="$PROJECT_DIR$/17Mediator" />
+            <option value="$PROJECT_DIR$/18Proxy" />
+            <option value="$PROJECT_DIR$/18Proxy&amp;Notification" />
+            <option value="$PROJECT_DIR$/19Combine" />
+            <option value="$PROJECT_DIR$/20Adapter" />
+            <option value="$PROJECT_DIR$/21Decorate" />
+            <option value="$PROJECT_DIR$/22flyweight" />
+            <option value="$PROJECT_DIR$/23facade" />
+            <option value="$PROJECT_DIR$/24bridge" />
+            <option value="$PROJECT_DIR$/25mvp" />
+          </set>
+        </option>
+        <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/02Sington" />
