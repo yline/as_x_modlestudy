@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ListView.iml" filepath="$PROJECT_DIR$/ListView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SwipeRefreshLayout/SwipeRefreshLayout.iml" filepath="$PROJECT_DIR$/SwipeRefreshLayout/SwipeRefreshLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/ThresHold/ThresHold.iml" filepath="$PROJECT_DIR$/ThresHold/ThresHold.iml" />
     </modules>
   </component>

@@ -10,18 +10,18 @@ public interface ICommonAdapterCallback<E>
 	/**
 	 * Attempts to add {@code object} to the contents of this
 	 * {@code Collection} (optional).
-	 * <p>
+	 * <p/>
 	 * After this method finishes successfully it is guaranteed that the object
 	 * is contained in the collection.
-	 * <p>
+	 * <p/>
 	 * If the collection was modified it returns {@code true}, {@code false} if
 	 * no changes were made.
-	 * <p>
+	 * <p/>
 	 * An implementation of {@code Collection} may narrow the set of accepted
 	 * objects, but it has to specify this in the documentation. If the object
 	 * to be added does not meet this restriction, then an
 	 * {@code IllegalArgumentException} is thrown.
-	 * <p>
+	 * <p/>
 	 * If a collection does not yet contain an object that is to be added and
 	 * adding the object fails, this method <i>must</i> throw an appropriate
 	 * unchecked Exception. Returning false is not permitted in this case

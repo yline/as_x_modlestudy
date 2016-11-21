@@ -1,1 +1,1 @@
-include ':ThresHold'
+include ':ThresHold', ':SwipeRefreshLayout'
