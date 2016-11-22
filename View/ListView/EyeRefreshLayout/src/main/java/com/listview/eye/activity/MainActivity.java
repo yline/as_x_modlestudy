@@ -1,6 +1,7 @@
 package com.listview.eye.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.TypedValue;
@@ -178,5 +179,10 @@ public class MainActivity extends BaseActivity
 	{
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources()
 				.getDisplayMetrics());
+	}
+
+	public static void actionStart(Context context)
+	{
+		context.startActivity(new Intent(context, MainActivity.class));
 	}
 }

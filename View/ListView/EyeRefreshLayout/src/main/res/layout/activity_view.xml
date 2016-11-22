@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn_view_start"
+        android:id="@+id/btn_view_eye"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="view_start"/>
+        android:text="EyeView 效果演示"/>
 
     <RelativeLayout
-        android:id="@+id/layoutFooter"
+        android:id="@+id/rl_eye"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/btn_view_eye"
         android:background="#424242">
 
         <!-- 顶部加载的动画 -->
@@ -24,9 +24,35 @@
             android:id="@+id/view_eye"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"/>
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_view_process"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_eye"
+        android:text="YProcess 效果展示"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_process"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@+id/btn_view_process"
+        android:background="#424242">
+
+        <com.listview.eye.view.YProgressView
+            android:id="@+id/view_process"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_start_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="ListView 效果展示"/>
+
+</RelativeLayout>
