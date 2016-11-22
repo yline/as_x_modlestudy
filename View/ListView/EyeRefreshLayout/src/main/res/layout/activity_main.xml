@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="#1565c0"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="10dp"
+        android:text="PullDownListView"
+        android:textColor="#fff"/>
+
+    <com.listview.eye.view.PullDownListView
+        android:id="@+id/pullDownListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#424242"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/layoutHeader"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true">
+
+            <!-- 顶部加载的动画 -->
+
+            <com.listview.eye.view.EyeView
+                android:id="@+id/eyeView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutFooter"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true">
+
+            <!-- 底部加载的动画 -->
+
+            <com.listview.eye.view.YProgressView
+                android:id="@+id/progressView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp">
+            </com.listview.eye.view.YProgressView>
+        </RelativeLayout>
+
+    </com.listview.eye.view.PullDownListView>
+
+</LinearLayout>
