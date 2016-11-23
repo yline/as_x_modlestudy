@@ -43,7 +43,6 @@ public class MainActivity extends BaseAppCompatActivity
 			@Override
 			public void onRefresh()
 			{
-
 				new Handler().postDelayed(new Runnable()
 				{
 					@Override

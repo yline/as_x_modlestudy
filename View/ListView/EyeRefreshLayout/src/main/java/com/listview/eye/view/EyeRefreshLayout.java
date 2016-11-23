@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,7 +21,7 @@ import com.listview.eye.R;
 /**
  * 这个是有问题的
  */
-public class PullDownListView extends RelativeLayout implements OnScrollListener
+public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 {
 	private int maxPullTopHeight;
 
@@ -48,19 +49,12 @@ public class PullDownListView extends RelativeLayout implements OnScrollListener
 
 	private OnScrollListener mOnScrollListener;
 
-	private OnPullHeightChangeListener mOnPullHeightChangeListener;
-
-	public void setOnPullHeightChangeListener(OnPullHeightChangeListener listener)
-	{
-		this.mOnPullHeightChangeListener = listener;
-	}
-
 	public void setOnScrollListener(OnScrollListener listener)
 	{
 		this.mOnScrollListener = listener;
 	}
 
-	public PullDownListView(Context context, AttributeSet attrs)
+	public EyeRefreshLayout(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 	}
@@ -68,6 +62,11 @@ public class PullDownListView extends RelativeLayout implements OnScrollListener
 	public boolean isRefreshing()
 	{
 		return this.isRefreshing;
+	}
+
+	public void setListView(ListView listView)
+	{
+		this.mListView = listView;
 	}
 
 	private ListView mListView = new ListView(getContext())
@@ -98,7 +97,6 @@ public class PullDownListView extends RelativeLayout implements OnScrollListener
 
 					if (isTop && mListView.getTop() >= 0)
 					{
-
 						if (isToBottom && mListView.getTop() <= maxPullTopHeight)
 						{
 							// MotionEvent event = MotionEvent.obtain(ev);
@@ -123,7 +121,6 @@ public class PullDownListView extends RelativeLayout implements OnScrollListener
 						}
 						else if (!isToBottom && mListView.getTop() > 0)
 						{
-							// MotionEvent event = MotionEvent.obtain(ev);
 							ev.setAction(MotionEvent.ACTION_UP);
 							super.onTouchEvent(ev);
 							if ((mListView.getTop() - step) < 0)
@@ -150,7 +147,6 @@ public class PullDownListView extends RelativeLayout implements OnScrollListener
 					{
 						if (!isToBottom && (parent.getHeight() - mListView.getBottom()) <= maxPullBottomHeight)
 						{
-							// MotionEvent event = MotionEvent.obtain(ev);
 							ev.setAction(MotionEvent.ACTION_UP);
 							super.onTouchEvent(ev);
 							pullTag = true;
@@ -204,9 +200,18 @@ public class PullDownListView extends RelativeLayout implements OnScrollListener
 						{
 							animateTopTo(layoutHeader.getMeasuredHeight());
 							isRefreshing = true;
-							if (null != mOnPullHeightChangeListener)
+							if (null != onRefreshListener)
 							{
-								mOnPullHeightChangeListener.onRefreshing(true);
+								int time = onRefreshListener.onStart();
+								new Handler().postDelayed(new Runnable()
+								{
+									@Override
+									public void run()
+									{
+										pullUp();
+										onRefreshListener.onFinish();
+									}
+								}, time);
 							}
 						}
 						else
@@ -221,9 +226,18 @@ public class PullDownListView extends RelativeLayout implements OnScrollListener
 						{
 							animateBottomTo(-layoutFooter.getMeasuredHeight());
 							isRefreshing = true;
-							if (null != mOnPullHeightChangeListener)
+							if (null != onLoadListener)
 							{
-								mOnPullHeightChangeListener.onRefreshing(false);
+								int time = onLoadListener.onStart();
+								new Handler().postDelayed(new Runnable()
+								{
+									@Override
+									public void run()
+									{
+										pullUp();
+										onLoadListener.onFinish();
+									}
+								}, time);
 							}
 						}
 						else
@@ -239,9 +253,9 @@ public class PullDownListView extends RelativeLayout implements OnScrollListener
 	private void scrollBottomTo(int y)
 	{
 		mListView.layout(mListView.getLeft(), y, mListView.getRight(), this.getMeasuredHeight() + y);
-		if (null != mOnPullHeightChangeListener)
+		if (null != onLoadListener)
 		{
-			mOnPullHeightChangeListener.onBottomHeightChange(layoutHeader.getHeight(), -y);
+			onLoadListener.onLoad(layoutHeader.getHeight(), -y);
 		}
 	}
 
@@ -270,9 +284,9 @@ public class PullDownListView extends RelativeLayout implements OnScrollListener
 	private void scrollTopTo(int y)
 	{
 		mListView.layout(mListView.getLeft(), y, mListView.getRight(), this.getMeasuredHeight() + y);
-		if (null != mOnPullHeightChangeListener)
+		if (null != onRefreshListener)
 		{
-			mOnPullHeightChangeListener.onTopHeightChange(layoutHeader.getHeight(), y);
+			onRefreshListener.onRefresh(layoutHeader.getHeight(), y);
 		}
 	}
 
@@ -423,13 +437,45 @@ public class PullDownListView extends RelativeLayout implements OnScrollListener
 	{
 		this.mListView.setOnItemClickListener(listener);
 	}
-
+	/*
 	public interface OnPullHeightChangeListener
 	{
-		public void onTopHeightChange(int headerHeight, int pullHeight);
+		void onTopHeightChange(int headerHeight, int pullHeight);
 
-		public void onBottomHeightChange(int footerHeight, int pullHeight);
+		void onBottomHeightChange(int footerHeight, int pullHeight);
 
-		public void onRefreshing(boolean isTop);
+		void onRefreshing(boolean isTop);
+	}*/
+
+	private OnRefreshListener onRefreshListener;
+
+	public void setOnRefreshListener(OnRefreshListener listener)
+	{
+		this.onRefreshListener = listener;
+	}
+
+	public interface OnRefreshListener
+	{
+		int onStart();
+
+		void onRefresh(int headerHeight, int pullHeight);
+
+		void onFinish();
+	}
+
+	private OnLoadListener onLoadListener;
+
+	public void setOnLoadListener(OnLoadListener listener)
+	{
+		this.onLoadListener = listener;
+	}
+
+	public interface OnLoadListener
+	{
+		int onStart();
+
+		void onLoad(int footerHeight, int pullHeight);
+
+		void onFinish();
 	}
 }
