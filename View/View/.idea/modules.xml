@@ -3,11 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DrawLayout/DrawLayout.iml" filepath="$PROJECT_DIR$/DrawLayout/DrawLayout.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SliderBar/Slider.iml" filepath="$PROJECT_DIR$/SliderBar/Slider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PatternLock/PatternLock.iml" filepath="$PROJECT_DIR$/PatternLock/PatternLock.iml" />
       <module fileurl="file://$PROJECT_DIR$/SliderBar/SliderBar.iml" filepath="$PROJECT_DIR$/SliderBar/SliderBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/View.iml" filepath="$PROJECT_DIR$/View.iml" />
       <module fileurl="file://$PROJECT_DIR$/WaveView/WaveView.iml" filepath="$PROJECT_DIR$/WaveView/WaveView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WaveView/app.iml" filepath="$PROJECT_DIR$/WaveView/app.iml" />
     </modules>
   </component>
 </project>
