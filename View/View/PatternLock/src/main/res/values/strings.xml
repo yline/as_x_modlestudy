@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">图案解锁</string>
+    <string name="app_name">PatternLock</string>
     <string name="lockscreen_access_pattern_start">"开始绘制图案"</string>
     <string name="lockscreen_access_pattern_cleared">"图案已清除"</string>
     <string name="lockscreen_access_pattern_cell_added">"已添加单元格"</string>

@@ -8,15 +8,4 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ButtonGreen" parent="@android:style/Widget.Button">
-        <item name="android:textSize">18.0sp</item>
-        <item name="android:textColor">@drawable/skin_color_button</item>
-        <item name="android:background">@drawable/common_btn_green</item>
-    </style>
-
-    <style name="ButtonRed" parent="@android:style/Widget.Button">
-        <item name="android:textSize">18.0sp</item>
-        <item name="android:textColor">@drawable/skin_color_button</item>
-        <item name="android:background">@drawable/common_btn_red</item>
-    </style>
 </resources>
