@@ -52,7 +52,7 @@ public class UnlockPwdActivity extends BaseActivity
 
 		if (!LockPatternHelper.getInstance().savedPatternExists())
 		{
-			GuideGesturePasswordActivity.actionStart(this);
+			CreateLockPwdActivity.actionStart(this);
 			finish();
 		}
 	}
@@ -106,7 +106,7 @@ public class UnlockPwdActivity extends BaseActivity
 			{
 				mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Correct);
 
-				GuideGesturePasswordActivity.actionStart(UnlockPwdActivity.this);
+				CreateLockPwdActivity.actionStart(UnlockPwdActivity.this);
 				MainApplication.toast("输入正确");
 				finish();
 			}

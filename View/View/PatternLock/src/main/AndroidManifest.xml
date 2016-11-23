@@ -15,8 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.CreateGesturePasswordActivity"></activity>
-        <activity android:name=".activity.GuideGesturePasswordActivity"></activity>
+        <activity android:name=".activity.CreateLockPwdActivity"></activity>
     </application>
 
 </manifest>
