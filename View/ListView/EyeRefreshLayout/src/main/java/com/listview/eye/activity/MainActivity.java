@@ -61,10 +61,7 @@ public class MainActivity extends BaseActivity
 					progress = 1.0f;
 				}
 
-				if (!eyeRefreshLayout.isRefreshing())
-				{
-					eyeView.setProgress(progress);
-				}
+				eyeView.setProgress(progress);
 			}
 
 			@Override
@@ -74,6 +71,7 @@ public class MainActivity extends BaseActivity
 			}
 		});
 
+		// 不设置listener就不会进行监听事件,也不会体现在UI上
 		eyeRefreshLayout.setOnLoadListener(new EyeRefreshLayout.OnLoadListener()
 		{
 			@Override
@@ -102,10 +100,7 @@ public class MainActivity extends BaseActivity
 					progress = 1.0f;
 				}
 
-				if (!eyeRefreshLayout.isRefreshing())
-				{
-					progressView.setProgress(progress);
-				}
+				progressView.setProgress(progress);
 			}
 
 			@Override

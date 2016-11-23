@@ -8,13 +8,12 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.listview.eye.R;
 
-public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
+public class EyeRefreshLayout extends RelativeLayout implements AbsListView.OnScrollListener
 {
 	private int maxPullTopHeight;
 
@@ -27,8 +26,6 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 	private boolean isTop;
 
 	private boolean isBottom;
-
-	private boolean isRefreshing;
 
 	private boolean isAnimation;
 
@@ -45,14 +42,7 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 		super(context, attrs);
 	}
 
-	public boolean isRefreshing()
-	{
-		return this.isRefreshing;
-	}
-
 	private ListView mListView;
-
-	private int lastY = 0;
 
 	public void setListView(ListView listView)
 	{
@@ -61,10 +51,12 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 
 		mListView.setOnTouchListener(new OnTouchListener()
 		{
+			int lastY = 0;
+
 			@Override
 			public boolean onTouch(View v, MotionEvent ev)
 			{
-				if (isAnimation || isRefreshing)
+				if (isAnimation)
 				{
 					return mListView.onTouchEvent(ev);
 				}
@@ -85,95 +77,101 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 
 						if (isTop && mListView.getTop() >= 0)
 						{
-							if (isToBottom && mListView.getTop() <= maxPullTopHeight)
+							if (null != onRefreshListener)
 							{
-								ev.setAction(MotionEvent.ACTION_UP);
-								mListView.onTouchEvent(ev);
-								pullTag = true;
+								if (isToBottom && mListView.getTop() <= maxPullTopHeight)
+								{
+									ev.setAction(MotionEvent.ACTION_UP);
+									mListView.onTouchEvent(ev);
+									pullTag = true;
 
-								if (mListView.getTop() > layoutHeader.getHeight())
-								{
-									step = step / 2;
+									if (mListView.getTop() > layoutHeader.getHeight())
+									{
+										step = step / 3;
+									}
+									if ((mListView.getTop() + step) > maxPullTopHeight)
+									{
+										mCurrentY = maxPullTopHeight;
+										scrollTopTo(mCurrentY);
+									}
+									else
+									{
+										mCurrentY += step;
+										scrollTopTo(mCurrentY);
+									}
 								}
-								if ((mListView.getTop() + step) > maxPullTopHeight)
+								else if (!isToBottom && mListView.getTop() > 0)
 								{
-									mCurrentY = maxPullTopHeight;
-									scrollTopTo(mCurrentY);
+									ev.setAction(MotionEvent.ACTION_UP);
+									mListView.onTouchEvent(ev);
+									if ((mListView.getTop() - step) < 0)
+									{
+										mCurrentY = 0;
+										scrollTopTo(mCurrentY);
+									}
+									else
+									{
+										mCurrentY -= step;
+										scrollTopTo(mCurrentY);
+									}
 								}
-								else
+								else if (!isToBottom && mListView.getTop() == 0)
 								{
-									mCurrentY += step;
-									scrollTopTo(mCurrentY);
+									if (!pullTag)
+									{
+										return mListView.onTouchEvent(ev);
+									}
 								}
+								return true;
 							}
-							else if (!isToBottom && mListView.getTop() > 0)
-							{
-								ev.setAction(MotionEvent.ACTION_UP);
-								mListView.onTouchEvent(ev);
-								if ((mListView.getTop() - step) < 0)
-								{
-									mCurrentY = 0;
-									scrollTopTo(mCurrentY);
-								}
-								else
-								{
-									mCurrentY -= step;
-									scrollTopTo(mCurrentY);
-								}
-							}
-							else if (!isToBottom && mListView.getTop() == 0)
-							{
-								if (!pullTag)
-								{
-									return mListView.onTouchEvent(ev);
-								}
-							}
-							return true;
 						}
 						else if (isBottom && mListView.getBottom() <= parent.getHeight())
 						{
-							if (!isToBottom && (parent.getHeight() - mListView.getBottom()) <= maxPullBottomHeight)
+							if (null != onLoadListener)
 							{
-								ev.setAction(MotionEvent.ACTION_UP);
-								mListView.onTouchEvent(ev);
-								pullTag = true;
-								if (parent.getHeight() - mListView.getBottom() > layoutFooter.getHeight())
+								if (!isToBottom && (parent.getHeight() - mListView.getBottom()) <= maxPullBottomHeight)
 								{
-									step = step / 2;
-								}
+									ev.setAction(MotionEvent.ACTION_UP);
+									mListView.onTouchEvent(ev);
+									pullTag = true;
+									if (parent.getHeight() - mListView.getBottom() > layoutFooter.getHeight())
+									{
+										step = step / 3;
+									}
 
-								if ((mListView.getBottom() - step) < (parent.getHeight() - maxPullBottomHeight))
-								{
-									mCurrentY = -maxPullBottomHeight;
-									scrollBottomTo(mCurrentY);
+									if ((mListView.getBottom() - step) < (parent.getHeight() - maxPullBottomHeight))
+									{
+										mCurrentY = -maxPullBottomHeight;
+										scrollBottomTo(mCurrentY);
+									}
+									else
+									{
+										mCurrentY -= step;
+										scrollBottomTo(mCurrentY);
+									}
 								}
-								else
+								else if (isToBottom && (mListView.getBottom() < parent.getHeight()))
 								{
-									mCurrentY -= step;
-									scrollBottomTo(mCurrentY);
+									if ((mListView.getBottom() + step) > parent.getHeight())
+									{
+										mCurrentY = 0;
+										scrollBottomTo(mCurrentY);
+									}
+									else
+									{
+										mCurrentY += step;
+										scrollBottomTo(mCurrentY);
+									}
 								}
+								else if (isToBottom && mListView.getBottom() == parent.getHeight())
+								{
+									if (!pullTag)
+									{
+										return mListView.onTouchEvent(ev);
+									}
+								}
+								return true;
 							}
-							else if (isToBottom && (mListView.getBottom() < parent.getHeight()))
-							{
-								if ((mListView.getBottom() + step) > parent.getHeight())
-								{
-									mCurrentY = 0;
-									scrollBottomTo(mCurrentY);
-								}
-								else
-								{
-									mCurrentY += step;
-									scrollBottomTo(mCurrentY);
-								}
-							}
-							else if (isToBottom && mListView.getBottom() == parent.getHeight())
-							{
-								if (!pullTag)
-								{
-									return mListView.onTouchEvent(ev);
-								}
-							}
-							return true;
 						}
 						break;
 					}
@@ -186,45 +184,48 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 							if (mListView.getTop() > refreshingTopHeight)
 							{
 								animateTopTo(layoutHeader.getMeasuredHeight());
-								isRefreshing = true;
 								if (null != onRefreshListener)
 								{
 									int time = onRefreshListener.onStart();
-									new Handler().postDelayed(new Runnable()
+									if (time > 0)
 									{
-										@Override
-										public void run()
+										new Handler().postDelayed(new Runnable()
 										{
-											pullUp();
-											onRefreshListener.onFinish();
-										}
-									}, time);
+											@Override
+											public void run()
+											{
+												pullUp();
+												onRefreshListener.onFinish();
+											}
+										}, time);
+									}
 								}
 							}
 							else
 							{
 								animateTopTo(0);
 							}
-
 						}
 						else if (mListView.getBottom() < parent.getHeight())
 						{
 							if ((parent.getHeight() - mListView.getBottom()) > refreshingBottomHeight)
 							{
 								animateBottomTo(-layoutFooter.getMeasuredHeight());
-								isRefreshing = true;
 								if (null != onLoadListener)
 								{
 									int time = onLoadListener.onStart();
-									new Handler().postDelayed(new Runnable()
+									if (time > 0)
 									{
-										@Override
-										public void run()
+										new Handler().postDelayed(new Runnable()
 										{
-											pullUp();
-											onLoadListener.onFinish();
-										}
-									}, time);
+											@Override
+											public void run()
+											{
+												pullUp();
+												onLoadListener.onFinish();
+											}
+										}, time);
+									}
 								}
 							}
 							else
@@ -300,6 +301,19 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 		animator.start();
 	}
 
+	/** 拉回初始状态 */
+	public void pullUp()
+	{
+		if (mListView.getTop() > 0)
+		{
+			animateTopTo(0);
+		}
+		else if (mListView.getBottom() < this.getHeight())
+		{
+			animateBottomTo(0);
+		}
+	}
+
 	@Override
 	public void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
 	{
@@ -321,20 +335,6 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 		super.onFinishInflate();
 	}
 
-	/** 拉回顶部 */
-	public void pullUp()
-	{
-		isRefreshing = false;
-		if (mListView.getTop() > 0)
-		{
-			animateTopTo(0);
-		}
-		else if (mListView.getBottom() < this.getHeight())
-		{
-			animateBottomTo(0);
-		}
-	}
-
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState)
 	{
@@ -344,6 +344,7 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
 	{
+		// 判断是否已经到底部
 		if (mListView.getCount() > 0)
 		{
 			if ((firstVisibleItem + visibleItemCount) == totalItemCount)
@@ -351,7 +352,6 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 				View lastItem = (View) mListView.getChildAt(visibleItemCount - 1);
 				if (null != lastItem)
 				{
-
 					if (lastItem.getBottom() == mListView.getHeight())
 					{
 						isBottom = true;
@@ -372,6 +372,7 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 			isBottom = false;
 		}
 
+		// 判断是否已经到顶部
 		if (mListView.getCount() > 0)
 		{
 			if (firstVisibleItem == 0)
@@ -409,6 +410,9 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 
 	public interface OnRefreshListener
 	{
+		/**
+		 * @return if return <= 0; 则不会自行调用 onFinish(); 此时,参考原文中写,即可
+		 */
 		int onStart();
 
 		void onRefresh(int headerHeight, int pullHeight);
@@ -425,6 +429,9 @@ public class EyeRefreshLayout extends RelativeLayout implements OnScrollListener
 
 	public interface OnLoadListener
 	{
+		/**
+		 * @return if return <= 0; 则不会自行调用 onFinish(); 此时,参考原文中写,即可
+		 */
 		int onStart();
 
 		void onLoad(int footerHeight, int pullHeight);
