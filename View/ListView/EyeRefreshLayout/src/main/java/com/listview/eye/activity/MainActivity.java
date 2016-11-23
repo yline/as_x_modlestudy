@@ -123,7 +123,6 @@ public class MainActivity extends BaseActivity
 		eyeView = (EyeView) this.findViewById(R.id.eyeView);
 
 		listView = (ListView) this.findViewById(R.id.view_list);
-
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, adapterData);
 		listView.setAdapter(adapter);
 
