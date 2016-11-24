@@ -258,8 +258,7 @@ public class LockPatternView extends View
 	{
 		super(context, attrs);
 
-		TypedArray a = context.obtainStyledAttributes(attrs,
-				R.styleable.LockPatternView);
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LockPatternView);
 
 		final String aspect = a.getString(R.styleable.LockPatternView_aspect);
 
@@ -302,7 +301,6 @@ public class LockPatternView extends View
 			mBitmapHeight = Math.max(mBitmapHeight, bitmap.getHeight());
 		}
 		a.recycle();
-
 	}
 
 	private Bitmap getBitmapFor(int resId)

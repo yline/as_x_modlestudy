@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.FileObserver;
 import android.util.Log;
 
+import com.yline.log.LogFileUtil;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +19,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LockPatternHelper
 {
+	private static final boolean Debug = true;
+
 	private static final String TAG = "LockPatternUtils";
 
 	private static final String LOCK_PATTERN_FILE = "gesture.key";
@@ -63,10 +67,17 @@ public class LockPatternHelper
 		@Override
 		public void onEvent(int event, String path)
 		{
-			Log.d(TAG, "file path" + path);
+			if (Debug)
+			{
+				LogFileUtil.v(TAG, "file path" + path);
+			}
+
 			if (LOCK_PATTERN_FILE.equals(path))
 			{
-				Log.d(TAG, "lock pattern file changed");
+				if (Debug)
+				{
+					LogFileUtil.v(TAG, "lock pattern file changed");
+				}
 				sHaveNonZeroPatternFile.set(sLockPatternFilename.length() > 0);
 			}
 		}
@@ -121,7 +132,7 @@ public class LockPatternHelper
 	}
 
 	/**
-	 * Deserialize a pattern. 瑙ｅ瘑,鐢ㄤ簬淇濆瓨鐘舵�
+	 * Deserialize a pattern. 将String转成Pattern
 	 * @param string The pattern serialized with {@link #patternToString}
 	 * @return The pattern.
 	 */
@@ -139,7 +150,7 @@ public class LockPatternHelper
 	}
 
 	/**
-	 * Serialize a pattern. 鍔犲瘑
+	 * Serialize a pattern. 将Pattern转成String
 	 * @param pattern The pattern.
 	 * @return The pattern in string form.
 	 */

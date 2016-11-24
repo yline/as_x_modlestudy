@@ -13,14 +13,17 @@ import com.view.pattern.lock.R;
 import com.view.pattern.lock.view.LockPatternHelper;
 import com.view.pattern.lock.view.LockPatternView;
 import com.yline.base.BaseActivity;
+import com.yline.log.LogFileUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CreateLockPwdActivity extends BaseActivity
 {
+	/** 保存当前UI信息的key */
 	private static final String KEY_UI_STAGE = "uiStage";
 
+	/** 保存当前Pattern状态信息的key */
 	private static final String KEY_PATTERN_CHOICE = "chosenPattern";
 
 	private LockPatternView mLockPatternView;
@@ -45,30 +48,37 @@ public class CreateLockPwdActivity extends BaseActivity
 	 */
 	protected enum Stage
 	{
+		/** 向用户介绍的状态 */
 		Introduction(R.string.lock_pattern_recording_intro_header,
 				android.R.string.cancel, View.VISIBLE,
 				R.string.lock_pattern_continue_button_text, false,
 				true),
+		/** 向用户演示的状态,动画 */
 		HelpScreen(R.string.lock_pattern_settings_help_how_to_record,
 				android.R.string.unknownName, View.GONE,
 				android.R.string.ok, true,
 				false),
+		/** 选择太少的个数 */
 		ChoiceTooShort(R.string.lock_pattern_recording_incorrect_too_short,
 				R.string.lock_pattern_retry_button_text, View.VISIBLE,
 				R.string.lock_pattern_continue_button_text, false,
 				true),
+		/** 第一次确认状态 */
 		FirstChoiceValid(R.string.lock_pattern_pattern_entered_header,
 				R.string.lock_pattern_retry_button_text, View.VISIBLE,
 				R.string.lock_pattern_continue_button_text, true,
 				false),
+		/** 待确认状态 */
 		NeedToConfirm(R.string.lock_pattern_need_to_confirm,
 				android.R.string.cancel, View.VISIBLE,
 				R.string.lock_pattern_confirm_button_text, false,
 				true),
+		/** 确认错误状态 */
 		ConfirmWrong(R.string.lock_pattern_need_to_unlock_wrong,
 				android.R.string.cancel, View.VISIBLE,
 				R.string.lock_pattern_confirm_button_text, false,
 				true),
+		/** 确认正确状态 */
 		ChoiceConfirmed(R.string.lock_pattern_pattern_confirmed_header,
 				android.R.string.cancel, View.VISIBLE,
 				R.string.lock_pattern_confirm_button_text, true,
@@ -123,7 +133,9 @@ public class CreateLockPwdActivity extends BaseActivity
 			{
 				mChosenPattern = LockPatternHelper.getInstance().stringToPattern(patternString);
 			}
-			updateStage(Stage.values()[savedInstanceState.getInt(KEY_UI_STAGE)]);
+
+			final int uiStage = savedInstanceState.getInt(KEY_UI_STAGE);
+			updateStage(Stage.values()[uiStage]);
 		}
 	}
 
@@ -246,18 +258,21 @@ public class CreateLockPwdActivity extends BaseActivity
 		@Override
 		public void onPatternDetected(List<LockPatternView.Cell> pattern)
 		{
+			/** 若绘制的图片没有的话 */
 			if (pattern == null)
 			{
 				return;
 			}
 
 			// Log.i("way", "result = " + pattern.toString());
-			if (mUiStage == Stage.NeedToConfirm
-					|| mUiStage == Stage.ConfirmWrong)
+			if (mUiStage == Stage.NeedToConfirm || mUiStage == Stage.ConfirmWrong)
 			{
 				if (mChosenPattern == null)
-					throw new IllegalStateException(
-							"null chosen pattern in stage 'need to confirm");
+				{
+					throw new IllegalStateException("null chosen pattern in stage 'need to confirm");
+				}
+
+				// 判断校验是否正确
 				if (mChosenPattern.equals(pattern))
 				{
 					updateStage(Stage.ChoiceConfirmed);
@@ -267,8 +282,7 @@ public class CreateLockPwdActivity extends BaseActivity
 					updateStage(Stage.ConfirmWrong);
 				}
 			}
-			else if (mUiStage == Stage.Introduction
-					|| mUiStage == Stage.ChoiceTooShort)
+			else if (mUiStage == Stage.Introduction || mUiStage == Stage.ChoiceTooShort)
 			{
 				if (pattern.size() < LockPatternHelper.MIN_LOCK_PATTERN_SIZE)
 				{
@@ -276,14 +290,14 @@ public class CreateLockPwdActivity extends BaseActivity
 				}
 				else
 				{
+					/** 这里保存一份,首次绘制的Pattern */
 					mChosenPattern = new ArrayList<LockPatternView.Cell>(pattern);
 					updateStage(Stage.FirstChoiceValid);
 				}
 			}
 			else
 			{
-				throw new IllegalStateException("Unexpected stage " + mUiStage
-						+ " when " + "entering the pattern.");
+				throw new IllegalStateException("Unexpected stage " + mUiStage + " when " + "entering the pattern.");
 			}
 		}
 
@@ -297,6 +311,8 @@ public class CreateLockPwdActivity extends BaseActivity
 	private void updateStage(Stage stage)
 	{
 		mUiStage = stage;
+
+		LogFileUtil.v(MainApplication.TAG, "UiStage = " + mUiStage);
 		tvHint.setText(stage.headerMessage);
 
 		mFooterLeftButton.setText(stage.leftHint);
