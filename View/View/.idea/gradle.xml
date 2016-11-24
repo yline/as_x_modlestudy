@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/DragBubble" />
             <option value="$PROJECT_DIR$/DrawLayout" />
             <option value="$PROJECT_DIR$/PatternLock" />
             <option value="$PROJECT_DIR$/SliderBar" />
@@ -18,6 +19,7 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/DragBubble" />
             <option value="$PROJECT_DIR$/DrawLayout" />
             <option value="$PROJECT_DIR$/PatternLock" />
             <option value="$PROJECT_DIR$/SliderBar" />
