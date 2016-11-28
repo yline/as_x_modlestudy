@@ -1,1 +1,1 @@
-include ':UnActiveLock', ':UnActiveManager', ':MessagerReceiver', ':MultiFilterThresHold', ':LocalThresHold'
+include ':UnActiveLock', ':UnActiveManager', ':MessagerReceiver', ':MultiFilterThresHold', ':LocalThresHold', ':AlarmReceiver'

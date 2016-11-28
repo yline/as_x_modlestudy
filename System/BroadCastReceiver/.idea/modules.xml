@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AlarmReceiver/AlarmReceiver.iml" filepath="$PROJECT_DIR$/AlarmReceiver/AlarmReceiver.iml" />
       <module fileurl="file://$PROJECT_DIR$/BroadCastReceiver.iml" filepath="$PROJECT_DIR$/BroadCastReceiver.iml" />
       <module fileurl="file://$PROJECT_DIR$/LocalThresHold/LocalThresHold.iml" filepath="$PROJECT_DIR$/LocalThresHold/LocalThresHold.iml" />
       <module fileurl="file://$PROJECT_DIR$/MessagerReceiver/MessagerReceiver.iml" filepath="$PROJECT_DIR$/MessagerReceiver/MessagerReceiver.iml" />
