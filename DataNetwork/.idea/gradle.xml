@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/SharePeference" />
             <option value="$PROJECT_DIR$/UDPSample" />
             <option value="$PROJECT_DIR$/XML" />
+            <option value="$PROJECT_DIR$/lrucache" />
           </set>
         </option>
         <option name="myModules">
@@ -31,6 +32,7 @@
             <option value="$PROJECT_DIR$/SharePeference" />
             <option value="$PROJECT_DIR$/UDPSample" />
             <option value="$PROJECT_DIR$/XML" />
+            <option value="$PROJECT_DIR$/lrucache" />
           </set>
         </option>
       </GradleProjectSettings>

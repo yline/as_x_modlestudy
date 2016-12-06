@@ -10,9 +10,9 @@
       <module fileurl="file://$PROJECT_DIR$/Https/Https.iml" filepath="$PROJECT_DIR$/Https/Https.iml" />
       <module fileurl="file://$PROJECT_DIR$/Json/Json.iml" filepath="$PROJECT_DIR$/Json/Json.iml" />
       <module fileurl="file://$PROJECT_DIR$/SharePeference/SharePeference.iml" filepath="$PROJECT_DIR$/SharePeference/SharePeference.iml" />
-      <module fileurl="file://$PROJECT_DIR$/UDPSample/UDP&amp;Instance.iml" filepath="$PROJECT_DIR$/UDPSample/UDP&amp;Instance.iml" />
       <module fileurl="file://$PROJECT_DIR$/UDPSample/UDPSample.iml" filepath="$PROJECT_DIR$/UDPSample/UDPSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/XML/XML.iml" filepath="$PROJECT_DIR$/XML/XML.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lrucache/lrucache.iml" filepath="$PROJECT_DIR$/lrucache/lrucache.iml" />
     </modules>
   </component>
 </project>
