@@ -40,4 +40,37 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="数据库 Google API形式"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_api_insert"
+            android:layout_width="0dp"
+            android:text="增加数据_api"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_api_delete"
+            android:layout_width="0dp"
+            android:text="删除数据_api"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_api_update"
+            android:layout_width="0dp"
+            android:text="修改数据_api"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </LinearLayout>

@@ -28,7 +28,7 @@ public class MyDbManager
 	/** age */
 	private static final String AGE = "age";
 
-	private SQLiteDatabase database;
+	private MySQLiteHelper sqLiteHelper;
 
 	private MyDbManager()
 	{
@@ -51,31 +51,49 @@ public class MyDbManager
 
 	private void createDataBase(Context context)
 	{
-		MySQLiteHelper sqLiteHelper = new MySQLiteHelper(context);
-		database = sqLiteHelper.getReadableDatabase();
+		sqLiteHelper = new MySQLiteHelper(context);
+		SQLiteDatabase database = sqLiteHelper.getReadableDatabase();
 		String createSql = String.format("create table %s(%s Integer primary key, %s varchar(16), %s Integer not null)", TABLE_NAME, ID, NAME, AGE);
 		LogFileUtil.v(TAG, createSql);
-		database.execSQL(createSql);
+		try
+		{
+			database.execSQL(createSql);
+			database.close();
+		}
+		catch (Exception e)
+		{
+			LogFileUtil.e(TAG, createSql, e);
+		}
+
 	}
 
 	public void insert(int id, String name, int age)
 	{
 		String insertSql = String.format("insert into %s(%s, %s, %s) values(%s, \"%s\", %s)", TABLE_NAME, ID, NAME, AGE, id, name, age);
 		LogFileUtil.v(TAG, insertSql);
+
+		SQLiteDatabase database = sqLiteHelper.getReadableDatabase();
 		database.execSQL(insertSql);
+		database.close();
 	}
 
 	public void deleteById(int id)
 	{
 		String deleteSql = String.format("delete from %s where %s=%s", TABLE_NAME, ID, id);
 		LogFileUtil.v(TAG, deleteSql);
+
+		SQLiteDatabase database = sqLiteHelper.getReadableDatabase();
 		database.execSQL(deleteSql);
+		database.close();
 	}
 
 	public void updateById(int id, String name, int age)
 	{
 		String updateSql = String.format("update %s set %s=\"%s\",%s=%s where %s=%s", TABLE_NAME, NAME, name, AGE, age, ID, id);
 		LogFileUtil.v(TAG, updateSql);
+
+		SQLiteDatabase database = sqLiteHelper.getReadableDatabase();
 		database.execSQL(updateSql);
+		database.close();
 	}
 }
