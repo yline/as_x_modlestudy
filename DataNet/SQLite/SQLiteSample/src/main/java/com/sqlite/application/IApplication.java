@@ -1,5 +1,6 @@
 package com.sqlite.application;
 
+import com.sqlite.Helper.MyDbManager;
 import com.yline.application.BaseApplication;
 import com.yline.application.SDKConfig;
 
@@ -9,6 +10,15 @@ import com.yline.application.SDKConfig;
 public class IApplication extends BaseApplication
 {
 	public static final String TAG = "SQLiteSample";
+
+	@Override
+	public void onCreate()
+	{
+		super.onCreate();
+
+		// 初始化数据库对象
+		MyDbManager.getInstance().init(this);
+	}
 
 	@Override
 	protected SDKConfig initConfig()
