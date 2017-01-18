@@ -1,5 +1,6 @@
 package com.sqlite.page.application;
 
+import com.sqlite.page.helper.DbManager;
 import com.yline.application.BaseApplication;
 import com.yline.application.SDKConfig;
 
@@ -9,6 +10,14 @@ import com.yline.application.SDKConfig;
 public class IApplication extends BaseApplication
 {
 	public static final String TAG = "SQLiteSampleQueryPage";
+
+	@Override
+	public void onCreate()
+	{
+		super.onCreate();
+
+		DbManager.getInstance().init(this);
+	}
 
 	@Override
 	protected SDKConfig initConfig()
