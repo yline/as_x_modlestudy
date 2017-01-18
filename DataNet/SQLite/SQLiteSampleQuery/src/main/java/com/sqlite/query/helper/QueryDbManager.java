@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created by yline on 2017/1/16.
+ * 如果数据适配到ListView类似Adapter时,可以使用: SimpleCursorAdapter or CursorAdapter
+ * @author yline 2017/1/17 --> 10:37
+ * @version 1.0.0
  */
 public class QueryDbManager
 {

@@ -1,1 +1,1 @@
-include ':SQLiteSample', ':SQLiteSampleQuery'
+include ':SQLiteSample', ':SQLiteSampleQuery', ':SQLiteSampleQueryPage'
