@@ -114,7 +114,7 @@ public class DbManager
 
 	// public List<Person> queryLimit(){}
 
-	public List<Person> queryAll(int minAge)
+	public List<Person> queryAllThroughMinAge(int minAge)
 	{
 		/**
 		 * Query the given table, returning a {@link Cursor} over the result set.
@@ -128,7 +128,7 @@ public class DbManager
 		 * @param orderBy 排序条件
 		 */
 		Cursor cursor = sqLiteHelper.getWritableDatabase().query(SQLiteHelper.getTableName(), null,
-				SQLiteHelper.getAGE() + ">" + minAge, null, null, null, SQLiteHelper.getID());
+				SQLiteHelper.getAGE() + ">" + minAge, null, null, null, SQLiteHelper.getAGE());
 
 		List<Person> resultList = new ArrayList<>();
 		if (null != cursor)
@@ -150,5 +150,43 @@ public class DbManager
 		LogFileUtil.v(TAG, "size = " + resultList.size());
 
 		return resultList;
+	}
+
+	public List<Person> queryAllLimit(int page, int pageSize)
+	{
+		Cursor cursor = sqLiteHelper.getWritableDatabase().query(SQLiteHelper.getTableName(), null,
+				null, null, null, null, null, (page * pageSize) + "," + pageSize);
+
+		List<Person> resultList = new ArrayList<>();
+		if (null != cursor)
+		{
+			while (cursor.moveToNext())
+			{
+				int id = cursor.getInt(cursor.getColumnIndex(SQLiteHelper.getID()));
+				String name = cursor.getString(cursor.getColumnIndex(SQLiteHelper.getNAME()));
+				int age = cursor.getInt(cursor.getColumnIndex(SQLiteHelper.getAGE()));
+
+				resultList.add(new Person(id, name, age));
+			}
+		}
+		else
+		{
+			LogFileUtil.v(TAG, "cursor is null");
+		}
+
+		LogFileUtil.v(TAG, "size = " + resultList.size());
+
+		return resultList;
+	}
+
+	public long getCountSize()
+	{
+		long count = 0;
+		Cursor cursor = sqLiteHelper.getWritableDatabase().query(SQLiteHelper.getTableName(), null, null, null, null, null, null);
+		if (null != cursor)
+		{
+			count = cursor.getCount();
+		}
+		return count;
 	}
 }
