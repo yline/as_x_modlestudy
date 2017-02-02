@@ -64,9 +64,8 @@ public class ContacterHelper
 				{
 					contactPhoneID = contactid;
 				}
-				LogFileUtil.v(AppConstant.TAG_CONTACTER, "contactName = " + contactName);
-				LogFileUtil.v(AppConstant.TAG_CONTACTER, "contactid = " + contactid);
-				LogFileUtil.v(AppConstant.TAG_CONTACTER, "contactPhoneID = " + contactPhoneID);
+
+				LogFileUtil.v(AppConstant.TAG_CONTACTER, "contactName = " + contactName + ",contactid = " + contactid + ",contactPhoneID = " + contactPhoneID + ",contactNumber = " + contactNumber);
 			}
 			cursor.close();
 		}
@@ -94,17 +93,15 @@ public class ContacterHelper
 			 */
 			if (contact_id != null)
 			{
-				LogFileUtil.i(AppConstant.TAG_CONTACTER, "contact_id = " + contact_id + ";  display_name = " + display_name);
-
 				Cursor cursorId = resolver.query(dataUri, null, "contact_id=?", new String[]{contact_id}, null);
 				while (cursorId.moveToNext())
 				{
 					String data1 = cursorId.getString(cursorId.getColumnIndex("data1"));
 					String mimetype = cursorId.getString(cursorId.getColumnIndex("mimetype"));
-					LogFileUtil.v(AppConstant.TAG_CONTACTER, "data1 = " + data1);
-					LogFileUtil.v(AppConstant.TAG_CONTACTER, "mimetype = " + mimetype);
-				}
 
+					LogFileUtil.i(AppConstant.TAG_CONTACTER, "contact_id = " + contact_id + ",display_name = " + display_name + ",data1 = " + data1 + ",mimetype = " + mimetype);
+				}
+				
 				cursorId.close();
 			}
 		}
