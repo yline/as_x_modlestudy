@@ -16,7 +16,7 @@ import java.net.URL;
 /**
  * 请求的URL,区分大小写
  * @author YLine
- *         <p/>
+ *         <p>
  *         2016年7月2日 下午12:04:15
  */
 public class GetUtil

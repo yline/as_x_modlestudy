@@ -5,9 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AIDL&amp;Provider/AIDL&amp;Provider.iml" filepath="$PROJECT_DIR$/AIDL&amp;Provider/AIDL&amp;Provider.iml" />
       <module fileurl="file://$PROJECT_DIR$/AIDL&amp;User/AIDL&amp;User.iml" filepath="$PROJECT_DIR$/AIDL&amp;User/AIDL&amp;User.iml" />
       <module fileurl="file://$PROJECT_DIR$/DataNetwork.iml" filepath="$PROJECT_DIR$/DataNetwork.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Http/Http.iml" filepath="$PROJECT_DIR$/Http/Http.iml" />
       <module fileurl="file://$PROJECT_DIR$/HttpBoye/HttpBoye.iml" filepath="$PROJECT_DIR$/HttpBoye/HttpBoye.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Https/Https.iml" filepath="$PROJECT_DIR$/Https/Https.iml" />
       <module fileurl="file://$PROJECT_DIR$/Json/Json.iml" filepath="$PROJECT_DIR$/Json/Json.iml" />
       <module fileurl="file://$PROJECT_DIR$/SharePeference/SharePeference.iml" filepath="$PROJECT_DIR$/SharePeference/SharePeference.iml" />
       <module fileurl="file://$PROJECT_DIR$/UDPSample/UDPSample.iml" filepath="$PROJECT_DIR$/UDPSample/UDPSample.iml" />
