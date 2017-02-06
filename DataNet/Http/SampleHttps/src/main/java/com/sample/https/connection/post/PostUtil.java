@@ -35,7 +35,7 @@ import javax.net.ssl.TrustManagerFactory;
 /**
  * 请求的URL,区分大小写
  * @author YLine
- *         <p>
+ *         <p/>
  *         2016年7月5日 下午10:46:01
  */
 public class PostUtil
