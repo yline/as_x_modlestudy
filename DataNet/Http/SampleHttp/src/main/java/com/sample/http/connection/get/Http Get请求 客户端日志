@@ -1,0 +1,27 @@
+07-03 09:12:47.080: V/x->MainActivity$1.onClick(L:50):(3558): Http -> ip = 192.168.1.102,className = HttpGetConnection?json="json"
+请求链接:
+07-03 09:12:47.090: V/x->GetConnectionUtil.doGetAsyn(L:47):(3558): connection_get -> doGetAsyn -> in -> http:http://192.168.1.102:8080/WebHttp/HttpGetConnection?json="json"
+07-03 09:12:47.090: V/x->GetConnectionUtil$1.run(L:65):(3558): connection_get -> doGetAsyn -> new url over
+请求头:【5条】
+07-03 09:12:47.120: I/x->GetConnectionUtil$1.run(L:75):(3558): connection_get -> doGetAsyn -> initHttpConnection over requestHeader
+07-03 09:12:47.120: I/x->GetConnectionUtil$1.run(L:75):(3558): accept:*/*
+07-03 09:12:47.120: I/x->GetConnectionUtil$1.run(L:75):(3558): action:get
+07-03 09:12:47.120: I/x->GetConnectionUtil$1.run(L:75):(3558): charset:utf-8
+07-03 09:12:47.120: I/x->GetConnectionUtil$1.run(L:75):(3558): connection:Keep-Alive
+07-03 09:12:47.120: I/x->GetConnectionUtil$1.run(L:75):(3558): Content-Type:application/x-www-form-urlencoded
+返回码:
+07-03 09:12:47.160: I/x->GetConnectionUtil$1.run(L:78):(3558): connection_get -> doGetAsyn -> responseCode = 200
+响应头:
+07-03 09:12:47.170: I/x->GetConnectionUtil$1.run(L:92):(3558): connection_get -> doGetAsyn -> responseHeader
+07-03 09:12:47.170: I/x->GetConnectionUtil$1.run(L:92):(3558): Server:Apache-Coyote/1.1
+07-03 09:12:47.170: I/x->GetConnectionUtil$1.run(L:92):(3558): Content-Length:19  // 字节长度,响应头的;
+07-03 09:12:47.170: I/x->GetConnectionUtil$1.run(L:92):(3558): Date:Sun, 03 Jul 2016 01:12:46 GMT
+07-03 09:12:47.170: I/x->GetConnectionUtil$1.run(L:92):(3558): X-Android-Selected-Transport:http/1.1
+07-03 09:12:47.170: I/x->GetConnectionUtil$1.run(L:92):(3558): X-Android-Sent-Millis:1467508367148
+07-03 09:12:47.170: I/x->GetConnectionUtil$1.run(L:92):(3558): X-Android-Received-Millis:1467508367174
+07-03 09:12:47.170: I/x->GetConnectionUtil$1.run(L:92):(3558): X-Android-Response-Source:NETWORK 200
+07-03 09:12:47.170: I/x->GetConnectionUtil$1.run(L:92):(3558): null:null
+返回数据:
+07-03 09:12:47.170: I/x->MainActivity$1$1.onSuccess(L:58):(3558): Http -> 请求成功
+07-03 09:12:47.170: I/x->MainActivity$1$1.onSuccess(L:58):(3558): result = Served at: /WebHttp
+

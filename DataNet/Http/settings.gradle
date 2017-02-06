@@ -1,1 +1,1 @@
-include ':HttpAlbum'
+include ':HttpAlbum', ':SampleHttp'
