@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/SampleHttp" />
             <option value="$PROJECT_DIR$/SampleHttpBoye" />
             <option value="$PROJECT_DIR$/SampleHttps" />
+            <option value="$PROJECT_DIR$/SampleOkHttp" />
           </set>
         </option>
         <option name="myModules">
@@ -22,6 +23,7 @@
             <option value="$PROJECT_DIR$/SampleHttp" />
             <option value="$PROJECT_DIR$/SampleHttpBoye" />
             <option value="$PROJECT_DIR$/SampleHttps" />
+            <option value="$PROJECT_DIR$/SampleOkHttp" />
           </set>
         </option>
       </GradleProjectSettings>
