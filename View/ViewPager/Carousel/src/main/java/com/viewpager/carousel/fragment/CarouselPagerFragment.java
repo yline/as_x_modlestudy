@@ -24,7 +24,7 @@ import com.view.viewpager.carousel.R;
 /**
  * 实现自动滑动,可以控制的量都在CarouselFragmentParams中控制
  * 缺陷:有时候循环的点的图片会消失不见,需要调节getRecycleCount中的返回量
- * <p/>
+ * <p>
  * 网络获取图片还没弄
  */
 public class CarouselPagerFragment extends Fragment
@@ -93,7 +93,7 @@ public class CarouselPagerFragment extends Fragment
 		viewPager.setAdapter(adapter);
 		viewPager.setCurrentItem(params.getPointStartPosition());
 
-		viewPager.setOnPageChangeListener(new OnPageChangeListener()
+		viewPager.addOnPageChangeListener(new OnPageChangeListener()
 		{
 
 			@Override
@@ -328,7 +328,6 @@ public class CarouselPagerFragment extends Fragment
 
 	/**
 	 * 设置viewPager大小
-	 *
 	 * @param view          viewPager
 	 * @param carouselParam 参数
 	 */
@@ -344,7 +343,6 @@ public class CarouselPagerFragment extends Fragment
 
 	/**
 	 * 添加指示点
-	 *
 	 * @param context   本Activity
 	 * @param viewGroup 指示点父框体(此处LinearLayout)
 	 * @param count     指示点个数
@@ -377,7 +375,6 @@ public class CarouselPagerFragment extends Fragment
 
 	/**
 	 * 指示点状态
-	 *
 	 * @param viewGroup 指示点父框体(此处LinearLayout)
 	 * @param position  当前的指示点
 	 */
