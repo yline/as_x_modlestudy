@@ -69,6 +69,7 @@ public class MainADHelper
 		{
 			this.viewPager = viewPager;
 
+			viewPager.setOffscreenPageLimit(param.resource.size());
 			UIResizeUtil.build().setIsWidthAdapter(false)
 					.setWidth(param.viewPagerWidth).setHeight(param.viewPagerHeight).commit(viewPager);
 
@@ -81,7 +82,6 @@ public class MainADHelper
 				@Override
 				public void onPageSelected(int position)
 				{
-					position = param.isRecycle ? position % param.resource.size() : position;
 					// 指示点
 					selectIndicatorPoint(linearLayout, position);
 				}
@@ -154,6 +154,7 @@ public class MainADHelper
 	 */
 	private void selectIndicatorPoint(LinearLayout parentLayout, int position)
 	{
+		position = param.isRecycle ? position % param.resource.size() : position;
 		for (int i = 0; i < parentLayout.getChildCount(); i++)
 		{
 			if (i == position)
@@ -309,6 +310,7 @@ public class MainADHelper
 				if (touchState == UserTouchState.OnMove)
 				{
 					handler.sendEmptyMessageDelayed(1, param.recycleAutoTime);
+					touchState = UserTouchState.OnAuto;
 				}
 				else if (touchState == UserTouchState.OnAuto)
 				{
@@ -456,10 +458,19 @@ public class MainADHelper
 			this.isAutoRecycle = autoRecycle;
 			return this;
 		}
-		
+
+		/**
+		 * 如果设置成false,则将起始点设置为:Integer.MAX_VALUE;
+		 * @param recycleRight
+		 * @return
+		 */
 		public ParamHolder setRecycleRight(boolean recycleRight)
 		{
 			this.isRecycleRight = recycleRight;
+			if (!recycleRight)
+			{
+				startPosition = 518918400 - 1; // (该值等于 13! / 12)
+			}
 			return this;
 		}
 		

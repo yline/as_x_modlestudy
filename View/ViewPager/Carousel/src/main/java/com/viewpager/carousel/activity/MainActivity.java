@@ -47,7 +47,7 @@ public class MainActivity extends BaseFragmentActivity implements MainADHelper.O
 		data.add(R.drawable.img5);
 
 		MainADHelper mainADHelper = new MainADHelper();
-		mainADHelper.build().setResource(data).setRecycleRight(false).commit(this);
+		mainADHelper.build().setResource(data).setRecycleRight(false).setRecycleAutoTime(3000).commit(this);
 		mainADHelper.initPoint((LinearLayout) findViewById(R.id.ll_main_ad));
 		mainADHelper.initViewPagerView((ViewPager) findViewById(R.id.viewpager_main_ad));
 		mainADHelper.setListener(this);
