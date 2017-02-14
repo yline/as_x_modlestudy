@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/carousel_viewpager"
+        android:id="@+id/viewpager_main_ad"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
     </android.support.v4.view.ViewPager>
 
     <LinearLayout
-        android:id="@+id/carousel_linear"
+        android:id="@+id/ll_main_ad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/carousel_viewpager"
+        android:layout_alignBottom="@+id/viewpager_main_ad"
         android:layout_gravity="center_horizontal|bottom"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="10dp" >
+        android:paddingBottom="10dp">
     </LinearLayout>
 
 </RelativeLayout>

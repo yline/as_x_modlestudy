@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/fragment_carousepager"
-                android:layout_width="wrap_content"
+            <include
+                android:id="@+id/include_main_ad"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-            </LinearLayout>
+                layout="@layout/activity_main_ad">
+            </include>
 
             <ListView
                 android:id="@+id/show_listview"
                 android:layout_width="match_parent"
-                android:layout_height="400dp" >
+                android:layout_height="400dp">
             </ListView>
         </LinearLayout>
     </ScrollView>

@@ -1,32 +1,25 @@
 package com.viewpager.carousel.activity;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.util.DisplayMetrics;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.view.viewpager.carousel.R;
-import com.viewpager.carousel.fragment.CarouselPagerFragment;
-import com.viewpager.carousel.fragment.CarouselPagerFragmentParams;
+import com.viewpager.carousel.viewhelper.MainADHelper;
 import com.yline.base.BaseFragmentActivity;
 
-public class MainActivity extends BaseFragmentActivity implements CarouselPagerFragment.onPagerClickListener
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends BaseFragmentActivity implements MainADHelper.OnPageClickListener
 {
-	private FragmentManager fragmentManager = getSupportFragmentManager();
-
-	private CarouselPagerFragment carouselFragment;
-
 	private ListView listView;
 
-	private int[] mImageSrc = {R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5,};
-
-	private static final String[] strs = new String[]{"first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "nineth", "ten"};
+	private static final String[] strS = new String[]{"first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "nineth", "ten"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -46,34 +39,27 @@ public class MainActivity extends BaseFragmentActivity implements CarouselPagerF
 
 	private void initData()
 	{
-		CarouselPagerFragmentParams params = new CarouselPagerFragmentParams();
-		params.setResInt(mImageSrc);
+		List<Integer> data = new ArrayList<>();
+		data.add(R.drawable.img1);
+		data.add(R.drawable.img2);
+		data.add(R.drawable.img3);
+		data.add(R.drawable.img4);
+		data.add(R.drawable.img5);
 
-		params.setViewLayout(getScreenWidth(getApplicationContext()), getScreenWidth(getApplicationContext()) / 2);
-		params.setRecycleSetting(true, true, true);
-		params.setPointStartPosition(0);
-
-		carouselFragment = new CarouselPagerFragment(params);
-
-		fragmentManager.beginTransaction().add(R.id.fragment_carousepager, carouselFragment).commit();
+		MainADHelper mainADHelper = new MainADHelper();
+		mainADHelper.build().setResource(data).setRecycleRight(false).commit(this);
+		mainADHelper.initPoint((LinearLayout) findViewById(R.id.ll_main_ad));
+		mainADHelper.initViewPagerView((ViewPager) findViewById(R.id.viewpager_main_ad));
+		mainADHelper.setListener(this);
+		mainADHelper.startAutoRecycle();
 
 		// listView计算高度就可以了
-		listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, strs));
-	}
-
-	/** 获取屏幕宽度 */
-	private int getScreenWidth(Context context)
-	{
-		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-		DisplayMetrics outMetrics = new DisplayMetrics();
-		wm.getDefaultDisplay().getMetrics(outMetrics);
-		return outMetrics.widthPixels;
+		listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, strS));
 	}
 
 	@Override
-	public void onPagerClicked(View v, int position)
+	public void onPagerClick(View v, int position)
 	{
-		Toast.makeText(getApplicationContext(), "position = " + position, Toast.LENGTH_SHORT).show();
+		MainApplication.toast("position = " + position);
 	}
-
 }
