@@ -469,7 +469,7 @@ public class MainADHelper
 			this.isRecycleRight = recycleRight;
 			if (!recycleRight)
 			{
-				startPosition = 518918400 - 1; // (该值等于 13! / 12)
+				startPosition = 465585120 - 1; // (该值等于 1~21 的公倍数)
 			}
 			return this;
 		}
