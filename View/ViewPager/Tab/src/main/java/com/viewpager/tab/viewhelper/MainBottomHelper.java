@@ -40,6 +40,11 @@ public class MainBottomHelper
 			public void onPageSelected(int position)
 			{
 				setTextColor(position);
+
+				if (null != listener)
+				{
+					listener.onTabSelected(position);
+				}
 			}
 
 			@Override
@@ -117,11 +122,6 @@ public class MainBottomHelper
 			UIResizeUtil.build().setLeftMargin(position * lineWidth).commit(viewHolder.lineIv);
 
 			viewPager.setCurrentItem(position);
-
-			if (null != listener)
-			{
-				listener.onTabSelected(position);
-			}
 		}
 	}
 

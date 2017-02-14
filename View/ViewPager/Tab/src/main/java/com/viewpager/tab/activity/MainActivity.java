@@ -32,7 +32,7 @@ public class MainActivity extends BaseFragmentActivity // implements MainBottomH
 	private ShowFragment show3;
 
 	private ShowFragment show4;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -71,6 +71,7 @@ public class MainActivity extends BaseFragmentActivity // implements MainBottomH
 		fragmentList.add(show3);
 		fragmentList.add(show4);
 
+		// 这个属于放置数据的地方
 		viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager)
 		{
 
