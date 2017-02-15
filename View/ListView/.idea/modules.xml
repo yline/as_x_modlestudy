@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AttachLayout/AttachLayout.iml" filepath="$PROJECT_DIR$/AttachLayout/AttachLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/EyeRefreshLayout/EyeRefreshLayout.iml" filepath="$PROJECT_DIR$/EyeRefreshLayout/EyeRefreshLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/ListView.iml" filepath="$PROJECT_DIR$/ListView.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeRefreshLayout/SwipeRefreshLayout.iml" filepath="$PROJECT_DIR$/SwipeRefreshLayout/SwipeRefreshLayout.iml" />
