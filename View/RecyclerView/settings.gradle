@@ -1,1 +1,1 @@
-include ':RecyclerViewSample'
+include ':RecyclerViewSample', ':AttachRecycle'

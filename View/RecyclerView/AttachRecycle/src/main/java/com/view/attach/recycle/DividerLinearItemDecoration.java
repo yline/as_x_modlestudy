@@ -1,4 +1,4 @@
-package com.view.recycler.decoration;
+package com.view.attach.recycle;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -31,7 +31,7 @@ public class DividerLinearItemDecoration extends RecyclerView.ItemDecoration
 		a.recycle();
 		setOrientation(orientation);
 	}
-	
+
 	public void setOrientation(int orientation)
 	{
 		if (orientation != HORIZONTAL_LIST && orientation != VERTICAL_LIST)
@@ -42,19 +42,19 @@ public class DividerLinearItemDecoration extends RecyclerView.ItemDecoration
 	}
 
 	@Override
-	public void onDraw(Canvas c, RecyclerView parent)
+	public void onDraw(Canvas canvas, RecyclerView parent)
 	{
 		if (mOrientation == VERTICAL_LIST)
 		{
-			drawVertical(c, parent);
+			drawVertical(canvas, parent);
 		}
 		else
 		{
-			drawHorizontal(c, parent);
+			drawHorizontal(canvas, parent);
 		}
 	}
 
-	private void drawVertical(Canvas c, RecyclerView parent)
+	private void drawVertical(Canvas canvas, RecyclerView parent)
 	{
 		final int left = parent.getPaddingLeft();
 		final int right = parent.getWidth() - parent.getPaddingRight();
@@ -62,18 +62,19 @@ public class DividerLinearItemDecoration extends RecyclerView.ItemDecoration
 		final int childCount = parent.getChildCount();
 		for (int i = 0; i < childCount; i++)
 		{
-			final View child = parent.getChildAt(i);
-			RecyclerView v = new RecyclerView(parent.getContext());
-			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-					.getLayoutParams();
-			final int top = child.getBottom() + params.bottomMargin;
-			final int bottom = top + mDivider.getIntrinsicHeight();
-			mDivider.setBounds(left, top, right, bottom);
-			mDivider.draw(c);
+			if (i != 0) // 这样第一个就没有加载分割线
+			{
+				final View child = parent.getChildAt(i);
+				final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+				final int top = child.getBottom() + params.bottomMargin;
+				final int bottom = top + mDivider.getIntrinsicHeight();
+				mDivider.setBounds(left, top, right, bottom);
+				mDivider.draw(canvas);
+			}
 		}
 	}
 
-	private void drawHorizontal(Canvas c, RecyclerView parent)
+	private void drawHorizontal(Canvas canvas, RecyclerView parent)
 	{
 		final int top = parent.getPaddingTop();
 		final int bottom = parent.getHeight() - parent.getPaddingBottom();
@@ -82,12 +83,11 @@ public class DividerLinearItemDecoration extends RecyclerView.ItemDecoration
 		for (int i = 0; i < childCount; i++)
 		{
 			final View child = parent.getChildAt(i);
-			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-					.getLayoutParams();
+			final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 			final int left = child.getRight() + params.rightMargin;
 			final int right = left + mDivider.getIntrinsicHeight();
 			mDivider.setBounds(left, top, right, bottom);
-			mDivider.draw(c);
+			mDivider.draw(canvas);
 		}
 	}
 
