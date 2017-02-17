@@ -34,7 +34,7 @@ public class HeadFootWrapperAdapter<T> extends CommonRecyclerAdapter<T>
 	public HeadFootWrapperAdapter(CommonRecyclerAdapter adapter)
 	{
 		this.mInnerAdapter = adapter;
-		this.sList.addAll(mInnerAdapter.getDataList());
+		this.sList = mInnerAdapter.getDataList();
 	}
 
 	/**
