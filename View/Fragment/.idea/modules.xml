@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Fragment.iml" filepath="$PROJECT_DIR$/Fragment.iml" />
       <module fileurl="file://$PROJECT_DIR$/Gesture/Gesture.iml" filepath="$PROJECT_DIR$/Gesture/Gesture.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PreferenceFragment/PreferenceFragment.iml" filepath="$PROJECT_DIR$/PreferenceFragment/PreferenceFragment.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tab/Tab.iml" filepath="$PROJECT_DIR$/Tab/Tab.iml" />
     </modules>
   </component>

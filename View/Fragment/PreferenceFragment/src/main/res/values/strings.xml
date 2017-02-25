@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">PreferenceFragment</string>
+
+    <!--fragment main preference-->
+    <string name="main_preference_inline">1_标题</string>
+    <string name="main_preference_title_checkbox">1_勾选标题</string>
+    <string name="main_preference_summary_checkbox">1_勾选描述</string>
+
+    <string name="main_preference_dialog_based">2_弹框标题</string>
+    <string name="main_preference_title_edittext">2_编辑框标题</string>
+    <string name="main_preference_summary_edittext">2_编辑框描述</string>
+    <string name="main_preference_dialog_title_edittext">2_编辑框弹框标题</string>
+    <string name="main_preference_title_list">2_列表标题</string>
+    <string name="main_preference_summary_list">2_列表描述</string>
+    <string name="main_preference_dialog_title_list">2_列表弹框标题</string>
+
+    <string name="main_preference_launch">3_跳转标题</string>
+    <string name="main_preference_title_screen">3_设置子标题</string>
+    <string name="main_preference_summary_screen">3_设置子标题描述</string>
+    <string name="main_preference_title_next_screen_toggle">3_设置勾选标题</string>
+    <string name="main_preference_summary_next_screen_toggle">3_设置勾选概述</string>
+    <string name="main_preference_title_intent">3_设置跳转标题</string>
+    <string name="main_preference_summary_intent">3_设置跳转描述</string>
+
+    <string name="main_preference_attributes">4_参数标题</string>
+    <string name="main_preference_title_parent">4_参数勾选标题</string>
+    <string name="main_preference_summary_parent">4_参数勾选描述</string>
+    <string name="main_preference_title_child">4_参数勾选子标题</string>
+    <string name="main_preference_summary_child">4_参数勾选子参数</string>
+
+</resources>

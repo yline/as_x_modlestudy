@@ -1,1 +1,1 @@
-include ':Gesture', ':Tab'
+include ':Gesture', ':Tab', ':PreferenceFragment'
