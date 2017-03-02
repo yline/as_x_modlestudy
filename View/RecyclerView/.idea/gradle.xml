@@ -9,7 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/AttachRecycle" />
+            <option value="$PROJECT_DIR$/HeadFootRecycle" />
             <option value="$PROJECT_DIR$/RecyclerViewSample" />
           </set>
         </option>
