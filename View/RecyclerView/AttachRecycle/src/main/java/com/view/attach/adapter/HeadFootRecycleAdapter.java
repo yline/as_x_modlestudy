@@ -11,11 +11,12 @@ import com.yline.base.common.CommonRecycleViewHolder;
 import com.yline.base.common.CommonRecyclerAdapter;
 
 /**
- * Bug与方便同在(遇到再调节)
- * @author yline 2017/2/16 --> 18:19
+ * 添加头部和底部的Recycle
+ *
+ * @author yline 2017/3/2 --> 17:33
  * @version 1.0.0
  */
-public class HeadFootWrapperAdapter<T> extends CommonRecyclerAdapter<T>
+public abstract class HeadFootRecycleAdapter<T> extends CommonRecyclerAdapter<T>
 {
 	// sList的最大数目
 	private static final int BASE_ITEM_TYPE_HEADER = 100000;
@@ -29,16 +30,9 @@ public class HeadFootWrapperAdapter<T> extends CommonRecyclerAdapter<T>
 	// 底部布局
 	private SparseArrayCompat<View> footViewArray = new SparseArrayCompat<>();
 
-	private CommonRecyclerAdapter mInnerAdapter;
-
-	public HeadFootWrapperAdapter(CommonRecyclerAdapter adapter)
-	{
-		this.mInnerAdapter = adapter;
-		this.sList = mInnerAdapter.getDataList();
-	}
-
 	/**
 	 * 创建时会调用多次,依据viewType类型,创建ViewHolder
+	 *
 	 * @param parent
 	 * @param viewType
 	 * @return
@@ -54,20 +48,10 @@ public class HeadFootWrapperAdapter<T> extends CommonRecyclerAdapter<T>
 		{
 			return new CommonRecycleViewHolder(footViewArray.get(viewType));
 		}
-		return mInnerAdapter.onCreateViewHolder(parent, viewType);
+
+		return super.onCreateViewHolder(parent, viewType);
 	}
 
-	@Override
-	public int getItemRes()
-	{
-		return mInnerAdapter.getItemRes();
-	}
-
-	@Override
-	public void setViewContent(CommonRecycleViewHolder commonRecycleViewHolder, int i)
-	{
-		mInnerAdapter.setViewContent(commonRecycleViewHolder, i);
-	}
 
 	@Override
 	public int getItemViewType(int position)
@@ -80,7 +64,7 @@ public class HeadFootWrapperAdapter<T> extends CommonRecyclerAdapter<T>
 		{
 			return footViewArray.keyAt(position - getHeadersCount() - sList.size());
 		}
-		return mInnerAdapter.getItemViewType(position - getHeadersCount());
+		return super.getItemViewType(position - getHeadersCount());
 	}
 
 	@Override
@@ -94,20 +78,22 @@ public class HeadFootWrapperAdapter<T> extends CommonRecyclerAdapter<T>
 		{
 			return;
 		}
-		mInnerAdapter.onBindViewHolder(holder, position - getHeadersCount());
+		super.onBindViewHolder(holder, position - getHeadersCount());
 	}
 
 	@Override
 	public int getItemCount()
 	{
-		return getHeadersCount() + getFootersCount() + mInnerAdapter.getItemCount();
+		return getHeadersCount() + getFootersCount() + sList.size();
 	}
 
-	/** 适配 GridLayoutManager */
+	/**
+	 * 适配 GridLayoutManager
+	 */
 	@Override
 	public void onAttachedToRecyclerView(RecyclerView recyclerView)
 	{
-		mInnerAdapter.onAttachedToRecyclerView(recyclerView);
+		super.onAttachedToRecyclerView(recyclerView);
 
 		RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
 
@@ -140,7 +126,7 @@ public class HeadFootWrapperAdapter<T> extends CommonRecyclerAdapter<T>
 					return 0;
 				}
 			});
-			
+
 			gridLayoutManager.setSpanCount(gridLayoutManager.getSpanCount());
 		}
 	}
@@ -149,7 +135,7 @@ public class HeadFootWrapperAdapter<T> extends CommonRecyclerAdapter<T>
 	@Override
 	public void onViewAttachedToWindow(CommonRecycleViewHolder holder)
 	{
-		mInnerAdapter.onViewAttachedToWindow(holder);
+		super.onViewAttachedToWindow(holder);
 		int position = holder.getLayoutPosition();
 		if (isHeaderViewPos(position) || isFooterViewPos(position))
 		{

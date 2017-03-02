@@ -7,15 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.view.attach.R;
-import com.view.attach.adapter.HeadFootWrapperAdapter;
+import com.view.attach.adapter.HeadFootRecycleAdapter;
 import com.view.attach.recycle.DividerLinearItemDecoration;
-import com.view.attach.viewhelper.MainHelper;
 import com.yline.base.BaseAppCompatActivity;
 import com.yline.base.common.CommonRecycleViewHolder;
 import com.yline.base.common.CommonRecyclerAdapter;
+import com.yline.log.LogFileUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class MainActivity extends BaseAppCompatActivity
 {
 	private RecyclerView recyclerView;
 
-	private HeadFootWrapperAdapter headFootWrapperAdapter;
+	private HeadFootRecycleAdapter headFootWrapperAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -37,21 +38,24 @@ public class MainActivity extends BaseAppCompatActivity
 
 		recyclerView.addItemDecoration(new DividerLinearItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-		MainAdapter adapter = new MainAdapter();
 		List<String> data = new ArrayList<>();
 		for (int i = 0; i < 59; i++)
 		{
 			data.add("item " + i);
 		}
 
-		adapter.addAll(data);
-
-		headFootWrapperAdapter = new HeadFootWrapperAdapter(adapter);
+		headFootWrapperAdapter = new MainAdapter();
+		headFootWrapperAdapter.setOnClickListener(new CommonRecyclerAdapter.OnClickListener()
+		{
+			@Override
+			public void onClick(View view, int i)
+			{
+				LogFileUtil.v("headFootWrapperAdapter -> position = " + i);
+				MainApplication.toast("headFootWrapperAdapter -> position = " + i);
+			}
+		});
 
 		recyclerView.setAdapter(headFootWrapperAdapter);
-
-		MainHelper mainHelper = new MainHelper();
-		mainHelper.initAdapterView(adapter);
 
 		TextView header1 = new TextView(this);
 		header1.setText("Header 1");
@@ -67,9 +71,11 @@ public class MainActivity extends BaseAppCompatActivity
 		TextView footer2 = new TextView(this);
 		footer2.setText("Footer 2");
 		headFootWrapperAdapter.addFootView(footer2);
+
+		headFootWrapperAdapter.addAll(data);
 	}
 
-	private class MainAdapter extends CommonRecyclerAdapter<String>
+	private class MainAdapter extends HeadFootRecycleAdapter<String>
 	{
 
 		@Override
