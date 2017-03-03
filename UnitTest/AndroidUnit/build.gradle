@@ -22,11 +22,6 @@ android {
             dirs 'Libs'
         }
     }
-
-    // ADD THESE LINES:
-//    packagingOptions {
-//        exclude 'LICENSE.txt'
-//    }
 }
 
 dependencies {
