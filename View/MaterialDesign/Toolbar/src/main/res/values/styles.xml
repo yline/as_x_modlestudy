@@ -1,14 +1,30 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.Default" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-    <style name="AppTheme.Base" parent="AppTheme">
+    <!--配合Toolbar使用-->
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!--&lt;!&ndash; Actionbar color &ndash;&gt;
+        <item name="colorPrimary">@color/accent_material_dark</item>-->
+        <!--Status bar color-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="elevation">5dp</item>
+    </style>
+
+    <style name="AppTheme.Custom" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:label">MainTitle</item>
+        <item name="android:title">MainTitle</item>
+        <item name="android:subtitle">subTitle</item>
+        <item name="android:windowBackground">@color/dim_foreground_material_dark</item>
     </style>
 </resources>
