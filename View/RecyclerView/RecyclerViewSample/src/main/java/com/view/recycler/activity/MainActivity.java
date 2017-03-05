@@ -52,7 +52,7 @@ public class MainActivity extends BaseAppCompatActivity
 
 				// 添加新的一条前,移除旧的,以免叠加
 				recyclerView.removeItemDecoration(decor);
-				decor = new DividerLinearItemDecoration(MainActivity.this, DividerLinearItemDecoration.VERTICAL_LIST);
+				decor = new DividerLinearItemDecoration(MainActivity.this, DividerLinearItemDecoration.VERTICAL_LIST, R.drawable.bg_divider);
 				recyclerView.setItemAnimator(new DefaultItemAnimator());
 				recyclerView.addItemDecoration(decor, 0);
 			}
