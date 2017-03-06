@@ -1,6 +1,5 @@
 package com.view.menu.view;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
@@ -17,6 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.view.menu.R;
+import com.yline.log.LogFileUtil;
 
 import java.util.List;
 
@@ -27,17 +27,16 @@ public class DropDownMenu extends LinearLayout
 	// 顶部菜单布局
 	private LinearLayout tabMenuView;
 	
-	// 底部容器，包含popupMenuViews，maskView
+	// 底部容器
 	private PopupWindow popupWindow;
 
 	// 底部容器具体View，contentView，maskView
 	private LinearLayout popupView;
 
-	// 可更换的内容
-	private FrameLayout contentView;
+	// 可更换的内容; 遮罩半透明View，点击可关闭DropDownMenu
+	private View tempContentView, maskView;
 
-	// 遮罩半透明View，点击可关闭DropDownMenu
-	private View maskView;
+	private List<View> arrayViewList;
 
 	// tabMenuView里面选中的tab位置，-1表示未选中
 	private int current_tab_position = -1;
@@ -108,19 +107,14 @@ public class DropDownMenu extends LinearLayout
 		underLine.setBackgroundColor(underlineColor);
 		addView(underLine, 1);
 
-		// 初始化PopupWindow
-		popupWindow = new PopupWindow(context);
-		popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-		popupWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-
 		// 初始化PopupView
-		popupView = new LinearLayout(context);
+		popupView = new LinearLayout(getContext());
 		LinearLayout.LayoutParams popupParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+		popupView.setOrientation(LinearLayout.VERTICAL);
 		popupView.setLayoutParams(popupParams);
 
-		// 将其添加到popupWindow
-		popupWindow.setContentView(popupView);
-
+		// 初始化PopupWindow
+		popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 	}
 
 	/**
@@ -141,33 +135,18 @@ public class DropDownMenu extends LinearLayout
 			addTab(tabTexts, i);
 		}
 
-		contentView = new FrameLayout(getContext());
-		contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-		popupView.addView(contentView, 0);
-		contentView.setVisibility(View.GONE);
+		this.arrayViewList = arrayView;
 
 		maskView = new View(getContext());
 		maskView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		maskView.setBackgroundColor(maskColor);
-		maskView.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				closeMenu();
-			}
-		});
-		popupView.addView(maskView, 1);
-		maskView.setVisibility(View.GONE);
 
-		for (int i = 0; i < arrayView.size(); i++)
-		{
-			arrayView.get(i).setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-			contentView.addView(arrayView.get(i), i);
-		}
+		tempContentView = arrayViewList.get(0);
+		popupView.addView(tempContentView, 0);
+		popupView.addView(maskView, 1);
 	}
 
-	private void addTab(@NonNull List<String> tabTexts, int i)
+	private void addTab(@NonNull List<String> tabTexts, final int i)
 	{
 		final TextView tab = new TextView(getContext());
 		tab.setSingleLine();
@@ -185,7 +164,7 @@ public class DropDownMenu extends LinearLayout
 			@Override
 			public void onClick(View v)
 			{
-				switchMenu(tab);
+				switchMenu(tab, i);
 			}
 		});
 		tabMenuView.addView(tab);
@@ -230,23 +209,29 @@ public class DropDownMenu extends LinearLayout
 	 */
 	public void closeMenu()
 	{
-		if (current_tab_position != -1)
+		if (current_tab_position != -1 && null != popupWindow)
 		{
 			((TextView) tabMenuView.getChildAt(current_tab_position)).setTextColor(textUnselectedColor);
 			((TextView) tabMenuView.getChildAt(current_tab_position)).setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnselectedIcon), null);
 
-			// popupWindow.dismiss();
-
-			ObjectAnimator popupAnimator = ObjectAnimator.ofFloat(popupView, "translationY", 0, -popupView.getHeight());
-			popupAnimator.setDuration(DURATION_ANIMATOR);
-			popupAnimator.start();
-			/*
-			ObjectAnimator maskAnimator = ObjectAnimator.ofFloat(maskView, "alpha", 1f, 0f);
-			maskAnimator.setDuration(DURATION_ANIMATOR);
-			maskAnimator.start();*/
-
+			popupWindow.dismiss();
 			current_tab_position = -1;
 		}
+	}
+
+	/**
+	 * 替换成某个位置的菜单
+	 *
+	 * @param position 新打开的菜单
+	 */
+	public void updateMenu(int position)
+	{
+		popupView.removeView(tempContentView);
+		tempContentView = arrayViewList.get(position);
+		popupView.addView(tempContentView, 0);
+
+		((TextView) tabMenuView.getChildAt(position)).setTextColor(textSelectedColor);
+		((TextView) tabMenuView.getChildAt(position)).setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuSelectedIcon), null);
 	}
 
 	/**
@@ -262,54 +247,35 @@ public class DropDownMenu extends LinearLayout
 	/**
 	 * 切换菜单
 	 *
-	 * @param target
+	 * @param targetView
 	 */
-	private void switchMenu(View target)
+	private void switchMenu(View targetView, int position)
 	{
-		System.out.println(current_tab_position);
-		for (int i = 0; i < tabMenuView.getChildCount(); i = i + 2)
+		LogFileUtil.v("position = " + position + ",current_tab_position = " + current_tab_position);
+
+		// 点击的位置 == 之前的位置
+		if (position == current_tab_position)
 		{
-			if (target == tabMenuView.getChildAt(i))
+			closeMenu();
+		}
+		else
+		{
+			int last = current_tab_position; // 临时替换成当前位置
+			for (int i = 0; i < arrayViewList.size(); i++)
 			{
-				if (current_tab_position == i)
+				if (i == position)
 				{
-					closeMenu();
+					updateMenu(position);
+				}
+				else if (i == last)
+				{
+					((TextView) tabMenuView.getChildAt(current_tab_position)).setTextColor(textUnselectedColor);
+					((TextView) tabMenuView.getChildAt(current_tab_position)).setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnselectedIcon), null);
 				}
 				else
 				{
-					if (current_tab_position == -1)
-					{
-
-						popupView.setVisibility(View.VISIBLE);
-						ObjectAnimator popupAnimator = ObjectAnimator.ofFloat(popupView, "translationY", -popupView.getHeight(), 0);
-						popupAnimator.setDuration(DURATION_ANIMATOR);
-						popupAnimator.start();
-
-						maskView.setVisibility(VISIBLE);
-						ObjectAnimator maskAnimator = ObjectAnimator.ofFloat(maskView, "alpha", 0f, 1f);
-						maskAnimator.setDuration(DURATION_ANIMATOR);
-						maskAnimator.start();
-
-						contentView.getChildAt(i / 2).setVisibility(View.VISIBLE);
-					}
-					else
-					{
-						contentView.getChildAt(i / 2).setVisibility(View.VISIBLE);
-					}
-					current_tab_position = i;
-					((TextView) tabMenuView.getChildAt(i)).setTextColor(textSelectedColor);
-					((TextView) tabMenuView.getChildAt(i)).setCompoundDrawablesWithIntrinsicBounds(null, null,
-							getResources().getDrawable(menuSelectedIcon), null);
+					// do nothing
 				}
-			}
-			else
-			{
-				((TextView) tabMenuView.getChildAt(i)).setTextColor(textUnselectedColor);
-				((TextView) tabMenuView.getChildAt(i)).setCompoundDrawablesWithIntrinsicBounds(null, null,
-						getResources().getDrawable(menuUnselectedIcon), null);
-				/*
-				popupMenuViews.getChildAt(i / 2).setVisibility(View.GONE);
-				*/
 			}
 		}
 	}
