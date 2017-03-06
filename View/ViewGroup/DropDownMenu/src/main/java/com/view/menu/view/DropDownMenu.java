@@ -1,5 +1,6 @@
 package com.view.menu.view;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
@@ -10,7 +11,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +21,8 @@ import java.util.List;
 
 public class DropDownMenu extends LinearLayout
 {
+	private static final int DURATION_ANIMATOR = 250;
+
 	//顶部菜单布局
 	private LinearLayout tabMenuView;
 
@@ -221,10 +223,15 @@ public class DropDownMenu extends LinearLayout
 			((TextView) tabMenuView.getChildAt(current_tab_position)).setTextColor(textUnselectedColor);
 			((TextView) tabMenuView.getChildAt(current_tab_position)).setCompoundDrawablesWithIntrinsicBounds(null, null,
 					getResources().getDrawable(menuUnselectedIcon), null);
-			popupMenuViews.setVisibility(View.GONE);
-			popupMenuViews.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.global_menu_out));
-			maskView.setVisibility(GONE);
-			maskView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.global_mask_out));
+
+			ObjectAnimator popupAnimator = ObjectAnimator.ofFloat(popupMenuViews, "translationY", 0, -popupMenuViews.getHeight());
+			popupAnimator.setDuration(DURATION_ANIMATOR);
+			popupAnimator.start();
+
+			ObjectAnimator maskAnimator = ObjectAnimator.ofFloat(maskView, "alpha", 1f, 0f);
+			maskAnimator.setDuration(DURATION_ANIMATOR);
+			maskAnimator.start();
+
 			current_tab_position = -1;
 		}
 	}
@@ -260,9 +267,15 @@ public class DropDownMenu extends LinearLayout
 					if (current_tab_position == -1)
 					{
 						popupMenuViews.setVisibility(View.VISIBLE);
-						popupMenuViews.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.global_menu_in));
+						ObjectAnimator popupAnimator = ObjectAnimator.ofFloat(popupMenuViews, "translationY", -popupMenuViews.getHeight(), 0);
+						popupAnimator.setDuration(DURATION_ANIMATOR);
+						popupAnimator.start();
+
 						maskView.setVisibility(VISIBLE);
-						maskView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.global_mask_in));
+						ObjectAnimator maskAnimator = ObjectAnimator.ofFloat(maskView, "alpha", 0f, 1f);
+						maskAnimator.setDuration(DURATION_ANIMATOR);
+						maskAnimator.start();
+						
 						popupMenuViews.getChildAt(i / 2).setVisibility(View.VISIBLE);
 					}
 					else
