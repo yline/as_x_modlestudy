@@ -25,7 +25,7 @@ public class DropDownMenu extends LinearLayout
 
 	//顶部菜单布局
 	private LinearLayout tabMenuView;
-
+	
 	//底部容器，包含popupMenuViews，maskView
 	private FrameLayout containerView;
 
@@ -73,7 +73,7 @@ public class DropDownMenu extends LinearLayout
 	{
 		super(context, attrs, defStyleAttr);
 
-		setOrientation(VERTICAL);
+		// setOrientation(VERTICAL);
 
 		// 为DropDownMenu添加自定义属性
 		int menuBackgroundColor = 0xffffffff;
@@ -93,7 +93,7 @@ public class DropDownMenu extends LinearLayout
 		// 初始化tabMenuView并添加到tabMenuView
 		tabMenuView = new LinearLayout(context);
 		LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-		tabMenuView.setOrientation(HORIZONTAL);
+		tabMenuView.setOrientation(LinearLayout.HORIZONTAL);
 		tabMenuView.setBackgroundColor(menuBackgroundColor);
 		tabMenuView.setLayoutParams(params);
 		addView(tabMenuView, 0);
@@ -106,8 +106,10 @@ public class DropDownMenu extends LinearLayout
 
 		// 初始化containerView并将其添加到DropDownMenu
 		containerView = new FrameLayout(context);
-		containerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-		addView(containerView, 2);
+		FrameLayout.LayoutParams containerParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+		//containerView.setLayoutParams();
+		addViewInLayout(containerView, 2, containerParams);
+		//addView(containerView, 2);
 	}
 
 	/**
@@ -275,7 +277,7 @@ public class DropDownMenu extends LinearLayout
 						ObjectAnimator maskAnimator = ObjectAnimator.ofFloat(maskView, "alpha", 0f, 1f);
 						maskAnimator.setDuration(DURATION_ANIMATOR);
 						maskAnimator.start();
-						
+
 						popupMenuViews.getChildAt(i / 2).setVisibility(View.VISIBLE);
 					}
 					else
