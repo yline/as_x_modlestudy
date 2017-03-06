@@ -13,7 +13,7 @@
     <com.view.menu.view.DropDownMenu
         android:id="@+id/dropDownMenu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         app:xDividerColor="@android:color/darker_gray"
         app:xMaskColor="@color/mask_color"
         app:xMenuBackgroundColor="@android:color/white"

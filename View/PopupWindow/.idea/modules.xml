@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PopupWindow.iml" filepath="$PROJECT_DIR$/PopupWindow.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PopupWindowThresHold/app.iml" filepath="$PROJECT_DIR$/PopupWindowThresHold/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PopupWindowThresHold/PopupWindowThresHold.iml" filepath="$PROJECT_DIR$/PopupWindowThresHold/PopupWindowThresHold.iml" />
     </modules>
   </component>
 </project>

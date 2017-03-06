@@ -79,7 +79,7 @@ public class MainHelper
 			}
 		});
 
-		dropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews, contentView);
+		dropDownMenu.setDropDownMenu(Arrays.asList(headers), popupViews);
 	}
 
 	public void initMenuData()
