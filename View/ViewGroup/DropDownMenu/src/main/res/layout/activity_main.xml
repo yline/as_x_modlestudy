@@ -1,0 +1,22 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.view.menu.view.DropDownMenu
+        android:id="@+id/dropDownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:xDividerColor="@android:color/darker_gray"
+        app:xMaskColor="@color/mask_color"
+        app:xMenuBackgroundColor="@android:color/white"
+        app:xMenuSelectedIcon="@drawable/drop_down_selected_icon"
+        app:xMenuTextSize="13sp"
+        app:xMenuUnselectedIcon="@drawable/drop_down_unselected_icon"
+        app:xTextSelectedColor="@android:color/holo_red_light"
+        app:xTextUnselectedColor="@android:color/black"
+        app:xUnderlineColor="@android:color/darker_gray">
+    </com.view.menu.view.DropDownMenu>
+</LinearLayout>
+
