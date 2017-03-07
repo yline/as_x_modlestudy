@@ -1,14 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="DropDownMenu">
-        <attr name="xUnderlineColor" format="color"/>
-        <attr name="xDividerColor" format="color"/>
-        <attr name="xTextSelectedColor" format="color"/>
-        <attr name="xTextUnselectedColor" format="color"/>
-        <attr name="xMenuBackgroundColor" format="color"/>
-        <attr name="xMaskColor" format="color"/>
-        <attr name="xMenuTextSize" format="dimension"/>
-        <attr name="xMenuSelectedIcon" format="reference"/>
-        <attr name="xMenuUnselectedIcon" format="reference"/>
-    </declare-styleable>
 </resources>

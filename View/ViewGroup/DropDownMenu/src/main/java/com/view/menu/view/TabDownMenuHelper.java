@@ -21,7 +21,7 @@ import java.util.Arrays;
  * @author yline 2017/3/6 --> 14:57
  * @version 1.0.0
  */
-public class DropDownMenuHelper
+public class TabDownMenuHelper
 {
 	private CityListAdapter cityListAdapter, ageListAdapter, sexListAdapter, constellationListAdapter;
 
