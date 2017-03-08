@@ -1,4 +1,4 @@
-package com.view.menu.view;
+package com.view.menu.widget;
 
 import android.content.Context;
 import android.support.design.widget.TabLayout;
@@ -14,13 +14,18 @@ import com.view.menu.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabDownMenuHelper
+/**
+ * 实现下拉菜单 的基础工具类
+ *
+ * @author yline 2017/3/7 --> 15:33
+ * @version 1.0.0
+ */
+public class DropMenuWidget
 {
 	// 默认位置
 	private static final int CONTENT_VIEW_POSITION = 0;
 
-	// 盖罩 颜色
-	private static final int MASK_COLOR = 0x88888888;
+	private TabLayout tabLayout;
 
 	// 承载物
 	private PopupWindow popupWindow;
@@ -39,13 +44,56 @@ public class TabDownMenuHelper
 
 	private boolean isOpened = false;
 
+	private View view;
+
+	public void start(Context context, List<String> header, List<View> viewList)
+	{
+		view = LayoutInflater.from(context).inflate(getResourceId(), null);
+		tabLayout = (TabLayout) view.findViewById(getTabLayoutId());
+		setDropDownMenu(context, tabLayout, header, viewList);
+	}
+
+	public void attach(ViewGroup viewGroup)
+	{
+		viewGroup.addView(view);
+	}
+
+	public boolean isOpened()
+	{
+		return isOpened;
+	}
+
+	/**
+	 * 关闭Menu
+	 */
+	public void closeMenu()
+	{
+		closeMenu(tabLayout.getSelectedTabPosition());
+	}
+
+	/**
+	 * 关闭Menu,并更新状态
+	 *
+	 * @param position 更新状态位置
+	 */
+	public void closeMenu(int position)
+	{
+		if (null != popupWindow && popupWindow.isShowing())
+		{
+			popupWindow.dismiss();
+
+			tabViewList.get(position).setSelected(false);
+			isOpened = false;
+		}
+	}
+
 	/**
 	 * @param context   上下文
 	 * @param tabLayout tab标题
 	 * @param header    标题信息
 	 * @param viewList  pop 内容
 	 */
-	public void setDropDownMenu(final Context context, final TabLayout tabLayout, List<String> header, List<View> viewList)
+	private void setDropDownMenu(final Context context, final TabLayout tabLayout, List<String> header, List<View> viewList)
 	{
 		if (header.size() != viewList.size())
 		{
@@ -56,7 +104,7 @@ public class TabDownMenuHelper
 
 		initPopupWindow(context);
 
-		initContentViewList(context, viewList);
+		initContentViewList(viewList);
 	}
 
 	/**
@@ -78,6 +126,8 @@ public class TabDownMenuHelper
 			tabViewList.add(tabView);
 		}
 		tabLayout.setSelectedTabIndicatorHeight(0);
+		tabLayout.setTabMode(TabLayout.MODE_FIXED);
+		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
 		{
@@ -118,11 +168,10 @@ public class TabDownMenuHelper
 	 */
 	private View addTab(Context context, String text)
 	{
-		View tabView = LayoutInflater.from(context).inflate(R.layout.item_tab_menu, null);
+		View tabView = LayoutInflater.from(context).inflate(getItemResourceId(), null);
 
-		TextView textView = (TextView) tabView.findViewById(R.id.tv_tab_down_menu);
+		TextView textView = (TextView) tabView.findViewById(getItemTextId());
 		textView.setText(text);
-
 		return tabView;
 	}
 
@@ -136,7 +185,7 @@ public class TabDownMenuHelper
 
 			maskView = new View(context);
 			maskView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-			maskView.setBackgroundColor(MASK_COLOR);
+			maskView.setBackgroundColor(getMaskColor());
 
 			contentView = new View(context);
 
@@ -172,37 +221,12 @@ public class TabDownMenuHelper
 	}
 
 	/**
-	 * 关闭Menu,并更新状态
-	 *
-	 * @param position 更新状态位置
-	 */
-	public void closeMenu(int position)
-	{
-		if (null != popupWindow && popupWindow.isShowing())
-		{
-			popupWindow.dismiss();
-
-			tabViewList.get(position).setSelected(false);
-			isOpened = false;
-		}
-	}
-
-	/**
 	 * 初始化 contentView
 	 *
 	 * @param list
 	 */
-	private void initContentViewList(Context context, List<View> list)
+	private void initContentViewList(List<View> list)
 	{
-		List<View> views = new ArrayList<>();
-		for (int i = 0; i < list.size(); i++)
-		{
-			TextView textView = new TextView(context);
-			textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-			textView.setText("position = " + i);
-			views.add(textView);
-		}
-
 		for (int i = 0; i < list.size(); i++)
 		{
 			list.get(i).setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -210,13 +234,33 @@ public class TabDownMenuHelper
 
 		this.contentViewList = list;
 	}
+
+	// 接下来为设置参数
+	public int getMaskColor()
+	{
+		return 0x88888888;
+	}
+
+	protected int getResourceId()
+	{
+		return R.layout.widget_drop_menu;
+	}
+
+	protected int getTabLayoutId()
+	{
+		return R.id.tab_layout_drop_menu;
+	}
+
+	protected int getItemResourceId()
+	{
+		return R.layout.widget_item_drop_menu;
+	}
+
+	protected int getItemTextId()
+	{
+		return R.id.tv_drop_down_menu;
+	}
 }
-
-
-
-
-
-
 
 
 

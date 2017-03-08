@@ -9,7 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/DropDownMenu" />
+            <option value="$PROJECT_DIR$/DropMenuWidget" />
             <option value="$PROJECT_DIR$/LabelLayout" />
           </set>
         </option>
