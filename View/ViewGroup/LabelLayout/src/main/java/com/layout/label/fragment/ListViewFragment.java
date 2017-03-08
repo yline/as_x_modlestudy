@@ -14,6 +14,7 @@ import com.layout.label.view.labellayout.LabelAdapter;
 import com.layout.label.view.labellayout.LabelFlowLayout;
 import com.yline.base.BaseFragment;
 import com.yline.base.common.CommonListAdapter;
+import com.yline.base.common.ViewHolder;
 import com.yline.log.LogFileUtil;
 
 import java.util.ArrayList;
