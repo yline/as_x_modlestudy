@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Carousel/Carousel.iml" filepath="$PROJECT_DIR$/Carousel/Carousel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AD/AD.iml" filepath="$PROJECT_DIR$/AD/AD.iml" />
       <module fileurl="file://$PROJECT_DIR$/CustomViewPager/CustomViewPager.iml" filepath="$PROJECT_DIR$/CustomViewPager/CustomViewPager.iml" />
       <module fileurl="file://$PROJECT_DIR$/IndicatorHelper/IndicatorHelper.iml" filepath="$PROJECT_DIR$/IndicatorHelper/IndicatorHelper.iml" />
       <module fileurl="file://$PROJECT_DIR$/PagerAdapter/PagerAdapter.iml" filepath="$PROJECT_DIR$/PagerAdapter/PagerAdapter.iml" />

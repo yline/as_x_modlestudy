@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.view.menu.R;
-import com.view.menu.view.TabDownMenu;
 import com.view.menu.view.TabDownMenuHelper;
+import com.view.menu.view.TabMenuHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TabMenuActivity extends AppCompatActivity
 {
-	private TabDownMenuHelper mainMenuHelper;
+	private TabMenuHelper mainMenuHelper;
 
 	private String headers[] = {"城市", "年龄", "性别", "星座"};
 
@@ -37,7 +37,7 @@ public class TabMenuActivity extends AppCompatActivity
 
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout_down_menu);
 
-		mainMenuHelper = new TabDownMenuHelper();
+		mainMenuHelper = new TabMenuHelper();
 
 		// 初始化控件
 		View cityView = mainMenuHelper.initCityView(this);
@@ -51,7 +51,7 @@ public class TabMenuActivity extends AppCompatActivity
 		popupViews.add(sexView);
 		popupViews.add(constellationView);
 
-		TabDownMenu tabDownMenu = new TabDownMenu();
+		TabDownMenuHelper tabDownMenu = new TabDownMenuHelper();
 		tabDownMenu.setDropDownMenu(this, tabLayout, Arrays.asList(headers), popupViews);
 
 		initMenuData();

@@ -1,220 +1,222 @@
 package com.view.menu.view;
 
 import android.content.Context;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.view.menu.R;
-import com.yline.base.common.CommonListAdapter;
-import com.yline.base.common.ViewHolder;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * 这个的可定制性，很强
- *
- * @author yline 2017/3/6 --> 14:57
- * @version 1.0.0
- */
 public class TabDownMenuHelper
 {
-	private CityListAdapter cityListAdapter, ageListAdapter, sexListAdapter, constellationListAdapter;
+	// 默认位置
+	private static final int CONTENT_VIEW_POSITION = 0;
 
-	private OnDropMenuClickListener listener;
+	// 盖罩 颜色
+	private static final int MASK_COLOR = 0x88888888;
 
-	public View initCityView(Context context)
+	// 承载物
+	private PopupWindow popupWindow;
+
+	// window对应的view
+	private LinearLayout popupView;
+
+	// popupView 的两个内容
+	private View contentView, maskView;
+
+	// tab view
+	private List<View> tabViewList;
+
+	// content view
+	private List<View> contentViewList;
+
+	private boolean isOpened = false;
+
+	/**
+	 * @param context   上下文
+	 * @param tabLayout tab标题
+	 * @param header    标题信息
+	 * @param viewList  pop 内容
+	 */
+	public void setDropDownMenu(final Context context, final TabLayout tabLayout, List<String> header, List<View> viewList)
 	{
-		final ListView cityView = new ListView(context)
+		if (header.size() != viewList.size())
 		{
-			@Override
-			protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-			{
-				heightMeasureSpec = MeasureSpec.makeMeasureSpec(500, MeasureSpec.AT_MOST);
-				super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-			}
-		};
-		cityView.setDividerHeight(0);
-		cityListAdapter = new CityListAdapter(context);
-		cityView.setAdapter(cityListAdapter);
-		cityView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
-				cityListAdapter.setCheckItem(position);
-				if (null != listener)
-				{
-					listener.onCityClick(position);
-				}
-			}
-		});
-
-		return cityView;
-	}
-
-	public View initAgeView(Context context)
-	{
-		final ListView ageView = new ListView(context)
-		{
-			@Override
-			protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-			{
-				heightMeasureSpec = MeasureSpec.makeMeasureSpec(500, MeasureSpec.AT_MOST);
-				super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-			}
-		};
-		ageView.setDividerHeight(0);
-		ageListAdapter = new CityListAdapter(context);
-		ageView.setAdapter(ageListAdapter);
-		ageView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
-				ageListAdapter.setCheckItem(position);
-				if (null != listener)
-				{
-					listener.onAgeClick(position);
-				}
-			}
-		});
-
-		return ageView;
-	}
-
-	public View initSexView(Context context)
-	{
-		final ListView sexView = new ListView(context)
-		{
-			@Override
-			protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-			{
-				heightMeasureSpec = MeasureSpec.makeMeasureSpec(500, MeasureSpec.AT_MOST);
-				super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-			}
-		};
-		sexView.setDividerHeight(0);
-		sexListAdapter = new CityListAdapter(context);
-		sexView.setAdapter(sexListAdapter);
-		sexView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
-				sexListAdapter.setCheckItem(position);
-				if (null != listener)
-				{
-					listener.onSexClick(position);
-				}
-			}
-		});
-
-		return sexView;
-	}
-
-	public View initConstellationView(Context context)
-	{
-		View parentView = LayoutInflater.from(context).inflate(R.layout.activity_main_menu, null);
-
-		GridView gridView = (GridView) parentView.findViewById(R.id.grid_view_main_constellation);
-		constellationListAdapter = new CityListAdapter(context);
-		gridView.setAdapter(constellationListAdapter);
-		gridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-			{
-				constellationListAdapter.setCheckItem(position);
-				if (null != listener)
-				{
-					listener.onConstellationClick(position);
-				}
-			}
-		});
-
-		return parentView;
-	}
-
-	public void setOnDropMenuClickListener(OnDropMenuClickListener listener)
-	{
-		this.listener = listener;
-	}
-
-	public void setCityData(String... data)
-	{
-		cityListAdapter.addAll(Arrays.asList(data));
-	}
-
-	public void setAgeData(String... data)
-	{
-		ageListAdapter.addAll(Arrays.asList(data));
-	}
-
-	public void setSexData(String... data)
-	{
-		sexListAdapter.addAll(Arrays.asList(data));
-	}
-
-	public void setConstellationData(String... data)
-	{
-		constellationListAdapter.addAll(Arrays.asList(data));
-	}
-
-	private class CityListAdapter extends CommonListAdapter<String>
-	{
-		private int checkItemPosition = 0;
-
-		public CityListAdapter(Context context)
-		{
-			super(context);
+			throw new IllegalArgumentException("params not match, header.size() should be equal popupViews.size()");
 		}
 
-		public void setCheckItem(int position)
-		{
-			checkItemPosition = position;
-			notifyDataSetChanged();
-		}
+		initTabView(context, tabLayout, header);
 
-		@Override
-		protected int getItemRes(int i)
-		{
-			return R.layout.item_main_city;
-		}
+		initPopupWindow(context);
 
-		@Override
-		protected void setViewContent(int position, ViewGroup viewGroup, ViewHolder viewHolder)
+		initContentViewList(context, viewList);
+	}
+
+	/**
+	 * 初始化Header
+	 *
+	 * @param context
+	 * @param tabLayout
+	 */
+	private void initTabView(final Context context, final TabLayout tabLayout, List<String> header)
+	{
+		this.tabViewList = new ArrayList<>();
+
+		for (int i = 0; i < header.size(); i++)
 		{
-			TextView textView = viewHolder.get(R.id.tv_item_main);
-			textView.setText(sList.get(position));
-			if (checkItemPosition != -1)
+			View tabView = addTab(context, header.get(i));
+			tabLayout.addTab(tabLayout.newTab().setCustomView(tabView));
+
+			tabView.setSelected(false);
+			tabViewList.add(tabView);
+		}
+		tabLayout.setSelectedTabIndicatorHeight(0);
+
+		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
+		{
+			@Override
+			public void onTabSelected(TabLayout.Tab tab)
 			{
-				if (checkItemPosition == position)
+				addMenu(tabLayout, tab.getPosition());
+			}
+
+			// 该方法比上面那个方法先执行
+			@Override
+			public void onTabUnselected(TabLayout.Tab tab)
+			{
+				// close menu
+			}
+
+			@Override
+			public void onTabReselected(TabLayout.Tab tab)
+			{
+				if (isOpened)
 				{
-					textView.setTextColor(sContext.getResources().getColor(android.R.color.holo_red_light));
-					textView.setCompoundDrawablesWithIntrinsicBounds(null, null, sContext.getResources().getDrawable(R.drawable.drop_down_checked), null);
+					closeMenu(tab.getPosition());
 				}
 				else
 				{
-					textView.setTextColor(sContext.getResources().getColor(android.R.color.black));
-					textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+					addMenu(tabLayout, tab.getPosition());
 				}
+			}
+		});
+	}
+
+	/**
+	 * 添加 tab
+	 *
+	 * @param context
+	 * @param text
+	 * @return
+	 */
+	private View addTab(Context context, String text)
+	{
+		View tabView = LayoutInflater.from(context).inflate(R.layout.item_tab_menu, null);
+
+		TextView textView = (TextView) tabView.findViewById(R.id.tv_tab_down_menu);
+		textView.setText(text);
+
+		return tabView;
+	}
+
+	private void initPopupWindow(Context context)
+	{
+		if (null == popupWindow)
+		{
+			popupView = new LinearLayout(context);
+			popupView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+			popupView.setOrientation(LinearLayout.VERTICAL);
+
+			maskView = new View(context);
+			maskView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+			maskView.setBackgroundColor(MASK_COLOR);
+
+			contentView = new View(context);
+
+			popupView.addView(contentView);
+			popupView.addView(maskView);
+
+			popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+		}
+	}
+
+	/**
+	 * 添加 menu
+	 *
+	 * @param tabLayout
+	 * @param position
+	 */
+	private void addMenu(TabLayout tabLayout, int position)
+	{
+		if (null != popupWindow)
+		{
+			contentView = contentViewList.get(position);
+			popupView.removeViewAt(CONTENT_VIEW_POSITION);
+			popupView.addView(contentView, CONTENT_VIEW_POSITION);
+
+			tabViewList.get(position).setSelected(true);
+			isOpened = true;
+
+			if (!popupView.isShown())
+			{
+				popupWindow.showAsDropDown(tabLayout);
 			}
 		}
 	}
 
-	public interface OnDropMenuClickListener
+	/**
+	 * 关闭Menu,并更新状态
+	 *
+	 * @param position 更新状态位置
+	 */
+	public void closeMenu(int position)
 	{
-		void onCityClick(int position);
+		if (null != popupWindow && popupWindow.isShowing())
+		{
+			popupWindow.dismiss();
 
-		void onAgeClick(int position);
+			tabViewList.get(position).setSelected(false);
+			isOpened = false;
+		}
+	}
 
-		void onSexClick(int position);
+	/**
+	 * 初始化 contentView
+	 *
+	 * @param list
+	 */
+	private void initContentViewList(Context context, List<View> list)
+	{
+		List<View> views = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++)
+		{
+			TextView textView = new TextView(context);
+			textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+			textView.setText("position = " + i);
+			views.add(textView);
+		}
 
-		void onConstellationClick(int position);
+		for (int i = 0; i < list.size(); i++)
+		{
+			list.get(i).setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+		}
+
+		this.contentViewList = list;
 	}
 }
+
+
+
+
+
+
+
+
+
