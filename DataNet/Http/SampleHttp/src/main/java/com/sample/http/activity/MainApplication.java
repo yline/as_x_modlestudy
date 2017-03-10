@@ -5,20 +5,9 @@ import com.yline.application.SDKConfig;
 
 public class MainApplication extends BaseApplication
 {
-	public static final String TAG = "SampleHttp";
-
 	@Override
-	public void onCreate()
+	public SDKConfig initConfig()
 	{
-		super.onCreate();
-	}
-
-	@Override
-	protected SDKConfig initConfig()
-	{
-		SDKConfig sdkConfig = new SDKConfig();
-		sdkConfig.setLogFilePath(TAG);
-		sdkConfig.setLogLocation(true);
-		return sdkConfig;
+		return super.initConfig();
 	}
 }

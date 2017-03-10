@@ -4,17 +4,14 @@ import com.yline.application.BaseApplication;
 import com.yline.application.SDKConfig;
 
 /**
- * Created by yline on 2017/2/6.
+ * @author yline 2017/3/10 --> 14:36
+ * @version 1.0.0
  */
 public class IApplication extends BaseApplication
 {
-	public static final String TAG = "HttpAlbum";
-
 	@Override
-	protected SDKConfig initConfig()
+	public SDKConfig initConfig()
 	{
-		SDKConfig sdkConfig = new SDKConfig();
-		sdkConfig.setLogFilePath(TAG);
-		return sdkConfig;
+		return super.initConfig();
 	}
 }

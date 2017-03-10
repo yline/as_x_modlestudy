@@ -37,7 +37,10 @@ public class MainActivity extends BaseAppCompatActivity
 			@Override
 			public void onClick(View v)
 			{
-				new XHttp<VNewsSingleBean>().doRequest("new_tui", VNewsSingleBean.class);
+				new XHttp<VNewsSingleBean>()
+				{
+
+				}.doRequest("new_tui", VNewsSingleBean.class);
 			}
 		});
 	}

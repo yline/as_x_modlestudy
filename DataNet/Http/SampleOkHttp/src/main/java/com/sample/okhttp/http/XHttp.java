@@ -1,7 +1,7 @@
 package com.sample.okhttp.http;
 
 import com.google.gson.Gson;
-import com.sample.okhttp.httphelper.HttpClient;
+import com.sample.okhttp.httphelper.HttpDefaultClient;
 import com.sample.okhttp.httphelper.HttpHandler;
 import com.sample.okhttp.httphelper.IHttpResponse;
 import com.yline.log.LogFileUtil;
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -41,7 +42,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 
 	public XHttp()
 	{
-		if (isHandler())
+		if (isResponseHandler())
 		{
 			httpHandler = HttpHandler.build();
 		}
@@ -56,18 +57,21 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	public void doRequest(String actionUrl, final Class<Result> clazz)
 	{
 		// 配置Client
-		OkHttpClient okHttpClient = getHttpClient();
+		OkHttpClient okHttpClient = getClient();
 		okHttpClient.newBuilder()
-				.connectTimeout(getConnectTimeOut(), TimeUnit.SECONDS)
-				.readTimeout(getReadTimeout(), TimeUnit.SECONDS)
-				.writeTimeout(getWriteTimeOut(), TimeUnit.SECONDS).build();
+				.connectTimeout(getClientConnectTimeOut(), TimeUnit.SECONDS)
+				.readTimeout(getClientReadTimeout(), TimeUnit.SECONDS)
+				.writeTimeout(getClientWriteTimeOut(), TimeUnit.SECONDS).build();
 
 		// 配置请求参数
 		Request.Builder builder = getRequestBuilder();
+		// 1,cache
+		builder.cacheControl(getCacheBuilder().build());
 
+		// 2,get、post区分
 		if (REQUEST_POST == getRequestType())
 		{
-			String postHttpUrl = getHttpBaseUrl() + actionUrl;
+			String postHttpUrl = getRequestUrlBase() + actionUrl;
 			if (isDebug())
 			{
 				LogFileUtil.v("postHttpUrl", postHttpUrl);
@@ -77,7 +81,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 		}
 		else if (REQUEST_GET == getRequestType())
 		{
-			String getHttpUrl = String.format("%s%s?%s", getHttpBaseUrl(), actionUrl, getGetParamUrl());
+			String getHttpUrl = String.format("%s%s?%s", getRequestUrlBase(), actionUrl, getGetParamUrl());
 			if (isDebug())
 			{
 				LogFileUtil.v("getHttpUrl", getHttpUrl);
@@ -103,7 +107,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 			{
 				// 先进行code处理一次
 				String jsonResult;
-				if (isCodeHandler())
+				if (isResponseCodeHandler())
 				{
 					String data = response.body().string();
 					try
@@ -111,7 +115,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 						JSONObject jsonObject = new JSONObject(data);
 
 						int code = jsonObject.getInt("code");
-						if (getDefaultCode() == code)
+						if (getResponseDefaultCode() == code)
 						{
 							jsonResult = jsonObject.getString("data");
 						}
@@ -140,7 +144,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 
 	private void handleSuccess(final Result result)
 	{
-		if (isHandler())
+		if (isResponseHandler())
 		{
 			httpHandler.post(new Runnable()
 			{
@@ -159,7 +163,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 
 	private void handleFailureCode(final int code)
 	{
-		if (isHandler())
+		if (isResponseHandler())
 		{
 			httpHandler.post(new Runnable()
 			{
@@ -179,7 +183,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	private void handleFailure(final Exception ex)
 	{
 		// 是否需要 Handler 处理一次
-		if (isHandler())
+		if (isResponseHandler())
 		{
 			httpHandler.post(new Runnable()
 			{
@@ -198,17 +202,17 @@ public class XHttp<Result> implements IHttpResponse<Result>
 
 	private RequestBody getPostRequestBody()
 	{
-		String jsonBody = new Gson().toJson(getPostParam());
+		String jsonBody = new Gson().toJson(getRequestPostParam());
 		if (isDebug())
 		{
 			LogFileUtil.v("requestBody", "jsonBody = " + jsonBody);
 		}
-		return RequestBody.create(getPostMediaType(), jsonBody);
+		return RequestBody.create(getRequestPostMediaType(), jsonBody);
 	}
 
 	private String getGetParamUrl()
 	{
-		Map<String, String> map = getGetParam();
+		Map<String, String> map = getRequestGetParam();
 		if (null == map)
 		{
 			return "";
@@ -253,34 +257,34 @@ public class XHttp<Result> implements IHttpResponse<Result>
 		}
 	}
 
-	 /* --------------------------- 以下代码用来设置参数 --------------------------- */
-
-	protected boolean isDebug()
+	public static boolean isDebug()
 	{
 		return true;
 	}
 
+	 /* --------------------------- 以下代码用来设置参数 --------------------------- */
+
 	/**
-	 * 默认 单例方式获取 HttpClient
+	 * 默认 单例方式获取 HttpDefaultClient
 	 *
 	 * @return
 	 */
-	protected OkHttpClient getHttpClient()
+	protected OkHttpClient getClient()
 	{
-		return HttpClient.getInstance();
+		return HttpDefaultClient.getInstance();
 	}
 
-	protected int getConnectTimeOut()
-	{
-		return 10;
-	}
-
-	protected int getReadTimeout()
+	protected int getClientConnectTimeOut()
 	{
 		return 10;
 	}
 
-	protected int getWriteTimeOut()
+	protected int getClientReadTimeout()
+	{
+		return 10;
+	}
+
+	protected int getClientWriteTimeOut()
 	{
 		return 10;
 	}
@@ -312,7 +316,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	 *
 	 * @return
 	 */
-	protected String getHttpBaseUrl()
+	protected String getRequestUrlBase()
 	{
 		return "http://120.92.35.211/wanghong/wh/index.php/Back/Api/";
 	}
@@ -322,12 +326,12 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	 *
 	 * @return
 	 */
-	protected Object getPostParam()
+	protected Object getRequestPostParam()
 	{
 		return "";
 	}
 
-	protected MediaType getPostMediaType()
+	protected MediaType getRequestPostMediaType()
 	{
 		return MediaType.parse(MEDIA_TYPE_JSON);
 	}
@@ -337,7 +341,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	 *
 	 * @return
 	 */
-	protected Map<String, String> getGetParam()
+	protected Map<String, String> getRequestGetParam()
 	{
 		return null;
 	}
@@ -347,7 +351,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	 *
 	 * @return
 	 */
-	protected boolean isHandler()
+	protected boolean isResponseHandler()
 	{
 		return true;
 	}
@@ -357,7 +361,7 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	 *
 	 * @return
 	 */
-	protected boolean isCodeHandler()
+	protected boolean isResponseCodeHandler()
 	{
 		return true;
 	}
@@ -367,8 +371,20 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	 *
 	 * @return
 	 */
-	protected int getDefaultCode()
+	protected int getResponseDefaultCode()
 	{
 		return REQUEST_SUCCESS_CODE;
+	}
+
+	/**
+	 * 配置缓存选项
+	 *
+	 * @return
+	 */
+	protected CacheControl.Builder getCacheBuilder()
+	{
+		final CacheControl.Builder cacheBuilder = new CacheControl.Builder();
+		cacheBuilder.maxAge(10, TimeUnit.MILLISECONDS);
+		return cacheBuilder;
 	}
 }
