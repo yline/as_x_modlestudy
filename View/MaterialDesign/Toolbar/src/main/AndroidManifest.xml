@@ -23,6 +23,10 @@
             android:name=".activity.style.IconBackActivity"
             android:theme="@style/AppTheme.Delete">
         </activity>
+        <activity
+            android:name=".activity.style.RightMenuActivity"
+            android:theme="@style/AppTheme.Delete">
+        </activity>
     </application>
 
 </manifest>

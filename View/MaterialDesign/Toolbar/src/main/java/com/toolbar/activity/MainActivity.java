@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.toolbar.R;
 import com.toolbar.activity.style.IconBackActivity;
+import com.toolbar.activity.style.RightMenuActivity;
 import com.toolbar.activity.style.TitleCenterActivity;
 import com.yline.base.BaseAppCompatActivity;
 
@@ -37,6 +38,15 @@ public class MainActivity extends BaseAppCompatActivity
 			public void onClick(View v)
 			{
 				IconBackActivity.actionStart(MainActivity.this);
+			}
+		});
+
+		findViewById(R.id.btn_main_action_right).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				RightMenuActivity.actionStart(MainActivity.this);
 			}
 		});
 	}

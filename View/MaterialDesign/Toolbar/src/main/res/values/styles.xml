@@ -25,4 +25,13 @@
         <item name="colorControlNormal">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
     </style>
+
+    <style name="AppTheme.RightMenu" parent="AppTheme.Default">
+        <!--子布局的,字体颜色-->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <!--自身的,返回键颜色-->
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
 </resources>

@@ -28,8 +28,10 @@ import okhttp3.Response;
  * @author yline 2017/3/9 --> 13:14
  * @version 1.0.0
  */
-public class XHttp<Result> implements IHttpResponse<Result>
+public abstract class XHttp<Result> implements IHttpResponse<Result>
 {
+	public static final boolean isDebug = true;
+
 	public static final int REQUEST_POST = 0;
 
 	public static final int REQUEST_GET = 1;
@@ -58,15 +60,11 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	{
 		// 配置Client
 		OkHttpClient okHttpClient = getClient();
-		okHttpClient.newBuilder()
-				.connectTimeout(getClientConnectTimeOut(), TimeUnit.SECONDS)
-				.readTimeout(getClientReadTimeout(), TimeUnit.SECONDS)
-				.writeTimeout(getClientWriteTimeOut(), TimeUnit.SECONDS).build();
 
 		// 配置请求参数
 		Request.Builder builder = getRequestBuilder();
 		// 1,cache
-		builder.cacheControl(getCacheBuilder().build());
+		builder.cacheControl(getCacheBuilder());
 
 		// 2,get、post区分
 		if (REQUEST_POST == getRequestType())
@@ -135,9 +133,23 @@ public class XHttp<Result> implements IHttpResponse<Result>
 					jsonResult = response.body().string();
 				}
 
-				// 解析
-				Result result = new Gson().fromJson(jsonResult, clazz);
-				handleSuccess(result);
+				// response.body().close();
+
+				if (isDebug())
+				{
+					LogFileUtil.v("onSuccess", (null == jsonResult ? "null" : jsonResult.toString()));
+				}
+
+				if (isResponseParse())
+				{
+					// 解析
+					Result result = new Gson().fromJson(jsonResult, clazz);
+					handleSuccess(result);
+				}
+				else
+				{
+					handleSuccess((Result) jsonResult);
+				}
 			}
 		});
 	}
@@ -220,24 +232,26 @@ public class XHttp<Result> implements IHttpResponse<Result>
 		else
 		{
 			StringBuffer stringBuffer = new StringBuffer();
+			boolean isFirst = true;
 			for (String key : map.keySet())
 			{
+				if (isFirst)
+				{
+					isFirst = false;
+				}
+				else
+				{
+					stringBuffer.append("&");
+				}
 				stringBuffer.append(key);
-				stringBuffer.append("&");
+				stringBuffer.append("=");
 				stringBuffer.append(map.get(key));
 			}
 			return stringBuffer.toString();
 		}
 	}
 
-	@Override
-	public void onSuccess(Result result)
-	{
-		if (isDebug())
-		{
-			LogFileUtil.v("onSuccess", (null == result ? "null" : result.toString()));
-		}
-	}
+	public abstract void onSuccess(Result result);
 
 	@Override
 	public void onFailureCode(int code)
@@ -272,21 +286,6 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	protected OkHttpClient getClient()
 	{
 		return HttpDefaultClient.getInstance();
-	}
-
-	protected int getClientConnectTimeOut()
-	{
-		return 10;
-	}
-
-	protected int getClientReadTimeout()
-	{
-		return 10;
-	}
-
-	protected int getClientWriteTimeOut()
-	{
-		return 10;
 	}
 
 	/**
@@ -367,6 +366,17 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	}
 
 	/**
+	 * 如果返回的,以字符串输出；则设置成true
+	 * 如果需要解析,则设置成false
+	 *
+	 * @return
+	 */
+	protected boolean isResponseParse()
+	{
+		return true;
+	}
+
+	/**
 	 * 默认正确的Code
 	 *
 	 * @return
@@ -381,10 +391,18 @@ public class XHttp<Result> implements IHttpResponse<Result>
 	 *
 	 * @return
 	 */
-	protected CacheControl.Builder getCacheBuilder()
+	protected CacheControl getCacheBuilder()
 	{
 		final CacheControl.Builder cacheBuilder = new CacheControl.Builder();
-		cacheBuilder.maxAge(10, TimeUnit.MILLISECONDS);
-		return cacheBuilder;
+		// cacheBuilder.noCache(); // 不使用缓存，用网络请求
+		// cacheBuilder.noStore(); // 不使用缓存，也不存储缓存
+		// cacheBuilder.onlyIfCached(); // 只使用缓存
+		// cacheBuilder.noTransform(); // 禁止转码
+		cacheBuilder.maxAge(1000, TimeUnit.SECONDS); // 本地能够使用这个数据多久
+		cacheBuilder.maxStale(300, TimeUnit.SECONDS); // 如果超过这个时间,则认为数据过时，从新请求；如果没超过这个时间，则不会发送请求
+		cacheBuilder.minFresh(100, TimeUnit.SECONDS); // 超时时间为当前时间加上10秒钟。
+		return cacheBuilder.build();
 	}
+	
+
 }

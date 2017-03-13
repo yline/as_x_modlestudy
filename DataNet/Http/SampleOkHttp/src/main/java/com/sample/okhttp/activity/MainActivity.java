@@ -1,47 +1,64 @@
 package com.sample.okhttp.activity;
 
 import android.os.Bundle;
-import android.view.View;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 
 import com.sample.okhttp.R;
-import com.sample.okhttp.bean.VNewsSingleBean;
-import com.sample.okhttp.http.HttpHelper;
-import com.sample.okhttp.http.XHttp;
+import com.sample.okhttp.fragment.TestGetFragment;
+import com.sample.okhttp.fragment.TestPostFragment;
 import com.yline.base.BaseAppCompatActivity;
+import com.yline.base.BaseFragment;
 
-/**
- * Created by yline on 2017/2/7.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends BaseAppCompatActivity
 {
+	private String url = "http://120.92.35.211/wanghong/wh/Common/Uploads/2017-03-11/55cc154f216745.60264944.jpg";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener()
+		final List<BaseFragment> fragmentList = new ArrayList<>();
+		final List<String> titleList = new ArrayList<>();
+
+		fragmentList.add(new TestGetFragment());
+		titleList.add("测试Get");
+
+		fragmentList.add(new TestPostFragment());
+		titleList.add("测试Post");
+
+		TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+
+		viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager())
 		{
 			@Override
-			public void onClick(View v)
+			public Fragment getItem(int position)
 			{
-				// String httpUrl = "http://120.92.77.154/crest/index.php/api/example/users/N#887a19d10a6601b2";
-				String httpUrl = "https://github.com/yissan/CalendarView";
-
-				HttpHelper.doGet(httpUrl);
+				return fragmentList.get(position);
 			}
-		});
 
-		findViewById(R.id.btn_test_manager).setOnClickListener(new View.OnClickListener()
-		{
 			@Override
-			public void onClick(View v)
+			public int getCount()
 			{
-				new XHttp<VNewsSingleBean>()
-				{
+				return fragmentList.size();
+			}
 
-				}.doRequest("new_tui", VNewsSingleBean.class);
+			@Override
+			public CharSequence getPageTitle(int position)
+			{
+				return titleList.get(position);
 			}
 		});
+		tabLayout.setupWithViewPager(viewPager);
 	}
+
+
 }

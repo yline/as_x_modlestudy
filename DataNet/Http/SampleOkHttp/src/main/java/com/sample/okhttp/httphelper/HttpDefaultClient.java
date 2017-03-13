@@ -4,6 +4,7 @@ import com.sample.okhttp.application.IApplication;
 import com.yline.utils.FileUtil;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
@@ -36,10 +37,20 @@ public class HttpDefaultClient extends OkHttpClient
 				{
 					HttpDefaultClient.Builder builder = new HttpDefaultClient.Builder();
 
+					// 设置缓存
 					String cacheDirStr = IApplication.getApplication().getExternalCacheDir() + File.separator + DEFAULT_CACHE_PATH;
 					File cacheDir = FileUtil.createFileDir(cacheDirStr);
 					Cache cache = new Cache(cacheDir, DEFAULT_CACHE_SIZE);
 					builder.cache(cache);
+					
+					// 设置超时
+					builder.connectTimeout(10, TimeUnit.SECONDS)
+							.readTimeout(10, TimeUnit.SECONDS)
+							.writeTimeout(10, TimeUnit.SECONDS);
+
+					// 添加拦截器
+					builder.addInterceptor(new HttpDefaultInterceptor());  // 有网络、没网络都会走
+					builder.addNetworkInterceptor(new HttpDefaultNetworkInterceptor()); // 有网络,会走
 
 					httpClient = builder.build();
 				}
