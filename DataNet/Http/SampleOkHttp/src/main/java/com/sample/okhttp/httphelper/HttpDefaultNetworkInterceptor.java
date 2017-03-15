@@ -11,21 +11,19 @@ import okhttp3.Response;
 
 public class HttpDefaultNetworkInterceptor implements Interceptor
 {
-	private boolean isDebug = XHttp.isDebug;
-
 	@Override
 	public Response intercept(Interceptor.Chain chain) throws IOException
 	{
 		Request request = chain.request();
 		long time1 = System.nanoTime();
-		if (isDebug)
+		if (XHttp.isDefaultDebug())
 		{
 			LogFileUtil.v(String.format("Network request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
 		}
 
 		Response response = chain.proceed(request);
 		// 打印日志
-		if (isDebug)
+		if (XHttp.isDefaultDebug())
 		{
 			long time2 = System.nanoTime();
 
@@ -33,7 +31,6 @@ public class HttpDefaultNetworkInterceptor implements Interceptor
 		}
 
 		// 设置缓存
-
 		return response;
 	}
 }

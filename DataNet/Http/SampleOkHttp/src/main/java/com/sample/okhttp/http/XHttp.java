@@ -30,8 +30,6 @@ import okhttp3.Response;
  */
 public abstract class XHttp<Result> implements IHttpResponse<Result>
 {
-	public static final boolean isDebug = true;
-
 	public static final int REQUEST_POST = 0;
 
 	public static final int REQUEST_GET = 1;
@@ -62,34 +60,7 @@ public abstract class XHttp<Result> implements IHttpResponse<Result>
 		OkHttpClient okHttpClient = getClient();
 
 		// 配置请求参数
-		Request.Builder builder = getRequestBuilder();
-		// 1,cache
-		builder.cacheControl(getCacheBuilder());
-
-		// 2,get、post区分
-		if (REQUEST_POST == getRequestType())
-		{
-			String postHttpUrl = getRequestUrlBase() + actionUrl;
-			if (isDebug())
-			{
-				LogFileUtil.v("postHttpUrl", postHttpUrl);
-			}
-
-			builder.url(postHttpUrl).post(getPostRequestBody());
-		}
-		else if (REQUEST_GET == getRequestType())
-		{
-			String getHttpUrl = String.format("%s%s?%s", getRequestUrlBase(), actionUrl, getGetParamUrl());
-			if (isDebug())
-			{
-				LogFileUtil.v("getHttpUrl", getHttpUrl);
-			}
-
-			builder.url(getHttpUrl);
-		}
-
-		// 建立请求
-		Request request = builder.build();
+		Request request = getRequest(actionUrl);
 
 		// 发送请求
 		okHttpClient.newCall(request).enqueue(new Callback()
@@ -103,55 +74,142 @@ public abstract class XHttp<Result> implements IHttpResponse<Result>
 			@Override
 			public void onResponse(Call call, Response response) throws IOException
 			{
-				// 先进行code处理一次
-				String jsonResult;
-				if (isResponseCodeHandler())
-				{
-					String data = response.body().string();
-					try
-					{
-						JSONObject jsonObject = new JSONObject(data);
-
-						int code = jsonObject.getInt("code");
-						if (getResponseDefaultCode() == code)
-						{
-							jsonResult = jsonObject.getString("data");
-						}
-						else
-						{
-							handleFailureCode(code);
-							return;
-						}
-					} catch (JSONException ex)
-					{
-						handleFailure(ex);
-						return;
-					}
-				}
-				else
-				{
-					jsonResult = response.body().string();
-				}
-
-				// response.body().close();
-
-				if (isDebug())
-				{
-					LogFileUtil.v("onSuccess", (null == jsonResult ? "null" : jsonResult.toString()));
-				}
-
-				if (isResponseParse())
-				{
-					// 解析
-					Result result = new Gson().fromJson(jsonResult, clazz);
-					handleSuccess(result);
-				}
-				else
-				{
-					handleSuccess((Result) jsonResult);
-				}
+				handleResponse(response, clazz);
 			}
 		});
+	}
+
+	/* --------------------------- 设置请求配置参数 --------------------------- */
+
+	/**
+	 * 默认不设置的一些配置,可以让用户自定义配置；例如Header
+	 * 但是如果有该文件内已经配置好的,则已配置的优先
+	 *
+	 * @return
+	 */
+	private Request getRequest(String actionUrl)
+	{
+		Request.Builder builder = new Request.Builder();
+
+		// 1,cache
+		builder.cacheControl(getCacheControl());
+
+		// 2,get、post区分
+		if (REQUEST_POST == getRequestType())
+		{
+			String postHttpUrl = getRequestUrlBase() + actionUrl;
+			if (isDebug())
+			{
+				LogFileUtil.v("Request post Url", postHttpUrl);
+			}
+
+			builder.url(postHttpUrl).post(getPostRequestBody());
+		}
+		else if (REQUEST_GET == getRequestType())
+		{
+			String getHttpUrl = String.format("%s%s?%s", getRequestUrlBase(), actionUrl, getGetParamUrl());
+			if (isDebug())
+			{
+				LogFileUtil.v("Request get Url", getHttpUrl);
+			}
+
+			builder.url(getHttpUrl);
+		}
+
+		// 丢给子类 实现更多功能
+		onRequestBuild(builder);
+
+		return builder.build();
+	}
+
+	private String getGetParamUrl()
+	{
+		Map<String, String> map = getRequestGetParam();
+		if (null == map)
+		{
+			return "";
+		}
+		else
+		{
+			StringBuffer stringBuffer = new StringBuffer();
+			boolean isFirst = true;
+			for (String key : map.keySet())
+			{
+				if (isFirst)
+				{
+					isFirst = false;
+				}
+				else
+				{
+					stringBuffer.append("&");
+				}
+				stringBuffer.append(key);
+				stringBuffer.append("=");
+				stringBuffer.append(map.get(key));
+			}
+			return stringBuffer.toString();
+		}
+	}
+
+	private RequestBody getPostRequestBody()
+	{
+		String jsonBody = new Gson().toJson(getRequestPostParam());
+		if (isDebug())
+		{
+			LogFileUtil.v("post requestBody", "jsonBody = " + jsonBody);
+		}
+		return RequestBody.create(getRequestPostMediaType(), jsonBody);
+	}
+
+	/* --------------------------- 处理返回参数 --------------------------- */
+
+	private void handleResponse(Response response, Class<Result> clazz) throws IOException
+	{
+		// 先进行code处理一次
+		String jsonResult;
+		if (isResponseCodeHandler())
+		{
+			String data = response.body().string();
+			try
+			{
+				JSONObject jsonObject = new JSONObject(data);
+
+				int code = jsonObject.getInt("code");
+				if (getResponseDefaultCode() == code)
+				{
+					jsonResult = jsonObject.getString("data");
+				}
+				else
+				{
+					handleFailureCode(code);
+					return;
+				}
+			} catch (JSONException ex)
+			{
+				handleFailure(ex);
+				return;
+			}
+		}
+		else
+		{
+			jsonResult = response.body().string();
+		}
+
+		if (isDebug())
+		{
+			LogFileUtil.v("onSuccess", (null == jsonResult ? "null" : jsonResult.toString()));
+		}
+
+		if (isResponseParse())
+		{
+			// 解析
+			Result result = new Gson().fromJson(jsonResult, clazz);
+			handleSuccess(result);
+		}
+		else
+		{
+			handleSuccess((Result) jsonResult);
+		}
 	}
 
 	private void handleSuccess(final Result result)
@@ -212,43 +270,11 @@ public abstract class XHttp<Result> implements IHttpResponse<Result>
 		}
 	}
 
-	private RequestBody getPostRequestBody()
-	{
-		String jsonBody = new Gson().toJson(getRequestPostParam());
-		if (isDebug())
-		{
-			LogFileUtil.v("requestBody", "jsonBody = " + jsonBody);
-		}
-		return RequestBody.create(getRequestPostMediaType(), jsonBody);
-	}
+	 /* --------------------------- 提供重写的方法 --------------------------- */
 
-	private String getGetParamUrl()
+	protected void onRequestBuild(Request.Builder builder)
 	{
-		Map<String, String> map = getRequestGetParam();
-		if (null == map)
-		{
-			return "";
-		}
-		else
-		{
-			StringBuffer stringBuffer = new StringBuffer();
-			boolean isFirst = true;
-			for (String key : map.keySet())
-			{
-				if (isFirst)
-				{
-					isFirst = false;
-				}
-				else
-				{
-					stringBuffer.append("&");
-				}
-				stringBuffer.append(key);
-				stringBuffer.append("=");
-				stringBuffer.append(map.get(key));
-			}
-			return stringBuffer.toString();
-		}
+
 	}
 
 	public abstract void onSuccess(Result result);
@@ -271,12 +297,7 @@ public abstract class XHttp<Result> implements IHttpResponse<Result>
 		}
 	}
 
-	public static boolean isDebug()
-	{
-		return true;
-	}
-
-	 /* --------------------------- 以下代码用来设置参数 --------------------------- */
+	/* --------------------------- 以下代码用来设置参数 --------------------------- */
 
 	/**
 	 * 默认 单例方式获取 HttpDefaultClient
@@ -286,17 +307,6 @@ public abstract class XHttp<Result> implements IHttpResponse<Result>
 	protected OkHttpClient getClient()
 	{
 		return HttpDefaultClient.getInstance();
-	}
-
-	/**
-	 * 默认不设置的一些配置,可以让用户自定义配置；例如Header
-	 * 但是如果有该文件内已经配置好的,则已配置的优先
-	 *
-	 * @return
-	 */
-	protected Request.Builder getRequestBuilder()
-	{
-		return new Request.Builder();
 	}
 
 	/**
@@ -391,7 +401,7 @@ public abstract class XHttp<Result> implements IHttpResponse<Result>
 	 *
 	 * @return
 	 */
-	protected CacheControl getCacheBuilder()
+	protected CacheControl getCacheControl()
 	{
 		final CacheControl.Builder cacheBuilder = new CacheControl.Builder();
 		// cacheBuilder.noCache(); // 不使用缓存，用网络请求
@@ -403,6 +413,22 @@ public abstract class XHttp<Result> implements IHttpResponse<Result>
 		cacheBuilder.minFresh(100, TimeUnit.SECONDS); // 超时时间为当前时间加上10秒钟。
 		return cacheBuilder.build();
 	}
-	
 
+	protected boolean isDebug()
+	{
+		return isDefaultDebug;
+	}
+
+	/* --------------------------- 设置是否 OkHttp工程 debug --------------------------- */
+	private static boolean isDefaultDebug = true;
+
+	public static boolean isDefaultDebug()
+	{
+		return isDefaultDebug;
+	}
+
+	public static void setIsDefaultDebug(boolean isDefaultDebug)
+	{
+		XHttp.isDefaultDebug = isDefaultDebug;
+	}
 }
