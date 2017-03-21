@@ -1,5 +1,6 @@
 package com.layout.label.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import com.layout.label.view.labellayout.LabelFlowLayout;
 import com.yline.base.BaseFragment;
 import com.yline.base.common.CommonListAdapter;
 import com.yline.base.common.ViewHolder;
-import com.yline.log.LogFileUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,54 +52,61 @@ public class ListViewFragment extends BaseFragment
 		data = new ArrayList<>();
 		initData(data);
 
-		commonListAdapter = new CommonListAdapter<List<String>>(getContext())
-		{
-			private Map<Integer, Set<Integer>> selectedMap = new HashMap<>();
-
-			@Override
-			protected int getItemRes(int i)
-			{
-				return R.layout.item_label_list;
-			}
-
-			@Override
-			protected void setViewContent(final int i, ViewGroup viewGroup, ViewHolder viewHolder)
-			{
-				LabelFlowLayout labelFlowLayout = viewHolder.get(R.id.layout_flow_label);
-
-				LabelAdapter<String> labelAdapter = new LabelAdapter<String>(sList.get(i))
-				{
-					@Override
-					public View getView(FlowLayout parent, int position, String s)
-					{
-						TextView tvLabel = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_label, parent, false);
-						tvLabel.setText(s);
-						return tvLabel;
-					}
-				};
-
-				labelFlowLayout.setAdapter(labelAdapter);
-				//重置状态
-				labelAdapter.setSelectedList(selectedMap.get(i));
-
-				labelFlowLayout.setOnSelectListener(new LabelFlowLayout.OnSelectListener()
-				{
-					@Override
-					public void onSelected(Set<Integer> selectPosSet)
-					{
-						selectedMap.put(i, selectPosSet);
-					}
-				});
-			}
-		};
+		commonListAdapter = new ListAdapter(getContext());
 
 		lvLabel.setAdapter(commonListAdapter);
 		commonListAdapter.set(data);
 	}
 
+	private class ListAdapter extends CommonListAdapter<List<String>>
+	{
+		private Map<Integer, Set<Integer>> selectedMap = new HashMap<>();
+
+		public ListAdapter(Context context)
+		{
+			super(context);
+		}
+
+		@Override
+		protected int getItemRes(int i)
+		{
+			return R.layout.item_label_list;
+		}
+
+		@Override
+		protected void setViewContent(final int i, ViewGroup viewGroup, ViewHolder viewHolder)
+		{
+			LabelFlowLayout labelFlowLayout = viewHolder.get(R.id.layout_flow_label_list);
+
+			LabelAdapter<String> labelAdapter = new LabelAdapter<String>(sList.get(i))
+			{
+				@Override
+				public View getView(FlowLayout parent, int position, String s)
+				{
+					TextView tvLabel = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_label, parent, false);
+					tvLabel.setText(s);
+					return tvLabel;
+				}
+			};
+
+			labelFlowLayout.setAdapter(labelAdapter);
+			//重置状态
+			labelAdapter.setSelectedList(selectedMap.get(i));
+
+			labelFlowLayout.setOnSelectListener(new LabelFlowLayout.OnSelectListener()
+			{
+				@Override
+				public void onSelected(Set<Integer> selectPosSet)
+				{
+					selectedMap.put(i, selectPosSet);
+				}
+			});
+		}
+	}
+
 	private void initData(List<List<String>> data)
 	{
-		for (int i = 'A'; i < 'Z'; i++)
+		for (int i = 'A'; i < 'C'; i++)
 		{
 			List<String> itemData = new ArrayList<>();
 			for (int j = 0; j < 4; j++)
@@ -108,7 +115,5 @@ public class ListViewFragment extends BaseFragment
 			}
 			data.add(itemData);
 		}
-		LogFileUtil.v("size = " + data.size());
-		LogFileUtil.v("size size = " + data.get(0).size());
 	}
 }

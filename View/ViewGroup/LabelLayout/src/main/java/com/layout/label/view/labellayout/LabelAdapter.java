@@ -2,15 +2,13 @@ package com.layout.label.view.labellayout;
 
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public abstract class LabelAdapter<T>
 {
-	private List<T> mTagDataList;
+	protected List<T> slist;
 
 	private OnDataChangedListener mOnDataChangedListener;
 
@@ -18,12 +16,7 @@ public abstract class LabelAdapter<T>
 
 	public LabelAdapter(List<T> data)
 	{
-		mTagDataList = data;
-	}
-
-	public LabelAdapter(T[] data)
-	{
-		mTagDataList = new ArrayList<>(Arrays.asList(data));
+		slist = data;
 	}
 
 	interface OnDataChangedListener
@@ -63,7 +56,7 @@ public abstract class LabelAdapter<T>
 
 	public int getCount()
 	{
-		return mTagDataList == null ? 0 : mTagDataList.size();
+		return slist == null ? 0 : slist.size();
 	}
 
 	public void notifyDataChanged()
@@ -73,7 +66,7 @@ public abstract class LabelAdapter<T>
 
 	public T getItem(int position)
 	{
-		return mTagDataList.get(position);
+		return slist.get(position);
 	}
 
 	public abstract View getView(FlowLayout parent, int position, T t);
@@ -82,6 +75,4 @@ public abstract class LabelAdapter<T>
 	{
 		return false;
 	}
-
-
 }

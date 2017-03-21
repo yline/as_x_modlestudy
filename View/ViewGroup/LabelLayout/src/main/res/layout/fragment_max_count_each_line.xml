@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <com.layout.label.view.labellayout.LabelFlowLayout
-        android:id="@+id/layout_flow_label_simple"
+        android:id="@+id/layout_flow_label_each_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </com.layout.label.view.labellayout.LabelFlowLayout>

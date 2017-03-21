@@ -9,7 +9,8 @@ import android.support.v4.view.ViewPager;
 import com.layout.label.R;
 import com.layout.label.fragment.GravityFragment;
 import com.layout.label.fragment.ListViewFragment;
-import com.layout.label.fragment.SimpleFragment;
+import com.layout.label.fragment.MaxCountEachLineFragment;
+import com.layout.label.fragment.SampleSimpleFragment;
 import com.yline.base.BaseAppCompatActivity;
 
 public class MainActivity extends BaseAppCompatActivity
@@ -18,7 +19,7 @@ public class MainActivity extends BaseAppCompatActivity
 
 	private ViewPager viewPager;
 
-	private static final String[] LABEL_TITLES = new String[]{"Simple", "Gravity", "ListView"};
+	private static final String[] LABEL_TITLES = new String[]{"列表", "简单使用", "每行最多3个"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -37,13 +38,15 @@ public class MainActivity extends BaseAppCompatActivity
 				switch (position)
 				{
 					case 0:
-						return new SimpleFragment();
-					case 1:
-						return new GravityFragment();
-					case 2:
 						return new ListViewFragment();
+					case 1:
+						return new SampleSimpleFragment();
+					case 2:
+						return new MaxCountEachLineFragment();
+					case 3:
+						return new GravityFragment();
 					default:
-						return new SimpleFragment();
+						return new ListViewFragment();
 				}
 			}
 

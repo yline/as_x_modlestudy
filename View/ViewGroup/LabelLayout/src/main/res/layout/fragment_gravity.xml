@@ -23,9 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Breath And Life"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
 
         <TextView
@@ -33,9 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Fallen"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
 
         <TextView
@@ -43,9 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Brand-new World"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
 
         <TextView
@@ -53,9 +53,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Save you from anything"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
     </com.layout.label.view.labellayout.FlowLayout>
 
@@ -77,9 +77,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Breath And Life"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
 
         <TextView
@@ -87,9 +87,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Fallen"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
 
         <TextView
@@ -97,9 +97,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Brand-new World"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
 
         <TextView
@@ -107,9 +107,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Save you from anything"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
     </com.layout.label.view.labellayout.FlowLayout>
 
@@ -131,9 +131,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Breath And Life"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
 
         <TextView
@@ -141,9 +141,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Fallen"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
 
         <TextView
@@ -151,9 +151,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Brand-new World"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
 
         <TextView
@@ -161,9 +161,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:layout_marginRight="6dp"
-            android:background="@drawable/bg_label_normal"
+            android:background="@drawable/label_bg_normal"
             android:text="Save you from anything"
-            android:textColor="@drawable/color_label_text"
+            android:textColor="@drawable/label_text_color"
             android:textSize="13sp"/>
     </com.layout.label.view.labellayout.FlowLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.layout.label.view.labellayout;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
@@ -14,6 +15,11 @@ public class LabelView extends FrameLayout implements Checkable
 	public LabelView(Context context)
 	{
 		super(context);
+	}
+
+	public LabelView(Context context, AttributeSet attrs)
+	{
+		super(context, attrs);
 	}
 
 	public View getTagView()

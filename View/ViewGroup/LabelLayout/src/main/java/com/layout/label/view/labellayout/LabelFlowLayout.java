@@ -34,9 +34,9 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 	public LabelFlowLayout(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
-		TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LabelFlowLayout);
-		mAutoSelectEffect = ta.getBoolean(R.styleable.LabelFlowLayout_auto_select_effect, true);
-		mSelectedMax = ta.getInt(R.styleable.LabelFlowLayout_max_select, -1);
+		TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.WidgetLabelLayout);
+		mAutoSelectEffect = ta.getBoolean(R.styleable.WidgetLabelLayout_auto_select_effect, true);
+		mSelectedMax = ta.getInt(R.styleable.WidgetLabelLayout_max_select, -1);
 		ta.recycle();
 
 		if (mAutoSelectEffect)
@@ -54,7 +54,6 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 	{
 		this(context, null);
 	}
-
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
@@ -108,14 +107,12 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 		}
 	}
 
-
 	public void setAdapter(LabelAdapter adapter)
 	{
 		mTagAdapter = adapter;
 		mTagAdapter.setOnDataChangedListener(this);
 		mSelectedView.clear();
 		changeAdapter();
-
 	}
 
 	private void changeAdapter()
@@ -129,14 +126,6 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 			View tagView = adapter.getView(this, i, adapter.getItem(i));
 
 			tagViewContainer = new LabelView(getContext());
-			//            ViewGroup.MarginLayoutParams clp = (ViewGroup.MarginLayoutParams) tagView.getLayoutParams();
-			//            ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(clp);
-			//            lp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-			//            lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-			//            lp.topMargin = clp.topMargin;
-			//            lp.bottomMargin = clp.bottomMargin;
-			//            lp.leftMargin = clp.leftMargin;
-			//            lp.rightMargin = clp.rightMargin;
 			tagView.setDuplicateParentStateEnabled(true);
 			if (tagView.getLayoutParams() != null)
 			{

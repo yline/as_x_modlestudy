@@ -9,25 +9,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.layout.label.R;
+import com.layout.label.activity.DeleteData;
 import com.layout.label.view.labellayout.FlowLayout;
 import com.layout.label.view.labellayout.LabelAdapter;
 import com.layout.label.view.labellayout.LabelFlowLayout;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
-public class SimpleFragment extends Fragment
+public class SampleSimpleFragment extends Fragment
 {
-	private String[] values = new String[]{"Hello", "Android", "Weclome Hi ", "Button", "TextView", "Hello", "Android", "Weclome", "Button ImageView", "TextView", "Helloworld", "Android", "Weclome Hello", "Button Text", "TextView"};
-
 	private LabelFlowLayout labelFlowLayout;
 
 	private LabelAdapter labelAdapter;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -40,47 +35,18 @@ public class SimpleFragment extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 
-		init(view);
+		labelFlowLayout = (LabelFlowLayout) view.findViewById(R.id.layout_flow_label_simple);
+		labelAdapter = new SimpleLabelAdapter(Arrays.asList(DeleteData.data));
+		labelFlowLayout.setAdapter(labelAdapter);
 
 		// mFlowLayout.setMaxSelectCount(3); 设置最多可选择多少个
 		// mAdapter.setSelectedList(1, 3, 5, 7, 8, 9); 默认选择哪几个
 
-		setClickView();
-	}
-
-	private void init(View view)
-	{
-		labelFlowLayout = (LabelFlowLayout) view.findViewById(R.id.layout_flow_label);
-
-		labelAdapter = new LabelAdapter<String>(values)
-		{
-			@Override
-			public View getView(FlowLayout parent, int position, String str)
-			{
-				TextView tvItem = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_label, labelFlowLayout, false);
-				tvItem.setText(str);
-				return tvItem;
-			}
-
-			@Override
-			public boolean setSelected(int position, String s)
-			{
-				// return s.equals("Android"); 默认选择哪些标签
-				return super.setSelected(position, s);
-			}
-		};
-
-		labelFlowLayout.setAdapter(labelAdapter);
-	}
-
-	private void setClickView()
-	{
 		labelFlowLayout.setOnTagClickListener(new LabelFlowLayout.OnTagClickListener()
 		{
 			@Override
 			public boolean onTagClick(View view, int position, FlowLayout parent)
 			{
-				// Toast.makeText(getActivity(), mVals[position], Toast.LENGTH_SHORT).show();
 				// return true;
 				return false;
 			}
@@ -94,5 +60,29 @@ public class SimpleFragment extends Fragment
 				getActivity().setTitle("choose:" + selectPosSet.toString());
 			}
 		});
+	}
+
+	private class SimpleLabelAdapter extends LabelAdapter<String>
+	{
+
+		public SimpleLabelAdapter(List<String> data)
+		{
+			super(data);
+		}
+
+		@Override
+		public View getView(FlowLayout parent, int position, String str)
+		{
+			TextView tvItem = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_label, labelFlowLayout, false);
+			tvItem.setText(str);
+			return tvItem;
+		}
+
+		@Override
+		public boolean setSelected(int position, String s)
+		{
+			// return s.equals("Android"); 默认选择哪些标签
+			return super.setSelected(position, s);
+		}
 	}
 }
