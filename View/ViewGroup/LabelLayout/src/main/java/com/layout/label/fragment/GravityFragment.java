@@ -9,6 +9,12 @@ import android.view.ViewGroup;
 import com.layout.label.R;
 import com.yline.base.BaseFragment;
 
+/**
+ * 手动布局
+ *
+ * @author yline 2017/3/22 -- 10:12
+ * @version 1.0.0
+ */
 public class GravityFragment extends BaseFragment
 {
 	@Override

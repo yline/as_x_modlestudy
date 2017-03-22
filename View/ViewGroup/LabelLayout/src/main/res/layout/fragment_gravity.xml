@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="16dp">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,15 +19,23 @@
         android:layout_marginTop="6dp"
         app:gravity="left">
 
-        <TextView
+        <!-- 必须 java代码设置点击 -->
+        <com.layout.label.view.labellayout.LabelView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:layout_marginRight="6dp"
-            android:background="@drawable/label_bg_normal"
-            android:text="Breath And Life"
-            android:textColor="@drawable/label_text_color"
-            android:textSize="13sp"/>
+            android:clickable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@drawable/label_bg_normal"
+                android:duplicateParentState="true"
+                android:text="Breath And Life"
+                android:textColor="@drawable/label_text_color"
+                android:textSize="13sp"/>
+        </com.layout.label.view.labellayout.LabelView>
 
         <TextView
             android:layout_width="wrap_content"

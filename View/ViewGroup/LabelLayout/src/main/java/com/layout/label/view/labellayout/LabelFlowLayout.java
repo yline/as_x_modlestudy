@@ -140,7 +140,6 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 			tagViewContainer.addView(tagView);
 			addView(tagViewContainer);
 
-
 			if (preCheckedList.contains(i))
 			{
 				tagViewContainer.setChecked(true);

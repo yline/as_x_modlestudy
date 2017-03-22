@@ -11,6 +11,7 @@ import com.layout.label.fragment.GravityFragment;
 import com.layout.label.fragment.ListViewFragment;
 import com.layout.label.fragment.MaxCountEachLineFragment;
 import com.layout.label.fragment.SampleSimpleFragment;
+import com.layout.label.fragment.SingleClickFragment;
 import com.yline.base.BaseAppCompatActivity;
 
 public class MainActivity extends BaseAppCompatActivity
@@ -19,7 +20,7 @@ public class MainActivity extends BaseAppCompatActivity
 
 	private ViewPager viewPager;
 
-	private static final String[] LABEL_TITLES = new String[]{"列表", "简单使用", "每行最多3个"};
+	private static final String[] LABEL_TITLES = new String[]{"列表", "简单使用", "每行最多3个", "单个点击", "xml布局"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -44,6 +45,8 @@ public class MainActivity extends BaseAppCompatActivity
 					case 2:
 						return new MaxCountEachLineFragment();
 					case 3:
+						return new SingleClickFragment();
+					case 4:
 						return new GravityFragment();
 					default:
 						return new ListViewFragment();
