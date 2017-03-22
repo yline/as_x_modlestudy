@@ -18,7 +18,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-public class SampleSimpleFragment extends BaseFragment
+/**
+ * 设定，最大选择个数，和最小选择个数
+ *
+ * @author yline 2017/3/22 -- 13:20
+ * @version 1.0.0
+ */
+public class SelectOneFragment extends BaseFragment
 {
 	private LabelFlowLayout labelFlowLayout;
 
@@ -27,7 +33,7 @@ public class SampleSimpleFragment extends BaseFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.fragment_simple, container, false);
+		return inflater.inflate(R.layout.fragment_select_one, container, false);
 	}
 
 	@Override
@@ -35,12 +41,15 @@ public class SampleSimpleFragment extends BaseFragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 
-		labelFlowLayout = (LabelFlowLayout) view.findViewById(R.id.layout_flow_label_simple);
-		labelAdapter = new SimpleLabelAdapter(Arrays.asList(DeleteData.data));
+		labelFlowLayout = (LabelFlowLayout) view.findViewById(R.id.layout_flow_label_select_one);
+		labelAdapter = new SelectOneAdapter(Arrays.asList(DeleteData.data));
 		labelFlowLayout.setAdapter(labelAdapter);
 
-		// mFlowLayout.setMaxSelectCount(3); 设置最多可选择多少个
-		// mAdapter.setSelectedList(1, 3, 5, 7, 8, 9); 默认选择哪几个
+		// labelFlowLayout.setMaxSelectCount(3); 设置最多可选择多少个
+		// labelAdapter.setSelectedList(1, 3, 5, 7, 8, 9); 默认选择哪几个
+		labelFlowLayout.setMaxSelectCount(2);
+		labelFlowLayout.setMinSelectCount(2);
+		labelAdapter.setSelectedList(0, 1, 3);
 
 		labelFlowLayout.setOnTagClickListener(new LabelFlowLayout.OnTagClickListener()
 		{
@@ -62,10 +71,10 @@ public class SampleSimpleFragment extends BaseFragment
 		});
 	}
 
-	private class SimpleLabelAdapter extends LabelAdapter<String>
+	private class SelectOneAdapter extends LabelAdapter<String>
 	{
 
-		public SimpleLabelAdapter(List<String> data)
+		public SelectOneAdapter(List<String> data)
 		{
 			super(data);
 		}

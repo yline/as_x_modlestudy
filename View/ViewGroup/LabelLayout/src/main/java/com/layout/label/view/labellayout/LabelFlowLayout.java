@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.layout.label.R;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -23,20 +25,22 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 
 	private boolean mAutoSelectEffect = true;
 
-	private int mSelectedMax = -1;//-1为不限制数量
+	private int mSelectedMax = Integer.MAX_VALUE; // -1为不限制数量
+
+	private int mSelectedMin = -1; // -1为不限制下限
 
 	private static final String TAG = "TagFlowLayout";
 
 	private MotionEvent mMotionEvent;
 
-	private Set<Integer> mSelectedView = new HashSet<Integer>();
+	private Deque<Integer> mSelectDeque = new ArrayDeque<>();
 
 	public LabelFlowLayout(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context, attrs, defStyle);
 		TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.WidgetLabelLayout);
 		mAutoSelectEffect = ta.getBoolean(R.styleable.WidgetLabelLayout_auto_select_effect, true);
-		mSelectedMax = ta.getInt(R.styleable.WidgetLabelLayout_max_select, -1);
+		mSelectedMax = ta.getInt(R.styleable.WidgetLabelLayout_max_select, Integer.MAX_VALUE);
 		ta.recycle();
 
 		if (mAutoSelectEffect)
@@ -111,7 +115,7 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 	{
 		mTagAdapter = adapter;
 		mTagAdapter.setOnDataChangedListener(this);
-		mSelectedView.clear();
+		mSelectDeque.clear();
 		changeAdapter();
 	}
 
@@ -121,6 +125,7 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 		LabelAdapter adapter = mTagAdapter;
 		LabelView tagViewContainer = null;
 		HashSet preCheckedList = mTagAdapter.getPreCheckedList();
+
 		for (int i = 0; i < adapter.getCount(); i++)
 		{
 			View tagView = adapter.getView(this, i, adapter.getItem(i));
@@ -133,25 +138,25 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 			}
 			else
 			{
-				MarginLayoutParams lp = new MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				lp.setMargins(dip2px(getContext(), 5), dip2px(getContext(), 5), dip2px(getContext(), 5), dip2px(getContext(), 5));
 				tagViewContainer.setLayoutParams(lp);
 			}
 			tagViewContainer.addView(tagView);
 			addView(tagViewContainer);
 
-			if (preCheckedList.contains(i))
+			if (preCheckedList.contains(i) && mSelectDeque.size() < mSelectedMax)
 			{
 				tagViewContainer.setChecked(true);
+				mSelectDeque.add(i);
 			}
 
 			if (mTagAdapter.setSelected(i, adapter.getItem(i)))
 			{
-				mSelectedView.add(i);
+				mSelectDeque.add(i);
 				tagViewContainer.setChecked(true);
 			}
 		}
-		mSelectedView.addAll(preCheckedList);
 	}
 
 	@Override
@@ -189,19 +194,29 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 		return true;
 	}
 
+	/**
+	 * 只支持,初始化的时候,设置
+	 *
+	 * @param count
+	 */
 	public void setMaxSelectCount(int count)
 	{
-		if (mSelectedView.size() > count)
-		{
-			Log.w(TAG, "you has already select more than " + count + " views , so it will be clear .");
-			mSelectedView.clear();
-		}
-		mSelectedMax = count;
+		this.mSelectedMax = count;
+	}
+
+	/**
+	 * 只支持,初始化的时候,设置
+	 *
+	 * @param count
+	 */
+	public void setMinSelectCount(int count)
+	{
+		this.mSelectedMin = count;
 	}
 
 	public Set<Integer> getSelectedList()
 	{
-		return new HashSet<Integer>(mSelectedView);
+		return new HashSet<>(mSelectDeque);
 	}
 
 	private void doSelect(LabelView child, int position)
@@ -210,35 +225,39 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 		{
 			if (!child.isChecked())
 			{
-				//处理max_select=1的情况
-				if (mSelectedMax == 1 && mSelectedView.size() == 1)
+				// 处理max_select=1的情况
+				if (mSelectDeque.size() >= mSelectedMax)
 				{
-					Iterator<Integer> iterator = mSelectedView.iterator();
+					Iterator<Integer> iterator = mSelectDeque.iterator();
 					Integer preIndex = iterator.next();
 					LabelView pre = (LabelView) getChildAt(preIndex);
+
 					pre.setChecked(false);
 					child.setChecked(true);
-					mSelectedView.remove(preIndex);
-					mSelectedView.add(position);
+
+					mSelectDeque.remove(preIndex);
+					mSelectDeque.add(position);
 				}
 				else
 				{
-					if (mSelectedMax > 0 && mSelectedView.size() >= mSelectedMax)
-					{
-						return;
-					}
 					child.setChecked(true);
-					mSelectedView.add(position);
+					mSelectDeque.add(position);
 				}
 			}
 			else
 			{
+				// 小于最小值,则跳过
+				if (mSelectedMin >= mSelectDeque.size())
+				{
+					return;
+				}
 				child.setChecked(false);
-				mSelectedView.remove(position);
+				mSelectDeque.remove(position);
 			}
+
 			if (mOnSelectListener != null)
 			{
-				mOnSelectListener.onSelected(new HashSet<Integer>(mSelectedView));
+				mOnSelectListener.onSelected(new HashSet<>(mSelectDeque));
 			}
 		}
 	}
@@ -259,9 +278,9 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 		bundle.putParcelable(KEY_DEFAULT, super.onSaveInstanceState());
 
 		String selectPos = "";
-		if (mSelectedView.size() > 0)
+		if (mSelectDeque.size() > 0)
 		{
-			for (int key : mSelectedView)
+			for (int key : mSelectDeque)
 			{
 				selectPos += key + "|";
 			}
@@ -284,7 +303,7 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 				for (String pos : split)
 				{
 					int index = Integer.parseInt(pos);
-					mSelectedView.add(index);
+					mSelectDeque.add(index);
 
 					LabelView tagView = (LabelView) getChildAt(index);
 					if (tagView != null)
@@ -337,7 +356,7 @@ public class LabelFlowLayout extends FlowLayout implements LabelAdapter.OnDataCh
 	@Override
 	public void onChanged()
 	{
-		mSelectedView.clear();
+		mSelectDeque.clear();
 		changeAdapter();
 	}
 

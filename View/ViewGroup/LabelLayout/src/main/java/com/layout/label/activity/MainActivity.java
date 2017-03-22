@@ -11,8 +11,13 @@ import com.layout.label.fragment.GravityFragment;
 import com.layout.label.fragment.ListViewFragment;
 import com.layout.label.fragment.MaxCountEachLineFragment;
 import com.layout.label.fragment.SampleSimpleFragment;
+import com.layout.label.fragment.SelectOneFragment;
 import com.layout.label.fragment.SingleClickFragment;
 import com.yline.base.BaseAppCompatActivity;
+import com.yline.base.BaseFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseAppCompatActivity
 {
@@ -20,7 +25,9 @@ public class MainActivity extends BaseAppCompatActivity
 
 	private ViewPager viewPager;
 
-	private static final String[] LABEL_TITLES = new String[]{"列表", "简单使用", "每行最多3个", "单个点击", "xml布局"};
+	private static final String[] LABEL_TITLES = new String[]{"列表", "简单使用", "每行最多3个", "单个点击", "xml布局", "设定选择1个"};
+
+	private List<BaseFragment> fragmentList = new ArrayList<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -31,26 +38,19 @@ public class MainActivity extends BaseAppCompatActivity
 		tabLayout = (TabLayout) findViewById(R.id.tag_lay);
 		viewPager = (ViewPager) findViewById(R.id.viewpager_tab);
 
+		fragmentList.add(new ListViewFragment());
+		fragmentList.add(new SampleSimpleFragment());
+		fragmentList.add(new MaxCountEachLineFragment());
+		fragmentList.add(new SingleClickFragment());
+		fragmentList.add(new GravityFragment());
+		fragmentList.add(new SelectOneFragment());
+
 		viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager())
 		{
 			@Override
 			public Fragment getItem(int position)
 			{
-				switch (position)
-				{
-					case 0:
-						return new ListViewFragment();
-					case 1:
-						return new SampleSimpleFragment();
-					case 2:
-						return new MaxCountEachLineFragment();
-					case 3:
-						return new SingleClickFragment();
-					case 4:
-						return new GravityFragment();
-					default:
-						return new ListViewFragment();
-				}
+				return fragmentList.get(position);
 			}
 
 			@Override
