@@ -9,7 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/TagLayout" />
+            <option value="$PROJECT_DIR$/Button" />
+            <option value="$PROJECT_DIR$/TabLayout" />
             <option value="$PROJECT_DIR$/Toolbar" />
           </set>
         </option>
