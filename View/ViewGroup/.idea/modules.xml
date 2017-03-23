@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LabelLayout/LabelLayout.iml" filepath="$PROJECT_DIR$/LabelLayout/LabelLayout.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ViewGroup.iml" filepath="$PROJECT_DIR$/ViewGroup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ViewGroup.iml" filepath="$PROJECT_DIR$/.idea/modules/ViewGroup.iml" />
     </modules>
   </component>
 </project>
