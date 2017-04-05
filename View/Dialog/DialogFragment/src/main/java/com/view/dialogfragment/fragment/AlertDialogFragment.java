@@ -1,18 +1,15 @@
 package com.view.dialogfragment.fragment;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 
 import com.view.dialogfragment.R;
 
-/**
- * Created by yline on 2016/9/25.
- */
 public class AlertDialogFragment extends DialogFragment
 {
 	private EditText mUsername;
@@ -49,6 +46,7 @@ public class AlertDialogFragment extends DialogFragment
 	{
 		/**
 		 * 输入点击确定后执行操作
+		 *
 		 * @param username
 		 * @param password
 		 */

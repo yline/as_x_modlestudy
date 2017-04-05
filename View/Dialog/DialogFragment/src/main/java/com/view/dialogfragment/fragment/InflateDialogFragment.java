@@ -10,9 +10,6 @@ import android.widget.Button;
 import com.view.dialogfragment.R;
 import com.view.dialogfragment.activity.MainApplication;
 
-/**
- * Created by yline on 2016/9/25.
- */
 public class InflateDialogFragment extends DialogFragment
 {
 	private View mContainer;
