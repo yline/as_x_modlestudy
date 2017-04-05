@@ -44,10 +44,10 @@ public class SpecialDialogFragment extends BaseTestFragment
 			public void onClick(View v)
 			{
 				View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_special_bottom, null);
-				
+
 				Dialog dialog = new Dialog(getContext(), R.style.dialog);
 				dialog.setContentView(view);
-
+				
 				Window dialogWindow = dialog.getWindow();
 				dialogWindow.setGravity(Gravity.BOTTOM);
 

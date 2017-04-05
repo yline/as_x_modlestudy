@@ -1,1 +1,1 @@
-include ':WaveView', ':SliderBar', ':DrawLayout', ':PatternLock', ':DragBubble'
+include ':WaveView', ':SliderBar', ':PatternLock', ':DragBubble'

@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Button" />
+            <option value="$PROJECT_DIR$/DrawerLayout" />
             <option value="$PROJECT_DIR$/TabLayout" />
             <option value="$PROJECT_DIR$/Toolbar" />
           </set>
