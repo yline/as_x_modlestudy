@@ -10,6 +10,7 @@ import com.dialog.fragment.ButtonDialogFragment;
 import com.dialog.fragment.CustomDialogFragment;
 import com.dialog.fragment.ListDialogFragment;
 import com.dialog.fragment.ProgressDialogFragment;
+import com.dialog.fragment.SpecialDialogFragment;
 import com.view.dialog.R;
 import com.yline.base.BaseFragment;
 import com.yline.test.BaseTestActivity;
@@ -39,6 +40,9 @@ public class MainActivity extends BaseTestActivity
 
 		fragmentList.add(new CustomDialogFragment());
 		titleList.add("自定义");
+
+		fragmentList.add(new SpecialDialogFragment());
+		titleList.add("特殊的dialog");
 
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 		ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
