@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HeadFootAdapter/HeadFootAdapter.iml" filepath="$PROJECT_DIR$/HeadFootAdapter/HeadFootAdapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HeadFootAdapter&amp;ItemDecoration/HeadFootAdapter&amp;ItemDecoration.iml" filepath="$PROJECT_DIR$/HeadFootAdapter&amp;ItemDecoration/HeadFootAdapter&amp;ItemDecoration.iml" />
       <module fileurl="file://$PROJECT_DIR$/ItemDecoration/ItemDecoration.iml" filepath="$PROJECT_DIR$/ItemDecoration/ItemDecoration.iml" />
       <module fileurl="file://$PROJECT_DIR$/RecyclerView.iml" filepath="$PROJECT_DIR$/RecyclerView.iml" />
     </modules>

@@ -1,1 +1,1 @@
-include ':ItemDecoration', ':HeadFootAdapter'
+include ':ItemDecoration', ':HeadFootAdapter', ':HeadFootAdapter&ItemDecoration'
