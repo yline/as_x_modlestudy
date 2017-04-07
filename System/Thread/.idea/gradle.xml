@@ -15,16 +15,7 @@
             <option value="$PROJECT_DIR$/ThreadPoolExecutor" />
           </set>
         </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/AsyncTaskLoaderThresHold" />
-            <option value="$PROJECT_DIR$/AsyncTaskThresHold" />
-            <option value="$PROJECT_DIR$/Handler" />
-            <option value="$PROJECT_DIR$/LockObject" />
-            <option value="$PROJECT_DIR$/ThreadPoolExecutor" />
-          </set>
-        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
