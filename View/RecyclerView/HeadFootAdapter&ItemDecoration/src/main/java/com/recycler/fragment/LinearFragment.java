@@ -69,7 +69,7 @@ public class LinearFragment extends BaseFragment
 			}
 
 			@Override
-			protected int getDividerResourceId()
+			protected int getDivideResourceId()
 			{
 				return R.drawable.widget_recycler_divider_white_small;
 			}

@@ -20,9 +20,9 @@ public class DefaultGridItemDecoration extends RecyclerView.ItemDecoration
 
 	public DefaultGridItemDecoration(Context context)
 	{
-		if (-1 != getDividerResourceId())
+		if (-1 != getDivideResourceId())
 		{
-			mDivider = ContextCompat.getDrawable(context, getDividerResourceId());
+			mDivider = ContextCompat.getDrawable(context, getDivideResourceId());
 		}
 		else
 		{
@@ -45,18 +45,26 @@ public class DefaultGridItemDecoration extends RecyclerView.ItemDecoration
 			final View child = parent.getChildAt(i);
 
 			currentPosition = parent.getChildAdapterPosition(child);
-			if (isHeadDivider(currentPosition))
+			if (isDrawDivideLine(totalCount, currentPosition))
 			{
-				break;
+				if (isLastDivideLine(totalCount, currentPosition, spanCount) && !isDivideLastLine())
+				{
+					int orientation = getOrientation(parent);
+					if (orientation == LinearLayoutManager.VERTICAL)
+					{
+						drawVertical(c, child);
+					}
+					else
+					{
+						drawHorizontal(c, child);
+					}
+				}
+				else
+				{
+					drawHorizontal(c, child);
+					drawVertical(c, child);
+				}
 			}
-
-			if (isLastDivider(totalCount, currentPosition, spanCount))
-			{
-				break;
-			}
-
-			drawHorizontal(c, child);
-			drawVertical(c, child);
 		}
 	}
 
@@ -86,78 +94,57 @@ public class DefaultGridItemDecoration extends RecyclerView.ItemDecoration
 	public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
 	{
 		super.getItemOffsets(outRect, view, parent, state);
-
 		int spanCount = getSpanCount(parent);
 		int totalCount = parent.getAdapter().getItemCount();
 
 		int currentPosition = parent.getChildAdapterPosition(view);
-
-		if (isHeadDivider(currentPosition))
+		if (isDrawDivideLine(totalCount, currentPosition))
 		{
-			return;
-		}
+			int orientation = getOrientation(parent);
+			boolean isLastDivideLine = isLastDivideLine(totalCount, currentPosition, spanCount);
 
-		if (isLastDivideDisappear())
-		{
-			final int queueCount = (totalCount % spanCount == 0) ? (totalCount - spanCount) : (totalCount - totalCount % spanCount);
-			if (currentPosition == queueCount + spanCount - 1)
+			currentPosition -= getHeadNumber();
+			boolean isLastSpan = currentPosition % spanCount == spanCount - 1; // 判断是否是 最后一个span
+
+			if (isLastDivideLine && !isDivideLastLine())
 			{
-				return;
+				if (!isLastSpan)
+				{
+					if (LinearLayoutManager.VERTICAL == orientation)
+					{
+						outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+					}
+					else if (LinearLayoutManager.HORIZONTAL == orientation)
+					{
+						outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+					}
+				}
 			}
-			else if (currentPosition >= queueCount)
+			else
 			{
-				int orientation = getOrientation(parent);
-				// 如果是最后一行，则不需要绘制底部
-				if (LinearLayoutManager.VERTICAL == orientation)
+				if (isLastSpan)
 				{
-					outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+					if (LinearLayoutManager.VERTICAL == orientation)
+					{
+						outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+					}
+					else if (LinearLayoutManager.HORIZONTAL == orientation)
+					{
+						outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+					}
 				}
-				else if (LinearLayoutManager.HORIZONTAL == orientation) // 如果是最后一列，则不需要绘制右边
+				else
 				{
-					outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+					outRect.set(0, 0, mDivider.getIntrinsicWidth(), mDivider.getIntrinsicHeight());
 				}
-				return;
 			}
-		}
-
-		int orientation = getOrientation(parent);
-		boolean isLast = currentPosition % spanCount == spanCount - 1;
-		if (isLast && LinearLayoutManager.VERTICAL == orientation) // 如果是最后一行，则不需要绘制底部
-		{
-			outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
-		}
-		else if (isLast && LinearLayoutManager.HORIZONTAL == orientation) // 如果是最后一列，则不需要绘制右边
-		{
-			outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
-		}
-		else
-		{
-			outRect.set(0, 0, mDivider.getIntrinsicWidth(), mDivider.getIntrinsicHeight());
 		}
 	}
 
-	/**
-	 * 是否满足，最后一行或一列，分割线，消失的条件
-	 *
-	 * @param totalCount
-	 * @param currentPosition
-	 * @param spanCount
-	 * @return
-	 */
-	private boolean isLastDivider(int totalCount, int currentPosition, int spanCount)
-	{
-		final int queueCount = (totalCount % spanCount == 0) ? (totalCount - spanCount) : (totalCount - totalCount % spanCount);
-		if (isLastDivideDisappear() && currentPosition >= queueCount)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	// 方向,当前item是否是最后一行或列
+	/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 工具类 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
 
 	/**
-	 * 获取 列数或行数
+	 * 获取行数 或 列数
 	 *
 	 * @param parent
 	 * @return
@@ -179,7 +166,7 @@ public class DefaultGridItemDecoration extends RecyclerView.ItemDecoration
 	}
 
 	/**
-	 * 获取方向
+	 * 获取当前控件的方向
 	 *
 	 * @param parent
 	 * @return
@@ -200,14 +187,43 @@ public class DefaultGridItemDecoration extends RecyclerView.ItemDecoration
 	}
 
 	/**
-	 * 是否满足，头部，分割线，消失的条件
+	 * 判断是否绘制分割线（仅仅头部和底部）
 	 *
+	 * @param totalCount
 	 * @param currentPosition
 	 * @return
 	 */
-	private boolean isHeadDivider(int currentPosition)
+	private boolean isDrawDivideLine(int totalCount, int currentPosition)
 	{
-		if (getHeadNumber() > currentPosition)
+		// 头部
+		if (currentPosition < getHeadNumber() && !isDivideHead())
+		{
+			return false;
+		}
+
+		// 底部
+		if (currentPosition > totalCount - 1 - getFootNumber() && !isDivideFoot())
+		{
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * 判断是否是最后一行 或 一列
+	 *
+	 * @param totalCount      总数
+	 * @param currentPosition 当前位置
+	 * @param spanCount       行数 或者 列数
+	 * @return
+	 */
+	private boolean isLastDivideLine(int totalCount, int currentPosition, int spanCount)
+	{
+		int tempTotalCount = (totalCount - getFootNumber() - getHeadNumber()) / spanCount * spanCount + spanCount; // 整除
+		currentPosition -= getHeadNumber();
+
+		if (currentPosition >= tempTotalCount - spanCount && currentPosition < tempTotalCount)
 		{
 			return true;
 		}
@@ -215,35 +231,65 @@ public class DefaultGridItemDecoration extends RecyclerView.ItemDecoration
 		return false;
 	}
 
-	/* ------------------------------------ 提供重写的参数 ---------------------------------------- */
-
-	/**
-	 * 最后一个分割线是否绘制
-	 *
-	 * @return
-	 */
-	protected boolean isLastDivideDisappear()
-	{
-		return true;
-	}
+	/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 提供重写的参数 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
 
 	/**
 	 * 分割线资源
 	 *
 	 * @return
 	 */
-	protected int getDividerResourceId()
+	protected int getDivideResourceId()
 	{
 		return -1;
 	}
 
 	/**
-	 * 添加的头部的数量
+	 * 头部的数量
 	 *
 	 * @return
 	 */
 	protected int getHeadNumber()
 	{
 		return 0;
+	}
+
+	/**
+	 * 头部是否有分割线
+	 *
+	 * @return
+	 */
+	protected boolean isDivideHead()
+	{
+		return false;
+	}
+
+	/**
+	 * 底部的数量
+	 *
+	 * @return
+	 */
+	protected int getFootNumber()
+	{
+		return 0;
+	}
+
+	/**
+	 * 底部是否有分割线
+	 *
+	 * @return
+	 */
+	protected boolean isDivideFoot()
+	{
+		return false;
+	}
+
+	/**
+	 * 最后一个分割线是否分割
+	 *
+	 * @return
+	 */
+	protected boolean isDivideLastLine()
+	{
+		return false;
 	}
 }

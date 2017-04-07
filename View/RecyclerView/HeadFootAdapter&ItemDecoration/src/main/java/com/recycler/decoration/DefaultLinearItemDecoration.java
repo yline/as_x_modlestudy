@@ -25,9 +25,9 @@ public class DefaultLinearItemDecoration extends RecyclerView.ItemDecoration
 
 	public DefaultLinearItemDecoration(Context context)
 	{
-		if (-1 != getDividerResourceId())
+		if (-1 != getDivideResourceId())
 		{
-			mDivider = ContextCompat.getDrawable(context, getDividerResourceId());
+			mDivider = ContextCompat.getDrawable(context, getDivideResourceId());
 		}
 		else
 		{
@@ -167,7 +167,7 @@ public class DefaultLinearItemDecoration extends RecyclerView.ItemDecoration
 	 *
 	 * @return
 	 */
-	protected int getDividerResourceId()
+	protected int getDivideResourceId()
 	{
 		return -1;
 	}

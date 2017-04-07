@@ -52,7 +52,13 @@ public class GridFragment extends BaseFragment
 			}
 		};
 
+		headFootRecyclerAdapter.addHeadView(LayoutInflater.from(getContext()).inflate(R.layout.item_attach, null));
+		headFootRecyclerAdapter.addHeadView(LayoutInflater.from(getContext()).inflate(R.layout.item_attach, null));
+		headFootRecyclerAdapter.addFootView(LayoutInflater.from(getContext()).inflate(R.layout.item_attach, null));
+		headFootRecyclerAdapter.addFootView(LayoutInflater.from(getContext()).inflate(R.layout.item_attach, null));
+
 		RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_grid);
+		recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3)); // 这个必须在 setAdapter之前执行，否则添加错误
 		recyclerView.setAdapter(headFootRecyclerAdapter);
 		recyclerView.addItemDecoration(new DefaultGridItemDecoration(getContext())
 		{
@@ -63,12 +69,23 @@ public class GridFragment extends BaseFragment
 			}
 
 			@Override
-			protected int getDividerResourceId()
+			protected int getFootNumber()
+			{
+				return 2;
+			}
+
+			@Override
+			protected boolean isDivideLastLine()
+			{
+				return false;
+			}
+
+			@Override
+			protected int getDivideResourceId()
 			{
 				return R.drawable.widget_recycler_divider_white_small;
 			}
 		});
-		recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
 		List<String> dataList = new ArrayList<>();
 		for (int i = 0; i < 20; i++)
@@ -76,10 +93,5 @@ public class GridFragment extends BaseFragment
 			dataList.add("fucker - " + i);
 		}
 		headFootRecyclerAdapter.setDataList(dataList);
-
-		headFootRecyclerAdapter.addHeadView(LayoutInflater.from(getContext()).inflate(R.layout.item_attach, null));
-		headFootRecyclerAdapter.addHeadView(LayoutInflater.from(getContext()).inflate(R.layout.item_attach, null));
-		headFootRecyclerAdapter.addFootView(LayoutInflater.from(getContext()).inflate(R.layout.item_attach, null));
-		headFootRecyclerAdapter.addFootView(LayoutInflater.from(getContext()).inflate(R.layout.item_attach, null));
 	}
 }
