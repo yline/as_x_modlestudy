@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HeadFootRecycle/HeadFootRecycle.iml" filepath="$PROJECT_DIR$/HeadFootRecycle/HeadFootRecycle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HeadFootAdapter/HeadFootAdapter.iml" filepath="$PROJECT_DIR$/HeadFootAdapter/HeadFootAdapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ItemDecoration/ItemDecoration.iml" filepath="$PROJECT_DIR$/ItemDecoration/ItemDecoration.iml" />
       <module fileurl="file://$PROJECT_DIR$/RecyclerView.iml" filepath="$PROJECT_DIR$/RecyclerView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/RecyclerViewSample/RecyclerViewSample.iml" filepath="$PROJECT_DIR$/RecyclerViewSample/RecyclerViewSample.iml" />
     </modules>
   </component>
 </project>

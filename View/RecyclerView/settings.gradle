@@ -1,1 +1,1 @@
-include ':RecyclerViewSample', ':HeadFootRecycle'
+include ':ItemDecoration', ':HeadFootAdapter'

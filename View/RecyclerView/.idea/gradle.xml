@@ -9,8 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/HeadFootRecycle" />
-            <option value="$PROJECT_DIR$/RecyclerViewSample" />
+            <option value="$PROJECT_DIR$/HeadFootAdapter" />
+            <option value="$PROJECT_DIR$/ItemDecoration" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
