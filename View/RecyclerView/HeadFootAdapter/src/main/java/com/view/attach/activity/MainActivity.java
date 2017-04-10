@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.view.attach.R;
-import com.view.attach.adapter.HeadFootRecycleAdapter;
+import com.view.attach.adapter.HeadFootRecyclerAdapter;
 import com.view.attach.recycle.DividerLinearItemDecoration;
 import com.yline.application.BaseApplication;
 import com.yline.base.BaseAppCompatActivity;
@@ -26,7 +26,7 @@ public class MainActivity extends BaseAppCompatActivity
 {
 	private RecyclerView recyclerView;
 
-	private HeadFootRecycleAdapter headFootWrapperAdapter;
+	private HeadFootRecyclerAdapter headFootWrapperAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -76,7 +76,7 @@ public class MainActivity extends BaseAppCompatActivity
 		headFootWrapperAdapter.addAll(data);
 	}
 
-	private class MainAdapter extends HeadFootRecycleAdapter<String>
+	private class MainAdapter extends HeadFootRecyclerAdapter<String>
 	{
 
 		@Override

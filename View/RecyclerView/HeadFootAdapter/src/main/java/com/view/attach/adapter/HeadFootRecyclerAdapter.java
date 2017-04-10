@@ -16,7 +16,7 @@ import com.yline.common.CommonRecyclerViewHolder;
  * @author yline 2017/3/2 --> 17:33
  * @version 1.0.0
  */
-public abstract class HeadFootRecycleAdapter<T> extends CommonRecyclerAdapter<T>
+public abstract class HeadFootRecyclerAdapter<T> extends CommonRecyclerAdapter<T>
 {
 	// sList的最大数目
 	private static final int BASE_ITEM_TYPE_HEADER = 100000;
