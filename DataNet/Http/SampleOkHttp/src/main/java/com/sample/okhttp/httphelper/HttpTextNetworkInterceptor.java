@@ -1,6 +1,5 @@
 package com.sample.okhttp.httphelper;
 
-import com.sample.okhttp.http.XHttp;
 import com.yline.log.LogFileUtil;
 
 import java.io.IOException;
@@ -9,21 +8,23 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HttpDefaultNetworkInterceptor implements Interceptor
+import static com.sample.okhttp.httphelper.HttpTextInterceptor.Interceptor_debug;
+
+public class HttpTextNetworkInterceptor implements Interceptor
 {
 	@Override
-	public Response intercept(Interceptor.Chain chain) throws IOException
+	public Response intercept(Chain chain) throws IOException
 	{
 		Request request = chain.request();
 		long time1 = System.nanoTime();
-		if (XHttp.isDefaultDebug())
+		if (Interceptor_debug)
 		{
 			LogFileUtil.v(String.format("Network request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
 		}
 
 		Response response = chain.proceed(request);
 		// 打印日志
-		if (XHttp.isDefaultDebug())
+		if (Interceptor_debug)
 		{
 			long time2 = System.nanoTime();
 

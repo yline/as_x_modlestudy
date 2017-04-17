@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sample.okhttp.http.XHttp;
+import com.sample.okhttp.http.XHttpAdapter;
+import com.sample.okhttp.http.XHttpUtil;
 import com.yline.test.BaseTestFragment;
 
 import java.util.HashMap;
@@ -22,47 +23,18 @@ public class TestGetFragment extends BaseTestFragment
 			@Override
 			public void onClick(View v)
 			{
-				new XHttp<String>()
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("start", "0");
+				map.put("count", "1");
+
+				XHttpUtil.doDoubanTest(map, new XHttpAdapter<String>()
 				{
 					@Override
 					public void onSuccess(String s)
 					{
 						tvShow.setText(s);
 					}
-
-					@Override
-					protected boolean isResponseCodeHandler()
-					{
-						return false;
-					}
-
-					@Override
-					protected String getRequestUrlBase()
-					{
-						return "https://api.douban.com/v2/movie/top250";
-					}
-
-					@Override
-					protected Map<String, String> getRequestGetParam()
-					{
-						Map<String, String> map = new HashMap<String, String>();
-						map.put("start", "0");
-						map.put("count", "1");
-						return map;
-					}
-
-					@Override
-					protected boolean isResponseParse()
-					{
-						return false;
-					}
-
-					@Override
-					protected int getRequestType()
-					{
-						return XHttp.REQUEST_GET;
-					}
-				}.doRequest("", String.class);
+				});
 			}
 		});
 	}

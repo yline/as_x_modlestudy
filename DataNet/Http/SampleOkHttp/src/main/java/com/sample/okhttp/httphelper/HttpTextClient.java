@@ -16,7 +16,7 @@ import okhttp3.OkHttpClient;
  * @author yline 2017/2/28 --> 17:29
  * @version 1.0.0
  */
-public class HttpDefaultClient extends OkHttpClient
+public class HttpTextClient extends OkHttpClient
 {
 	/**
 	 * 储存文字等内容
@@ -31,11 +31,11 @@ public class HttpDefaultClient extends OkHttpClient
 	{
 		if (null == httpClient)
 		{
-			synchronized (HttpDefaultClient.class)
+			synchronized (HttpTextClient.class)
 			{
 				if (null == httpClient)
 				{
-					HttpDefaultClient.Builder builder = new HttpDefaultClient.Builder();
+					HttpTextClient.Builder builder = new HttpTextClient.Builder();
 
 					// 设置缓存
 					String cacheDirStr = SDKManager.getApplication().getExternalCacheDir() + File.separator + DEFAULT_CACHE_PATH;
@@ -49,8 +49,8 @@ public class HttpDefaultClient extends OkHttpClient
 							.writeTimeout(10, TimeUnit.SECONDS);
 
 					// 添加拦截器
-					builder.addInterceptor(new HttpDefaultInterceptor());  // 有网络、没网络都会走
-					builder.addNetworkInterceptor(new HttpDefaultNetworkInterceptor()); // 有网络,会走
+					builder.addInterceptor(new HttpTextInterceptor());  // 有网络、没网络都会走
+					builder.addNetworkInterceptor(new HttpTextNetworkInterceptor()); // 有网络,会走
 
 					httpClient = builder.build();
 				}
@@ -59,7 +59,7 @@ public class HttpDefaultClient extends OkHttpClient
 		return httpClient;
 	}
 
-	private HttpDefaultClient()
+	private HttpTextClient()
 	{
 	}
 }

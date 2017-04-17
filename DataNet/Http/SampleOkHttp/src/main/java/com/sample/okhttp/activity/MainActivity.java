@@ -59,6 +59,4 @@ public class MainActivity extends BaseAppCompatActivity
 		});
 		tabLayout.setupWithViewPager(viewPager);
 	}
-
-
 }

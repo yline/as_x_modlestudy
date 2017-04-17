@@ -6,8 +6,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.sample.okhttp.R;
-import com.sample.okhttp.bean.VNewsSingleBean;
-import com.sample.okhttp.http.XHttp;
+import com.sample.okhttp.http.XHttpAdapter;
+import com.sample.okhttp.http.XHttpUtil;
 import com.yline.log.LogFileUtil;
 import com.yline.test.BaseTestFragment;
 
@@ -21,54 +21,14 @@ public class TestPostFragment extends BaseTestFragment
 			@Override
 			public void onClick(View v)
 			{
-				new XHttp<VNewsSingleBean>()
+				XHttpUtil.doNews(new XHttpAdapter()
 				{
 					@Override
-					public void onSuccess(VNewsSingleBean vNewsSingleBean)
-					{
-					}
-
-					@Override
-					protected Object getRequestPostParam()
-					{
-						return new TestPostFragment.Request("1");
-					}
-				}.doRequest("new_1", VNewsSingleBean.class);
-			}
-		});
-
-		addButton("请求图片流", new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				new XHttp<String>()
-				{
-
-					@Override
-					public void onSuccess(String s)
+					public void onSuccess(Object o)
 					{
 
 					}
-
-					@Override
-					protected boolean isResponseParse()
-					{
-						return false;
-					}
-
-					@Override
-					protected boolean isResponseCodeHandler()
-					{
-						return false;
-					}
-
-					@Override
-					protected String getRequestUrlBase()
-					{
-						return "http://120.92.35.211/wanghong/wh/Common/Uploads/2017-03-11/55cc154f216745.60264944.jpg";
-					}
-				}.doRequest("", String.class);
+				});
 			}
 		});
 
