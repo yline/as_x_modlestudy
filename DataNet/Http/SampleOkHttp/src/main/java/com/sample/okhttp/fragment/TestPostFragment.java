@@ -1,5 +1,6 @@
 package com.sample.okhttp.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,7 +14,7 @@ import com.yline.test.BaseTestFragment;
 public class TestPostFragment extends BaseTestFragment
 {
 	@Override
-	protected void testStart()
+	protected void testStart(View view, Bundle savedInstanceState)
 	{
 		addButton("请求文字", new View.OnClickListener()
 		{

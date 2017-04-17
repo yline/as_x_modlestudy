@@ -1,6 +1,6 @@
 package com.sample.okhttp.httphelper;
 
-import com.sample.okhttp.application.IApplication;
+import com.yline.application.SDKManager;
 import com.yline.utils.FileUtil;
 
 import java.io.File;
@@ -38,7 +38,7 @@ public class HttpDefaultClient extends OkHttpClient
 					HttpDefaultClient.Builder builder = new HttpDefaultClient.Builder();
 
 					// 设置缓存
-					String cacheDirStr = IApplication.getApplication().getExternalCacheDir() + File.separator + DEFAULT_CACHE_PATH;
+					String cacheDirStr = SDKManager.getApplication().getExternalCacheDir() + File.separator + DEFAULT_CACHE_PATH;
 					File cacheDir = FileUtil.createFileDir(cacheDirStr);
 					Cache cache = new Cache(cacheDir, DEFAULT_CACHE_SIZE);
 					builder.cache(cache);

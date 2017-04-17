@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Http.iml" filepath="$PROJECT_DIR$/Http.iml" />
-      <module fileurl="file://$PROJECT_DIR$/HttpAlbum/HttpAlbum.iml" filepath="$PROJECT_DIR$/HttpAlbum/HttpAlbum.iml" />
       <module fileurl="file://$PROJECT_DIR$/SampleHttp/SampleHttp.iml" filepath="$PROJECT_DIR$/SampleHttp/SampleHttp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SampleHttpBoye/SampleHttpBoye.iml" filepath="$PROJECT_DIR$/SampleHttpBoye/SampleHttpBoye.iml" />
       <module fileurl="file://$PROJECT_DIR$/SampleHttps/SampleHttps.iml" filepath="$PROJECT_DIR$/SampleHttps/SampleHttps.iml" />
       <module fileurl="file://$PROJECT_DIR$/SampleOkHttp/SampleOkHttp.iml" filepath="$PROJECT_DIR$/SampleOkHttp/SampleOkHttp.iml" />
     </modules>

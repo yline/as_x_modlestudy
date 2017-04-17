@@ -17,17 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    repositories {
-        flatDir {
-            dirs 'Libs'
-        }
-    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile(name: 'LibSDK', ext: 'aar')
-    compile files('libs/gson-2.3.1.jar')
+    compile 'com.yline.lib:LibSDK:1.2.0'
+    compile 'com.google.code.gson:gson:2.8.0'
 }

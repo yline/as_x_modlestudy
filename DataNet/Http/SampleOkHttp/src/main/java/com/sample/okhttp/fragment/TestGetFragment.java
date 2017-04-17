@@ -1,5 +1,6 @@
 package com.sample.okhttp.fragment;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,8 +12,9 @@ import java.util.Map;
 
 public class TestGetFragment extends BaseTestFragment
 {
+
 	@Override
-	protected void testStart()
+	protected void testStart(View view, Bundle savedInstanceState)
 	{
 		final TextView tvShow = addTextView("test get");
 		addButton("测试get请求(带缓存一起)", new View.OnClickListener()

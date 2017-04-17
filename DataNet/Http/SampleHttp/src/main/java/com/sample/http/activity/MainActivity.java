@@ -8,6 +8,7 @@ import android.widget.EditText;
 import com.sample.http.R;
 import com.sample.http.connection.get.GetUtil;
 import com.sample.http.connection.post.PostUtil;
+import com.yline.application.SDKManager;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
 
@@ -48,7 +49,7 @@ public class MainActivity extends BaseActivity
 				String ip = mEtInputIp.getText().toString().trim();
 				String className = mEtInputClass.getText().toString().trim();
 				className += "?json=\"json\""; // 加一个拼接
-				LogFileUtil.v(MainApplication.TAG, "ip = " + ip + ",className = " + className);
+				LogFileUtil.v(SDKManager.TAG, "ip = " + ip + ",className = " + className);
 
 				GetUtil.doLocal(ip, WEB_PROJECT_NAME, className, new GetUtil.GetCallback()
 				{
@@ -56,13 +57,13 @@ public class MainActivity extends BaseActivity
 					@Override
 					public void onSuccess(String result)
 					{
-						LogFileUtil.i(MainApplication.TAG, "请求成功\nresult = " + result);
+						LogFileUtil.i(SDKManager.TAG, "请求成功\nresult = " + result);
 					}
 
 					@Override
 					public void onError(Exception e)
 					{
-						LogFileUtil.e(MainApplication.TAG, "网络错误\n", e);
+						LogFileUtil.e(SDKManager.TAG, "网络错误\n", e);
 					}
 				});
 			}
@@ -77,7 +78,7 @@ public class MainActivity extends BaseActivity
 				String ip = mEtInputIp.getText().toString().trim();
 				String className = mEtInputClass.getText().toString().trim();
 				className += "?json=\"json\""; // 加一个拼接
-				LogFileUtil.v(MainApplication.TAG, "ip = " + ip + ",className = " + className);
+				LogFileUtil.v(SDKManager.TAG, "ip = " + ip + ",className = " + className);
 
 				PostUtil.doLocal(ip, WEB_PROJECT_NAME, className, new PostUtil.PostConnectionCallback()
 				{
@@ -85,13 +86,13 @@ public class MainActivity extends BaseActivity
 					@Override
 					public void onSuccess(String result)
 					{
-						LogFileUtil.i(MainApplication.TAG, "请求成功\nresult = " + result);
+						LogFileUtil.i(SDKManager.TAG, "请求成功\nresult = " + result);
 					}
 
 					@Override
 					public void onError(Exception e)
 					{
-						LogFileUtil.e(MainApplication.TAG, "网络错误\n", e);
+						LogFileUtil.e(SDKManager.TAG, "网络错误\n", e);
 					}
 				});
 			}

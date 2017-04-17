@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.sample.https.R;
 import com.sample.https.connection.get.GetUtil;
 import com.sample.https.connection.post.PostUtil;
+import com.yline.application.SDKManager;
 import com.yline.log.LogFileUtil;
 
 /**
@@ -16,6 +17,7 @@ import com.yline.log.LogFileUtil;
  * 原因:后台没有搭建好
  * Blog:http://blog.csdn.net/iispring/article/details/51615631
  * PS:之后还有OkHttp,前提都是本地搭好后台
+ *
  * @author YLine 2016/8/7 --> 15:29
  * @version 1.0
  */
@@ -56,7 +58,7 @@ public class MainActivity extends Activity
 				String ip = mEtInputIp.getText().toString().trim();
 				String className = mEtInputClass.getText().toString().trim();
 				className += "?json=\"json\""; // 加一个拼接
-				LogFileUtil.v(IApplication.TAG, "ip = " + ip + ",className = " + className);
+				LogFileUtil.v(SDKManager.TAG, "ip = " + ip + ",className = " + className);
 
 				GetUtil.doHttpsLocal(ip, WEB_PROJECT_NAME, className, new GetUtil.GetConnectionCallback()
 				{
@@ -64,13 +66,13 @@ public class MainActivity extends Activity
 					@Override
 					public void onSuccess(String result)
 					{
-						LogFileUtil.i(IApplication.TAG, "请求成功\nresult = " + result);
+						LogFileUtil.i(SDKManager.TAG, "请求成功\nresult = " + result);
 					}
 
 					@Override
 					public void onError(Exception e)
 					{
-						LogFileUtil.e(IApplication.TAG, "网络错误\n", e);
+						LogFileUtil.e(SDKManager.TAG, "网络错误\n", e);
 					}
 				});
 			}
@@ -85,7 +87,7 @@ public class MainActivity extends Activity
 				String ip = mEtInputIp.getText().toString().trim();
 				String className = mEtInputClass.getText().toString().trim();
 				className += "?json=\"json\""; // 加一个拼接
-				LogFileUtil.v(IApplication.TAG, "ip = " + ip + ",className = " + className);
+				LogFileUtil.v(SDKManager.TAG, "ip = " + ip + ",className = " + className);
 
 				PostUtil.doHttpsLocal(ip, WEB_PROJECT_NAME, className, new PostUtil.PostConnectionCallback()
 				{
@@ -93,13 +95,13 @@ public class MainActivity extends Activity
 					@Override
 					public void onSuccess(String result)
 					{
-						LogFileUtil.i(IApplication.TAG, "请求成功\nresult = " + result);
+						LogFileUtil.i(SDKManager.TAG, "请求成功\nresult = " + result);
 					}
 
 					@Override
 					public void onError(Exception e)
 					{
-						LogFileUtil.e(IApplication.TAG, "网络错误\n", e);
+						LogFileUtil.e(SDKManager.TAG, "网络错误\n", e);
 					}
 				});
 			}

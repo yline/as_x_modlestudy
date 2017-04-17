@@ -2,8 +2,8 @@ package com.sample.https.connection.get;
 
 import android.os.Handler;
 
-import com.sample.https.activity.IApplication;
 import com.sample.https.connection.HttpsHelper;
+import com.yline.application.SDKManager;
 import com.yline.log.LogFileUtil;
 
 import java.io.BufferedReader;
@@ -29,6 +29,7 @@ import javax.net.ssl.TrustManagerFactory;
 
 /**
  * 请求的URL,区分大小写
+ *
  * @author YLine
  *         <p/>
  *         2016年7月5日 下午9:20:05
@@ -56,6 +57,7 @@ public class GetUtil
 
 	/**
 	 * Get 异步请求
+	 *
 	 * @param httpUrl  URL
 	 * @param callback 网络请求回调
 	 */
@@ -116,31 +118,26 @@ public class GetUtil
 						handleError(callback,
 								new Exception("doGetHttpsAsyn -> responseCode error code = " + responseCode));
 					}
-				}
-				catch (MalformedURLException e)
+				} catch (MalformedURLException e)
 				{
 					LogFileUtil.e(TAG, "doGetHttpsAsyn -> MalformedURLException", e);
 					handleError(callback, e);
-				}
-				catch (ProtocolException e)
+				} catch (ProtocolException e)
 				{
 					LogFileUtil.e(TAG, "doGetHttpsAsyn -> ProtocolException", e);
 					handleError(callback, e);
-				}
-				catch (IOException e)
+				} catch (IOException e)
 				{
 					LogFileUtil.e(TAG, "doGetHttpsAsyn -> IOException", e);
 					handleError(callback, e);
-				}
-				finally
+				} finally
 				{
 					if (null != bufferedReader)
 					{
 						try
 						{
 							bufferedReader.close();
-						}
-						catch (IOException e)
+						} catch (IOException e)
 						{
 							LogFileUtil.e(TAG, "doGetHttpsAsyn -> close IOException", e);
 							handleError(callback, e);
@@ -159,6 +156,7 @@ public class GetUtil
 	 * https 链接  设置
 	 * RequestHeader : setRequestProperty
 	 * parameter     : 直接在后面加的参数
+	 *
 	 * @param httpsURLConnection
 	 */
 	private static void initHttpsConnection(HttpsURLConnection httpsURLConnection)
@@ -195,8 +193,7 @@ public class GetUtil
 					return true;
 				}
 			});
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			LogFileUtil.e(TAG, "initHttpsConnection -> getSSLContext -> Exception", e);
 		}
@@ -205,6 +202,7 @@ public class GetUtil
 
 	/**
 	 * 证书认证
+	 *
 	 * @return SSLContext or exception
 	 * @throws CertificateException
 	 * @throws IOException
@@ -217,7 +215,7 @@ public class GetUtil
 	{
 		// 从asserts目录中获取CA.cer证书的文件流
 		CertificateFactory cf = CertificateFactory.getInstance("X.509");
-		InputStream in = IApplication.getApplication().getAssets().open(CA_CRT_ASSERT); // 区分大小写
+		InputStream in = SDKManager.getApplication().getAssets().open(CA_CRT_ASSERT); // 区分大小写
 
 		// 将该文件流转化为一个证书对象Certificate
 		Certificate ca = cf.generateCertificate(in);
@@ -241,6 +239,7 @@ public class GetUtil
 
 	/**
 	 * 回调,抛出异常到主线程
+	 *
 	 * @param callback
 	 * @param e
 	 */
@@ -262,6 +261,7 @@ public class GetUtil
 
 	/**
 	 * 回调,抛出网络请求结果到主线程
+	 *
 	 * @param callback
 	 * @param result
 	 */
@@ -285,12 +285,14 @@ public class GetUtil
 	{
 		/**
 		 * 请求成功,返回结果
+		 *
 		 * @param result
 		 */
 		void onSuccess(String result);
 
 		/**
 		 * 网络错误
+		 *
 		 * @param e
 		 */
 		void onError(Exception e);

@@ -9,9 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/HttpAlbum" />
             <option value="$PROJECT_DIR$/SampleHttp" />
-            <option value="$PROJECT_DIR$/SampleHttpBoye" />
             <option value="$PROJECT_DIR$/SampleHttps" />
             <option value="$PROJECT_DIR$/SampleOkHttp" />
           </set>
