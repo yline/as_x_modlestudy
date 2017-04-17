@@ -1,1 +1,1 @@
-include ':TabLayout', ':Toolbar', ':Button', ':DrawerLayout'
+include ':TabLayout', ':Toolbar', ':Button', ':DrawerLayout', ':StatusBar'
