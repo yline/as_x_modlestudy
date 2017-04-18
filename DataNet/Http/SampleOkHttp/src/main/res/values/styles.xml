@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Default" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- 状态栏高度 -->
+        <item name="colorPrimary">@android:color/holo_red_light</item>
+        <item name="colorPrimaryDark">@android:color/holo_red_dark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--子布局的,字体颜色-->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <!--自身的,返回键颜色-->
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
 </resources>

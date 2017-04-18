@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Http.iml" filepath="$PROJECT_DIR$/Http.iml" />
       <module fileurl="file://$PROJECT_DIR$/SampleHttp/SampleHttp.iml" filepath="$PROJECT_DIR$/SampleHttp/SampleHttp.iml" />
       <module fileurl="file://$PROJECT_DIR$/SampleHttps/SampleHttps.iml" filepath="$PROJECT_DIR$/SampleHttps/SampleHttps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SampleNoHttp/SampleNoHttp.iml" filepath="$PROJECT_DIR$/SampleNoHttp/SampleNoHttp.iml" />
       <module fileurl="file://$PROJECT_DIR$/SampleOkHttp/SampleOkHttp.iml" filepath="$PROJECT_DIR$/SampleOkHttp/SampleOkHttp.iml" />
     </modules>
   </component>

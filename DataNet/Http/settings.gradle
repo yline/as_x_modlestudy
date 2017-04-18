@@ -1,1 +1,1 @@
-include ':SampleHttp', ':SampleHttps', ':SampleOkHttp'
+include ':SampleHttp', ':SampleHttps', ':SampleOkHttp', ':SampleNoHttp'
