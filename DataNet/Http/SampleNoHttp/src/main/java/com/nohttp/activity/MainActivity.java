@@ -90,12 +90,16 @@ public class MainActivity extends BaseAppCompatActivity
 
 	private void onItemViewClick(int position)
 	{
+		switch (position)
+		{
+			case 0: // 最原始使用方法
+				OriginalActivity.actionStart(this);
+				break;
+		}
+
 		/*Intent intent = null;
 		switch (position)
 		{
-			case 0:// 最原始使用方法
-				intent = new Intent(this, OriginalActivity.class);
-				break;
 			case 1:// 各种请求方法演示(GET, POST, HEAD, PUT等等)
 				intent = new Intent(this, MethodActivity.class);
 				break;
