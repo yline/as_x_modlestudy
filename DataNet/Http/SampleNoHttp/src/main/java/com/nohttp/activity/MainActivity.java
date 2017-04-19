@@ -107,13 +107,13 @@ public class MainActivity extends BaseAppCompatActivity
 			case 5: // 自定义请求GsonJson Problem
 				DefineRequestActivity.actionStart(this);
 				break;
-			case 6: // NoHttp缓存演示 ？？？
+			case 6: // NoHttp缓存演示
 				CacheActivity.actionStart(this);
 				break;
 			case 7:// 响应码302/303重定向演示
 				RedirectActivity.actionStart(this);
 				break;
-			case 8:// 文件上传
+			case 8:// 文件上传  ？？？
 				UploadFileActivity.actionStart(this);
 				break;
 			case 9: // 文件下载

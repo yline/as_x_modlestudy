@@ -16,44 +16,24 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.OriginalActivity">
-        </activity>
-        <activity android:name=".activity.MethodActivity">
-        </activity>
-        <activity android:name=".activity.ImageActivity">
-        </activity>
-        <activity android:name=".activity.JsonActivity">
-        </activity>
-        <activity android:name=".activity.PostBodyActivity">
-        </activity>
-        <activity android:name=".activity.DefineRequestActivity">
-        </activity>
-        <activity android:name=".activity.CacheActivity">
-        </activity>
-        <activity android:name=".activity.RedirectActivity">
-        </activity>
-        <activity android:name=".activity.UploadFileActivity">
-        </activity>
-        <activity android:name=".activity.DownloadActivity">
-        </activity>
-        <activity android:name=".activity.CancelActivity">
-        </activity>
-        <activity android:name=".activity.SyncActivity">
-        </activity>
-        <activity android:name=".activity.ProXYActivity">
-        </activity>
-        <activity android:name=".activity.HttpsActivity">
-        </activity>
-        <activity android:name=".activity.CacheHttpActivity">
-        </activity>
-        <activity android:name=".activity.CacheRequestFailedReadCacheActivity">
-        </activity>
-        <activity android:name=".activity.CacheNoneCacheRequestNetWorkActivity">
-        </activity>
-        <activity android:name=".activity.CacheOnlyReadCacheActivity">
-        </activity>
-        <activity android:name=".activity.CacheOnlyRequestNetworkActivity">
-        </activity>
+        <activity android:name=".activity.OriginalActivity"/>
+        <activity android:name=".activity.MethodActivity"/>
+        <activity android:name=".activity.ImageActivity"/>
+        <activity android:name=".activity.JsonActivity"/>
+        <activity android:name=".activity.PostBodyActivity"/>
+        <activity android:name=".activity.DefineRequestActivity"/>
+        <activity android:name=".activity.CacheActivity"/>
+        <activity android:name=".activity.RedirectActivity"/>
+        <activity android:name=".activity.UploadFileActivity"/>
+        <activity android:name=".activity.DownloadActivity"/>
+        <activity android:name=".activity.CancelActivity"/>
+        <activity android:name=".activity.SyncActivity"/>
+        <activity android:name=".activity.ProXYActivity"/>
+        <activity android:name=".activity.HttpsActivity"/>
+        <activity android:name=".activity.CacheHttpActivity"/>
+        <activity android:name=".activity.CacheRequestFailedReadCacheActivity"/>
+        <activity android:name=".activity.CacheNoneCacheRequestNetWorkActivity"/>
+        <activity android:name=".activity.CacheOnlyReadCacheActivity"/>
+        <activity android:name=".activity.CacheOnlyRequestNetworkActivity"/>
     </application>
-
 </manifest>
