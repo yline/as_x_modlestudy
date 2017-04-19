@@ -5,10 +5,22 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
+import com.nohttp.helper.HttpListener;
+import com.nohttp.helper.HttpResponseListener;
+import com.nohttp.helper.ImageDialog;
+import com.nohttp.helper.WaitDialog;
 import com.yanzhenjie.nohttp.NoHttp;
+import com.yanzhenjie.nohttp.error.NetworkError;
+import com.yanzhenjie.nohttp.error.NotFoundCacheError;
+import com.yanzhenjie.nohttp.error.TimeoutError;
+import com.yanzhenjie.nohttp.error.URLError;
+import com.yanzhenjie.nohttp.error.UnKnownHostError;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.RequestQueue;
+import com.yanzhenjie.nohttp.rest.Response;
+import com.yline.application.SDKManager;
 import com.yline.base.BaseAppCompatActivity;
+import com.yline.log.LogFileUtil;
 
 public class CommonActivity extends BaseAppCompatActivity
 {
@@ -26,6 +38,8 @@ public class CommonActivity extends BaseAppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+		mWaitDialog = new WaitDialog(this);
 
 		// 初始化请求队列，传入的参数是请求并发值。
 		mQueue = NoHttp.newRequestQueue();
@@ -53,7 +67,7 @@ public class CommonActivity extends BaseAppCompatActivity
 	 * @param isLoading 实现显示加载框。
 	 * @param <T>       想请求到的数据类型。
 	 */
-	public <T> void request(int what, Request<T> request, HttpListener<T> callback, boolean canCancel, boolean isLoading)
+	protected <T> void request(int what, Request<T> request, HttpListener<T> callback, boolean canCancel, boolean isLoading)
 	{
 		request.setCancelSign(object);
 		mQueue.add(what, request, new HttpResponseListener<>(this, request, callback, canCancel, isLoading));
@@ -69,46 +83,45 @@ public class CommonActivity extends BaseAppCompatActivity
 		mQueue.cancelBySign(object);
 	}
 
-	/**
-	 * Show message dialog.
-	 *
-	 * @param title   title.
-	 * @param message message.
-	 */
-	public void showMessageDialog(int title, int message)
-	{
-		showMessageDialog(getText(title), getText(message));
-	}
+	/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Dialog %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 	/**
-	 * Show message dialog.
-	 *
-	 * @param title   title.
-	 * @param message message.
+	 * 请求的时候等待框。
 	 */
-	public void showMessageDialog(int title, CharSequence message)
+	protected WaitDialog mWaitDialog;
+
+	protected void showWaitDialog()
+	{
+		if (mWaitDialog != null && !mWaitDialog.isShowing())
+		{
+			mWaitDialog.show();
+		}
+	}
+
+	protected void dismissWaitDialog()
+	{
+		if (mWaitDialog != null && mWaitDialog.isShowing())
+		{
+			mWaitDialog.dismiss();
+		}
+	}
+
+	protected void showMessageDialog(int title, int messageId)
+	{
+		showMessageDialog(getText(title), getText(messageId));
+	}
+
+	protected void showMessageDialog(int title, CharSequence message)
 	{
 		showMessageDialog(getText(title), message);
 	}
 
-	/**
-	 * Show message dialog.
-	 *
-	 * @param title   title.
-	 * @param message message.
-	 */
-	public void showMessageDialog(CharSequence title, int message)
+	protected void showMessageDialog(CharSequence title, int messageId)
 	{
-		showMessageDialog(title, getText(message));
+		showMessageDialog(title, getText(messageId));
 	}
 
-	/**
-	 * Show message dialog.
-	 *
-	 * @param title   title.
-	 * @param message message.
-	 */
-	public void showMessageDialog(CharSequence title, CharSequence message)
+	protected void showMessageDialog(CharSequence title, CharSequence message)
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(title);
@@ -130,11 +143,42 @@ public class CommonActivity extends BaseAppCompatActivity
 	 * @param title  标题。
 	 * @param bitmap 图片。
 	 */
-	public void showImageDialog(CharSequence title, Bitmap bitmap)
+	protected void showImageDialog(CharSequence title, Bitmap bitmap)
 	{
 		ImageDialog imageDialog = new ImageDialog(this);
 		imageDialog.setTitle(title);
 		imageDialog.setImage(bitmap);
 		imageDialog.show();
+	}
+
+	protected void handleException(Response<String> response)
+	{
+		Exception exception = response.getException();
+		if (exception instanceof NetworkError)
+		{// 网络不好
+			SDKManager.toast("请检查网络。");
+		}
+		else if (exception instanceof TimeoutError)
+		{// 请求超时
+			SDKManager.toast("请求超时，网络不好或者服务器不稳定。");
+		}
+		else if (exception instanceof UnKnownHostError)
+		{// 找不到服务器
+			SDKManager.toast("未发现指定服务器，清切换网络后重试。");
+		}
+		else if (exception instanceof URLError)
+		{// URL是错的
+			SDKManager.toast("URL错误。");
+		}
+		else if (exception instanceof NotFoundCacheError)
+		{
+			// 这个异常只会在仅仅查找缓存时没有找到缓存时返回
+			SDKManager.toast("没有找到缓存.");
+		}
+		else
+		{
+			SDKManager.toast("未知错误。");
+		}
+		LogFileUtil.v(exception.getMessage());
 	}
 }

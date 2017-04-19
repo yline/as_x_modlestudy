@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.nohttp.R;
+import com.nohttp.helper.RecyclerListMultiAdapter;
+import com.nohttp.helper.RecyclerListMultiBean;
 import com.yline.base.BaseAppCompatActivity;
-import com.yline.common.CommonRecyclerAdapter;
-import com.yline.common.CommonRecyclerViewHolder;
 import com.yline.utils.UIResizeUtil;
 import com.yline.utils.UIScreenUtil;
 
@@ -29,8 +29,8 @@ public class MainActivity extends BaseAppCompatActivity
 
 	private AppBarLayout appBarLayout;
 
-	private MainRecyclerAdapter mainRecyclerAdapter;
-
+	private RecyclerListMultiAdapter mainRecyclerAdapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -57,17 +57,26 @@ public class MainActivity extends BaseAppCompatActivity
 		});
 		recyclerView.setNestedScrollingEnabled(true);
 
-		mainRecyclerAdapter = new MainRecyclerAdapter();
+		mainRecyclerAdapter = new RecyclerListMultiAdapter();
 		recyclerView.setAdapter(mainRecyclerAdapter);
 
-		List<MainRecyclerBean> dataList = new ArrayList<>();
+		List<RecyclerListMultiBean> dataList = new ArrayList<>();
 		String[] titles = getResources().getStringArray(R.array.activity_start_items);
 		String[] titlesDes = getResources().getStringArray(R.array.activity_start_items_des);
 		for (int i = 0; i < titles.length; i++)
 		{
-			dataList.add(new MainRecyclerBean(titles[i], titlesDes[i]));
+			dataList.add(new RecyclerListMultiBean(titles[i], titlesDes[i]));
 		}
 		mainRecyclerAdapter.setDataList(dataList);
+
+		mainRecyclerAdapter.setOnItemClickListener(new RecyclerListMultiAdapter.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(View v, int position)
+			{
+				onItemViewClick(position);
+			}
+		});
 	}
 
 	private class OffSetChangedListener implements AppBarLayout.OnOffsetChangedListener
@@ -146,64 +155,5 @@ public class MainActivity extends BaseAppCompatActivity
 		{
 			startActivity(intent);
 		}*/
-	}
-
-	private class MainRecyclerAdapter extends CommonRecyclerAdapter<MainRecyclerBean>
-	{
-
-		@Override
-		public void onBindViewHolder(CommonRecyclerViewHolder viewHolder, final int position)
-		{
-			viewHolder.setText(R.id.item_list_title, sList.get(position).getTitle());
-			viewHolder.setText(R.id.item_list_title_sub, sList.get(position).getSubTitle());
-
-			viewHolder.getItemView().setOnClickListener(new View.OnClickListener()
-			{
-				@Override
-				public void onClick(View v)
-				{
-					onItemViewClick(position);
-				}
-			});
-		}
-
-		@Override
-		public int getItemRes()
-		{
-			return R.layout.item_main;
-		}
-	}
-
-	private class MainRecyclerBean
-	{
-		private String title;
-
-		private String subTitle;
-
-		public MainRecyclerBean(String title, String subTitle)
-		{
-			this.title = title;
-			this.subTitle = subTitle;
-		}
-
-		public String getTitle()
-		{
-			return title;
-		}
-
-		public void setTitle(String title)
-		{
-			this.title = title;
-		}
-
-		public String getSubTitle()
-		{
-			return subTitle;
-		}
-
-		public void setSubTitle(String subTitle)
-		{
-			this.subTitle = subTitle;
-		}
 	}
 }

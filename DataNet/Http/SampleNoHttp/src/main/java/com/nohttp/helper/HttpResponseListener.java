@@ -1,4 +1,4 @@
-package com.nohttp.common;
+package com.nohttp.helper;
 
 import android.app.Activity;
 import android.content.DialogInterface;

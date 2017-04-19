@@ -9,20 +9,12 @@ import android.widget.TextView;
 import com.nohttp.R;
 import com.nohttp.common.CommonActivity;
 import com.nohttp.common.Constants;
-import com.nohttp.common.WaitDialog;
 import com.yanzhenjie.nohttp.Headers;
-import com.yanzhenjie.nohttp.Logger;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
-import com.yanzhenjie.nohttp.error.NetworkError;
-import com.yanzhenjie.nohttp.error.NotFoundCacheError;
-import com.yanzhenjie.nohttp.error.TimeoutError;
-import com.yanzhenjie.nohttp.error.URLError;
-import com.yanzhenjie.nohttp.error.UnKnownHostError;
 import com.yanzhenjie.nohttp.rest.OnResponseListener;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.Response;
-import com.yline.application.SDKManager;
 
 import java.util.Locale;
 
@@ -32,11 +24,6 @@ public class OriginalActivity extends CommonActivity
 	 * 用来标志请求的what, 类似handler的what一样，这里用来区分请求。
 	 */
 	private static final int NOHTTP_WHAT_TEST = 0x001;
-	
-	/**
-	 * 请求的时候等待框。
-	 */
-	private WaitDialog mWaitDialog;
 	
 	private Object sign = new Object();
 	
@@ -48,7 +35,6 @@ public class OriginalActivity extends CommonActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_original);
 		
-		mWaitDialog = new WaitDialog(this);
 		mTvResult = (TextView) findViewById(R.id.tv_result);
 		
 		findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener()
@@ -58,8 +44,7 @@ public class OriginalActivity extends CommonActivity
 			{
 				// 创建请求对象。
 				Request<String> request = NoHttp.createStringRequest(Constants.URL_NOHTTP_JSONOBJECT, RequestMethod.GET);
-				
-				
+
 				// 添加请求参数。
 				request.add("name", "yanzhenjie") // String型。
 						.add("pwd", 123) // int型。
@@ -109,7 +94,7 @@ public class OriginalActivity extends CommonActivity
 				
 				// 响应头
 				Headers headers = response.getHeaders();
-				String headResult = "响应码：%1$d\\n花费时间：%2$d毫秒。";
+				String headResult = "响应码：%1$d\n花费时间：%2$d毫秒。";
 				headResult = String.format(Locale.getDefault(), headResult, headers.getResponseCode(), response.getNetworkMillis());
 				mTvResult.setText(headResult);
 			}
@@ -119,52 +104,20 @@ public class OriginalActivity extends CommonActivity
 		public void onStart(int what)
 		{
 			// 请求开始，这里可以显示一个dialog
-			if (mWaitDialog != null && !mWaitDialog.isShowing())
-			{
-				mWaitDialog.show();
-			}
+			showWaitDialog();
 		}
 		
 		@Override
 		public void onFinish(int what)
 		{
 			// 请求结束，这里关闭dialog
-			if (mWaitDialog != null && mWaitDialog.isShowing())
-			{
-				mWaitDialog.dismiss();
-			}
+			dismissWaitDialog();
 		}
 		
 		@Override
 		public void onFailed(int what, Response<String> response)
 		{
-			Exception exception = response.getException();
-			if (exception instanceof NetworkError)
-			{// 网络不好
-				SDKManager.toast("请检查网络。");
-			}
-			else if (exception instanceof TimeoutError)
-			{// 请求超时
-				SDKManager.toast("请求超时，网络不好或者服务器不稳定。");
-			}
-			else if (exception instanceof UnKnownHostError)
-			{// 找不到服务器
-				SDKManager.toast("未发现指定服务器，清切换网络后重试。");
-			}
-			else if (exception instanceof URLError)
-			{// URL是错的
-				SDKManager.toast("URL错误。");
-			}
-			else if (exception instanceof NotFoundCacheError)
-			{
-				// 这个异常只会在仅仅查找缓存时没有找到缓存时返回
-				SDKManager.toast("没有找到缓存.");
-			}
-			else
-			{
-				SDKManager.toast("未知错误。");
-			}
-			Logger.e("错误：" + exception.getMessage());
+			handleException(response);
 		}
 	};
 	

@@ -1,4 +1,4 @@
-package com.nohttp.common;
+package com.nohttp.helper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,6 +7,12 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 
+/**
+ * 单个图片 Dialog
+ *
+ * @author yline 2017/4/19 -- 9:54
+ * @version 1.0.0
+ */
 public class ImageDialog extends AlertDialog.Builder
 {
 	private AlertDialog alertDialog;
