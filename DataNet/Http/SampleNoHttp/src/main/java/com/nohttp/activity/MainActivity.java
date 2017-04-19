@@ -101,6 +101,12 @@ public class MainActivity extends BaseAppCompatActivity
 			case 3: // JsonObject, JsonArray
 				JsonActivity.actionStart(this);
 				break;
+			case 4: // POST一段JSON、XML，自定义包体等
+				PostBodyActivity.actionStart(this);
+				break;
+			case 5: // 自定义请求GsonJson Problem
+				DefineRequestActivity.actionStart(this);
+				break;
 		}
 
 		/*Intent intent = null;
