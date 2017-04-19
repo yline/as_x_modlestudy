@@ -11,13 +11,9 @@ import android.widget.LinearLayout;
 
 import com.nohttp.R;
 import com.nohttp.helper.RecyclerListMultiAdapter;
-import com.nohttp.helper.RecyclerListMultiBean;
 import com.yline.base.BaseAppCompatActivity;
 import com.yline.utils.UIResizeUtil;
 import com.yline.utils.UIScreenUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends BaseAppCompatActivity
 {
@@ -30,7 +26,7 @@ public class MainActivity extends BaseAppCompatActivity
 	private AppBarLayout appBarLayout;
 
 	private RecyclerListMultiAdapter mainRecyclerAdapter;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -60,15 +56,7 @@ public class MainActivity extends BaseAppCompatActivity
 		mainRecyclerAdapter = new RecyclerListMultiAdapter();
 		recyclerView.setAdapter(mainRecyclerAdapter);
 
-		List<RecyclerListMultiBean> dataList = new ArrayList<>();
-		String[] titles = getResources().getStringArray(R.array.activity_start_items);
-		String[] titlesDes = getResources().getStringArray(R.array.activity_start_items_des);
-		for (int i = 0; i < titles.length; i++)
-		{
-			dataList.add(new RecyclerListMultiBean(titles[i], titlesDes[i]));
-		}
-		mainRecyclerAdapter.setDataList(dataList);
-
+		mainRecyclerAdapter.setDataList(this, R.array.activity_start_items, R.array.activity_start_items_des);
 		mainRecyclerAdapter.setOnItemClickListener(new RecyclerListMultiAdapter.OnItemClickListener()
 		{
 			@Override
@@ -103,6 +91,15 @@ public class MainActivity extends BaseAppCompatActivity
 		{
 			case 0: // 最原始使用方法
 				OriginalActivity.actionStart(this);
+				break;
+			case 1: // 各种请求方法演示(GET, POST, HEAD, PUT等等)
+				MethodActivity.actionStart(this);
+				break;
+			case 2: // 请求图片
+				ImageActivity.actionStart(this);
+				break;
+			case 3: // JsonObject, JsonArray
+				JsonActivity.actionStart(this);
 				break;
 		}
 

@@ -1,13 +1,29 @@
 package com.nohttp.helper;
 
+import android.content.Context;
 import android.view.View;
 
 import com.nohttp.R;
 import com.yline.common.CommonRecyclerAdapter;
 import com.yline.common.CommonRecyclerViewHolder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RecyclerListMultiAdapter extends CommonRecyclerAdapter<RecyclerListMultiBean>
 {
+	public void setDataList(Context context, int titlesId, int titlesDesId)
+	{
+		List<RecyclerListMultiBean> dataList = new ArrayList<>();
+		String[] titles = context.getResources().getStringArray(titlesId);
+		String[] titlesDes = context.getResources().getStringArray(titlesId);
+		for (int i = 0; i < titles.length; i++)
+		{
+			dataList.add(new RecyclerListMultiBean(titles[i], titlesDes[i]));
+		}
+		this.setDataList(dataList);
+	}
+
 	@Override
 	public void onBindViewHolder(CommonRecyclerViewHolder viewHolder, final int position)
 	{

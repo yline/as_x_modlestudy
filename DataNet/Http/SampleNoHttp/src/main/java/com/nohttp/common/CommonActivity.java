@@ -106,23 +106,10 @@ public class CommonActivity extends BaseAppCompatActivity
 		}
 	}
 
-	protected void showMessageDialog(int title, int messageId)
-	{
-		showMessageDialog(getText(title), getText(messageId));
-	}
-
-	protected void showMessageDialog(int title, CharSequence message)
-	{
-		showMessageDialog(getText(title), message);
-	}
-
-	protected void showMessageDialog(CharSequence title, int messageId)
-	{
-		showMessageDialog(title, getText(messageId));
-	}
-
 	protected void showMessageDialog(CharSequence title, CharSequence message)
 	{
+		LogFileUtil.v("" + message);
+
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(title);
 		builder.setMessage(message);

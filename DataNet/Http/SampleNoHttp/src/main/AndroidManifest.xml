@@ -20,6 +20,10 @@
         </activity>
         <activity android:name=".activity.MethodActivity">
         </activity>
+        <activity android:name=".activity.ImageActivity">
+        </activity>
+        <activity android:name=".activity.JsonActivity">
+        </activity>
     </application>
 
 </manifest>
