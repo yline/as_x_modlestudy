@@ -28,6 +28,22 @@
         </activity>
         <activity android:name=".activity.DefineRequestActivity">
         </activity>
+        <activity android:name=".activity.CacheActivity">
+        </activity>
+        <activity android:name=".activity.RedirectActivity">
+        </activity>
+        <activity android:name=".activity.UploadFileActivity">
+        </activity>
+        <activity android:name=".activity.DownloadActivity">
+        </activity>
+        <activity android:name=".activity.CancelActivity">
+        </activity>
+        <activity android:name=".activity.SyncActivity">
+        </activity>
+        <activity android:name=".activity.ProXYActivity">
+        </activity>
+        <activity android:name=".activity.HttpsActivity">
+        </activity>
     </application>
 
 </manifest>
