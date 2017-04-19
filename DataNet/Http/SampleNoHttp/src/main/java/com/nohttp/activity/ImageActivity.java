@@ -13,15 +13,11 @@ import com.nohttp.R;
 import com.nohttp.common.CommonActivity;
 import com.nohttp.common.Constants;
 import com.nohttp.helper.HttpListener;
+import com.nohttp.helper.RecyclerListSingleAdapter;
 import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.RequestMethod;
 import com.yanzhenjie.nohttp.rest.Request;
 import com.yanzhenjie.nohttp.rest.Response;
-import com.yline.common.CommonRecyclerAdapter;
-import com.yline.common.CommonRecyclerViewHolder;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class ImageActivity extends CommonActivity implements HttpListener<Bitmap>
 {
@@ -32,29 +28,7 @@ public class ImageActivity extends CommonActivity implements HttpListener<Bitmap
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
 
-		List<String> imageItems = Arrays.asList(getResources().getStringArray(R.array.activity_image_item));
-		CommonRecyclerAdapter recyclerAdapter = new CommonRecyclerAdapter<String>()
-		{
-			@Override
-			public void onBindViewHolder(CommonRecyclerViewHolder viewHolder, final int position)
-			{
-				viewHolder.setText(android.R.id.text1, sList.get(position));
-				viewHolder.getItemView().setOnClickListener(new View.OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						request(position);
-					}
-				});
-			}
-
-			@Override
-			public int getItemRes()
-			{
-				return android.R.layout.simple_list_item_1;
-			}
-		};
+		RecyclerListSingleAdapter singleAdapter = new RecyclerListSingleAdapter();
 
 		RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_image_activity);
 		recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
@@ -66,9 +40,17 @@ public class ImageActivity extends CommonActivity implements HttpListener<Bitmap
 				outRect.set(10, 10, 10, 10);
 			}
 		});
-		recyclerView.setAdapter(recyclerAdapter);
+		recyclerView.setAdapter(singleAdapter);
 
-		recyclerAdapter.setDataList(imageItems);
+		singleAdapter.setDataList(this, R.array.activity_image_item);
+		singleAdapter.setOnItemClickListener(new RecyclerListSingleAdapter.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(View v, int position)
+			{
+				request(position);
+			}
+		});
 	}
 
 	private void request(int position)

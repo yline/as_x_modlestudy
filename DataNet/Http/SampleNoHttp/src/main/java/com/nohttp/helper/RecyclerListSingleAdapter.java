@@ -7,29 +7,21 @@ import com.nohttp.R;
 import com.yline.common.CommonRecyclerAdapter;
 import com.yline.common.CommonRecyclerViewHolder;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class RecyclerListMultiAdapter extends CommonRecyclerAdapter<RecyclerListMultiBean>
+public class RecyclerListSingleAdapter extends CommonRecyclerAdapter<String>
 {
-	public void setDataList(Context context, int titlesId, int titlesDesId)
+	public void setDataList(Context context, int dataListId)
 	{
-		List<RecyclerListMultiBean> dataList = new ArrayList<>();
-		String[] titles = context.getResources().getStringArray(titlesId);
-		String[] titlesDes = context.getResources().getStringArray(titlesId);
-		for (int i = 0; i < titles.length; i++)
-		{
-			dataList.add(new RecyclerListMultiBean(titles[i], titlesDes[i]));
-		}
-		this.setDataList(dataList);
+		List<String> cacheDataTypes = Arrays.asList(context.getResources().getStringArray(dataListId));
+		super.setDataList(cacheDataTypes);
 	}
 
 	@Override
 	public void onBindViewHolder(CommonRecyclerViewHolder viewHolder, final int position)
 	{
-		viewHolder.setText(R.id.item_list_title, sList.get(position).getTitle());
-		viewHolder.setText(R.id.item_list_title_sub, sList.get(position).getSubTitle());
-
+		viewHolder.setText(R.id.item_list_title, sList.get(position));
 		viewHolder.getItemView().setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -46,7 +38,7 @@ public class RecyclerListMultiAdapter extends CommonRecyclerAdapter<RecyclerList
 	@Override
 	public int getItemRes()
 	{
-		return R.layout.item_multi;
+		return R.layout.item_single;
 	}
 
 	private OnItemClickListener itemClickListener;

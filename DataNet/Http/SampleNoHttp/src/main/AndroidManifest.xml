@@ -44,6 +44,16 @@
         </activity>
         <activity android:name=".activity.HttpsActivity">
         </activity>
+        <activity android:name=".activity.CacheHttpActivity">
+        </activity>
+        <activity android:name=".activity.CacheRequestFailedReadCacheActivity">
+        </activity>
+        <activity android:name=".activity.CacheNoneCacheRequestNetWorkActivity">
+        </activity>
+        <activity android:name=".activity.CacheOnlyReadCacheActivity">
+        </activity>
+        <activity android:name=".activity.CacheOnlyRequestNetworkActivity">
+        </activity>
     </application>
 
 </manifest>
