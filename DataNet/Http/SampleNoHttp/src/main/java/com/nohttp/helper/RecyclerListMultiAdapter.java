@@ -16,7 +16,7 @@ public class RecyclerListMultiAdapter extends CommonRecyclerAdapter<RecyclerList
 	{
 		List<RecyclerListMultiBean> dataList = new ArrayList<>();
 		String[] titles = context.getResources().getStringArray(titlesId);
-		String[] titlesDes = context.getResources().getStringArray(titlesId);
+		String[] titlesDes = context.getResources().getStringArray(titlesDesId);
 		for (int i = 0; i < titles.length; i++)
 		{
 			dataList.add(new RecyclerListMultiBean(titles[i], titlesDes[i]));

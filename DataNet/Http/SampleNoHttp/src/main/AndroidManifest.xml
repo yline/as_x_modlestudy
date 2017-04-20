@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.nohttp">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".activity.IApplication"
         android:allowBackup="true"
@@ -24,16 +27,11 @@
         <activity android:name=".activity.DefineRequestActivity"/>
         <activity android:name=".activity.CacheActivity"/>
         <activity android:name=".activity.RedirectActivity"/>
-        <activity android:name=".activity.UploadFileActivity"/>
-        <activity android:name=".activity.DownloadActivity"/>
-        <activity android:name=".activity.CancelActivity"/>
-        <activity android:name=".activity.SyncActivity"/>
-        <activity android:name=".activity.ProXYActivity"/>
-        <activity android:name=".activity.HttpsActivity"/>
         <activity android:name=".activity.CacheHttpActivity"/>
         <activity android:name=".activity.CacheRequestFailedReadCacheActivity"/>
         <activity android:name=".activity.CacheNoneCacheRequestNetWorkActivity"/>
         <activity android:name=".activity.CacheOnlyReadCacheActivity"/>
         <activity android:name=".activity.CacheOnlyRequestNetworkActivity"/>
     </application>
+
 </manifest>
