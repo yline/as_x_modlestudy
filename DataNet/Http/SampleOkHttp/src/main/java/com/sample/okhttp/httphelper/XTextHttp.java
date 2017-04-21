@@ -400,7 +400,7 @@ public class XTextHttp<Result>
 		final CacheControl.Builder cacheBuilder = new CacheControl.Builder();
 		// cacheBuilder.noCache(); // 不使用缓存，用网络请求
 		// cacheBuilder.noStore(); // 不使用缓存，也不存储缓存
-		// cacheBuilder.onlyIfCached(); // 只使用缓存
+		// cacheBuilder.onlyIfCached(); // 只使用缓存; 而且缓存不存在或者过期,一定返回503错误
 		// cacheBuilder.noTransform(); // 禁止转码
 		cacheBuilder.maxAge(1000, TimeUnit.SECONDS); // 本地能够使用这个数据多久
 		cacheBuilder.maxStale(300, TimeUnit.SECONDS); // 如果超过这个时间,则认为数据过时，从新请求；如果没超过这个时间，则不会发送请求

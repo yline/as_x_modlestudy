@@ -35,14 +35,13 @@ public class HttpTextClient extends OkHttpClient
 			{
 				if (null == httpClient)
 				{
-					HttpTextClient.Builder builder = new HttpTextClient.Builder();
+					OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
 					// 设置缓存
 					String cacheDirStr = SDKManager.getApplication().getExternalCacheDir() + File.separator + DEFAULT_CACHE_PATH;
-					File cacheDir = FileUtil.createFileDir(cacheDirStr);
+					File cacheDir = FileUtil.createDir(cacheDirStr);
 					Cache cache = new Cache(cacheDir, DEFAULT_CACHE_SIZE);
 					builder.cache(cache);
-					
 					// 设置超时
 					builder.connectTimeout(10, TimeUnit.SECONDS)
 							.readTimeout(10, TimeUnit.SECONDS)
