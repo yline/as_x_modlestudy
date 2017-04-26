@@ -14,15 +14,7 @@
             <option value="$PROJECT_DIR$/Utils" />
           </set>
         </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/Manager" />
-            <option value="$PROJECT_DIR$/SubUnit" />
-            <option value="$PROJECT_DIR$/Tools" />
-            <option value="$PROJECT_DIR$/Utils" />
-          </set>
-        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

@@ -1,22 +1,18 @@
 package com.utils.activity;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 import com.appother.utils.R;
-import com.utils.AppUtil;
-import com.utils.DensityUtil;
 import com.utils.KeyBoardUtil;
 import com.utils.MD5Util;
-import com.utils.SDCardUtil;
-import com.utils.ScreenUtil;
-import com.utils.TimeConvertUtil;
-import com.utils.TimeStampUtil;
-import com.utils.ToastUtil;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
+import com.yline.utils.AppUtil;
+import com.yline.utils.SDCardUtil;
+import com.yline.utils.TimeConvertUtil;
+import com.yline.utils.TimeStampUtil;
 
 public class MainActivity extends BaseActivity
 {
@@ -39,24 +35,6 @@ public class MainActivity extends BaseActivity
 				LogFileUtil.i(MainApplication.TAG, "appName = " + appName + ",versionName = " + versionName);
 
 				MainApplication.toast("appName = " + appName + ",versionName = " + versionName);
-			}
-		});
-
-		findViewById(R.id.btn_density_util).setOnClickListener(new View.OnClickListener()
-		{
-
-			@Override
-			public void onClick(View v)
-			{
-				LogFileUtil.v(MainApplication.TAG, "onClick -> btn_density_util");
-
-				int dp = DensityUtil.dp2px(MainApplication.getApplication(), 100);
-				int sp = DensityUtil.sp2px(MainApplication.getApplication(), 100);
-				float pxd = DensityUtil.px2dp(MainApplication.getApplication(), 100);
-				float pxs = DensityUtil.px2sp(MainApplication.getApplication(), 100);
-				LogFileUtil.i(MainApplication.TAG, "dp = " + dp + ",sp = " + sp + ",pxd = " + pxd + ",pxs = " + pxs);
-
-				LogFileUtil.v(MainApplication.TAG, "路径转换的不便于测试,略过");
 			}
 		});
 
@@ -98,31 +76,6 @@ public class MainActivity extends BaseActivity
 				String hexByBytes = MD5Util.toHexString(bytes);
 				String md5ByString = MD5Util.md5(hexByBytes);
 				LogFileUtil.v(MainApplication.TAG, "hexByBytes = " + hexByBytes + ",md5ByString = " + md5ByString);
-			}
-		});
-
-		findViewById(R.id.btn_screen_util).setOnClickListener(new View.OnClickListener()
-		{
-
-			@Override
-			public void onClick(View v)
-			{
-				LogFileUtil.v(MainApplication.TAG, "onClick -> btn_screen_util");
-
-				int screenWidth = ScreenUtil.getScreenWidth(MainApplication.getApplication());
-				int screenHeight = ScreenUtil.getScreenHeight(MainApplication.getApplication());
-				int statusheight = ScreenUtil.getStatusHeight(MainApplication.getApplication());
-				LogFileUtil.v(MainApplication.TAG, "screenWidth = " + screenWidth + ",screenHeight = " + screenHeight + ",statusheight = " + statusheight);
-
-				int absoluteWidth = ScreenUtil.getAbsoluteScreenWidth(MainApplication.getApplication());
-				int absoluteHeight = ScreenUtil.getAbsoluteScreenHeight(MainApplication.getApplication());
-				LogFileUtil.v(MainApplication.TAG, "absoluteWidth = " + absoluteWidth + ",absoluteHeight = " + absoluteHeight);
-
-				Bitmap bitmap1 = ScreenUtil.snapShotWithStatusBar(MainActivity.this);
-				LogFileUtil.v(MainApplication.TAG, "getWidth1 = " + bitmap1.getWidth() + ",getHeight1 = " + bitmap1.getHeight());
-
-				Bitmap bitmap2 = ScreenUtil.snapShotWithoutStatusBar(MainActivity.this);
-				LogFileUtil.v(MainApplication.TAG, "getWidth2 = " + bitmap2.getWidth() + ",getHeight2 = " + bitmap2.getHeight());
 			}
 		});
 
@@ -193,7 +146,7 @@ public class MainActivity extends BaseActivity
 				String content = "多的是你不知道的事";
 				LogFileUtil.v(MainApplication.TAG, "onClick -> btn_toast_util content = " + content);
 
-				ToastUtil.show(MainActivity.this, content);
+				MainApplication.toast(content);
 			}
 		});
 

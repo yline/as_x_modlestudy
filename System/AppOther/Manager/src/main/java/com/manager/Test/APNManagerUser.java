@@ -6,9 +6,6 @@ import com.manager.APNManager;
 import com.manager.activity.MainApplication;
 import com.yline.log.LogFileUtil;
 
-/**
- * Created by yline on 2016/9/4.
- */
 public class APNManagerUser
 {
 	public static void test(final Context context)
