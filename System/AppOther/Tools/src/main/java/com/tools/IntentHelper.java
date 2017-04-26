@@ -11,6 +11,8 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 
 import com.tools.activity.MainApplication;
+import com.yline.log.LogFileUtil;
+import com.yline.utils.FileUtil;
 
 import java.io.File;
 
@@ -38,6 +40,7 @@ public class IntentHelper
 
 	/**
 	 * 安装Apk;未测试
+	 *
 	 * @param context
 	 * @param path    /storage/sdcard1/临时文件夹/ActivityBackCode.apk
 	 */
@@ -61,6 +64,7 @@ public class IntentHelper
 
 	/**
 	 * kill Process others;未测试
+	 *
 	 * @param context
 	 * @param packagName
 	 */
@@ -70,11 +74,43 @@ public class IntentHelper
 		activityManager.killBackgroundProcesses(packagName);
 	}
 
+
 	/**
-	 * 打开相册
-	 * @param requestCode 请求码
+	 * 拍照失败，则data不为null，其它值全部为null
+	 * 拍照成功，则data为null
+	 *
+	 * @param activity
+	 * @param fileName    暂存的图片名， camera_picture.jpg
+	 * @param requestCode
+	 * @return
 	 */
-	public void openAlbum(Activity activity, int requestCode)
+	public static boolean openCamera(Activity activity, String fileName, int requestCode)
+	{
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+		Uri outputUri = Uri.fromFile(FileUtil.create(activity.getExternalCacheDir(), fileName));
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri); // 存放位置为sdcard卡上cwj文件夹，文件名为android123.jpg格式
+		if (null != intent.resolveActivity(activity.getPackageManager()))
+		{
+			activity.startActivityForResult(intent, requestCode);
+			return true;
+		}
+		else
+		{
+			LogFileUtil.e("IntentUtil", "camera do not exist");
+			return false;
+		}
+	}
+
+	/**
+	 * 选择成功，返回data不为null, data.getdata 为null
+	 * 选择失败，返回data为null
+	 *
+	 * @param activity
+	 * @param requestCode
+	 * @return
+	 */
+	public static boolean openAlbum(Activity activity, int requestCode)
 	{
 		Intent tempIntent = new Intent();
 		tempIntent.setAction(Intent.ACTION_PICK);
@@ -82,41 +118,55 @@ public class IntentHelper
 		if (null != tempIntent.resolveActivity(activity.getPackageManager()))
 		{
 			activity.startActivityForResult(tempIntent, requestCode);
+			return true;
 		}
 		else
 		{
-			MainApplication.toast(HINT_JUMP_FAILED);
+			LogFileUtil.e("IntentUtil", "album do not exist");
+			return false;
 		}
 	}
 
 	/**
-	 * 裁剪图片
-	 * @param uri     被裁减的照片的url
-	 * @param backUri 裁剪后照片存放位置的uri
+	 * 请求相册，并裁剪
+	 * 选择成功，返回data不为null
+	 * 选择失败，返回data为null
+	 *
+	 * @param activity
+	 * @param uri         onActivityResult 返回的结果
+	 * @param fileName    缓存本地的文件名
+	 * @param requestCode
+	 * @return
 	 */
-	public void openAlbumZoom(Activity activity, Uri uri, Uri backUri, int requestCode)
+	public static boolean openPictureZoom(Activity activity, Uri uri, String fileName, int requestCode)
 	{
 		Intent tempIntent = new Intent("com.android.camera.action.CROP");
+
 		tempIntent.setDataAndType(uri, "image/*");
 		tempIntent.putExtra("crop", "true");
-		tempIntent.putExtra("inputX", 400);
-		tempIntent.putExtra("inputY", 400);
-		tempIntent.putExtra(MediaStore.EXTRA_OUTPUT, backUri);//图像输出
+
+		Uri outputUri = Uri.fromFile(FileUtil.create(activity.getExternalCacheDir(), fileName));
+		tempIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);// 图像输出
+		tempIntent.putExtra("aspectX", 3); // 边长比例
+		tempIntent.putExtra("aspectY", 3);
 		tempIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 		tempIntent.putExtra("noFaceDetection", true);
 		tempIntent.putExtra("return-data", false);// 回调方法data.getExtras().getParcelable("data")返回数据为空
 		if (null != tempIntent.resolveActivity(activity.getPackageManager()))
 		{
 			activity.startActivityForResult(tempIntent, requestCode);
+			return true;
 		}
 		else
 		{
-			MainApplication.toast(HINT_JUMP_FAILED);
+			LogFileUtil.e("IntentUtil", "album zoom do not exist");
+			return false;
 		}
 	}
 
 	/**
 	 * 打开音乐浏览器,浏览文件
+	 *
 	 * @param requestCode 请求码
 	 */
 	public void openAudio(Activity activity, int requestCode)
@@ -136,6 +186,7 @@ public class IntentHelper
 
 	/**
 	 * 浏览器
+	 *
 	 * @param website http:// website
 	 * @return
 	 */
@@ -166,29 +217,10 @@ public class IntentHelper
 		}
 	}
 
-	/**
-	 * 打开摄像机
-	 * @param activity
-	 * @param uri
-	 * @param requestCode
-	 */
-	public void openCamera(Activity activity, Uri uri, int requestCode)
-	{
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, uri); //存放位置为sdcard卡上cwj文件夹，文件名为android123.jpg格式
-
-		if (null != intent.resolveActivity(activity.getPackageManager()))
-		{
-			activity.startActivityForResult(intent, requestCode);
-		}
-		else
-		{
-			MainApplication.toast(HINT_JUMP_FAILED);
-		}
-	}
 
 	/**
 	 * 打开联系人界面
+	 *
 	 * @param context
 	 */
 	public void openContact(Context context)
@@ -201,6 +233,7 @@ public class IntentHelper
 
 	/**
 	 * 打开 文件管理器(包含音频、图片、视频等等)
+	 *
 	 * @param requestCode 请求码
 	 */
 	public void openFile(Activity activity, int requestCode)
@@ -223,6 +256,7 @@ public class IntentHelper
 
 	/**
 	 * 打开录音器
+	 *
 	 * @param context
 	 */
 	public void openRecord(Context context)
@@ -233,6 +267,7 @@ public class IntentHelper
 
 	/**
 	 * 打开网络设置界面
+	 *
 	 * @param requestCode 请求码
 	 */
 	public void openSettingWifi(Activity activity, int requestCode)

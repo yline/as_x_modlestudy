@@ -1,9 +1,7 @@
 package com.tools.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 
 import com.appother.tools.R;
@@ -11,18 +9,13 @@ import com.tools.IntentHelper;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
 
-import java.io.File;
-
-/**
- * http://blog.csdn.net/wl455624651/article/details/7943252  各种跳转
- */
 public class MainActivity extends BaseActivity
 {
 	private static final int ALBUM_PICK = 1;
 
 	private static final int ALBUM_PICK_ZOOM = 2;
 
-	private final String backUri = Environment.getExternalStorageDirectory() + "/temp.jpg";
+	private final String fileName = "temp.jpg";
 
 	private static final int AUDIO_PICK = 3;
 
@@ -87,7 +80,7 @@ public class MainActivity extends BaseActivity
 			{
 				LogFileUtil.v(MainApplication.TAG, "btn_camera");
 
-				helper.openCamera(MainActivity.this, Uri.parse(backUri), CAMERA);
+				helper.openCamera(MainActivity.this, fileName, CAMERA);
 			}
 		});
 
@@ -153,10 +146,10 @@ public class MainActivity extends BaseActivity
 			{
 				case ALBUM_PICK:
 					LogFileUtil.v(MainApplication.TAG, "ALBUM_PICK -> " + data.getData());
-					helper.openAlbumZoom(MainActivity.this, data.getData(), Uri.fromFile(new File(backUri)), ALBUM_PICK_ZOOM);
+					helper.openPictureZoom(MainActivity.this, data.getData(), fileName, ALBUM_PICK_ZOOM);
 					break;
 				case ALBUM_PICK_ZOOM:
-					LogFileUtil.v(MainApplication.TAG, "ALBUM_PICK_ZOOM -> " + backUri);
+					LogFileUtil.v(MainApplication.TAG, "ALBUM_PICK_ZOOM -> " + fileName);
 					break;
 				case AUDIO_PICK:
 					LogFileUtil.v(MainApplication.TAG, "AUDIO_PICK -> " + data.getData().getPath());
