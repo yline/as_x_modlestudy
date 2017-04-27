@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ViewGroup.iml" filepath="$PROJECT_DIR$/.idea/modules/ViewGroup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NumberPicker/NumberPicker.iml" filepath="$PROJECT_DIR$/NumberPicker/NumberPicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ViewGroup.iml" filepath="$PROJECT_DIR$/ViewGroup.iml" />
     </modules>
   </component>
 </project>
