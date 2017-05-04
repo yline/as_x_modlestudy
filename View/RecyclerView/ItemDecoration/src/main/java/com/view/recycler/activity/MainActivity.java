@@ -11,7 +11,6 @@ import android.view.View;
 import com.view.recycler.R;
 import com.view.recycler.decoration.DividerGridItemDecoration;
 import com.view.recycler.decoration.DividerLinearItemDecoration;
-import com.yline.application.BaseApplication;
 import com.yline.base.BaseAppCompatActivity;
 import com.yline.common.CommonRecyclerAdapter;
 import com.yline.common.CommonRecyclerViewHolder;
@@ -107,15 +106,6 @@ public class MainActivity extends BaseAppCompatActivity
 				homeAdapter.remove(1);
 			}
 		});
-
-		homeAdapter.setOnClickListener(new CommonRecyclerAdapter.OnClickListener()
-		{
-			@Override
-			public void onClick(View v, int position)
-			{
-				BaseApplication.toast(homeAdapter.getItem(position).getContent());
-			}
-		});
 	}
 
 	private Random random;
@@ -168,15 +158,15 @@ public class MainActivity extends BaseAppCompatActivity
 	{
 
 		@Override
-		public int getItemRes()
+		public void onBindViewHolder(CommonRecyclerViewHolder viewHolder, int position)
 		{
-			return R.layout.item_home;
+			viewHolder.setText(R.id.tv_num, sList.get(position).getContent());
 		}
 
 		@Override
-		public void setViewContent(CommonRecyclerViewHolder holder, int position)
+		public int getItemRes()
 		{
-			holder.setText(R.id.tv_num, sList.get(position).getContent());
+			return R.layout.item_home;
 		}
 	}
 }
