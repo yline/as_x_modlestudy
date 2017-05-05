@@ -9,7 +9,8 @@ import android.widget.ListView;
 import com.view.attach.R;
 import com.view.attach.viewhelper.MainHelper;
 import com.yline.base.BaseAppCompatActivity;
-import com.yline.base.common.CommonListAdapter;
+import com.yline.common.CommonListAdapter;
+import com.yline.common.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +57,9 @@ public class MainActivity extends BaseAppCompatActivity
 			}
 
 			@Override
-			protected void setViewContent(int i, ViewGroup viewGroup, ViewHolder viewHolder)
+			protected void onBindViewHolder(ViewGroup parent, ViewHolder viewHolder, int position)
 			{
-				viewHolder.setText(android.R.id.text1, sList.get(i));
+				viewHolder.setText(android.R.id.text1, sList.get(position));
 			}
 		};
 
@@ -69,6 +70,6 @@ public class MainActivity extends BaseAppCompatActivity
 		{
 			data.add("item = " + i);
 		}
-		adapter.set(data);
+		adapter.setDataList(data);
 	}
 }

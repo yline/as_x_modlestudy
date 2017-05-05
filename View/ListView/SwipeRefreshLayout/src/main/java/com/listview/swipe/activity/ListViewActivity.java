@@ -10,7 +10,8 @@ import android.widget.ListView;
 import com.listview.swipe.R;
 import com.listview.swipe.viewhelper.ListViewHelper;
 import com.yline.base.BaseAppCompatActivity;
-import com.yline.base.common.CommonListAdapter;
+import com.yline.common.CommonListAdapter;
+import com.yline.common.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +54,9 @@ public class ListViewActivity extends BaseAppCompatActivity implements ListViewH
 			}
 
 			@Override
-			protected void setViewContent(int i, ViewGroup viewGroup, ViewHolder viewHolder)
+			protected void onBindViewHolder(ViewGroup parent, ViewHolder viewHolder, int position)
 			{
-				viewHolder.setText(android.R.id.text1, sList.get(i));
+				viewHolder.setText(android.R.id.text1, sList.get(position));
 			}
 		};
 		mListView.setAdapter(adapter);

@@ -12,7 +12,8 @@ import com.view.dragbubble.R;
 import com.view.dragbubble.activity.MainApplication;
 import com.view.dragbubble.view.DragBubble;
 import com.yline.base.BaseFragment;
-import com.yline.base.common.CommonListAdapter;
+import com.yline.common.CommonListAdapter;
+import com.yline.common.ViewHolder;
 import com.yline.log.LogFileUtil;
 
 public class TestFragment extends BaseFragment
@@ -62,22 +63,22 @@ public class TestFragment extends BaseFragment
 		}
 
 		@Override
-		protected void setViewContent(final int i, final ViewGroup viewGroup, ViewHolder viewHolder)
+		protected void onBindViewHolder(ViewGroup parent, ViewHolder viewHolder, final int position)
 		{
-			LogFileUtil.v(TAG, "setViewContent position = " + i);
-			viewHolder.setText(R.id.tv_content, sList.get(i).getContent());
+			LogFileUtil.v(TAG, "setViewContent position = " + position);
+			viewHolder.setText(R.id.tv_content, sList.get(position).getContent());
 
 			final DragBubble dragBubble = viewHolder.get(R.id.dragbubble);
-			dragBubble.setText(sList.get(i).getMsgNumber());
-			dragBubble.setVisibility(sList.get(i).getVisibility() ? View.VISIBLE : View.GONE);
+			dragBubble.setText(sList.get(position).getMsgNumber());
+			dragBubble.setVisibility(sList.get(position).getVisibility() ? View.VISIBLE : View.GONE);
 
 			dragBubble.setOnDragListener(new DragBubble.OnDragListener()
 			{
 				@Override
 				public void onDragOut()
 				{
-					sList.get(i).setVisibility(false);
-					sList.get(i).setMsgNumber("0");
+					sList.get(position).setVisibility(false);
+					sList.get(position).setMsgNumber("0");
 				}
 			});
 		}
