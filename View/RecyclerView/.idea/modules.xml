@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/FloatGroupRecycler/FloatGroupRecycler.iml" filepath="$PROJECT_DIR$/FloatGroupRecycler/FloatGroupRecycler.iml" />
       <module fileurl="file://$PROJECT_DIR$/GroupRecyclerAdapter/GroupRecyclerAdapter.iml" filepath="$PROJECT_DIR$/GroupRecyclerAdapter/GroupRecyclerAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/HeadFootAdapter/HeadFootAdapter.iml" filepath="$PROJECT_DIR$/HeadFootAdapter/HeadFootAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/HeadFootAdapter&amp;ItemDecoration/HeadFootAdapter&amp;ItemDecoration.iml" filepath="$PROJECT_DIR$/HeadFootAdapter&amp;ItemDecoration/HeadFootAdapter&amp;ItemDecoration.iml" />

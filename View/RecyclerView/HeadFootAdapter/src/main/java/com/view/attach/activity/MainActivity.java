@@ -7,17 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.view.attach.R;
 import com.view.attach.adapter.HeadFootRecyclerAdapter;
 import com.view.attach.recycle.DividerLinearItemDecoration;
-import com.yline.application.BaseApplication;
 import com.yline.base.BaseAppCompatActivity;
-import com.yline.common.CommonRecyclerAdapter;
 import com.yline.common.CommonRecyclerViewHolder;
-import com.yline.log.LogFileUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,15 +42,6 @@ public class MainActivity extends BaseAppCompatActivity
 		}
 
 		headFootWrapperAdapter = new MainAdapter();
-		headFootWrapperAdapter.setOnClickListener(new CommonRecyclerAdapter.OnClickListener()
-		{
-			@Override
-			public void onClick(View view, int i)
-			{
-				LogFileUtil.v("headFootWrapperAdapter -> position = " + i);
-				BaseApplication.toast("headFootWrapperAdapter -> position = " + i);
-			}
-		});
 
 		recyclerView.setAdapter(headFootWrapperAdapter);
 

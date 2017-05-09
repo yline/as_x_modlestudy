@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Button/Button.iml" filepath="$PROJECT_DIR$/Button/Button.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CoordinatorLayout/CoordinatorLayout.iml" filepath="$PROJECT_DIR$/CoordinatorLayout/CoordinatorLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/DrawerLayout/DrawerLayout.iml" filepath="$PROJECT_DIR$/DrawerLayout/DrawerLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/MaterialDesign.iml" filepath="$PROJECT_DIR$/MaterialDesign.iml" />
       <module fileurl="file://$PROJECT_DIR$/StatusBar/StatusBar.iml" filepath="$PROJECT_DIR$/StatusBar/StatusBar.iml" />

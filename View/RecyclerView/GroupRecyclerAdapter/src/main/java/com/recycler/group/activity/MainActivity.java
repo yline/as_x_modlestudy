@@ -94,6 +94,8 @@ public class MainActivity extends BaseAppCompatActivity
 		protected int getGroupItemCount(int positionOfGroup)
 		{
 			int count = super.getGroupItemCount(positionOfGroup);
+
+			// 实现 展开和收起的主要位置
 			if (count >= 0 && !mBooleanMap.get(positionOfGroup))
 			{
 				count = 0;

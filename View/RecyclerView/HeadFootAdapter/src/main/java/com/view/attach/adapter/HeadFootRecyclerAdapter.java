@@ -78,8 +78,11 @@ public abstract class HeadFootRecyclerAdapter<T> extends CommonRecyclerAdapter<T
 		{
 			return;
 		}
-		super.onBindViewHolder(holder, position - getHeadersCount());
+
+		setViewContent(holder, position - getHeadersCount());
 	}
+
+	protected abstract void setViewContent(CommonRecyclerViewHolder holder, int position);
 
 	@Override
 	public int getItemCount()
