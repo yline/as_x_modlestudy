@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.recycler.R;
-import com.recycler.adapter.HeadFootRecyclerAdapter;
-import com.recycler.decoration.DefaultLinearItemDecoration;
 import com.yline.base.BaseFragment;
 import com.yline.common.CommonRecyclerViewHolder;
 

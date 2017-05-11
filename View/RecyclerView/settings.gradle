@@ -1,1 +1,1 @@
-include ':ItemDecoration', ':HeadFootAdapter', ':HeadFootAdapter&ItemDecoration', ':GroupRecyclerAdapter', ':FloatGroupRecycler'
+include ':HeadFootAdapter&ItemDecoration', ':GroupRecyclerAdapter', ':FloatGroupRecycler'

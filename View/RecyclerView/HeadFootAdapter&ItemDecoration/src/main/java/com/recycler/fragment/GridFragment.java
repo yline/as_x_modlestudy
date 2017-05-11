@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.recycler.R;
-import com.recycler.adapter.HeadFootRecyclerAdapter;
-import com.recycler.decoration.DefaultGridItemDecoration;
 import com.yline.base.BaseFragment;
-import com.yline.common.CommonRecyclerViewHolder;
+import com.yline.view.apply.SimpleGridItemDecoration;
+import com.yline.view.common.HeadFootRecyclerAdapter;
+import com.yline.view.common.RecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class GridFragment extends BaseFragment
 			}
 
 			@Override
-			public void setViewContent(CommonRecyclerViewHolder holder, int position)
+			public void setViewContent(RecyclerViewHolder holder, int position)
 			{
 				holder.setText(R.id.tv_num, sList.get(position));
 			}
@@ -60,7 +60,7 @@ public class GridFragment extends BaseFragment
 		RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_grid);
 		recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3)); // 这个必须在 setAdapter之前执行，否则添加错误
 		recyclerView.setAdapter(headFootRecyclerAdapter);
-		recyclerView.addItemDecoration(new DefaultGridItemDecoration(getContext())
+		recyclerView.addItemDecoration(new SimpleGridItemDecoration(getContext())
 		{
 			@Override
 			protected int getHeadNumber()
@@ -72,12 +72,6 @@ public class GridFragment extends BaseFragment
 			protected int getFootNumber()
 			{
 				return 2;
-			}
-
-			@Override
-			protected boolean isDivideLastLine()
-			{
-				return false;
 			}
 
 			@Override
