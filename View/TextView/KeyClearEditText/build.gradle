@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.floating.recycler"
+        applicationId "com.keyclear"
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
@@ -28,7 +28,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.yline.lib:LibSDK:1.3.1'
-    compile 'com.yline.lib:LibView:1.1.0'
     testCompile 'junit:junit:4.12'
+    compile 'com.yline.lib:LibSDK:1.4.0'
 }

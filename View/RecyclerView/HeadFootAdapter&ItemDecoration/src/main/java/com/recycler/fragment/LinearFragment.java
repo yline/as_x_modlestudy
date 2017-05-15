@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import com.recycler.R;
 import com.yline.base.BaseFragment;
-import com.yline.common.CommonRecyclerViewHolder;
+import com.yline.view.apply.SimpleLinearItemDecoration;
+import com.yline.view.common.HeadFootRecyclerAdapter;
+import com.yline.view.common.RecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,7 @@ public class LinearFragment extends BaseFragment
 			}
 
 			@Override
-			public void setViewContent(CommonRecyclerViewHolder holder, int position)
+			public void setViewContent(RecyclerViewHolder holder, int position)
 			{
 				holder.setText(R.id.tv_num, sList.get(position));
 			}
@@ -52,16 +54,16 @@ public class LinearFragment extends BaseFragment
 
 		RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_linear);
 		recyclerView.setAdapter(headFootRecyclerAdapter);
-		recyclerView.addItemDecoration(new DefaultLinearItemDecoration(getContext())
+		recyclerView.addItemDecoration(new SimpleLinearItemDecoration(getContext())
 		{
 			@Override
-			protected int getNonDivideHeadNumber()
+			protected int getHeadNumber()
 			{
 				return 2;
 			}
 
 			@Override
-			protected int getNonDivideFootNumber()
+			protected int getFootNumber()
 			{
 				return 2;
 			}
