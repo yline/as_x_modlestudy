@@ -60,7 +60,7 @@ public class KeyClearEditText extends AppCompatEditText implements View.OnFocusC
 		// 设置Drawable的宽高和TextSize的大小一致
 		mClearDrawable.setBounds(0, 0, (int) getTextSize(), (int) getTextSize());
 
-		setClearIconVisible(true);
+		setClearIconVisible(false);
 		// 设置焦点改变的监听
 		setOnFocusChangeListener(this);
 		// 设置输入框里面内容发生改变的监听
