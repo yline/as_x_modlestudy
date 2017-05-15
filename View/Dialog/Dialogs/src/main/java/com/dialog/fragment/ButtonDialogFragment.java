@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import com.dialog.widget.DialogIosWidget;
 import com.view.dialog.R;
 import com.yline.log.LogFileUtil;
 import com.yline.test.BaseTestFragment;
@@ -20,9 +21,10 @@ public class ButtonDialogFragment extends BaseTestFragment
 			{
 				AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
 
-				dialog.setIcon(R.mipmap.ic_launcher);
-				dialog.setTitle("标题");
-				dialog.setMessage("提示信息");
+				// dialog.setIcon(R.mipmap.ic_launcher);
+				// dialog.setTitle("标题");
+				// dialog.setMessage("提示信息A\n提示信息B");
+				dialog.setTitle("提示信息A\n提示信息B");
 				dialog.setCancelable(false);
 				dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() // 确定按钮
 				{
@@ -80,6 +82,16 @@ public class ButtonDialogFragment extends BaseTestFragment
 					}
 				});
 				dialog.create().show(); // 创建并且显示出来
+			}
+		});
+
+		addButton("仿IOS两个按钮 选择", new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				DialogIosWidget iosWidget = new DialogIosWidget(getContext());
+				iosWidget.show();
 			}
 		});
 	}
