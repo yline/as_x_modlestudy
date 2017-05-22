@@ -79,7 +79,7 @@ public class MainActivity extends BaseAppCompatActivity
 				super.onReceivedTitle(view, title);
 				LogFileUtil.v("First title = " + title);
 			}
-
+			
 			@Override
 			public void onProgressChanged(WebView view, int newProgress)
 			{
