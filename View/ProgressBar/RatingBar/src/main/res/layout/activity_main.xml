@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--  android:stepSize="1.0" 默认0.5 -->
+    <!--  style="@style/roomRatingBar" -->
+    <!-- style="?android:attr/ratingBarStyleSmall" -->
+    <!-- style="?android:attr/ratingBarStyleIndicator" -->
+    <android.support.v7.widget.AppCompatRatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="wrap_content"
+        style="@style/roomRatingBar"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:stepSize="0.1"
+        android:rating="3"/>
+</RelativeLayout>
