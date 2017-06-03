@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/LineProgressBar/LineProgressBar.iml" filepath="$PROJECT_DIR$/LineProgressBar/LineProgressBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/ProgressBar.iml" filepath="$PROJECT_DIR$/ProgressBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/RatingBar/RatingBar.iml" filepath="$PROJECT_DIR$/RatingBar/RatingBar.iml" />
     </modules>

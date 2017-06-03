@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 背景  gradient是渐变,corners定义的是圆角 -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="20dp"/>
+            <solid android:color="@android:color/white"/>
+        </shape>
+    </item>
+    <!-- 第二条进度条颜色 -->
+    <!--<item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="20dp"/>
+                <solid android:color="#ac6079"/>
+                &lt;!&ndash; 渐变色 &ndash;&gt;
+                &lt;!&ndash;<gradient
+                    android:angle="90.0"
+                    android:centerColor="#ac6079"
+                    android:centerY="0.45"
+                    android:endColor="#6c213a"
+                    android:startColor="#e71a5e"/>&ndash;&gt;
+            </shape>
+        </clip>
+    </item>-->
+    <!-- 进度条 -->
+    <item android:id="@android:id/progress">
+        <!-- 会发生裁剪，内部会变成竖线，而不是圆形 -->
+        <!--<clip>
+            <shape>
+                <corners android:radius="20dp"/>
+                <solid android:color="#FF8080"/>
+            </shape>
+        </clip>-->
+        <scale
+            android:scaleWidth="100%">
+            <shape
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:shape="rectangle">
+                <!-- solid指定形状的填充色，只有android:color一个属性 -->
+                <solid android:color="#FF009898"/>
+                <!-- padding设置内容区域离边界的间距 -->
+                <!-- corners设置圆角，只适用于rectangle -->
+                <corners
+                    android:radius="20dp"/>
+            </shape>
+        </scale>
+    </item>
+</layer-list>

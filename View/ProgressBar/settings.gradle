@@ -1,1 +1,1 @@
-include ':RatingBar'
+include ':RatingBar', ':LineProgressBar'
