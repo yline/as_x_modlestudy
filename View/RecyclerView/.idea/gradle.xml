@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ChoiceRecycler" />
             <option value="$PROJECT_DIR$/FloatGroupRecycler" />
             <option value="$PROJECT_DIR$/GroupRecyclerAdapter" />
             <option value="$PROJECT_DIR$/HeadFootAdapter&amp;ItemDecoration" />
