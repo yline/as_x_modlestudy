@@ -127,6 +127,10 @@ public class MainActivity extends BaseAppCompatActivity
 						}
 						oldPosition = positionOfGroup;
 					}
+					else
+					{
+						oldPosition = -1;
+					}
 
 					textView.setText(text);
 					notifyDataSetChanged();
