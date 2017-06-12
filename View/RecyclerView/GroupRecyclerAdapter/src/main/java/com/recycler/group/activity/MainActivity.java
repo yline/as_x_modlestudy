@@ -72,6 +72,8 @@ public class MainActivity extends BaseAppCompatActivity
 	{
 		private SparseBooleanArray mBooleanMap;
 
+		private int oldPosition = -1;
+
 		public EAdapter()
 		{
 			mBooleanMap = new SparseBooleanArray();
@@ -82,12 +84,6 @@ public class MainActivity extends BaseAppCompatActivity
 			this.headList = headList;
 			this.itemDoubleList = itemDoubleList;
 			notifyDataSetChanged();
-		}
-
-		@Override
-		protected int getHeadRes()
-		{
-			return R.layout.hotel_title_item;
 		}
 
 		@Override
@@ -105,6 +101,12 @@ public class MainActivity extends BaseAppCompatActivity
 		}
 
 		@Override
+		protected int getHeadRes()
+		{
+			return R.layout.hotel_title_item;
+		}
+
+		@Override
 		protected void onBindViewHolderHead(CommonRecyclerViewHolder viewHolder, List<String> strings, final int positionOfGroup)
 		{
 			final TextView textView = viewHolder.get(R.id.tv_open);
@@ -116,6 +118,15 @@ public class MainActivity extends BaseAppCompatActivity
 					boolean isOpen = mBooleanMap.get(positionOfGroup);
 					String text = isOpen ? "展开" : "关闭";
 					mBooleanMap.put(positionOfGroup, !isOpen);
+
+					if (oldPosition != positionOfGroup)
+					{
+						if (oldPosition != -1)
+						{
+							mBooleanMap.put(oldPosition, false);
+						}
+						oldPosition = positionOfGroup;
+					}
 
 					textView.setText(text);
 					notifyDataSetChanged();

@@ -45,6 +45,7 @@ public class SingleChoiceActivity extends BaseAppCompatActivity
 			{
 				super.setDataList(strings);
 				isSelected = new boolean[strings.size()];
+				oldPosition = -1;
 			}
 
 			@Override
