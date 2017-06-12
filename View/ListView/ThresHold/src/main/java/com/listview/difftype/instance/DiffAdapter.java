@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import com.view.listview.R;
-import com.yline.base.common.CommonListAdapter;
+import com.yline.view.common.CommonListAdapter;
+import com.yline.view.common.ViewHolder;
 
 /**
  * 两种风格的type
+ *
  * @author yline 2016/10/7 --> 9:57
  * @version 1.0.0
  */
@@ -55,9 +57,9 @@ public class DiffAdapter extends CommonListAdapter<DiffBean>
 	}
 
 	@Override
-	protected void setViewContent(int i, ViewGroup viewGroup, ViewHolder viewHolder)
+	protected void onBindViewHolder(ViewGroup parent, ViewHolder viewHolder, int position)
 	{
-		viewHolder.setText(R.id.tv_username, sList.get(i).getUserName());
-		viewHolder.setText(R.id.tv_chatcontent, sList.get(i).getChatContent());
+		viewHolder.setText(R.id.tv_username, sList.get(position).getUserName());
+		viewHolder.setText(R.id.tv_chatcontent, sList.get(position).getChatContent());
 	}
 }

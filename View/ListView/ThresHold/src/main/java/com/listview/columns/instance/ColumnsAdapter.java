@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import com.view.listview.R;
-import com.yline.base.common.CommonListAdapter;
+import com.yline.view.common.CommonListAdapter;
+import com.yline.view.common.ViewHolder;
 
 /**
  * 不同列数的listView;具体使用时,还需要对每个点击背景进行处理
+ *
  * @author yline 2016/10/6 --> 16:36
  * @version 1.0.0
  */
@@ -17,6 +19,7 @@ public class ColumnsAdapter extends CommonListAdapter<TestBean>
 
 	/**
 	 * 行数
+	 *
 	 * @param context
 	 * @param cloumn  如果超过范围,默认为1列
 	 */
@@ -44,7 +47,7 @@ public class ColumnsAdapter extends CommonListAdapter<TestBean>
 			return lines;
 		}
 	}
-	
+
 	@Override
 	protected int getItemRes(int position)
 	{
@@ -63,19 +66,19 @@ public class ColumnsAdapter extends CommonListAdapter<TestBean>
 	}
 
 	@Override
-	protected void setViewContent(int i, ViewGroup viewGroup, ViewHolder viewHolder)
+	protected void onBindViewHolder(ViewGroup parent, ViewHolder viewHolder, int position)
 	{
 		if (2 == sCloumn)
 		{
-			setViewContentTwo(i, viewGroup, viewHolder);
+			setViewContentTwo(position, parent, viewHolder);
 		}
 		else if (3 == sCloumn)
 		{
-			setViewContentThree(i, viewGroup, viewHolder);
+			setViewContentThree(position, parent, viewHolder);
 		}
 		else
 		{
-			setViewContentOne(i, viewGroup, viewHolder);
+			setViewContentOne(position, parent, viewHolder);
 		}
 	}
 

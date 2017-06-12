@@ -9,8 +9,8 @@ import android.widget.ListView;
 import com.view.attach.R;
 import com.view.attach.viewhelper.MainHelper;
 import com.yline.base.BaseAppCompatActivity;
-import com.yline.common.CommonListAdapter;
-import com.yline.common.ViewHolder;
+import com.yline.view.common.CommonListAdapter;
+import com.yline.view.common.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

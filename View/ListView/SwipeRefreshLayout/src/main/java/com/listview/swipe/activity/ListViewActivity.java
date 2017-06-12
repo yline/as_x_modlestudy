@@ -10,8 +10,8 @@ import android.widget.ListView;
 import com.listview.swipe.R;
 import com.listview.swipe.viewhelper.ListViewHelper;
 import com.yline.base.BaseAppCompatActivity;
-import com.yline.common.CommonListAdapter;
-import com.yline.common.ViewHolder;
+import com.yline.view.common.CommonListAdapter;
+import com.yline.view.common.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
