@@ -14,7 +14,7 @@ import com.yline.test.BaseTestFragment;
 public class TestPostFragment extends BaseTestFragment
 {
 	@Override
-	protected void testStart(View view, Bundle savedInstanceState)
+	public void testStart(View view, Bundle savedInstanceState)
 	{
 		addButton("请求文字", new View.OnClickListener()
 		{

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 
 import com.nohttp.R;
-import com.yline.common.CommonRecyclerAdapter;
-import com.yline.common.CommonRecyclerViewHolder;
+import com.yline.view.recycler.adapter.CommonRecyclerAdapter;
+import com.yline.view.recycler.holder.RecyclerViewHolder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,7 +19,7 @@ public class RecyclerListSingleAdapter extends CommonRecyclerAdapter<String>
 	}
 
 	@Override
-	public void onBindViewHolder(CommonRecyclerViewHolder viewHolder, final int position)
+	public void onBindViewHolder(RecyclerViewHolder viewHolder, final int position)
 	{
 		viewHolder.setText(R.id.item_list_title, sList.get(position));
 		viewHolder.getItemView().setOnClickListener(new View.OnClickListener()

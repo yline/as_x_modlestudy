@@ -17,7 +17,7 @@ public class TestGetFragment extends BaseTestFragment
 {
 
 	@Override
-	protected void testStart(View view, Bundle savedInstanceState)
+	public void testStart(View view, Bundle savedInstanceState)
 	{
 		final TextView tvShow = addTextView("test get");
 		addButton("测试get请求(带缓存一起)", new View.OnClickListener()
