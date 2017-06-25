@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/PhpOkHttpSample" />
             <option value="$PROJECT_DIR$/SampleHttp" />
             <option value="$PROJECT_DIR$/SampleHttps" />
             <option value="$PROJECT_DIR$/SampleNoHttp" />
