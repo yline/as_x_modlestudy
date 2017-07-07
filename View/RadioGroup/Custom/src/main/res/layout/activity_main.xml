@@ -69,7 +69,7 @@
 
                 <RadioButton
                     android:id="@+id/rb_radiogroupnestlinear_1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
@@ -78,7 +78,7 @@
 
                 <RadioButton
                     android:id="@+id/rb_radiogroupnestlinear_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
@@ -92,7 +92,7 @@
 
                 <RadioButton
                     android:id="@+id/rb_radiogroupnestlinear_3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
@@ -100,7 +100,7 @@
 
                 <RadioButton
                     android:id="@+id/rb_radiogroupnestlinear_4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
