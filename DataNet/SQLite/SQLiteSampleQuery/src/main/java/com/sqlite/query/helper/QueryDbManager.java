@@ -107,6 +107,18 @@ public class QueryDbManager
 		Cursor cursor = sqLiteHelper.getReadableDatabase().query(MySQLiteHelper.getTableName(), null,
 				MySQLiteHelper.getAGE() + ">10", null, null, null, MySQLiteHelper.getID());
 
+		SQLiteDatabase db = sqLiteHelper.getWritableDatabase();
+		/**
+		 * @param table 表名
+		 * @param columns 查询的字段名称 null 查询所有字段
+		 * @param selection 查询条件
+		 * @param selectionArgs 查询条件的 占位符
+		 * @param groupBy 分组条件
+		 * @param having 筛选条件
+		 * @param orderBy 排序条件
+		 */
+		Cursor c = db.query("MsgTable", null, "Age>10", null, null, null, "_id");
+		
 		List<Person> resultList = new ArrayList<>();
 		if (null != cursor)
 		{

@@ -3,15 +3,9 @@ package com.sqlite.application;
 import com.sqlite.Helper.ApiDbManager;
 import com.sqlite.Helper.MyDbManager;
 import com.yline.application.BaseApplication;
-import com.yline.application.SDKConfig;
 
-/**
- * Created by yline on 2017/1/16.
- */
 public class IApplication extends BaseApplication
 {
-	public static final String TAG = "SQLiteSample";
-
 	@Override
 	public void onCreate()
 	{
@@ -24,11 +18,4 @@ public class IApplication extends BaseApplication
 		ApiDbManager.getInstance().init(this);
 	}
 
-	@Override
-	protected SDKConfig initConfig()
-	{
-		SDKConfig sdkConfig = new SDKConfig();
-		sdkConfig.setLogFilePath(TAG);
-		return sdkConfig;
-	}
 }

@@ -10,8 +10,9 @@ import com.sqlite.page.R;
 import com.sqlite.page.bean.Person;
 import com.sqlite.page.helper.DbManager;
 import com.yline.base.BaseAppCompatActivity;
-import com.yline.base.common.CommonListAdapter;
 import com.yline.log.LogFileUtil;
+import com.yline.view.recycler.adapter.CommonListAdapter;
+import com.yline.view.recycler.holder.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,12 +104,11 @@ public class MainActivity extends BaseAppCompatActivity
 		}
 
 		@Override
-		protected void setViewContent(int i, ViewGroup viewGroup, ViewHolder viewHolder)
+		protected void onBindViewHolder(ViewGroup parent, ViewHolder viewHolder, int position)
 		{
-			viewHolder.setText(R.id.tv_id, sList.get(i).getId() + "");
-			viewHolder.setText(R.id.tv_name, sList.get(i).getName());
-			viewHolder.setText(R.id.tv_age, sList.get(i).getAge() + "");
+			viewHolder.setText(R.id.tv_id, sList.get(position).getId() + "");
+			viewHolder.setText(R.id.tv_name, sList.get(position).getName());
+			viewHolder.setText(R.id.tv_age, sList.get(position).getAge() + "");
 		}
 	}
-
 }

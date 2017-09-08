@@ -74,6 +74,7 @@ public class MyDbManager
 
 		SQLiteDatabase database = sqLiteHelper.getReadableDatabase();
 		database.execSQL(insertSql);
+		
 		database.close();
 	}
 
