@@ -8,6 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/SQLiteGreen" />
+            <option value="$PROJECT_DIR$/SQLiteGreenSample" />
             <option value="$PROJECT_DIR$/SQLiteSample" />
             <option value="$PROJECT_DIR$/SQLiteSampleQuery" />
             <option value="$PROJECT_DIR$/SQLiteSampleQueryPage" />

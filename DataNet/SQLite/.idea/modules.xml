@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SQLite.iml" filepath="$PROJECT_DIR$/SQLite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SQLiteGreen/SQLiteGreen.iml" filepath="$PROJECT_DIR$/SQLiteGreen/SQLiteGreen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SQLiteGreenSample/SQLiteGreenSample.iml" filepath="$PROJECT_DIR$/SQLiteGreenSample/SQLiteGreenSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/SQLiteSample/SQLiteSample.iml" filepath="$PROJECT_DIR$/SQLiteSample/SQLiteSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/SQLiteSampleQuery/SQLiteSampleQuery.iml" filepath="$PROJECT_DIR$/SQLiteSampleQuery/SQLiteSampleQuery.iml" />
       <module fileurl="file://$PROJECT_DIR$/SQLiteSampleQueryPage/SQLiteSampleQueryPage.iml" filepath="$PROJECT_DIR$/SQLiteSampleQueryPage/SQLiteSampleQueryPage.iml" />
