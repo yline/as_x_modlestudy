@@ -35,7 +35,7 @@ public interface IExecuteDao<Key, Model> {
     List<Model> loadAll();
 
     /**
-     * 插入单条数据
+     * 插入单条数据，如果重复，则不会插入数据
      * 默认缓存写入
      *
      * @param model 单条数据
@@ -44,7 +44,7 @@ public interface IExecuteDao<Key, Model> {
     long insert(Model model);
 
     /**
-     * 插入多条数据，开启事务
+     * 插入多条数据，开启事务，如果重复，则不会插入数据
      * 默认缓存写入
      *
      * @param models 数据队列
@@ -52,7 +52,7 @@ public interface IExecuteDao<Key, Model> {
     void insertInTx(Iterable<Model> models);
 
     /**
-     * 插入多条数据，开启事务
+     * 插入多条数据，开启事务，如果重复，则不会插入数据
      *
      * @param models 数据队列
      * @param cache  是否写入缓存
@@ -96,4 +96,9 @@ public interface IExecuteDao<Key, Model> {
      * @return 关键词
      */
     Key getKey(Model module);
+
+    /**
+     * 清除所有数据
+     */
+    void deleteAll();
 }

@@ -110,6 +110,12 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
         return mStatements.getCountStatement().simpleQueryForLong();
     }
 
+    @Override
+    public void deleteAll() {
+        mDb.execSQL(String.format("delete from '%s'", mTableName));
+        mScope.clear();
+    }
+
     /**
      * 读取单条数据 并关闭游标
      *
@@ -305,12 +311,13 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
                 mScope.lock();
 
                 try {
+                    long rowId;
                     for (Model model : models) {
                         statement.clearBindings();
                         bindValues(statement, model);
-                        statement.executeInsert();
+                        rowId = statement.executeInsert(); // 不重复插入数据
 
-                        if (cache) {
+                        if (-1 != rowId && cache) {
                             Key key = getKey(model);
                             cacheAttach(key, model, false);
                         }

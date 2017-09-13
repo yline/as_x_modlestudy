@@ -2,7 +2,6 @@ package com.sqlite.green;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
-import android.util.Log;
 
 import com.sqlite.green.common.AbstractSQLiteTest;
 import com.sqlite.green.test.Value;
@@ -11,9 +10,13 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
+import java.util.Random;
+
 // @RunWith(AndroidJUnit4.class)
 public class SQLiteValueTest extends AbstractSQLiteTest<String, Value> {
     public static final String TAG = "xxx-SQLiteValueTest";
+
+    private Random mRandom;
 
     @Before
     public void setUp() throws Exception {
@@ -21,6 +24,7 @@ public class SQLiteValueTest extends AbstractSQLiteTest<String, Value> {
         DaoManager.init(appContext);
 
         mDao = DaoManager.getValueDao();
+        mRandom = new Random();
     }
 
     @Override
@@ -31,8 +35,7 @@ public class SQLiteValueTest extends AbstractSQLiteTest<String, Value> {
 
     @Override
     protected String createRandomPK() {
-        int number = (int) (System.currentTimeMillis() % (1000 * 1000 * 1000));
-        return String.valueOf(number);
+        return mRandom.nextInt() + "";
     }
 
     @Override
@@ -43,8 +46,6 @@ public class SQLiteValueTest extends AbstractSQLiteTest<String, Value> {
 
     @After
     public void tearDown() throws Exception {
-        Log.i(TAG, "tearDown: ");
-
         mDao = null;
     }
 }

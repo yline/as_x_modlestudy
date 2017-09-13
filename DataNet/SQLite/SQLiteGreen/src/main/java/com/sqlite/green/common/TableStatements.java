@@ -37,7 +37,7 @@ public class TableStatements {
 
     public SQLiteStatement getInsertStatement() {
         if (null == insertStatement) {
-            String sql = genInsertSql("insert into");
+            String sql = genInsertSql("insert or ignore into");
             SQLiteStatement newInsertStatement = mDb.compileStatement(sql);
             synchronized (this) {
                 if (null == insertStatement) {
