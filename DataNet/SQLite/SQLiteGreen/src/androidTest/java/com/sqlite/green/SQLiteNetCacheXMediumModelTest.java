@@ -3,8 +3,8 @@ package com.sqlite.green;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.sqlite.green.common.AbstractSQLiteNetCacheTest;
+import com.sqlite.green.model.XMediumModel;
 import com.sqlite.green.test.NetCacheModel;
-import com.sqlite.green.test.XMediumModel;
 
 import org.junit.Assert;
 import org.junit.runner.RunWith;

@@ -1,4 +1,6 @@
-package com.sqlite.green.test;
+package com.sqlite.green.model;
+
+import com.sqlite.green.test.SimpleModel;
 
 import java.io.Serializable;
 import java.util.List;

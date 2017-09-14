@@ -23,7 +23,7 @@ public class SQLiteValueTest extends AbstractSQLiteTest<String, SimpleModel> {
         Context appContext = InstrumentationRegistry.getTargetContext();
         DaoManager.init(appContext);
 
-        mDao = DaoManager.getValueDao();
+        mDao = DaoManager.getValueModelDao();
         mRandom = new Random();
     }
 

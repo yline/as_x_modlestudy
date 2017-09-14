@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class AbstractSQLiteTest<Key, Model> {
     public String TAG = "xxx-";
 
-    protected AbstractDao<Key, Model> mDao;
+    protected IExecuteDao<Key, Model> mDao;
 
     public AbstractSQLiteTest() {
         TAG += getClass().getSimpleName();

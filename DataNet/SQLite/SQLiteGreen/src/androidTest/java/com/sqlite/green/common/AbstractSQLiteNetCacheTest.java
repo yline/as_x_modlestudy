@@ -25,7 +25,7 @@ public abstract class AbstractSQLiteNetCacheTest extends AbstractSQLiteTest<Stri
         Context appContext = InstrumentationRegistry.getTargetContext();
         DaoManager.init(appContext);
 
-        mDao = DaoManager.getNetCacheDao();
+        mDao = DaoManager.getNetCacheModelDao();
         mRandom = new Random();
     }
 

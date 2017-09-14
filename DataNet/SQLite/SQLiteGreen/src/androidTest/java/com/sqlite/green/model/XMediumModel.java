@@ -1,4 +1,4 @@
-package com.sqlite.green.test;
+package com.sqlite.green.model;
 
 import java.io.Serializable;
 import java.util.List;

@@ -2,10 +2,14 @@ package com.sqlite.green;
 
 import android.content.Context;
 
+import com.sqlite.green.async.AsyncOperation;
+import com.sqlite.green.common.IExecuteDao;
 import com.sqlite.green.gen.DaoOpenHelper;
 import com.sqlite.green.gen.DaoSession;
-import com.sqlite.green.test.NetCacheModelDao;
-import com.sqlite.green.test.SimpleModelDao;
+import com.sqlite.green.test.NetCacheModel;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 数据库 管理类
@@ -14,11 +18,14 @@ import com.sqlite.green.test.SimpleModelDao;
  * @version 1.0.0
  */
 public class DaoManager {
+    private ExecutorService mExecutorService;
+
     private DaoOpenHelper mDaoOpenHelper;
 
     private DaoSession mDaoSession;
 
     private DaoManager() {
+        mExecutorService = Executors.newSingleThreadExecutor();
     }
 
     public static DaoManager getInstance() {
@@ -38,6 +45,10 @@ public class DaoManager {
         this.mDaoSession = new DaoSession(mDaoOpenHelper.getWritableDatabase());
     }
 
+    public ExecutorService getExecutorService() {
+        return mExecutorService;
+    }
+
     /**
      * 初始化 Dao 工具
      * 调用该工具前，一定要调用一次
@@ -48,12 +59,15 @@ public class DaoManager {
         DaoManager.getInstance().setContext(context);
     }
 
-	public static NetCacheModelDao getNetCacheDao()
-	{
-		return DaoManager.getInstance().getDaoSession().getNetCacheDao();
-	}
+    public static IExecuteDao<String, NetCacheModel> getNetCacheModelDao() {
+        return DaoManager.getInstance().getDaoSession().getNetCacheModelDao();
+    }
 
-    public static SimpleModelDao getValueDao() {
-        return DaoManager.getInstance().getDaoSession().getValueDao();
+    public static AsyncOperation<String, NetCacheModel> getNetCacheModelDaoAsync() {
+        return DaoManager.getInstance().getDaoSession().getNetCacheModelDaoAsync();
+    }
+
+    public static IExecuteDao getValueModelDao() {
+        return DaoManager.getInstance().getDaoSession().getValueModelDao();
     }
 }
