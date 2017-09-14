@@ -1,11 +1,18 @@
 package com.sqlite.green.test;
 
-public class Value {
+import java.io.Serializable;
+
+/**
+ * 一个 简易 Model
+ * @author yline 2017/9/14 -- 14:35
+ * @version 1.0.0
+ */
+public class SimpleModel implements Serializable {
     private String Key;
 
     private String Value;
 
-    public Value(String key, String value) {
+    public SimpleModel(String key, String value) {
         Key = key;
         Value = value;
     }

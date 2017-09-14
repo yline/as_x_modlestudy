@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
 import com.sqlite.green.common.AbstractSQLiteTest;
-import com.sqlite.green.test.Value;
+import com.sqlite.green.test.SimpleModel;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -13,10 +13,10 @@ import org.junit.Before;
 import java.util.Random;
 
 // @RunWith(AndroidJUnit4.class)
-public class SQLiteValueTest extends AbstractSQLiteTest<String, Value> {
+public class SQLiteValueTest extends AbstractSQLiteTest<String, SimpleModel> {
     public static final String TAG = "xxx-SQLiteValueTest";
 
-    private Random mRandom;
+    protected Random mRandom;
 
     @Before
     public void setUp() throws Exception {
@@ -28,7 +28,7 @@ public class SQLiteValueTest extends AbstractSQLiteTest<String, Value> {
     }
 
     @Override
-    protected void assertModel(Value tom, Value joe) {
+    protected void assertModel(SimpleModel tom, SimpleModel joe) {
         Assert.assertEquals(tom.getKey(), joe.getKey());
         Assert.assertEquals(tom.getValue(), joe.getValue());
     }
@@ -39,9 +39,9 @@ public class SQLiteValueTest extends AbstractSQLiteTest<String, Value> {
     }
 
     @Override
-    protected Value createModel(String pk) {
+    protected SimpleModel createModel(String pk) {
         String value = pk + "-value";
-        return new Value(pk, value);
+        return new SimpleModel(pk, value);
     }
 
     @After

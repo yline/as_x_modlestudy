@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.sqlite.green.gen.DaoOpenHelper;
 import com.sqlite.green.gen.DaoSession;
-import com.sqlite.green.test.MsgDao;
-import com.sqlite.green.test.ValueDao;
+import com.sqlite.green.test.NetCacheModelDao;
+import com.sqlite.green.test.SimpleModelDao;
 
 /**
  * 数据库 管理类
@@ -48,12 +48,12 @@ public class DaoManager {
         DaoManager.getInstance().setContext(context);
     }
 
-	public static MsgDao getMsgDao()
+	public static NetCacheModelDao getNetCacheDao()
 	{
-		return DaoManager.getInstance().getDaoSession().getMsgDao();
+		return DaoManager.getInstance().getDaoSession().getNetCacheDao();
 	}
 
-    public static ValueDao getValueDao() {
+    public static SimpleModelDao getValueDao() {
         return DaoManager.getInstance().getDaoSession().getValueDao();
     }
 }
