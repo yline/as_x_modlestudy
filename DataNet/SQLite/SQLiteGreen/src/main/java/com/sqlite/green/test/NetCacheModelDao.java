@@ -95,6 +95,8 @@ public class NetCacheModelDao extends AbstractDao<String, NetCacheModel> {
             stmt.bindString(1 + Table.RequestTag.ordinal, requestTag);
         }
 
+
+
         Object resultHeader = model.getResultHeader();
         byte[] headerBytes = objectToByte(resultHeader);
         if (null != headerBytes) {

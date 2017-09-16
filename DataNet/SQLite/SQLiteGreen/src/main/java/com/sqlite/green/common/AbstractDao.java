@@ -106,8 +106,19 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
     }
 
     @Override
-    public long count() {
-        return mStatements.getCountStatement().simpleQueryForLong();
+    public synchronized long count() {
+        /*SQLiteStatement statement = mStatements.getCountStatement();
+        synchronized (statement){
+            return statement.simpleQueryForLong();
+        }*/
+
+        long count = 0;
+        Cursor cursor = mDb.query(mTableName, null, null, null, null, null, null);
+        if (null != cursor)
+        {
+            count = cursor.getCount();
+        }
+        return count;
     }
 
     @Override

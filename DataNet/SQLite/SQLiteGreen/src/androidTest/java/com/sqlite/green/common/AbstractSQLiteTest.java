@@ -124,7 +124,7 @@ public abstract class AbstractSQLiteTest<Key, Model> {
         mDao.insertOrReplaceInTx(listAll);
 
         Log.i(TAG, "testInsertOrReplaceInTx: teaTime = " + (System.currentTimeMillis() - teaTime));
-        Assert.assertEquals(mDao.count(), listAll.size());
+        Assert.assertEquals(listAll.size(), mDao.count());
     }
 
     @Test

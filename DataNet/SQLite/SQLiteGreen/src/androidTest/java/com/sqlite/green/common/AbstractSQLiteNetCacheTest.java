@@ -3,7 +3,7 @@ package com.sqlite.green.common;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
-import com.sqlite.green.DaoManager;
+import com.sqlite.green.gen.DaoManager;
 import com.sqlite.green.test.NetCacheModel;
 
 import org.junit.Assert;
@@ -23,7 +23,6 @@ public abstract class AbstractSQLiteNetCacheTest extends AbstractSQLiteTest<Stri
     @Before
     public void setUp() throws Exception {
         Context appContext = InstrumentationRegistry.getTargetContext();
-        DaoManager.init(appContext);
 
         mDao = DaoManager.getNetCacheModelDao();
         mRandom = new Random();

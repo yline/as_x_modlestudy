@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
 import com.sqlite.green.common.AbstractSQLiteTest;
+import com.sqlite.green.gen.DaoManager;
 import com.sqlite.green.test.SimpleModel;
 
 import org.junit.After;
@@ -21,7 +22,6 @@ public class SQLiteValueTest extends AbstractSQLiteTest<String, SimpleModel> {
     @Before
     public void setUp() throws Exception {
         Context appContext = InstrumentationRegistry.getTargetContext();
-        DaoManager.init(appContext);
 
         mDao = DaoManager.getValueModelDao();
         mRandom = new Random();

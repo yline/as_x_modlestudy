@@ -1,4 +1,4 @@
-package com.sqlite.green;
+package com.sqlite.green.rebuild.sqlite;
 
 import com.sqlite.green.common.AbstractSQLiteAsyncTest;
 import com.sqlite.green.test.NetCacheModel;

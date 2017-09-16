@@ -1,7 +1,7 @@
 package com.sqlite.green.async;
 
-import com.sqlite.green.DaoManager;
 import com.sqlite.green.common.IExecuteDao;
+import com.sqlite.green.gen.DaoManager;
 
 /**
  * 异步处理

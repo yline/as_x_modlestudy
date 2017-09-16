@@ -3,7 +3,7 @@ package com.sqlite.green.sample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.sqlite.green.DaoManager;
+import com.sqlite.green.SQLiteManager;
 import com.sqlite.green.async.AsyncOperation;
 import com.sqlite.green.async.AsyncOperationListener;
 import com.sqlite.green.async.AsyncOperationModel;
@@ -31,5 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 // 非UI线程，依旧在子线程之中
             }
         });
+
+        SQLiteManager.load("").getResultData();
     }
 }
