@@ -1,5 +1,7 @@
 package com.sqlite.green.async;
 
+
+import com.sqlite.green.common.AbstractSafelyDao;
 import com.sqlite.green.common.IExecuteDao;
 import com.sqlite.green.gen.DaoManager;
 
@@ -12,17 +14,17 @@ import com.sqlite.green.gen.DaoManager;
 public class AsyncOperation<Key, Model> {
     private AsyncOperationListener operationListener;
 
-    private IExecuteDao<Key, Model> iExecuteDao;
+    private AbstractSafelyDao<Key, Model> abstractSafelyDao;
 
-    public AsyncOperation(final IExecuteDao<Key, Model> iExecuteDao) {
-        this.iExecuteDao = iExecuteDao;
+    public AsyncOperation(final AbstractSafelyDao<Key, Model> abstractSafelyDao) {
+        this.abstractSafelyDao = abstractSafelyDao;
     }
 
     public void insert(final Model model) {
         DaoManager.getInstance().getExecutorService().execute(new Runnable() {
             @Override
             public void run() {
-                long rowId = iExecuteDao.insert(model);
+                long rowId = abstractSafelyDao.insert(model);
                 if (null != operationListener) {
                     operationListener.onAsyncCompleted(new AsyncOperationModel(rowId, AsyncOperationType.Insert));
                 }
@@ -34,7 +36,7 @@ public class AsyncOperation<Key, Model> {
         DaoManager.getInstance().getExecutorService().execute(new Runnable() {
             @Override
             public void run() {
-                iExecuteDao.insertInTx(models);
+                abstractSafelyDao.insertInTx(models);
                 if (null != operationListener) {
                     operationListener.onAsyncCompleted(new AsyncOperationModel(AsyncOperationType.InsertInTxIterable));
                 }
@@ -46,7 +48,7 @@ public class AsyncOperation<Key, Model> {
         DaoManager.getInstance().getExecutorService().execute(new Runnable() {
             @Override
             public void run() {
-                iExecuteDao.insertInTx(models, cache);
+                abstractSafelyDao.insertInTx(models, cache);
                 if (null != operationListener) {
                     operationListener.onAsyncCompleted(new AsyncOperationModel(AsyncOperationType.InsertInTxIterableCache));
                 }
@@ -58,7 +60,7 @@ public class AsyncOperation<Key, Model> {
         DaoManager.getInstance().getExecutorService().execute(new Runnable() {
             @Override
             public void run() {
-                iExecuteDao.insertOrReplace(model);
+                abstractSafelyDao.insertOrReplace(model);
                 if (null != operationListener) {
                     operationListener.onAsyncCompleted(new AsyncOperationModel(AsyncOperationType.InsertOrReplace));
                 }
@@ -70,7 +72,7 @@ public class AsyncOperation<Key, Model> {
         DaoManager.getInstance().getExecutorService().execute(new Runnable() {
             @Override
             public void run() {
-                iExecuteDao.insertOrReplaceInTx(models);
+                abstractSafelyDao.insertOrReplaceInTx(models);
                 if (null != operationListener) {
                     operationListener.onAsyncCompleted(new AsyncOperationModel(AsyncOperationType.InsertOrReplaceInTxIterable));
                 }
@@ -82,7 +84,7 @@ public class AsyncOperation<Key, Model> {
         DaoManager.getInstance().getExecutorService().execute(new Runnable() {
             @Override
             public void run() {
-                iExecuteDao.insertOrReplaceInTx(models, cache);
+                abstractSafelyDao.insertOrReplaceInTx(models, cache);
                 if (null != operationListener) {
                     operationListener.onAsyncCompleted(new AsyncOperationModel(AsyncOperationType.InsertOrReplaceInTxIterableCache));
                 }
@@ -94,7 +96,7 @@ public class AsyncOperation<Key, Model> {
         DaoManager.getInstance().getExecutorService().execute(new Runnable() {
             @Override
             public void run() {
-                iExecuteDao.deleteAll();
+                abstractSafelyDao.deleteAll();
                 if (null != operationListener) {
                     operationListener.onAsyncCompleted(new AsyncOperationModel(AsyncOperationType.DeleteAll));
                 }
@@ -108,7 +110,7 @@ public class AsyncOperation<Key, Model> {
      * @return 获取执行操作
      */
     public IExecuteDao<Key, Model> getExecuteDao() {
-        return iExecuteDao;
+        return abstractSafelyDao;
     }
 
     /**

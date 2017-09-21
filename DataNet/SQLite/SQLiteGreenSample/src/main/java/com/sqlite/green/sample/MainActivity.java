@@ -3,11 +3,9 @@ package com.sqlite.green.sample;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.sqlite.green.SQLiteManager;
-import com.sqlite.green.async.AsyncOperation;
-import com.sqlite.green.async.AsyncOperationListener;
-import com.sqlite.green.async.AsyncOperationModel;
-import com.sqlite.green.test.NetCacheModel;
+import com.sqlite.green.IApplication;
+import com.yline.application.SDKConfig;
+import com.yline.application.SDKManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,8 +14,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SDKManager.init(IApplication.getApplication(), new SDKConfig());
+
+        TestActivity.launcher(this);
+
         // 第一步
-        DaoManager.init(this);
+        /*DaoManager.init(this);
 
         // UI线程操作
         DaoManager.getNetCacheModelDao().insert(new NetCacheModel("url", new Object()));
@@ -32,6 +34,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SQLiteManager.load("").getResultData();
+        SQLiteManager.load("").getResultData();*/
     }
 }

@@ -3,7 +3,8 @@ package com.sqlite.green.common;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
-import android.util.Log;
+
+import com.sqlite.green.gen.DaoManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,6 @@ import java.util.List;
  * @version 1.0.0
  */
 public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model> {
-    private static final String TAG = "xxx-AbstractDao";
-
     private final SQLiteDatabase mDb;
 
     final String mTableName;
@@ -47,11 +46,7 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
     @Override
     public Model load(Key key) {
         if (mPKColumns.length != 1) {
-            Log.e(TAG, "load: pk length is error");
-            return null;
-        }
-
-        if (null == key) {
+            DaoManager.i("AbstractDao", "load: pk length is error");
             return null;
         }
 
@@ -106,19 +101,26 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
     }
 
     @Override
-    public synchronized long count() {
-        /*SQLiteStatement statement = mStatements.getCountStatement();
+    public long count() {
+        SQLiteStatement statement = mStatements.getCountStatement();
         synchronized (statement){
             return statement.simpleQueryForLong();
-        }*/
-
+        }
+/*
         long count = 0;
         Cursor cursor = mDb.query(mTableName, null, null, null, null, null, null);
-        if (null != cursor)
-        {
-            count = cursor.getCount();
-        }
-        return count;
+        try {
+            if (null != cursor) {
+                count = cursor.getCount();
+            } else {
+                DaoManager.e("AbstractDao", "count : cursor is null");
+            }
+            return count;
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }*/
     }
 
     @Override
@@ -273,8 +275,8 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
         SQLiteStatement statement = mStatements.getInsertOrReplaceStatement();
         synchronized (statement) {
             statement.clearBindings();
-            bindValues(statement, model);
-            return statement.executeInsert();
+            boolean bindResult = bindValues(statement, model);
+            return bindResult ? statement.executeInsert() : Error;
         }
     }
 
@@ -322,13 +324,14 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
                 mScope.lock();
 
                 try {
+                    boolean bindResult;
                     long rowId;
                     for (Model model : models) {
                         statement.clearBindings();
-                        bindValues(statement, model);
-                        rowId = statement.executeInsert(); // 不重复插入数据
+                        bindResult = bindValues(statement, model);
+                        rowId = bindResult ? statement.executeInsert() : Error; // 不重复插入数据
 
-                        if (-1 != rowId && cache) {
+                        if (Error != rowId && cache) {
                             Key key = getKey(model);
                             cacheAttach(key, model, false);
                         }
@@ -354,8 +357,8 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
         SQLiteStatement statement = mStatements.getInsertStatement();
         synchronized (statement) {
             statement.clearBindings();
-            bindValues(statement, model);
-            return statement.executeInsert();
+            boolean bindResult = bindValues(statement, model);
+            return bindResult ? statement.executeInsert() : Error;
         }
     }
 
@@ -405,6 +408,7 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
      *
      * @param stmt  SQLite工具
      * @param model 单个数据
+     * @return 是否绑定成功
      */
-    protected abstract void bindValues(SQLiteStatement stmt, Model model);
+    protected abstract boolean bindValues(SQLiteStatement stmt, Model model);
 }

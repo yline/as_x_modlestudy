@@ -1,5 +1,7 @@
 package com.sqlite.green;
 
+import android.util.Log;
+
 import com.sqlite.green.async.AsyncOperation;
 import com.sqlite.green.async.AsyncOperationListener;
 import com.sqlite.green.gen.DaoManager;
@@ -8,14 +10,33 @@ import com.sqlite.green.test.NetCacheModel;
 import java.util.List;
 
 /**
- * 统一提供调用方法
+ * 给String -> Model 统一提供调用方法
  *
  * @author yline 2017/9/16 -- 11:20
  * @version 1.0.0
  */
 public class SQLiteManager {
+    public static final boolean isDebug = true;
+
+    public static final String TAG = "xxx-sqlite";
+
     public static NetCacheModel load(String httpUrl) {
         return DaoManager.getNetCacheModelDao().load(httpUrl);
+    }
+
+    public static <T> T load(String httpUrl, Class<T> tClass) {
+        NetCacheModel model = DaoManager.getNetCacheModelDao().load(httpUrl);
+        if (null != model && httpUrl.equals(model.getRequestUrl())) {
+            try {
+                return tClass.cast(model.getResultData());
+            } catch (ClassCastException ex) {
+                Log.e(TAG, "load: ex = " + ex);
+                return null;
+            }
+        } else {
+            Log.i(TAG, "load: sqlite load failed model = " + model);
+            return null;
+        }
     }
 
     public static List<NetCacheModel> loadAll() {
@@ -86,7 +107,7 @@ public class SQLiteManager {
         return DaoManager.getNetCacheModelDao().count();
     }
 
-    public static void deleteAll(){
+    public static void deleteAll() {
         DaoManager.getNetCacheModelDao().deleteAll();
     }
 

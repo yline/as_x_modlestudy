@@ -31,4 +31,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile project(':SQLiteGreen')
+
+    compile 'com.yline.lib:LibSDK:2.0.4'
 }

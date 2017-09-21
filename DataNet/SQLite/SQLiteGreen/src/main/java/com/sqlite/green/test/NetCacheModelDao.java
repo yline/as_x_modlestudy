@@ -4,12 +4,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-import com.sqlite.green.common.AbstractDao;
+import com.sqlite.green.common.AbstractSafelyDao;
 import com.sqlite.green.common.Property;
+import com.sqlite.green.gen.DaoManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -19,7 +21,7 @@ import java.io.Serializable;
  * @author yline 2017/9/6 -- 20:01
  * @version 1.0.0
  */
-public class NetCacheModelDao extends AbstractDao<String, NetCacheModel> {
+public class NetCacheModelDao extends AbstractSafelyDao<String, NetCacheModel> {
     private static final String TABLE_NAME = "NetCacheModel";
 
     public static class Table {
@@ -82,7 +84,7 @@ public class NetCacheModelDao extends AbstractDao<String, NetCacheModel> {
     }
 
     @Override
-    protected void bindValues(SQLiteStatement stmt, NetCacheModel model) {
+    protected boolean bindValues(SQLiteStatement stmt, NetCacheModel model) {
         String requestUrl = model.getRequestUrl();
         if (null != requestUrl) {
             stmt.bindString(1 + Table.RequestUrl.ordinal, requestUrl);
@@ -95,22 +97,34 @@ public class NetCacheModelDao extends AbstractDao<String, NetCacheModel> {
             stmt.bindString(1 + Table.RequestTag.ordinal, requestTag);
         }
 
-
-
         Object resultHeader = model.getResultHeader();
-        byte[] headerBytes = objectToByte(resultHeader);
+        byte[] headerBytes;
+        try {
+            headerBytes = objectToByte(resultHeader);
+        } catch (NotSerializableException e) {
+            DaoManager.e("NetCacheModelDao objectToByte Header", e);
+            return false;
+        }
         if (null != headerBytes) {
             stmt.bindBlob(1 + Table.ResultHeader.ordinal, headerBytes);
         }
 
         Object resultData = model.getResultData();
-        byte[] dataBytes = objectToByte(resultData);
+        byte[] dataBytes;
+        try {
+            dataBytes = objectToByte(resultData);
+        } catch (NotSerializableException e) {
+            DaoManager.e("NetCacheModelDao objectToByte Data", e);
+            return false;
+        }
         if (null != dataBytes) {
             stmt.bindBlob(1 + Table.ResultData.ordinal, dataBytes);
         }
+
+        return true;
     }
 
-    public static byte[] objectToByte(Object object) {
+    public static byte[] objectToByte(Object object) throws NotSerializableException {
         if (null != object && object instanceof Serializable) {
             ByteArrayOutputStream baoStream = new ByteArrayOutputStream();
             ObjectOutputStream objectOutputStream = null;
@@ -118,8 +132,10 @@ public class NetCacheModelDao extends AbstractDao<String, NetCacheModel> {
                 objectOutputStream = new ObjectOutputStream(baoStream);
                 objectOutputStream.writeObject(object);
                 return baoStream.toByteArray();
+            } catch (NotSerializableException e) {
+                throw e;
             } catch (IOException e) {
-                e.printStackTrace();
+                DaoManager.e("NetCacheModelDao objectToByte", e);
             } finally {
                 try {
                     if (null != objectOutputStream) {
@@ -135,7 +151,7 @@ public class NetCacheModelDao extends AbstractDao<String, NetCacheModel> {
     }
 
     public static Object byteToObject(byte[] bytes) {
-        if (null != bytes || bytes.length != 0) {
+        if (null != bytes && bytes.length != 0) {
             ByteArrayInputStream baiStream = new ByteArrayInputStream(bytes);
             ObjectInputStream objectInputStream = null;
             try {

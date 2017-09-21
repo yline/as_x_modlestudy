@@ -17,6 +17,8 @@ import java.util.List;
  * @version 1.0.0
  */
 public interface IExecuteDao<Key, Model> {
+    public static final int Error = -1;
+
     /**
      * 依据 Key 获取 Model
      * 默认读取缓存

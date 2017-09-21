@@ -60,7 +60,7 @@ public class SimpleModelDao extends AbstractDao<String, SimpleModel> {
     }
 
     @Override
-    protected void bindValues(SQLiteStatement stmt, SimpleModel value) {
+    protected boolean bindValues(SQLiteStatement stmt, SimpleModel value) {
         String userId = value.getKey();
         if (null != userId) {
             stmt.bindString(1 + Table.Key.ordinal, userId);
@@ -70,5 +70,7 @@ public class SimpleModelDao extends AbstractDao<String, SimpleModel> {
         if (null != userId) {
             stmt.bindString(1 + Table.Value.ordinal, userName);
         }
+
+        return true;
     }
 }
