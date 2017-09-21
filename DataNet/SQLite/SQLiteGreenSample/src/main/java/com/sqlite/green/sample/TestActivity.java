@@ -12,7 +12,7 @@ import com.yline.log.LogFileUtil;
 import com.yline.test.BaseTestActivity;
 import com.yline.utils.LogUtil;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestActivity extends BaseTestActivity {
@@ -35,7 +35,7 @@ public class TestActivity extends BaseTestActivity {
             public void onClick(View v) {
                 SampleModel save = new SampleModel();
                 long rowId = SQLiteManager.insertOrReplace(new NetCacheModel(url, save));
-                LogUtil.v("rowId = " + rowId);
+                LogUtil.i("rowId = " + rowId);
             }
         });
 
@@ -43,10 +43,10 @@ public class TestActivity extends BaseTestActivity {
             @Override
             public void onClick(View v) {
                 SampleModel result = SQLiteManager.load(url, SampleModel.class);
-                if (null == result){
-                    LogFileUtil.v("result is null");
-                }else {
-                    LogFileUtil.v("result = " + result.toString());
+                if (null == result) {
+                    LogFileUtil.i("xxx-","result is null");
+                } else {
+                    LogFileUtil.i("xxx-","result = " + result.toString());
                 }
             }
         });
@@ -55,11 +55,14 @@ public class TestActivity extends BaseTestActivity {
     private class SampleModel {
         private String test;
 
-        private List<String> list;
+        private List<TModel> list;
 
         public SampleModel() {
             this.test = "123";
-            this.list = Arrays.asList("A", "B", "C", "D", "E");
+            this.list = new ArrayList<>();
+            for (int i = 0; i < 20; i++) {
+                list.add(new TModel("i-" + i));
+            }
         }
 
         public String getTest() {
@@ -70,11 +73,11 @@ public class TestActivity extends BaseTestActivity {
             this.test = test;
         }
 
-        public List<String> getList() {
+        public List<TModel> getList() {
             return list;
         }
 
-        public void setList(List<String> list) {
+        public void setList(List<TModel> list) {
             this.list = list;
         }
 
@@ -84,6 +87,23 @@ public class TestActivity extends BaseTestActivity {
                     "test='" + test + '\'' +
                     ", list=" + list +
                     '}';
+        }
+    }
+
+    public class TModel {
+
+        private String name;
+
+        public TModel(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

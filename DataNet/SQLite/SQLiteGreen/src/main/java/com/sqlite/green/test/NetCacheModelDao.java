@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 /**
  * 网络请求表 的 操作
@@ -125,7 +124,7 @@ public class NetCacheModelDao extends AbstractSafelyDao<String, NetCacheModel> {
     }
 
     public static byte[] objectToByte(Object object) throws NotSerializableException {
-        if (null != object && object instanceof Serializable) {
+        if (null != object ) { // && object instanceof Serializable
             ByteArrayOutputStream baoStream = new ByteArrayOutputStream();
             ObjectOutputStream objectOutputStream = null;
             try {
