@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.view.viewpager.carousel.R;
-import com.yline.utils.third.UIResizeUtil;
+import com.yline.utils.UIResizeUtil;
 
 /**
  * 支持定制 + 动态加载图片
