@@ -23,7 +23,7 @@ import android.widget.ImageView;
  * @author yline 2016/9/6 --> 23:10
  * @version 1.0.0
  */
-public class ImageViewPlus extends ImageView
+public class PlusImageView extends ImageView
 {
 	/**
 	 * android.widget.ImageView
@@ -70,15 +70,15 @@ public class ImageViewPlus extends ImageView
 
 	private Matrix mMatrix = new Matrix();
 
-	public ImageViewPlus(Context context, AttributeSet attrs)
+	public PlusImageView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		//取xml文件中设定的参数
-		TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ImageViewPlus);
-		mType = ta.getInt(R.styleable.ImageViewPlus_type, DEFAULT_TYPE);
-		mBorderColor = ta.getColor(R.styleable.ImageViewPlus_borderColor, DEFAULT_BORDER_COLOR);
-		mBorderWidth = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_borderWidth, dip2px(DEFAULT_BORDER_WIDTH));
-		mRectRoundRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_rectRoundRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
+		TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PlusImageView);
+		mType = ta.getInt(R.styleable.PlusImageView_type, DEFAULT_TYPE);
+		mBorderColor = ta.getColor(R.styleable.PlusImageView_borderColor, DEFAULT_BORDER_COLOR);
+		mBorderWidth = ta.getDimensionPixelSize(R.styleable.PlusImageView_borderWidth, dip2px(DEFAULT_BORDER_WIDTH));
+		mRectRoundRadius = ta.getDimensionPixelSize(R.styleable.PlusImageView_rectRoundRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
 		ta.recycle();
 	}
 

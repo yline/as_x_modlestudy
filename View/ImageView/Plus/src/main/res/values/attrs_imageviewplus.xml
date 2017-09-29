@@ -9,7 +9,7 @@
     <attr name="borderWidth" format="dimension" />
     <attr name="rectRoundRadius" format="dimension" />
 
-    <declare-styleable name="ImageViewPlus">  
+    <declare-styleable name="PlusImageView">
         <attr name="type" />
         <attr name="borderColor" />
         <attr name="borderWidth" />

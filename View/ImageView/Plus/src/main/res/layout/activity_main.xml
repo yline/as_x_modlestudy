@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:text="hello_world"/>
 
-    <com.imageview.plus.ImageViewPlus
+    <com.imageview.plus.PlusImageView
         android:id="@+id/iv_item_app"
         android:layout_width="100dp"
         android:layout_height="100dp"
