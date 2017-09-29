@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CheckHelper/CheckHelper.iml" filepath="$PROJECT_DIR$/CheckHelper/CheckHelper.iml" />
       <module fileurl="file://$PROJECT_DIR$/HScroll/HScroll.iml" filepath="$PROJECT_DIR$/HScroll/HScroll.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KeyClearEditText/KeyClearEditText.iml" filepath="$PROJECT_DIR$/KeyClearEditText/KeyClearEditText.iml" />
       <module fileurl="file://$PROJECT_DIR$/TextView.iml" filepath="$PROJECT_DIR$/TextView.iml" />
     </modules>
   </component>
