@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="4dp"
+    android:paddingRight="10dp"
+    android:paddingTop="4dp">
+
+    <TextView
+        android:id="@+id/tv_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/label_item_bg_layout_press"
+        android:duplicateParentState="true"
+        android:textColor="@drawable/label_selector_color_redgray">
+    </TextView>
+</LinearLayout>
+
+
+
+
+

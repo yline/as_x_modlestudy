@@ -8,6 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/LabelWidget" />
+            <option value="$PROJECT_DIR$/LabelWidgetSample" />
             <option value="$PROJECT_DIR$/SecondaryMenu" />
           </set>
         </option>

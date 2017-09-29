@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_widget_flow_able"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.view.widget.label.widget.LabelFlowLayout
+        android:id="@+id/label_flow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tab_flow_able">
+    </com.view.widget.label.widget.LabelFlowLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_flow_able"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TextView">
+    </android.support.design.widget.TabLayout>
+</RelativeLayout>

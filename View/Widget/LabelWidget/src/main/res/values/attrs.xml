@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--view label layout-->
+    <declare-styleable name="ViewLabel">
+        <attr name="label_max_count_each_line" format="integer"></attr>
+        <attr name="label_gravity">
+            <enum name="left" value="-1"/>
+            <enum name="center" value="0"/>
+            <enum name="equidistance" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>
