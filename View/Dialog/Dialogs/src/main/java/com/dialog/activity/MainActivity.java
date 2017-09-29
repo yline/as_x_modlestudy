@@ -12,13 +12,13 @@ import com.dialog.fragment.ListDialogFragment;
 import com.dialog.fragment.ProgressDialogFragment;
 import com.dialog.fragment.SpecialDialogFragment;
 import com.view.dialog.R;
+import com.yline.base.BaseAppCompatActivity;
 import com.yline.base.BaseFragment;
-import com.yline.test.BaseTestActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseTestActivity
+public class MainActivity extends BaseAppCompatActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
