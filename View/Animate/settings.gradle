@@ -1,1 +1,1 @@
-include ':TweenAnimation', ':ValueAnimator', ':FrameAnimation'
+include ':TweenAnimation', ':ValueAnimator', ':FrameAnimation', ':EasyTransition'

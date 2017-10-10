@@ -16,9 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ObjectActivity"></activity>
-        <activity android:name=".activity.SimpleValueAnimatorActivity"></activity>
-        <activity android:name=".activity.ColorValueAnimatorActivity"></activity>
+        <activity android:name=".activity.ObjectActivity"/>
+        <activity android:name=".activity.SimpleValueAnimatorActivity"/>
+        <activity android:name=".activity.ColorValueAnimatorActivity"/>
     </application>
 
 </manifest>

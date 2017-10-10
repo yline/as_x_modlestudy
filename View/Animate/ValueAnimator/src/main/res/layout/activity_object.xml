@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -15,14 +14,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="alpha java"/>
+            android:text="alpha java"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_alpha_xml"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="alpha xml"/>
+            android:text="alpha xml"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,14 +36,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="rotate java"/>
+            android:text="rotate java"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_rotate_xml"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="rotate xml"/>
+            android:text="rotate xml"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -55,14 +58,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="scale java"/>
+            android:text="scale java"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_scale_xml"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="scale xml"/>
+            android:text="scale xml"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -75,14 +80,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="translate java"/>
+            android:text="translate java"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_translate_xml"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="translate xml"/>
+            android:text="translate xml"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -95,14 +102,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="animation set java"/>
+            android:text="animation set java"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btn_animation_set_xml"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="animation set xml"/>
+            android:text="animation set xml"
+            android:textAllCaps="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -114,7 +123,7 @@
             android:id="@+id/tv_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"/>
+            android:text="@string/app_name" />
     </LinearLayout>
 
 </LinearLayout>
