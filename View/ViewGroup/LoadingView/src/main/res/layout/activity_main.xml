@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/main_rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="46dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="LoadingView" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/main_view_divide"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/main_rl_title"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_view_divide"
+        android:gravity="center"
+        android:text="Hello World!" />
+
+    <com.view.viewgroup.loadingview.LoadingView
+        android:id="@+id/main_view_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/main_view_divide"
+        android:visibility="gone" />
+</RelativeLayout>

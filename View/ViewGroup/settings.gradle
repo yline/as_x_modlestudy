@@ -1,1 +1,1 @@
-include ':NumberPicker'
+include ':NumberPicker', ':LoadingView'
