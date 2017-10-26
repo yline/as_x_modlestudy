@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/LoadingView" />
             <option value="$PROJECT_DIR$/NumberPicker" />
+            <option value="$PROJECT_DIR$/SwipeBackLayout" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

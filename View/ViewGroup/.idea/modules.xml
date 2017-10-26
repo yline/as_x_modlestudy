@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LoadingView/LoadingView.iml" filepath="$PROJECT_DIR$/LoadingView/LoadingView.iml" />
       <module fileurl="file://$PROJECT_DIR$/NumberPicker/NumberPicker.iml" filepath="$PROJECT_DIR$/NumberPicker/NumberPicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SwipeBackLayout/SwipeBackLayout.iml" filepath="$PROJECT_DIR$/SwipeBackLayout/SwipeBackLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/ViewGroup.iml" filepath="$PROJECT_DIR$/ViewGroup.iml" />
     </modules>
   </component>

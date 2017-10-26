@@ -1,1 +1,1 @@
-include ':NumberPicker', ':LoadingView'
+include ':NumberPicker', ':LoadingView', ':SwipeBackLayout'
