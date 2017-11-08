@@ -6,14 +6,6 @@ import android.database.sqlite.SQLiteStatement;
 
 import com.sqlite.green.common.AbstractSafelyDao;
 import com.sqlite.green.common.Property;
-import com.sqlite.green.gen.DaoManager;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.NotSerializableException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 /**
  * 网络请求表 的 操作
@@ -72,14 +64,10 @@ public class NetCacheModelDao extends AbstractSafelyDao<String, NetCacheModel> {
     protected NetCacheModel readModel(Cursor cursor) {
         String requestUrl = cursor.isNull(Table.RequestUrl.ordinal) ? null : cursor.getString(Table.RequestUrl.ordinal);
         String requestTag = cursor.isNull(Table.RequestTag.ordinal) ? null : cursor.getString(Table.RequestTag.ordinal);
-
         byte[] resultHeader = cursor.isNull(Table.ResultHeader.ordinal) ? null : cursor.getBlob(Table.ResultHeader.ordinal);
-        Object headerObject = byteToObject(resultHeader);
-
         byte[] resultData = cursor.isNull(Table.ResultData.ordinal) ? null : cursor.getBlob(Table.ResultData.ordinal);
-        Object dataObject = byteToObject(resultData);
 
-        return new NetCacheModel(requestUrl, requestTag, headerObject, dataObject);
+        return new NetCacheModel(requestUrl, requestTag, resultHeader, resultData);
     }
 
     @Override
@@ -87,90 +75,23 @@ public class NetCacheModelDao extends AbstractSafelyDao<String, NetCacheModel> {
         String requestUrl = model.getRequestUrl();
         if (null != requestUrl) {
             stmt.bindString(1 + Table.RequestUrl.ordinal, requestUrl);
-        }/*else {
-            stmt.bindNull(1 + Table.RequestUrl.ordinal);
-        }*/
+        }
 
         String requestTag = model.getRequestTag();
         if (null != requestTag) {
             stmt.bindString(1 + Table.RequestTag.ordinal, requestTag);
         }
 
-        Object resultHeader = model.getResultHeader();
-        byte[] headerBytes;
-        try {
-            headerBytes = objectToByte(resultHeader);
-        } catch (NotSerializableException e) {
-            DaoManager.e("NetCacheModelDao objectToByte Header", e);
-            return false;
-        }
-        if (null != headerBytes) {
-            stmt.bindBlob(1 + Table.ResultHeader.ordinal, headerBytes);
+        byte[] resultHeader = model.getResultHeader();
+        if (null != resultHeader) {
+            stmt.bindBlob(1 + Table.ResultHeader.ordinal, resultHeader);
         }
 
-        Object resultData = model.getResultData();
-        byte[] dataBytes;
-        try {
-            dataBytes = objectToByte(resultData);
-        } catch (NotSerializableException e) {
-            DaoManager.e("NetCacheModelDao objectToByte Data", e);
-            return false;
-        }
-        if (null != dataBytes) {
-            stmt.bindBlob(1 + Table.ResultData.ordinal, dataBytes);
+        byte[] resultData = model.getResultData();
+        if (null != resultData) {
+            stmt.bindBlob(1 + Table.ResultData.ordinal, resultData);
         }
 
         return true;
-    }
-
-    public static byte[] objectToByte(Object object) throws NotSerializableException {
-        if (null != object ) { // && object instanceof Serializable
-            ByteArrayOutputStream baoStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectOutputStream = null;
-            try {
-                objectOutputStream = new ObjectOutputStream(baoStream);
-                objectOutputStream.writeObject(object);
-                return baoStream.toByteArray();
-            } catch (NotSerializableException e) {
-                throw e;
-            } catch (IOException e) {
-                DaoManager.e("NetCacheModelDao objectToByte", e);
-            } finally {
-                try {
-                    if (null != objectOutputStream) {
-                        objectOutputStream.close();
-                    }
-                    baoStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
-
-    public static Object byteToObject(byte[] bytes) {
-        if (null != bytes && bytes.length != 0) {
-            ByteArrayInputStream baiStream = new ByteArrayInputStream(bytes);
-            ObjectInputStream objectInputStream = null;
-            try {
-                objectInputStream = new ObjectInputStream(baiStream);
-                return objectInputStream.readObject();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (null != objectInputStream) {
-                        objectInputStream.close();
-                    }
-                    baiStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
     }
 }

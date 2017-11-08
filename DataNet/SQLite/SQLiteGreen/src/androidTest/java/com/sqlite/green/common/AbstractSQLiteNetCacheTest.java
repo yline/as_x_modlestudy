@@ -37,7 +37,7 @@ public abstract class AbstractSQLiteNetCacheTest extends AbstractSQLiteTest<Stri
         assertObject(tom.getResultData(), joe.getResultData());
     }
 
-    protected abstract void assertObject(Object tom, Object joe);
+    protected abstract void assertObject(byte[] tom, byte[] joe);
 
     @Override
     protected String createRandomPK() {

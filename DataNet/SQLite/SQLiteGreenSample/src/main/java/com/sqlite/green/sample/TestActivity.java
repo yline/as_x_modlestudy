@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.sqlite.green.SQLiteIOUtils;
 import com.sqlite.green.SQLiteManager;
 import com.sqlite.green.test.NetCacheModel;
 import com.yline.log.LogFileUtil;
 import com.yline.test.BaseTestActivity;
 import com.yline.utils.LogUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +35,10 @@ public class TestActivity extends BaseTestActivity {
         addButton("insert", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SampleModel save = new SampleModel();
-                long rowId = SQLiteManager.insertOrReplace(new NetCacheModel(url, save));
+                SampleModel saveModel = new SampleModel();
+                byte[] saveByte = SQLiteIOUtils.objectToByte(saveModel);
+
+                long rowId = SQLiteManager.insertOrReplace(new NetCacheModel(url, saveByte));
                 LogUtil.i("rowId = " + rowId);
             }
         });
@@ -44,15 +48,15 @@ public class TestActivity extends BaseTestActivity {
             public void onClick(View v) {
                 SampleModel result = SQLiteManager.load(url, SampleModel.class);
                 if (null == result) {
-                    LogFileUtil.i("xxx-","result is null");
+                    LogFileUtil.i("xxx-", "result is null");
                 } else {
-                    LogFileUtil.i("xxx-","result = " + result.toString());
+                    LogFileUtil.i("xxx-", "result = " + result.toString());
                 }
             }
         });
     }
 
-    private class SampleModel {
+    private static class SampleModel implements Serializable {
         private String test;
 
         private List<TModel> list;
@@ -80,17 +84,9 @@ public class TestActivity extends BaseTestActivity {
         public void setList(List<TModel> list) {
             this.list = list;
         }
-
-        @Override
-        public String toString() {
-            return "SampleModel{" +
-                    "test='" + test + '\'' +
-                    ", list=" + list +
-                    '}';
-        }
     }
 
-    public class TModel {
+    public static class TModel implements Serializable {
 
         private String name;
 

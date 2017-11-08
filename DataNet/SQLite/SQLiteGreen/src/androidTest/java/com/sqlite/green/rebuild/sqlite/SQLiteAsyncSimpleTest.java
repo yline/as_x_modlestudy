@@ -1,5 +1,6 @@
 package com.sqlite.green.rebuild.sqlite;
 
+import com.sqlite.green.SQLiteIOUtils;
 import com.sqlite.green.common.AbstractSQLiteAsyncTest;
 import com.sqlite.green.test.NetCacheModel;
 import com.sqlite.green.test.SimpleModel;
@@ -35,6 +36,7 @@ public class SQLiteAsyncSimpleTest extends AbstractSQLiteAsyncTest<String, NetCa
     }
 
     protected NetCacheModel createModel(String pk) {
-        return new NetCacheModel(pk, new SimpleModel(pk, pk + "-value"));
+        byte[] modelByte = SQLiteIOUtils.objectToByte(new SimpleModel(pk, pk + "-value"));
+        return new NetCacheModel(pk, modelByte);
     }
 }

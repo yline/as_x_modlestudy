@@ -14,21 +14,25 @@ import org.junit.Assert;
  */
 public class SQLiteNetCacheSimpleModelTest extends AbstractSQLiteNetCacheTest {
     @Override
-    protected void assertObject(Object tom, Object joe) {
+    protected void assertObject(byte[] tom, byte[] joe) {
         if (null == tom && null == joe) {
             Assert.assertEquals(true, true);
             return;
         }
 
-        Assert.assertTrue(tom instanceof SimpleModel); // 断言一波
-        Assert.assertTrue(joe instanceof SimpleModel); // 断言一波
+        Object tomObject = SQLiteIOUtils.byteToObject(tom);
+        Object joeObject = SQLiteIOUtils.byteToObject(tom);
 
-        Assert.assertEquals(((SimpleModel) tom).getKey(), ((SimpleModel) joe).getKey());
-        Assert.assertEquals(((SimpleModel) tom).getValue(), ((SimpleModel) joe).getValue());
+        Assert.assertTrue(tomObject instanceof SimpleModel); // 断言一波
+        Assert.assertTrue(joeObject instanceof SimpleModel); // 断言一波
+
+        Assert.assertEquals(((SimpleModel) tomObject).getKey(), ((SimpleModel) joeObject).getKey());
+        Assert.assertEquals(((SimpleModel) tomObject).getValue(), ((SimpleModel) joeObject).getValue());
     }
 
     @Override
     protected NetCacheModel createModel(String pk) {
-        return new NetCacheModel(pk, new SimpleModel(pk, pk + "-value"));
+        byte[] modelByte = SQLiteIOUtils.objectToByte(new SimpleModel(pk, pk + "-value"));
+        return new NetCacheModel(pk, modelByte);
     }
 }

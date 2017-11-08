@@ -20,18 +20,21 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class SQLiteNetCacheXMediumModelTest extends AbstractSQLiteNetCacheTest {
     @Override
-    protected void assertObject(Object tom, Object joe) {
+    protected void assertObject(byte[] tom, byte[] joe) {
         if (null == tom && null == joe) {
             Assert.assertEquals(true, true);
             return;
         }
 
-        Assert.assertTrue(tom instanceof XMediumModel); // 断言一波
-        Assert.assertTrue(joe instanceof XMediumModel); // 断言一波
+        Object tomObject = SQLiteIOUtils.byteToObject(tom);
+        Object joeObject = SQLiteIOUtils.byteToObject(tom);
 
-        Assert.assertEquals(((XMediumModel) tom).getUserId(), ((XMediumModel) joe).getUserId());
-        Assert.assertEquals(((XMediumModel) tom).getUserList(), ((XMediumModel) joe).getUserList());
-        Assert.assertEquals(((XMediumModel) tom).getUserIntegerList(), ((XMediumModel) joe).getUserIntegerList());
+        Assert.assertTrue(tomObject instanceof XMediumModel); // 断言一波
+        Assert.assertTrue(joeObject instanceof XMediumModel); // 断言一波
+
+        Assert.assertEquals(((XMediumModel) tomObject).getUserId(), ((XMediumModel) joeObject).getUserId());
+        Assert.assertEquals(((XMediumModel) tomObject).getUserList(), ((XMediumModel) joeObject).getUserList());
+        Assert.assertEquals(((XMediumModel) tomObject).getUserIntegerList(), ((XMediumModel) joeObject).getUserIntegerList());
     }
 
     @Override
@@ -46,6 +49,7 @@ public class SQLiteNetCacheXMediumModelTest extends AbstractSQLiteNetCacheTest {
             intList.add(i);
         }
 
-        return new NetCacheModel(pk, new XMediumModel(pk, strList, intList));
+        byte[] modelByte = SQLiteIOUtils.objectToByte( new XMediumModel(pk, strList, intList));
+        return new NetCacheModel(pk,modelByte);
     }
 }
