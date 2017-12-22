@@ -3,29 +3,24 @@ package com.coordinator;
 import android.os.Bundle;
 import android.view.View;
 
+import com.coordinator.collapsingtoolbar.CollapsingToolbarActivity;
+import com.coordinator.floatingaction.FloatingActionActivity;
 import com.yline.test.BaseTestActivity;
 
 public class MainActivity extends BaseTestActivity {
     @Override
     public void testStart(View view, Bundle savedInstanceState) {
-        addButton("RecyclerView", new View.OnClickListener() {
+        addButton("FloatingActionButton", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RecyclerActivity.actionStart(MainActivity.this);
+                FloatingActionActivity.actionStart(MainActivity.this);
             }
         });
 
-        addButton("ScrollView", new View.OnClickListener() {
+        addButton("CollapsingToolbarLayout", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-
-        addButton("TabLayout", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                CollapsingToolbarActivity.launcher(MainActivity.this);
             }
         });
     }
