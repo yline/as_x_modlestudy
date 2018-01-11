@@ -101,7 +101,7 @@ public class FloatWindowManager {
 
     public void updateAvatarView() {
         if (null != mFloatView) {
-            mFloatView.setImageResource(R.mipmap.ic_launcher);
+            mFloatView.setImageResource(R.drawable.avatar);
         }
     }
 
