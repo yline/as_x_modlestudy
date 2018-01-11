@@ -3,6 +3,8 @@ package com.dialog.fragment;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +57,42 @@ public class SpecialDialogFragment extends BaseTestFragment {
                 dialog.onWindowAttributesChanged(lp);
 
                 dialog.show();
+            }
+        });
+
+        addButton("input", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AppCompatEditText inputTextView = new AppCompatEditText(getContext());
+
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                dialogBuilder.setView(inputTextView);
+                dialogBuilder.setTitle("请输入验证码");
+                dialogBuilder.setCancelable(false);
+                dialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String inputStr = inputTextView.getText().toString().trim();
+                        if ("bdtt".equalsIgnoreCase(inputStr)) {
+                            // TODO
+                        } else {
+                            // TODO
+                        }
+
+                        if (null != dialog) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                dialogBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (null != dialog) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                dialogBuilder.show();
             }
         });
     }

@@ -16,17 +16,7 @@
             <option value="$PROJECT_DIR$/UnActiveManager" />
           </set>
         </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/AlarmReceiver" />
-            <option value="$PROJECT_DIR$/LocalThresHold" />
-            <option value="$PROJECT_DIR$/MessagerReceiver" />
-            <option value="$PROJECT_DIR$/MultiFilterThresHold" />
-            <option value="$PROJECT_DIR$/UnActiveLock" />
-            <option value="$PROJECT_DIR$/UnActiveManager" />
-          </set>
-        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
