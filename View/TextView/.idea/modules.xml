@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/HScroll/HScroll.iml" filepath="$PROJECT_DIR$/HScroll/HScroll.iml" />
       <module fileurl="file://$PROJECT_DIR$/KeyClearEditText/KeyClearEditText.iml" filepath="$PROJECT_DIR$/KeyClearEditText/KeyClearEditText.iml" />
       <module fileurl="file://$PROJECT_DIR$/TextView.iml" filepath="$PROJECT_DIR$/TextView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VScroll/VScroll.iml" filepath="$PROJECT_DIR$/VScroll/VScroll.iml" />
     </modules>
   </component>
 </project>

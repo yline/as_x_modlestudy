@@ -1,1 +1,1 @@
-include ':HScroll', ':KeyClearEditText', ':CheckHelper'
+include ':HScroll', ':KeyClearEditText', ':CheckHelper', ':VScroll'

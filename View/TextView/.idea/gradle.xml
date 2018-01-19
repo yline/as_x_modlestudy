@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/CheckHelper" />
             <option value="$PROJECT_DIR$/HScroll" />
             <option value="$PROJECT_DIR$/KeyClearEditText" />
+            <option value="$PROJECT_DIR$/VScroll" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

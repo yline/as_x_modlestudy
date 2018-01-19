@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">VScroll</string>
+    <string-array name="scroll_text">
+        <item>滚动编号，1</item>
+        <item>滚动编号，2</item>
+        <item>滚动编号，3</item>
+        <item>滚动编号，4</item>
+        <item>滚动编号，5</item>
+        <item>滚动编号，6</item>
+        <item>滚动编号，7</item>
+        <item>滚动编号，8</item>
+        <item>滚动编号，9</item>
+        <item>滚动编号，10</item>
+        <item>滚动编号，11</item>
+        <item>滚动编号，12</item>
+    </string-array>
+</resources>
