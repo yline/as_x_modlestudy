@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/FloatGroupRecycler/FloatGroupRecycler.iml" filepath="$PROJECT_DIR$/FloatGroupRecycler/FloatGroupRecycler.iml" />
       <module fileurl="file://$PROJECT_DIR$/GroupRecyclerAdapter/GroupRecyclerAdapter.iml" filepath="$PROJECT_DIR$/GroupRecyclerAdapter/GroupRecyclerAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/HeadFootAdapter&amp;ItemDecoration/HeadFootAdapter&amp;ItemDecoration.iml" filepath="$PROJECT_DIR$/HeadFootAdapter&amp;ItemDecoration/HeadFootAdapter&amp;ItemDecoration.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MultiTreeRecycler/MultiTreeRecycler.iml" filepath="$PROJECT_DIR$/MultiTreeRecycler/MultiTreeRecycler.iml" />
       <module fileurl="file://$PROJECT_DIR$/RecyclerView.iml" filepath="$PROJECT_DIR$/RecyclerView.iml" />
       <module fileurl="file://F:\git_space\as_x_modlestudy\View\RecyclerView\HeadFootAdapter&amp;ItemDecoration\app.iml" filepath="F:\git_space\as_x_modlestudy\View\RecyclerView\HeadFootAdapter&amp;ItemDecoration\app.iml" />
     </modules>

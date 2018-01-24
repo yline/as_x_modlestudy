@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/FloatGroupRecycler" />
             <option value="$PROJECT_DIR$/GroupRecyclerAdapter" />
             <option value="$PROJECT_DIR$/HeadFootAdapter&amp;ItemDecoration" />
+            <option value="$PROJECT_DIR$/MultiTreeRecycler" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
