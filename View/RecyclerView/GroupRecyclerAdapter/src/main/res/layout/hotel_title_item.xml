@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/icon"/>
+            android:background="@drawable/icon"/>
     </RelativeLayout>
 
     <View
