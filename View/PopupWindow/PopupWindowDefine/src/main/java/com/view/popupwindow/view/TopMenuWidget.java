@@ -1,10 +1,14 @@
 package com.view.popupwindow.view;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.view.popupwindow.R;
 import com.yline.view.recycler.holder.ViewHolder;
@@ -32,6 +36,15 @@ public class TopMenuWidget {
     }
 
     private void initViewClick() {
+        mContentHolder.get(R.id.view_menu_top_tv).getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (mContentHolder.get(R.id.view_menu_top_tv).getHeight() != 0) {
+                    translate(mContentHolder.get(R.id.view_menu_top_tv));
+                }
+            }
+        });
+
         mContentHolder.setOnClickListener(R.id.view_menu_top_mask, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,9 +53,17 @@ public class TopMenuWidget {
         });
     }
 
+    private void translate(View view) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "translationY", -view.getHeight(), 0);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.setDuration(500);
+        animator.start();
+    }
+
     public void showAsDropDown(View anchor, String content) {
         if (null != mPopupWindow && !mPopupWindow.isShowing()) {
-            mContentHolder.setText(R.id.view_menu_top_tv, content);
+            TextView textView = mContentHolder.get(R.id.view_menu_top_tv);
+            textView.setText(content);
             mPopupWindow.showAsDropDown(anchor);
         }
     }

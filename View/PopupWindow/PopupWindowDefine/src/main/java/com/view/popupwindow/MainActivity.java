@@ -34,7 +34,7 @@ public class MainActivity extends BaseTestActivity {
                 TopMenuWidget menuWidget = new TopMenuWidget(MainActivity.this);
 
                 StringBuilder stringBuilder = new StringBuilder();
-                for (String str : StrConstant.getListRandom(10)) {
+                for (String str : StrConstant.getListRandom(20)) {
                     stringBuilder.append(str);
                     stringBuilder.append('\n');
                 }
