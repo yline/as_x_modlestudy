@@ -22,8 +22,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.yline.lib:LibSDK:2.0.7'
+    compile 'com.yline.lib:LibSDK:2.1.2'
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support:design:26.0.0-alpha1'
-    compile 'com.yline.lib:LibViewRecycler:1.0.4'
+    compile 'com.yline.lib:LibViewRecycler:1.1.1'
 }

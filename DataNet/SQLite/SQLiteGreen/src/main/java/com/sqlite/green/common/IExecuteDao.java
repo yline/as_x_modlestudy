@@ -91,13 +91,13 @@ public interface IExecuteDao<Key, Model> {
      */
     long count();
 
-    /**
-     * 依据Model 获取 缓存的Key
-     *
-     * @param module 数据队列
-     * @return 关键词
-     */
-    Key getKey(Model module);
+//    /**
+//     * 依据Model 获取 缓存的Key
+//     *
+//     * @param module 数据队列
+//     * @return 关键词
+//     */
+//    Key getKey(Model module);
 
     /**
      * 清除所有数据

@@ -197,7 +197,7 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
             return model;
         } else {
             model = readModel(cursor);
-            cacheAttach(key, model, lock);
+            loadCache(key, model, lock);
             return model;
         }
     }
@@ -224,7 +224,7 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
 
         if (cache) {
             Key key = getKey(model);
-            cacheAttach(key, model, true);
+            loadCache(key, model, true);
         }
 
         return rowId;
@@ -251,7 +251,7 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
 
                         if (cache) {
                             Key key = getKey(model);
-                            cacheAttach(key, model, false);
+                            loadCache(key, model, false);
                         }
                     }
                 } finally {
@@ -304,7 +304,7 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
 
         if (cache) {
             Key key = getKey(model);
-            cacheAttach(key, model, true);
+            loadCache(key, model, true);
         }
 
         return rowId;
@@ -333,7 +333,7 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
 
                         if (Error != rowId && cache) {
                             Key key = getKey(model);
-                            cacheAttach(key, model, false);
+                            loadCache(key, model, false);
                         }
                     }
                 } finally {
@@ -369,7 +369,7 @@ public abstract class AbstractDao<Key, Model> implements IExecuteDao<Key, Model>
      * @param model 数据
      * @param lock  操作 是否 锁处理
      */
-    private void cacheAttach(Key key, Model model, boolean lock) {
+    private void loadCache(Key key, Model model, boolean lock) {
         if (null != key) {
             if (lock) {
                 mScope.put(key, model);
