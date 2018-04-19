@@ -1,0 +1,7 @@
+1,
+Action: 新开启 Service或Activity
+Result: 只要是 另一个进程，则会初始化一次 Application
+
+2,
+Situation：新开启的进程，在后台
+Result: 若关闭主进程，新开启的进程依旧会运行

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.process">
+
+    <application
+        android:name=".IApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="Process:Main">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.CoreProcessActivity"
+            android:label="Process:Core"
+            android:process=":core" />
+        <activity
+            android:name=".activity.ImageProcessActivity"
+            android:label="Process:Image"
+            android:process=":image" />
+        <activity
+            android:name=".activity.PushProcessActivity"
+            android:label="Process:Push"
+            android:process=":push" />
+
+        <service android:name=".service.MainService" />
+        <service
+            android:name=".service.MusicProcessService"
+            android:process=":music" />
+        <service
+            android:name=".service.PushProcessService"
+            android:process=":push" />
+        <service
+            android:name=".service.RemoteProcessService"
+            android:process=":remote" />
+    </application>
+
+</manifest>
