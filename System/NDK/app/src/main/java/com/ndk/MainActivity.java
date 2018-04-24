@@ -1,23 +1,39 @@
 package com.ndk;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ndk.jni.JniManager;
+import com.yline.test.BaseTestActivity;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * @author yline 2018/4/24 -- 10:16
+ * @version 1.0.0
+ */
+public class MainActivity extends BaseTestActivity {
     private JniManager mJniManager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+    public void testStart(View view, Bundle savedInstanceState) {
         mJniManager = new JniManager();
 
-        // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(mJniManager.stringFromJNI() + "\n" + mJniManager.logByJni("Android->JNI"));
+        final TextView libTextView = addTextView("");
+        addButton("stringFromJNI", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String str = mJniManager.stringFromJNI();
+                libTextView.setText(str);
+            }
+        });
+
+        final TextView logTextView = addTextView("");
+        addButton("logByJni", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String logStr = mJniManager.logByJni("Android->JNI->Log");
+                logTextView.setText(logStr);
+            }
+        });
     }
 }

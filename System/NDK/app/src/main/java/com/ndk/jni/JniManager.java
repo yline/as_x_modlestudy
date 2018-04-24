@@ -1,6 +1,7 @@
 package com.ndk.jni;
 
 /**
+ * Java调用C的方法
  * Jni管理类
  *
  * @author yline 2018/4/23 -- 18:42
@@ -8,13 +9,11 @@ package com.ndk.jni;
  */
 public class JniManager {
     static {
-        System.loadLibrary("native-lib");
-
-        System.loadLibrary("native-log");
+        System.loadLibrary("native-manager");
     }
 
     /**
-     * 获取Jni
+     * 获取Jni 中定义的 String字符串
      *
      * @return C层的数据
      */

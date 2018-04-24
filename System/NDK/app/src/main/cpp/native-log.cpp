@@ -2,11 +2,9 @@
 #include <string>
 #include <android/log.h>
 
-extern "C"
-JNIEXPORT jstring
+extern "C" {
 
-JNICALL
-Java_com_ndk_jni_JniManager_logByJni(JNIEnv *env, jobject, jstring msg) {
+jstring Java_com_ndk_jni_JniManager_logByJni(JNIEnv *env, jobject, jstring msg) {
     if (NULL == msg) {
         __android_log_print(ANDROID_LOG_INFO, "xxx-", "msg is null");
         return env->NewStringUTF("msg is null");
@@ -17,8 +15,10 @@ Java_com_ndk_jni_JniManager_logByJni(JNIEnv *env, jobject, jstring msg) {
     c_msg = (char *) env->GetStringUTFChars(msg, 0);
 
     // 打印内容
-    __android_log_print(ANDROID_LOG_INFO, "xxx-", "jni, %s", c_msg);
+    __android_log_print(ANDROID_LOG_INFO, "xxx-", "log logByJni, %s", c_msg);
 
-    std::string hello = "Hello from C++";
+    std::string hello = "Hello C，log logByJni";
     return env->NewStringUTF(hello.c_str());
+}
+
 }
