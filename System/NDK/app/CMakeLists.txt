@@ -20,9 +20,9 @@ add_library( # Sets the name of the library.
              src/main/cpp/native-manager.cpp )
 
 add_library(
-             native-log
+             native-provider
              SHARED
-             src/main/cpp/native-log.cpp )
+             src/main/cpp/native-provider.cpp )
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -42,14 +42,15 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-                       native-log
+                       native-manager
 
                        # Links the target library to the log library
                        # included in the NDK.
                        ${log-lib} )
 
+
 target_link_libraries( # Specifies the target library.
-                       native-manager
+                       native-provider
 
                        # Links the target library to the log library
                        # included in the NDK.

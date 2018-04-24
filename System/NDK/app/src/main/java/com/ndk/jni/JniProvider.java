@@ -11,7 +11,7 @@ import com.yline.utils.LogUtil;
  */
 public class JniProvider {
     static {
-        System.loadLibrary("native-log");
+        System.loadLibrary("native-provider");
     }
 
     /**
