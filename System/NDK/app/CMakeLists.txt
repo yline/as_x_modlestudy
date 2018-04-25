@@ -17,7 +17,8 @@ add_library( # Sets the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             src/main/cpp/native-manager.cpp )
+             src/main/cpp/native-manager.cpp
+             src/main/cpp/base64.cpp)
 
 add_library(
              native-provider

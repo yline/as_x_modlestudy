@@ -21,6 +21,7 @@ void InitJniProvider(JNIEnv *env) {
     }
 }
 
+// 被调用的方法
 extern "C" {
 
 /**

@@ -26,4 +26,22 @@ public class JniManager {
      * @return 返回内容
      */
     public native String logByJni(String msg);
+
+    /**
+     * 加密
+     *
+     * @param msg  原始字符串
+     * @param type 加密的方式
+     * @return 加密后的数据
+     */
+    public native String encode(String msg, int type);
+
+    /**
+     * 解密
+     *
+     * @param msg  解密前的 字符串
+     * @param type 解密的方式
+     * @return 解密后的数据
+     */
+    public native String decode(String msg, int type);
 }

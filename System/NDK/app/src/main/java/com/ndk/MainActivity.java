@@ -2,6 +2,7 @@ package com.ndk;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ndk.jni.JniManager;
@@ -21,6 +22,7 @@ public class MainActivity extends BaseTestActivity {
         mJniManager = new JniManager();
         mJniProvider = new JniProvider();
 
+        /* ------------------------------------ Java调用C, 测试 ------------------------------------ */
         final TextView libTextView = addTextView("");
         addButton("stringFromJNI", new View.OnClickListener() {
             @Override
@@ -39,6 +41,7 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
+        /* ------------------------------------ C调用Java, 测试 ------------------------------------ */
         addButton("doProvider", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,5 +55,30 @@ public class MainActivity extends BaseTestActivity {
                 mJniProvider.doStaticProvider();
             }
         });
+
+        /* ------------------------------------ Java调用C, 加密解密 ------------------------------------ */
+        final EditText encodeEditText = addEditText("", "yline&乾天");
+        final TextView encodeTextView = addTextView("");
+        addButton("encode", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String inputStr = encodeEditText.getText().toString().trim();
+
+                mEncodedStr = mJniManager.encode(inputStr, 0);
+                encodeTextView.setText(mEncodedStr);
+            }
+        });
+
+        final TextView decodeTextView = addTextView("");
+        addButton("decode", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mEncodedStr) {
+                    decodeTextView.setText(mJniManager.decode(mEncodedStr, 0));
+                }
+            }
+        });
     }
+
+    private String mEncodedStr;
 }
