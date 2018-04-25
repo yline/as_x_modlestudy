@@ -1,7 +1,6 @@
 package com.lock.object.activity;
 
 import com.yline.application.BaseApplication;
-import com.yline.application.SDKConfig;
 
 public class MainApplication extends BaseApplication
 {
@@ -16,14 +15,4 @@ public class MainApplication extends BaseApplication
 	{
 		super.onCreate();
 	}
-
-	@Override
-	protected SDKConfig initConfig()
-	{
-		SDKConfig sdkConfig = new SDKConfig();
-		sdkConfig.setLogFilePath(TAG);
-		sdkConfig.setLogLocation(true);
-		return sdkConfig;
-	}
-
 }

@@ -1,32 +1,32 @@
 package com.system.handler.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
-import com.system.handler.R;
 import com.system.handler.TestThread;
-import com.yline.base.BaseAppCompatActivity;
+import com.yline.test.BaseTestActivity;
 
-public class MainActivity extends BaseAppCompatActivity implements TestThread.ThreadCallback
-{
-	private TextView tvTest;
+public class MainActivity extends BaseTestActivity {
+    @Override
+    public void testStart(View view, Bundle savedInstanceState) {
+        final TextView tvTest = addTextView("");
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+        final TestThread testThread = new TestThread();
+        testThread.setOnThreadCallback(new TestThread.OnThreadCallback() {
+            @Override
+            public void onResult(int number) {
+                tvTest.setText("number is " + number);
+            }
+        });
 
-		TestThread testThread = new TestThread();
-		testThread.setThreadCallback(this);
-		testThread.start();
-
-		tvTest = (TextView) findViewById(R.id.tv_test);
-	}
-
-	@Override
-	public void onResult(int what, int arg1)
-	{
-		tvTest.setText(R.string.app_name + " number is " + arg1);
-	}
+        addButton("testThread", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!testThread.isAlive()) {
+                    testThread.start();
+                }
+            }
+        });
+    }
 }
