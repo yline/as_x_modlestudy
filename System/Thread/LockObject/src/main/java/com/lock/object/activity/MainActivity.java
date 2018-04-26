@@ -3,6 +3,7 @@ package com.lock.object.activity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.lock.object.custom.Custom;
 import com.lock.object.sync.SynchronizedLock;
 import com.lock.object.sync.SynchronizedLockSimple;
 import com.yline.test.BaseTestActivity;
@@ -58,6 +59,20 @@ public class MainActivity extends BaseTestActivity {
                 SynchronizedLock.testWait("wait CC", 400, -1, 600);
 
                 SynchronizedLock.testNotify("notify", 1000, 1, 3000, true);
+            }
+        });
+
+        addButton("testRepeatable", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Custom.testRepeatable();
+            }
+        });
+
+        addButton("testNonRepeatable", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Custom.testNonRepeatable();
             }
         });
     }
