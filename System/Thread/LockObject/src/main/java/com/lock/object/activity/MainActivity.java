@@ -1,61 +1,64 @@
 package com.lock.object.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.lock.object.SynchronizedLock;
-import com.lock.object.SynchronizedLockSimple;
-import com.lock.object.tag.synchronize.InitConfig;
-import com.system.thread.R;
-import com.yline.log.LogFileUtil;
+import com.lock.object.sync.SynchronizedLock;
+import com.lock.object.sync.SynchronizedLockSimple;
+import com.yline.test.BaseTestActivity;
 
-public class MainActivity extends Activity
-{
+public class MainActivity extends BaseTestActivity {
+    @Override
+    public void testStart(View view, Bundle savedInstanceState) {
+        // 单纯的 synchronized 关键词
+        addButton("synchronized", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SynchronizedLockSimple.test("AA", 1500, 500, 500);
+                SynchronizedLockSimple.test("BB", 1000, 3000, 500);
+            }
+        });
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+        // 单独测试 lock.wait
+        addButton("testWait", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SynchronizedLock.testWait("wait forever", 500, -1, 500);
+                SynchronizedLock.testWait("wait 3000ms", 500, 3000, 500);
+            }
+        });
 
-		findViewById(R.id.btn_one).setOnClickListener(new View.OnClickListener()
-		{
+        // 单独测试 lock.notify
+        addButton("testNotify", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SynchronizedLock.testNotify("notify", 500, 500, 500, false);
+                SynchronizedLock.testNotify("notifyAll", 500, 500, 500, true);
+            }
+        });
 
-			@Override
-			public void onClick(View v)
-			{
-				LogFileUtil.v(MainApplication.TAG, "onClick btn_one");
-				new SynchronizedLockSimple().testSimple(3000, "1");
-				new SynchronizedLockSimple().testSimple(500, "2");
-			}
-		});
+        // 混合测试 wait + notify
+        addButton("testWaitAndNotify", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SynchronizedLock.testWait("wait AA", 200, -1, 800);
+                SynchronizedLock.testWait("wait BB", 300, -1, 700);
+                SynchronizedLock.testWait("wait CC", 400, -1, 600);
 
-		findViewById(R.id.btn_two).setOnClickListener(new View.OnClickListener()
-		{
+                SynchronizedLock.testNotify("notify", 1000, 1, 500, false);
+            }
+        });
 
-			@Override
-			public void onClick(View v)
-			{
-				LogFileUtil.v(MainApplication.TAG, "onClick btn_two");
+        // 混合测试 wait + notifyAll
+        addButton("testWaitAndNotifyAll", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SynchronizedLock.testWait("wait AA", 200, -1, 800);
+                SynchronizedLock.testWait("wait BB", 300, -1, 700);
+                SynchronizedLock.testWait("wait CC", 400, -1, 600);
 
-				new SynchronizedLock().testLockNotifyAll(9000, "3");
-				new SynchronizedLock().testLockWait(2000, "2");
-				new SynchronizedLock().testLockSingle(1000, "1");
-				new SynchronizedLock().testLockWaitAndNotifyAll(1000, "4");
-			}
-		});
-
-		findViewById(R.id.btn_three).setOnClickListener(new View.OnClickListener()
-		{
-
-			@Override
-			public void onClick(View v)
-			{
-				LogFileUtil.v(MainApplication.TAG, "onClick btn_three");
-				new InitConfig(MainActivity.this);
-			}
-		});
-	}
-
+                SynchronizedLock.testNotify("notify", 1000, 1, 3000, true);
+            }
+        });
+    }
 }

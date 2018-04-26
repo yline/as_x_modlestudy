@@ -1,18 +1,18 @@
-package com.lock.object.activity;			入口Activity
-
-package com.lock.object;					写的synchronized 介绍  demo
-
-package com.lock.object.tag.synchronize;	synchronized 应用,同步【最广泛的应用】
-
 基本总结点:
 1,synchronized会阻塞 内部代码块以及后部代码块
 2,synchronized能够保证同一时刻最多只有一个线程执行该段代码
+
 3,wait(): 导致当前线程等待,直到其它线程调用该同步监视器的notify()方法或者notifyAll()方法来唤醒该线程.[该方法可带  倒计时功能]
-4,notifyAll(): 唤醒在此同步监视器上等待的所有线程.
-5,wait和notify要求在Synchronized内部调用才能保证不出错;即:它要求在具有控制权的线程中执行对象的wait或notify方法.
+4,notify(); 唤醒在此同步监视器上等待的单个线程。如果所有线程都在此同步监视器上等待,则会选择唤醒其中一个线程,选择是任意性的.
+5,notifyAll(): 唤醒在此同步监视器上等待的所有线程.
+
+6,synchronized(lock)块的代码被阻塞，由于先行原则，后续的代码，也会被阻塞
+
+PS:
+wait和notify要求在Synchronized内部调用才能保证不出错;即:它要求在具有控制权的线程中执行对象的wait或notify方法.
  否则报错:java.lang.IllegalMonitorStateException:object not locked by thread before notify()
 
-6,synchronized可以理解成将之后的代码,暂时看做"串行"状态
+
 
 
 

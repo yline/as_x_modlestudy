@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -12,21 +11,23 @@
         android:id="@+id/pb_async_class"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tv_async_class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pb_async_class"
-        android:text="Hello World!"/>
+        android:text="Hello World!"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/btn_async_class"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_async_class"
-        android:text="Async Class开启进度"/>
+        android:text="Async Class开启进度"
+        android:textAllCaps="false" />
 
     <TextView
         android:id="@+id/tv_async_new"
@@ -34,13 +35,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_async_class"
         android:layout_marginTop="20dp"
-        android:text="Hello World!"/>
+        android:text="Hello World!"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/btn_async_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_async_new"
-        android:text="Async New开启进度"/>
+        android:text="Async New开启进度"
+        android:textAllCaps="false" />
 
 </RelativeLayout>

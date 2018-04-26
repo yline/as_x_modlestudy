@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name="com.lock.object.activity.MainApplication"
+        android:name="com.lock.object.activity.IApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,8 +19,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.lock.object.tag.synchronize.InitService">
-        </service>
     </application>
 
 </manifest>
