@@ -37,6 +37,10 @@ public class Utils {
         LogFileUtil.v("Thread = " + Thread.currentThread().getName() + ", location = " + location + ", finish");
     }
 
+    public static void doLog(String location) {
+        LogFileUtil.v("Thread = " + Thread.currentThread().getName() + ", location = " + location);
+    }
+
     public interface OnCallback {
         /**
          * 调用

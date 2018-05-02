@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.lock.object.custom.Custom;
+import com.lock.object.reen.Reentrant;
 import com.lock.object.sync.SynchronizedLock;
 import com.lock.object.sync.SynchronizedLockSimple;
 import com.yline.test.BaseTestActivity;
@@ -62,6 +63,7 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
+        // 测试，自定义 锁；可重入锁含义
         addButton("testRepeatable", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,10 +71,27 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
+        // 测试，自定义 锁；不可重入锁含义
         addButton("testNonRepeatable", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Custom.testNonRepeatable();
+            }
+        });
+
+        // ReentrantLock简单测试
+        addButton("testReentrantSimple", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Reentrant.testSimple(100, 500, 200, 100);
+            }
+        });
+
+        // ReentrantLock LockInterruptibly，没有实际效果
+        addButton("", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Reentrant.testLockInterruptibly(300, 200, 200, 300);
             }
         });
     }
