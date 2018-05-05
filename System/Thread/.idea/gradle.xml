@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/AsyncTaskThresHold" />
             <option value="$PROJECT_DIR$/Handler" />
             <option value="$PROJECT_DIR$/LockObject" />
+            <option value="$PROJECT_DIR$/ThreadLocal" />
             <option value="$PROJECT_DIR$/ThreadPoolExecutor" />
           </set>
         </option>

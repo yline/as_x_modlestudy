@@ -1,1 +1,1 @@
-include ':LockObject', ':AsyncTaskThresHold', ':AsyncTaskLoaderThresHold', ':Handler', ':ThreadPoolExecutor'
+include ':LockObject', ':AsyncTaskThresHold', ':AsyncTaskLoaderThresHold', ':Handler', ':ThreadPoolExecutor', ':ThreadLocal'
