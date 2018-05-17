@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/GroupRecyclerAdapter" />
             <option value="$PROJECT_DIR$/HeadFootAdapter&amp;ItemDecoration" />
             <option value="$PROJECT_DIR$/MultiTreeRecycler" />
+            <option value="$PROJECT_DIR$/SnapHelper" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
