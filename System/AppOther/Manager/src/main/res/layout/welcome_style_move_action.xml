@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/move_action_bg">
+
+    <ImageView
+        android:id="@+id/welcome_style_move_iv_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/move_action_logo" />
+
+    <TextView
+        android:id="@+id/welcome_style_move_tv_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/welcome_style_move_iv_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:text="马上有音乐"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff"
+        android:textSize="32sp" />
+
+</RelativeLayout>
