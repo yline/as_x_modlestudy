@@ -24,7 +24,17 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:recyclerview-v7:25.1.1'
+
+    compile 'com.facebook.fresco:fresco:1.5.0' // 主依赖
+    compile 'com.facebook.fresco:animated-gif:1.5.0' // 支持gif动图
+    compile 'com.facebook.fresco:animated-webp:1.5.0' // 支持webp动态
+    compile 'com.facebook.fresco:webpsupport:1.5.0' // 支持webp静态
+    compile 'com.facebook.fresco:imagepipeline-okhttp3:1.5.0'
+
     compile 'com.yline.lib:LibSDK:2.2.0'
+    compile 'com.yline.lib:LibViewRecycler:1.2.0'
+    compile 'com.yline.lib:LibViewFresco:1.1.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {

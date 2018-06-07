@@ -3,6 +3,7 @@ package com.manager
 import android.os.Bundle
 import android.view.View
 import com.manager.apn.APNManagerTest
+import com.manager.compress.CompressActivity
 import com.manager.intent.IntentActivity
 import com.manager.welcome.WelcomeActivity
 import com.yline.test.BaseTestActivity
@@ -19,6 +20,10 @@ class MainActivity : BaseTestActivity() {
 
         addButton("Intent Manager") {
             IntentActivity.launcher(this@MainActivity)
+        }
+
+        addButton("Compress Manager") {
+            CompressActivity.launcher(this@MainActivity)
         }
     }
 }
