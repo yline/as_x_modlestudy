@@ -85,6 +85,8 @@ object CompressManager {
         option.inJustDecodeBounds = false
         option.inSampleSize = scale
 
+        option.inPreferredConfig = Bitmap.Config.RGB_565
+
         return BitmapFactory.decodeFile(sourcePath, option)
     }
 
