@@ -1,6 +1,6 @@
 package com.dm.singleton.dcl;
 
-import com.dm.singleton.activity.MainApplication;
+import com.dm.singleton.activity.IApplication;
 import com.yline.log.LogFileUtil;
 
 /**
@@ -24,7 +24,7 @@ public class SingletonDCL
             {
                 if (null == instance)
                 {
-                    LogFileUtil.i(MainApplication.TAG, "SingletonDCL -> getInstance, new");
+                    LogFileUtil.i(IApplication.TAG, "SingletonDCL -> getInstance, new");
                     instance = new SingletonDCL();
                 }
             }
@@ -34,6 +34,6 @@ public class SingletonDCL
     
     public void doSome()
     {
-        LogFileUtil.i(MainApplication.TAG, "SingletonDCL -> doSome");
+        LogFileUtil.i(IApplication.TAG, "SingletonDCL -> doSome");
     }
 }

@@ -1,6 +1,6 @@
 package com.dm.singleton.enums;
 
-import com.dm.singleton.activity.MainApplication;
+import com.dm.singleton.activity.IApplication;
 import com.yline.log.LogFileUtil;
 
 /**
@@ -12,6 +12,6 @@ public enum SingletonEnum
     
     public void doSome()
     {
-        LogFileUtil.i(MainApplication.TAG, "SingletonEnum -> doSome");
+        LogFileUtil.i(IApplication.TAG, "SingletonEnum -> doSome");
     }
 }

@@ -1,6 +1,6 @@
 package com.dm.singleton.statics;
 
-import com.dm.singleton.activity.MainApplication;
+import com.dm.singleton.activity.IApplication;
 import com.yline.log.LogFileUtil;
 
 /**
@@ -27,6 +27,6 @@ public class SingletonStatic
     
     public void doSome()
     {
-        LogFileUtil.i(MainApplication.TAG, "SingletonStatic -> doSome");
+        LogFileUtil.i(IApplication.TAG, "SingletonStatic -> doSome");
     }
 }

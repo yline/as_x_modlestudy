@@ -1,6 +1,6 @@
 package com.dm.singleton.lazy;
 
-import com.dm.singleton.activity.MainApplication;
+import com.dm.singleton.activity.IApplication;
 import com.yline.log.LogFileUtil;
 
 /**
@@ -19,7 +19,7 @@ public class SingletonLazy
     {
         if (null == instance)
         {
-            LogFileUtil.i(MainApplication.TAG, "SingletonLazy -> getInstance, new");
+            LogFileUtil.i(IApplication.TAG, "SingletonLazy -> getInstance, new");
             instance = new SingletonLazy();
         }
         return instance;
@@ -27,6 +27,6 @@ public class SingletonLazy
     
     public void doSome()
     {
-        LogFileUtil.i(MainApplication.TAG, "SingletonLazy -> doSome");
+        LogFileUtil.i(IApplication.TAG, "SingletonLazy -> doSome");
     }
 }
