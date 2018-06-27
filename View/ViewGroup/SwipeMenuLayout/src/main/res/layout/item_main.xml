@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.swipe.menu.view.SwipeMenuLayout
+        android:id="@+id/item_main_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 第一个子控件，作为主控件 -->
+        <TextView
+            android:id="@+id/item_main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="项目中我是任意复杂的原Item布局" />
+
+        <!-- 以下都是侧滑菜单的内容依序排列 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/item_main_top"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="#d9dee4"
+                android:text="置顶"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/item_main_unread"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:background="#ecd50a"
+                android:clickable="true"
+                android:text="标记未读"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/item_main_delete"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="#ff4a57"
+                android:text="删除"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </com.swipe.menu.view.SwipeMenuLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#999999" />
+</LinearLayout>

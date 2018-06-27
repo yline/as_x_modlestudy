@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/LoadingView" />
             <option value="$PROJECT_DIR$/NumberPicker" />
             <option value="$PROJECT_DIR$/SwipeBackLayout" />
+            <option value="$PROJECT_DIR$/SwipeMenuLayout" />
             <option value="$PROJECT_DIR$/WheelLib" />
             <option value="$PROJECT_DIR$/WheelSample" />
           </set>

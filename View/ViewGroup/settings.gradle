@@ -1,1 +1,1 @@
-include ':NumberPicker', ':LoadingView', ':SwipeBackLayout', ':WheelLib', ':WheelSample'
+include ':NumberPicker', ':LoadingView', ':SwipeBackLayout', ':WheelLib', ':WheelSample', ':SwipeMenuLayout'
