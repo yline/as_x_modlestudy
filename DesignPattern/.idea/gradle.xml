@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/00UML" />
             <option value="$PROJECT_DIR$/02Sington" />
             <option value="$PROJECT_DIR$/03Builder" />
             <option value="$PROJECT_DIR$/04Prototype" />
