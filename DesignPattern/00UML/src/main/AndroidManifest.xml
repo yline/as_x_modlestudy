@@ -18,6 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".composition.CompositionActivity" />
+        <activity android:name=".realization.RealizationActivity" />
+        <activity android:name=".assocation.AssocationActivity" />
     </application>
 
 </manifest>

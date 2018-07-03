@@ -33,7 +33,7 @@ public class CompositionActivity extends BaseTestActivity {
         // 全局参数，ViewRootImpl使用
         // ViewRootImpl + ViewRootImpl.W
         // PhoneView + PhoneView.DecorView
-        addButton("StyleA", new View.OnClickListener() {
+        addButton("StyleA - 构造函数创建", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new ViewRootImpl();
@@ -43,7 +43,7 @@ public class CompositionActivity extends BaseTestActivity {
         // 全局参数，默认 同时构造
         // WindowManagerGlobal + ViewRootImpl(列表)
         // WindowManagerService + WindowState(列表)
-        addButton("StyleB", new View.OnClickListener() {
+        addButton("StyleB - 全局参数创建", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new WindowManagerGlobal();
@@ -53,7 +53,7 @@ public class CompositionActivity extends BaseTestActivity {
         // 全局参数，函数控制构造
         // Session + SurfaceSession
         // WindowManagerService + Session
-        addButton("StyleC", new View.OnClickListener() {
+        addButton("StyleC - 调用函数创建", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new Session();
