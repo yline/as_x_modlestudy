@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.uml.aggregation.a.TranfficCalculator;
 import com.yline.test.BaseTestActivity;
 
 public class AggregationActivity extends BaseTestActivity {
@@ -21,6 +22,11 @@ public class AggregationActivity extends BaseTestActivity {
 
     @Override
     public void testStart(View view, Bundle savedInstanceState) {
-
+        addButton("StyleA - 全局参数传入", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TranfficCalculator().caculatePrice(10);
+            }
+        });
     }
 }

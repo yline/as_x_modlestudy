@@ -1,6 +1,4 @@
-package com.dm.strategy.activity;
-
-import com.dm.strategy.Strategy;
+package com.uml.aggregation.a;
 
 public class TranfficCalculator {
     private Strategy mCaculateStrategy;

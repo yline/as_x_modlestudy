@@ -9,9 +9,10 @@
 
 聚合：Aggregation，生命周期不一致
 
+
 继承：Inheritance，extends
 继承在Java中体现为 extends 实体类或抽象类
 
-依赖：Dependency，使用其它类的 常量或静态方法
+依赖：Dependency，使用其它类的 常量或静态方法或作为局部变量使用
 
 
