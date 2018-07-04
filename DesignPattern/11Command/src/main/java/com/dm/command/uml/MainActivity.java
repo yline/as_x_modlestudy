@@ -11,31 +11,24 @@ import com.dm.command.uml.receiver.Receiver;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
 
-public class MainActivity extends BaseActivity
-{
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+public class MainActivity extends BaseActivity {
 
-		findViewById(R.id.btn_action).setOnClickListener(new View.OnClickListener()
-		{
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-			@Override
-			public void onClick(View v)
-			{
-				LogFileUtil.v(MainApplication.TAG, "onClick btn_action");
+        findViewById(R.id.btn_action).setOnClickListener(new View.OnClickListener() {
 
-				Receiver receiver = new Receiver();
+            @Override
+            public void onClick(View v) {
+                LogFileUtil.v(MainApplication.TAG, "onClick btn_action");
 
-				ICommand iCommand = new ConcreteCommand(receiver);
-
-				Invoker invoker = new Invoker(iCommand);
-
-				invoker.action();
-			}
-		});
-	}
+                Receiver receiver = new Receiver();
+                ICommand iCommand = new ConcreteCommand(receiver);
+                Invoker invoker = new Invoker(iCommand);
+                invoker.action();
+            }
+        });
+    }
 }
