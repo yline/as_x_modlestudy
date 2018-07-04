@@ -2,11 +2,16 @@
 组合也是一种引用关系；它强调两个类之间整体和局部关系，并且暗示两个类之间有相同的生命周期
 
 实现：Realization，implement
-实现在Java中体现为implements接口
+实现就是实现定义的接口协议，通常使用implements关键字
 
 引用：Association，即：关联，依赖注入(set)  ||  调用方法获取(非new)
-
+引用表示，某个对象用到了一个其他对象的方法或属性。通常并不会在内部自己创建其他对象，而是传入的
 
 聚合：Aggregation，生命周期不一致
+
 继承：Inheritance，extends
+继承在Java中体现为 extends 实体类或抽象类
+
 依赖：Dependency，使用其它类的 常量或静态方法
+
+

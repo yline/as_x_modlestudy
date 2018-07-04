@@ -20,6 +20,8 @@
         <activity android:name=".composition.CompositionActivity" />
         <activity android:name=".realization.RealizationActivity" />
         <activity android:name=".assocation.AssocationActivity" />
+        <activity android:name=".aggregation.AggregationActivity" />
+        <activity android:name=".dependency.DependencyActivity" />
     </application>
 
 </manifest>

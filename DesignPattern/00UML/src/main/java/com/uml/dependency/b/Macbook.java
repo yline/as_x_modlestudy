@@ -1,14 +1,11 @@
-package com.dm.builder.product;
+package com.uml.dependency.b;
 
-// 计算机抽象类,即 Product角色
-public abstract class Computer {
-    protected String mBoard;
+public class Macbook {
+    private String mBoard;
+    private String mDisplay;
+    private String mOS;
 
-    protected String mDisplay;
-
-    protected String mOS;
-
-    protected Computer() {
+    public Macbook() {
     }
 
     // 设置CPU核心数
@@ -22,7 +19,9 @@ public abstract class Computer {
     }
 
     // 设置操作系统
-    public abstract void setOS();
+    public void setOS() {
+        mOS = "Mac OS X 10.10";
+    }
 
     @Override
     public String toString() {
