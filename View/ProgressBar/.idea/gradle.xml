@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CircularProgressView" />
             <option value="$PROJECT_DIR$/LineProgressBar" />
             <option value="$PROJECT_DIR$/RatingBar" />
           </set>
