@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="WheelPicker">
-        <attr name="wheel_data" format="reference" />
         <attr name="wheel_selected_item_position" format="integer" />
         <attr name="wheel_item_text_size" format="dimension" />
         <attr name="wheel_item_text_color" format="color" />

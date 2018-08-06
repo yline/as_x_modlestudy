@@ -19,7 +19,7 @@ import java.util.Map;
  * @author AigeStudio 2016-07-12
  * @version 1
  */
-public class WheelDayPicker extends WheelPicker {
+public class WheelDayPicker extends WheelPicker<Integer> {
     private static final Map<Integer, List<Integer>> DAYS = new HashMap<>();
 
     private Calendar mCalendar;

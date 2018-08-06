@@ -9,6 +9,7 @@ import com.view.wheel.R;
 import com.wheel.lib.WheelPicker;
 import com.yline.application.SDKManager;
 import com.yline.base.BaseAppCompatActivity;
+import com.yline.test.StrConstant;
 
 /**
  * 单个轮播器
@@ -17,27 +18,28 @@ import com.yline.base.BaseAppCompatActivity;
  * @version 1.0.0
  */
 public class SingleActivity extends BaseAppCompatActivity {
-    public static void launcher(Context context) {
-        if (null != context) {
-            Intent intent = new Intent(context, SingleActivity.class);
-            if (!(context instanceof Activity)) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            }
-            context.startActivity(intent);
-        }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single);
-
-        WheelPicker wheelPicker = findViewById(R.id.single_wheel_picker);
-        wheelPicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(WheelPicker picker, Object data, int position) {
-                SDKManager.toast("select:" + String.valueOf(data));
-            }
-        });
-    }
+	public static void launcher(Context context) {
+		if (null != context) {
+			Intent intent = new Intent(context, SingleActivity.class);
+			if (!(context instanceof Activity)) {
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			}
+			context.startActivity(intent);
+		}
+	}
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_single);
+		
+		WheelPicker<String> wheelPicker = findViewById(R.id.single_wheel_picker);
+		wheelPicker.setData(StrConstant.getListEnglish(10));
+		wheelPicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener<String>() {
+			@Override
+			public void onItemSelected(WheelPicker picker, String data, int position) {
+				SDKManager.toast("select:" + data);
+			}
+		});
+	}
 }
