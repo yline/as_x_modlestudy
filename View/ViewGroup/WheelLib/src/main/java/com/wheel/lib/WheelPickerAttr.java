@@ -14,12 +14,7 @@ import java.util.List;
  * @author yline 2018/3/5 -- 13:07
  * @version 1.0.0
  */
-public class WheelPickerAttr<T> {
-	/**
-	 * 数据源
-	 */
-	private List<T> data;
-	
+public class WheelPickerAttr {
 	/**
 	 * 数据项文本尺寸
 	 */
@@ -126,22 +121,6 @@ public class WheelPickerAttr<T> {
 		isCurved = a.getBoolean(R.styleable.WheelPicker_wheel_curved, false);
 		itemAlign = a.getInt(R.styleable.WheelPicker_wheel_item_align, WheelPicker.ALIGN_CENTER);
 		a.recycle();
-	}
-	
-	public List<T> getData() {
-		return data;
-	}
-	
-	public int getDataSize() {
-		return (null == data ? 0 : data.size());
-	}
-	
-	public T getData(int index) {
-		return data.get(index);
-	}
-	
-	public void setData(List<T> data) {
-		this.data = data;
 	}
 	
 	public int getItemTextSize() {
@@ -295,7 +274,7 @@ public class WheelPickerAttr<T> {
 	 * @param dpValue dp
 	 * @return px
 	 */
-	public static int dp2px(Context context, float dpValue) {
+	private static int dp2px(Context context, float dpValue) {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, context.getResources().getDisplayMetrics());
 	}
 	
@@ -306,7 +285,7 @@ public class WheelPickerAttr<T> {
 	 * @param spValue sp
 	 * @return px
 	 */
-	public static int sp2px(Context context, float spValue) {
+	private static int sp2px(Context context, float spValue) {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, context.getResources().getDisplayMetrics());
 	}
 }

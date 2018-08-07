@@ -85,8 +85,7 @@ public class WheelDatePicker extends LinearLayout implements IDebug {
 	}
 	
 	private void setMaximumWidthTextYear() {
-		List years = mPickerYear.getData();
-		String lastYear = String.valueOf(years.get(years.size() - 1));
+		String lastYear = mPickerYear.getDataValue(mPickerYear.getCount() - 1);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < lastYear.length(); i++) {
 			sb.append("0");

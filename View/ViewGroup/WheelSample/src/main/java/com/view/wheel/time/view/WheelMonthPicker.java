@@ -17,7 +17,7 @@ import java.util.List;
  * @author AigeStudio 2016-07-12
  * @version 1
  */
-public class WheelMonthPicker extends WheelPicker<Integer> {
+public class WheelMonthPicker extends WheelPicker {
     private int mSelectedMonth;
 
     public WheelMonthPicker(Context context) {
@@ -51,6 +51,6 @@ public class WheelMonthPicker extends WheelPicker<Integer> {
     }
 
     public int getCurrentMonth() {
-        return Integer.valueOf(String.valueOf(getData().get(getCurrentItemPosition())));
+        return Integer.valueOf(String.valueOf(getDataValue(getCurrentItemPosition())));
     }
 }

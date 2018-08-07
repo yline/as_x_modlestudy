@@ -17,7 +17,7 @@ import java.util.List;
  * @author AigeStudio 2016-07-12
  * @version 1
  */
-public class WheelYearPicker extends WheelPicker<Integer> {
+public class WheelYearPicker extends WheelPicker {
 	private int mYearStart = 1000, mYearEnd = 3000;
 	
 	private int mSelectedYear;
@@ -84,6 +84,6 @@ public class WheelYearPicker extends WheelPicker<Integer> {
 	}
 	
 	public int getCurrentYear() {
-		return Integer.valueOf(String.valueOf(getData().get(getCurrentItemPosition())));
+		return Integer.valueOf(String.valueOf(getDataValue(getCurrentItemPosition())));
 	}
 }

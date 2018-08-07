@@ -22,18 +22,12 @@ import java.util.List;
 
 /**
  * 滚轮选择器
- * WheelPicker
+ * 1，Adapter数据类型不指定，若出现数据对应不上的问题，上层使用的问题
+ * 2，默认显示的是对应的Object.toString()方法
  *
  * @version 1.1.0
  */
-public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Runnable {
-	/**
-	 * 滚动状态标识值
-	 *
-	 * @see OnWheelChangeListener#onWheelScrollStateChanged(int)
-	 */
-	public static final int SCROLL_STATE_IDLE = 0, SCROLL_STATE_DRAGGING = 1, SCROLL_STATE_SCROLLING = 2;
-	
+public class WheelPicker extends View implements IDebug, IWheelPicker, Runnable {
 	/**
 	 * 数据项对齐方式标识值
 	 *
@@ -50,15 +44,6 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	private Scroller mScroller;
 	
 	private VelocityTracker mTracker;
-	
-	/**
-	 * 相关监听器
-	 *
-	 * @see OnWheelChangeListener,OnItemSelectedListener
-	 */
-	private OnItemSelectedListener<T> mOnItemSelectedListener;
-	
-	private OnWheelChangeListener<T> mOnWheelChangeListener;
 	
 	private Rect mRectDrawn;
 	
@@ -156,7 +141,9 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	
 	private boolean isDebug;
 	
-	private WheelPickerAttr<T> mAttrHelper;
+	private WheelPickerAttr mPickerAttr;
+	
+	private WheelPickerAdapter mPickerAdapter;
 	
 	public WheelPicker(Context context) {
 		this(context, null);
@@ -165,14 +152,15 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	public WheelPicker(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		
-		mAttrHelper = new WheelPickerAttr<>(context, attrs);
+		mPickerAttr = new WheelPickerAttr(context, attrs);
+		mPickerAdapter = new WheelPickerAdapter<>();
 		
 		// 可见数据项改变后更新与之相关的参数
 		// Update relevant parameters when the count of visible item changed
 		updateVisibleItemCount();
 		
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG | Paint.LINEAR_TEXT_FLAG);
-		mPaint.setTextSize(mAttrHelper.getItemTextSize());
+		mPaint.setTextSize(mPickerAttr.getItemTextSize());
 		
 		// 更新文本对齐方式 Update alignment of text
 		updateItemTextAlign();
@@ -201,30 +189,30 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	}
 	
 	private void updateVisibleItemCount() {
-		if (mAttrHelper.getVisibleItemCount() < 2) {
+		if (mPickerAttr.getVisibleItemCount() < 2) {
 			throw new ArithmeticException("Wheel's visible item count can not be less than 2!");
 		}
 		
 		// 确保滚轮选择器可见数据项数量为奇数
 		// Be sure count of visible item is odd number
-		if (mAttrHelper.getVisibleItemCount() % 2 == 0) {
-			mAttrHelper.setVisibleItemCount(mAttrHelper.getVisibleItemCount() + 1);
+		if (mPickerAttr.getVisibleItemCount() % 2 == 0) {
+			mPickerAttr.setVisibleItemCount(mPickerAttr.getVisibleItemCount() + 1);
 		}
-		mDrawnItemCount = mAttrHelper.getVisibleItemCount() + 2;
+		mDrawnItemCount = mPickerAttr.getVisibleItemCount() + 2;
 		mHalfDrawnItemCount = mDrawnItemCount / 2;
 	}
 	
 	private void computeTextSize() {
 		mTextMaxWidth = mTextMaxHeight = 0;
-		if (mAttrHelper.isHasSameWidth()) {
-			mTextMaxWidth = (int) mPaint.measureText(valueOf(mAttrHelper.getData(0)));
-		} else if (isPosInRang(mAttrHelper.getTextMaxWidthPosition())) {
-			mTextMaxWidth = (int) mPaint.measureText(valueOf(mAttrHelper.getData(mAttrHelper.getTextMaxWidthPosition())));
-		} else if (!TextUtils.isEmpty(mAttrHelper.getMaxWidthText())) {
-			mTextMaxWidth = (int) mPaint.measureText(mAttrHelper.getMaxWidthText());
+		if (mPickerAttr.isHasSameWidth()) {
+			mTextMaxWidth = (int) mPaint.measureText(mPickerAdapter.getDataValue(0));
+		} else if (isPosInRang(mPickerAttr.getTextMaxWidthPosition())) {
+			mTextMaxWidth = (int) mPaint.measureText(mPickerAdapter.getDataValue(mPickerAttr.getTextMaxWidthPosition()));
+		} else if (!TextUtils.isEmpty(mPickerAttr.getMaxWidthText())) {
+			mTextMaxWidth = (int) mPaint.measureText(mPickerAttr.getMaxWidthText());
 		} else {
-			for (T data : mAttrHelper.getData()) {
-				String text = valueOf(data);
+			for (int i = 0; i < mPickerAdapter.getCount(); i++) {
+				String text = mPickerAdapter.getDataValue(i);
 				int width = (int) mPaint.measureText(text);
 				mTextMaxWidth = Math.max(mTextMaxWidth, width);
 			}
@@ -234,7 +222,7 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	}
 	
 	private void updateItemTextAlign() {
-		switch (mAttrHelper.getItemAlign()) {
+		switch (mPickerAttr.getItemAlign()) {
 			case ALIGN_LEFT:
 				mPaint.setTextAlign(Paint.Align.LEFT);
 				break;
@@ -258,11 +246,11 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 		// 计算原始内容尺寸
 		// Correct sizes of original content
 		int resultWidth = mTextMaxWidth;
-		int resultHeight = mTextMaxHeight * mAttrHelper.getVisibleItemCount() + mAttrHelper.getItemSpace() * (mAttrHelper.getVisibleItemCount() - 1);
+		int resultHeight = mTextMaxHeight * mPickerAttr.getVisibleItemCount() + mPickerAttr.getItemSpace() * (mPickerAttr.getVisibleItemCount() - 1);
 		
 		// 如果开启弯曲效果则需要重新计算弯曲后的尺寸
 		// Correct view sizes again if curved is enable
-		if (mAttrHelper.isCurved()) {
+		if (mPickerAttr.isCurved()) {
 			resultHeight = (int) (2 * resultHeight / Math.PI);
 		}
 		if (isDebug) {
@@ -318,7 +306,7 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 		
 		mHalfWheelHeight = mRectDrawn.height() / 2;
 		
-		mItemHeight = mRectDrawn.height() / mAttrHelper.getVisibleItemCount();
+		mItemHeight = mRectDrawn.height() / mPickerAttr.getVisibleItemCount();
 		mHalfItemHeight = mItemHeight / 2;
 		
 		// 初始化滑动最大坐标
@@ -335,7 +323,7 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	}
 	
 	private void computeDrawnCenter() {
-		switch (mAttrHelper.getItemAlign()) {
+		switch (mPickerAttr.getItemAlign()) {
 			case ALIGN_LEFT:
 				mDrawnCenterX = mRectDrawn.left;
 				break;
@@ -350,16 +338,16 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	}
 	
 	private void computeFlingLimitY() {
-		int currentItemOffset = mAttrHelper.getSelectedItemPosition() * mItemHeight;
-		mMinFlingY = mAttrHelper.isCyclic() ? Integer.MIN_VALUE : -mItemHeight * (mAttrHelper.getDataSize() - 1) + currentItemOffset;
-		mMaxFlingY = mAttrHelper.isCyclic() ? Integer.MAX_VALUE : currentItemOffset;
+		int currentItemOffset = mPickerAttr.getSelectedItemPosition() * mItemHeight;
+		mMinFlingY = mPickerAttr.isCyclic() ? Integer.MIN_VALUE : -mItemHeight * (mPickerAdapter.getCount() - 1) + currentItemOffset;
+		mMaxFlingY = mPickerAttr.isCyclic() ? Integer.MAX_VALUE : currentItemOffset;
 	}
 	
 	private void computeIndicatorRect() {
-		if (!mAttrHelper.isHasIndicator()) {
+		if (!mPickerAttr.isHasIndicator()) {
 			return;
 		}
-		int halfIndicatorSize = mAttrHelper.getIndicatorSize() / 2;
+		int halfIndicatorSize = mPickerAttr.getIndicatorSize() / 2;
 		int indicatorHeadCenterY = mWheelCenterY + mHalfItemHeight;
 		int indicatorFootCenterY = mWheelCenterY - mHalfItemHeight;
 		mRectIndicatorHead.set(mRectDrawn.left, indicatorHeadCenterY - halfIndicatorSize, mRectDrawn.right, indicatorHeadCenterY + halfIndicatorSize);
@@ -367,7 +355,7 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	}
 	
 	private void computeCurrentItemRect() {
-		if (!mAttrHelper.isHasCurtain() && mAttrHelper.getSelectedItemTextColor() == -1) {
+		if (!mPickerAttr.isHasCurtain() && mPickerAttr.getSelectedItemTextColor() == -1) {
 			return;
 		}
 		mRectCurrentItem.set(mRectDrawn.left, mWheelCenterY - mHalfItemHeight, mRectDrawn.right, mWheelCenterY + mHalfItemHeight);
@@ -375,27 +363,26 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		if (null != mOnWheelChangeListener) {
-			mOnWheelChangeListener.onWheelScrolled(mScrollOffsetY);
-		}
+		mPickerAdapter.callWheelScrolled(mScrollOffsetY);
+		
 		int drawnDataStartPos = -mScrollOffsetY / mItemHeight - mHalfDrawnItemCount;
-		for (int drawnDataPos = drawnDataStartPos + mAttrHelper.getSelectedItemPosition(), drawnOffsetPos = -mHalfDrawnItemCount; drawnDataPos < drawnDataStartPos + mAttrHelper.getSelectedItemPosition() + mDrawnItemCount; drawnDataPos++, drawnOffsetPos++) {
+		for (int drawnDataPos = drawnDataStartPos + mPickerAttr.getSelectedItemPosition(), drawnOffsetPos = -mHalfDrawnItemCount; drawnDataPos < drawnDataStartPos + mPickerAttr.getSelectedItemPosition() + mDrawnItemCount; drawnDataPos++, drawnOffsetPos++) {
 			String data = "";
-			if (mAttrHelper.isCyclic()) {
-				int actualPos = drawnDataPos % mAttrHelper.getDataSize();
-				actualPos = actualPos < 0 ? (actualPos + mAttrHelper.getDataSize()) : actualPos;
-				data = valueOf(mAttrHelper.getData(actualPos));
+			if (mPickerAttr.isCyclic()) {
+				int actualPos = drawnDataPos % mPickerAdapter.getCount();
+				actualPos = actualPos < 0 ? (actualPos + mPickerAdapter.getCount()) : actualPos;
+				data = mPickerAdapter.getDataValue(actualPos);
 			} else {
 				if (isPosInRang(drawnDataPos)) {
-					data = valueOf(mAttrHelper.getData(drawnDataPos));
+					data = mPickerAdapter.getDataValue(drawnDataPos);
 				}
 			}
-			mPaint.setColor(mAttrHelper.getItemTextColor());
+			mPaint.setColor(mPickerAttr.getItemTextColor());
 			mPaint.setStyle(Paint.Style.FILL);
 			int mDrawnItemCenterY = mDrawnCenterY + (drawnOffsetPos * mItemHeight) + mScrollOffsetY % mItemHeight;
 			
 			int distanceToCenter = 0;
-			if (mAttrHelper.isCurved()) {
+			if (mPickerAttr.isCurved()) {
 				// 计算数据项绘制中心距离滚轮中心的距离比率
 				// Correct ratio of item's drawn center to wheel center
 				float ratio = (mDrawnCenterY - Math.abs(mDrawnCenterY - mDrawnItemCenterY) - mRectDrawn.top) * 1.0F / (mDrawnCenterY - mRectDrawn.top);
@@ -419,7 +406,7 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 				distanceToCenter = computeSpace((int) degree);
 				
 				int transX = mWheelCenterX;
-				switch (mAttrHelper.getItemAlign()) {
+				switch (mPickerAttr.getItemAlign()) {
 					case ALIGN_LEFT:
 						transX = mRectDrawn.left;
 						break;
@@ -447,29 +434,29 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 				
 				mMatrixRotate.postConcat(mMatrixDepth);
 			}
-			if (mAttrHelper.isHasAtmospheric()) {
+			if (mPickerAttr.isHasAtmospheric()) {
 				int alpha = (int) ((mDrawnCenterY - Math.abs(mDrawnCenterY - mDrawnItemCenterY)) * 1.0F / mDrawnCenterY * 255);
 				alpha = alpha < 0 ? 0 : alpha;
 				mPaint.setAlpha(alpha);
 			}
 			// 根据卷曲与否计算数据项绘制Y方向中心坐标
 			// Correct item's drawn centerY base on curved state
-			int drawnCenterY = mAttrHelper.isCurved() ? mDrawnCenterY - distanceToCenter : mDrawnItemCenterY;
+			int drawnCenterY = mPickerAttr.isCurved() ? mDrawnCenterY - distanceToCenter : mDrawnItemCenterY;
 			
 			// 判断是否需要为当前数据项绘制不同颜色
 			// Judges need to draw different color for current item or not
-			if (mAttrHelper.getSelectedItemTextColor() != -1) {
+			if (mPickerAttr.getSelectedItemTextColor() != -1) {
 				canvas.save();
-				if (mAttrHelper.isCurved()) {
+				if (mPickerAttr.isCurved()) {
 					canvas.concat(mMatrixRotate);
 				}
 				canvas.clipRect(mRectCurrentItem, Region.Op.DIFFERENCE);
 				canvas.drawText(data, mDrawnCenterX, drawnCenterY, mPaint);
 				canvas.restore();
 				
-				mPaint.setColor(mAttrHelper.getSelectedItemTextColor());
+				mPaint.setColor(mPickerAttr.getSelectedItemTextColor());
 				canvas.save();
-				if (mAttrHelper.isCurved()) {
+				if (mPickerAttr.isCurved()) {
 					canvas.concat(mMatrixRotate);
 				}
 				canvas.clipRect(mRectCurrentItem);
@@ -478,7 +465,7 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 			} else {
 				canvas.save();
 				canvas.clipRect(mRectDrawn);
-				if (mAttrHelper.isCurved()) {
+				if (mPickerAttr.isCurved()) {
 					canvas.concat(mMatrixRotate);
 				}
 				canvas.drawText(data, mDrawnCenterX, drawnCenterY, mPaint);
@@ -499,15 +486,15 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 		}
 		// 是否需要绘制幕布
 		// Need to draw curtain or not
-		if (mAttrHelper.isHasCurtain()) {
-			mPaint.setColor(mAttrHelper.getCurtainColor());
+		if (mPickerAttr.isHasCurtain()) {
+			mPaint.setColor(mPickerAttr.getCurtainColor());
 			mPaint.setStyle(Paint.Style.FILL);
 			canvas.drawRect(mRectCurrentItem, mPaint);
 		}
 		// 是否需要绘制指示器
 		// Need to draw indicator or not
-		if (mAttrHelper.isHasIndicator()) {
-			mPaint.setColor(mAttrHelper.getIndicatorColor());
+		if (mPickerAttr.isHasIndicator()) {
+			mPaint.setColor(mPickerAttr.getIndicatorColor());
 			mPaint.setStyle(Paint.Style.FILL);
 			canvas.drawRect(mRectIndicatorHead, mPaint);
 			canvas.drawRect(mRectIndicatorFoot, mPaint);
@@ -523,7 +510,7 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	}
 	
 	private boolean isPosInRang(int position) {
-		return position >= 0 && position < mAttrHelper.getDataSize();
+		return position >= 0 && position < mPickerAdapter.getCount();
 	}
 	
 	private int computeSpace(int degree) {
@@ -560,9 +547,7 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 				}
 				isClick = false;
 				mTracker.addMovement(event);
-				if (null != mOnWheelChangeListener) {
-					mOnWheelChangeListener.onWheelScrollStateChanged(SCROLL_STATE_DRAGGING);
-				}
+				mPickerAdapter.callWheelScrollStateChanged(WheelPickerAdapter.SCROLL_STATE_DRAGGING);
 				
 				// 滚动内容
 				// Scroll WheelPicker's content
@@ -597,7 +582,7 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 				}
 				// 校正坐标
 				// Correct coordinates
-				if (!mAttrHelper.isCyclic()) {
+				if (!mPickerAttr.isCyclic()) {
 					if (mScroller.getFinalY() > mMaxFlingY) {
 						mScroller.setFinalY(mMaxFlingY);
 					} else if (mScroller.getFinalY() < mMinFlingY) {
@@ -639,31 +624,26 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	
 	@Override
 	public void run() {
-		if (null == mAttrHelper.getData() || mAttrHelper.getDataSize() == 0) {
+		if (mPickerAdapter.getCount() == 0) {
 			return;
 		}
 		if (mScroller.isFinished() && !isForceFinishScroll) {
 			if (mItemHeight == 0) {
 				return;
 			}
-			int position = (-mScrollOffsetY / mItemHeight + mAttrHelper.getSelectedItemPosition()) % mAttrHelper.getDataSize();
-			position = position < 0 ? position + mAttrHelper.getDataSize() : position;
+			int position = (-mScrollOffsetY / mItemHeight + mPickerAttr.getSelectedItemPosition()) % mPickerAdapter.getCount();
+			position = position < 0 ? position + mPickerAdapter.getCount() : position;
 			if (isDebug) {
-				Log.i(TAG, position + ":" + mAttrHelper.getData(position) + ":" + mScrollOffsetY);
+				Log.i(TAG, position + ":" + mPickerAdapter.getDataValue(position) + ":" + mScrollOffsetY);
 			}
 			mCurrentItemPosition = position;
-			if (null != mOnItemSelectedListener) {
-				mOnItemSelectedListener.onItemSelected(this, mAttrHelper.getData(position), position);
-			}
-			if (null != mOnWheelChangeListener) {
-				mOnWheelChangeListener.onWheelSelected(mAttrHelper.getData(position), position);
-				mOnWheelChangeListener.onWheelScrollStateChanged(SCROLL_STATE_IDLE);
-			}
+			
+			mPickerAdapter.callItemSelected(this, position);
+			mPickerAdapter.callWheelSelected(position);
+			mPickerAdapter.callWheelScrollStateChanged(WheelPickerAdapter.SCROLL_STATE_IDLE);
 		}
 		if (mScroller.computeScrollOffset()) {
-			if (null != mOnWheelChangeListener) {
-				mOnWheelChangeListener.onWheelScrollStateChanged(SCROLL_STATE_SCROLLING);
-			}
+			mPickerAdapter.callWheelScrollStateChanged(WheelPickerAdapter.SCROLL_STATE_SCROLLING);
 			mScrollOffsetY = mScroller.getCurrY();
 			postInvalidate();
 			mHandler.postDelayed(this, 16);
@@ -678,16 +658,6 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	@Override
 	public int getCurrentItemPosition() {
 		return mCurrentItemPosition;
-	}
-	
-	@Override
-	public void setOnItemSelectedListener(OnItemSelectedListener<T> listener) {
-		mOnItemSelectedListener = listener;
-	}
-	
-	@Override
-	public void setOnWheelChangeListener(OnWheelChangeListener<T> listener) {
-		mOnWheelChangeListener = listener;
 	}
 	
 	@Override
@@ -708,40 +678,101 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 		invalidate();
 	}
 	
+	/**
+	 * 设置内容数据
+	 *
+	 * @param data 数据
+	 */
+	public void setData(List data) {
+		mPickerAdapter.setData(data);
+		notifyDataSetChanged();
+	}
+	
+	public String getDataValue(int position) {
+		return mPickerAdapter.getDataValue(position);
+	}
+	
+	public int getCount() {
+		return mPickerAdapter.getCount();
+	}
+	
+	/**
+	 * 设置自定义的Adapter，允许自定义实现valueOf
+	 *
+	 * @param pickerAdapter 数据适配
+	 */
+	public void setAdapter(WheelPickerAdapter pickerAdapter) {
+		this.mPickerAdapter = pickerAdapter;
+	}
+	
+	public void notifyDataSetChanged() {
+		// 重置位置
+		if (mPickerAttr.getSelectedItemPosition() > mPickerAdapter.getCount() - 1 || mCurrentItemPosition > mPickerAdapter.getCount() - 1) {
+			mCurrentItemPosition = mPickerAdapter.getCount() - 1;
+			mPickerAttr.setSelectedItemPosition(mCurrentItemPosition);
+		} else {
+			mPickerAttr.setSelectedItemPosition(mCurrentItemPosition);
+		}
+		mScrollOffsetY = 0;
+		computeTextSize();
+		computeFlingLimitY();
+		requestLayout();
+		invalidate();
+	}
+	
+	/**
+	 * 设置滚轮Item选中监听器
+	 *
+	 * @param listener 滚轮Item选中监听器{@link OnItemSelectedListener}
+	 */
+	public void setOnItemSelectedListener(OnItemSelectedListener listener) {
+		mPickerAdapter.setOnItemSelectedListener(listener);
+	}
+	
+	/**
+	 * 设置滚轮滚动状态改变监听器
+	 *
+	 * @param listener 滚轮滚动状态改变监听器
+	 * @see OnWheelChangeListener
+	 */
+	public void setOnWheelChangeListener(OnWheelChangeListener listener) {
+		mPickerAdapter.setOnWheelChangeListener(listener);
+	}
+	
 	/******************************************* 以下是Attr 的set、get方法 ************************************************/
 	@Override
 	public int getVisibleItemCount() {
-		return mAttrHelper.getVisibleItemCount();
+		return mPickerAttr.getVisibleItemCount();
 	}
 	
 	@Override
 	public void setVisibleItemCount(int count) {
-		mAttrHelper.setVisibleItemCount(count);
+		mPickerAttr.setVisibleItemCount(count);
 		updateVisibleItemCount();
 		requestLayout();
 	}
 	
 	@Override
 	public boolean isCyclic() {
-		return mAttrHelper.isCyclic();
+		return mPickerAttr.isCyclic();
 	}
 	
 	@Override
 	public void setCyclic(boolean isCyclic) {
-		mAttrHelper.setCyclic(isCyclic);
+		mPickerAttr.setCyclic(isCyclic);
 		computeFlingLimitY();
 		invalidate();
 	}
 	
 	@Override
 	public int getSelectedItemPosition() {
-		return mAttrHelper.getSelectedItemPosition();
+		return mPickerAttr.getSelectedItemPosition();
 	}
 	
 	@Override
 	public void setSelectedItemPosition(int position) {
-		mAttrHelper.setSelectedItemPosition(position);
-		position = Math.min(position, mAttrHelper.getDataSize() - 1);
+		mPickerAttr.setSelectedItemPosition(position);
+		position = Math.min(position, mPickerAdapter.getCount() - 1);
 		position = Math.max(position, 0);
 		mCurrentItemPosition = position;
 		mScrollOffsetY = 0;
@@ -751,34 +782,8 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	}
 	
 	@Override
-	public List<T> getData() {
-		return mAttrHelper.getData();
-	}
-	
-	@Override
-	public void setData(List<T> data) {
-		if (null == data) {
-			throw new NullPointerException("WheelPicker's data can not be null!");
-		}
-		mAttrHelper.setData(data);
-		
-		// 重置位置
-		if (mAttrHelper.getSelectedItemPosition() > data.size() - 1 || mCurrentItemPosition > data.size() - 1) {
-			mCurrentItemPosition = data.size() - 1;
-			mAttrHelper.setSelectedItemPosition(mCurrentItemPosition);
-		} else {
-			mAttrHelper.setSelectedItemPosition(mCurrentItemPosition);
-		}
-		mScrollOffsetY = 0;
-		computeTextSize();
-		computeFlingLimitY();
-		requestLayout();
-		invalidate();
-	}
-	
-	@Override
 	public void setSameWidth(boolean hasSameWidth) {
-		mAttrHelper.setHasSameWidth(hasSameWidth);
+		mPickerAttr.setHasSameWidth(hasSameWidth);
 		computeTextSize();
 		requestLayout();
 		invalidate();
@@ -786,12 +791,12 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	
 	@Override
 	public boolean hasSameWidth() {
-		return mAttrHelper.isHasSameWidth();
+		return mPickerAttr.isHasSameWidth();
 	}
 	
 	@Override
 	public String getMaximumWidthText() {
-		return mAttrHelper.getMaxWidthText();
+		return mPickerAttr.getMaxWidthText();
 	}
 	
 	@Override
@@ -799,7 +804,7 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 		if (null == text) {
 			throw new NullPointerException("Maximum width text can not be null!");
 		}
-		mAttrHelper.setMaxWidthText(text);
+		mPickerAttr.setMaxWidthText(text);
 		computeTextSize();
 		requestLayout();
 		invalidate();
@@ -807,15 +812,15 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	
 	@Override
 	public int getMaximumWidthTextPosition() {
-		return mAttrHelper.getTextMaxWidthPosition();
+		return mPickerAttr.getTextMaxWidthPosition();
 	}
 	
 	@Override
 	public void setMaximumWidthTextPosition(int position) {
 		if (!isPosInRang(position)) {
-			throw new ArrayIndexOutOfBoundsException("Maximum width text Position must in [0, " + mAttrHelper.getDataSize() + "), but current is " + position);
+			throw new ArrayIndexOutOfBoundsException("Maximum width text Position must in [0, " + mPickerAdapter.getCount() + "), but current is " + position);
 		}
-		mAttrHelper.setTextMaxWidthPosition(position);
+		mPickerAttr.setTextMaxWidthPosition(position);
 		computeTextSize();
 		requestLayout();
 		invalidate();
@@ -823,35 +828,35 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	
 	@Override
 	public int getSelectedItemTextColor() {
-		return mAttrHelper.getSelectedItemTextColor();
+		return mPickerAttr.getSelectedItemTextColor();
 	}
 	
 	@Override
 	public void setSelectedItemTextColor(int color) {
-		mAttrHelper.setSelectedItemTextColor(color);
+		mPickerAttr.setSelectedItemTextColor(color);
 		computeCurrentItemRect();
 		invalidate();
 	}
 	
 	@Override
 	public int getItemTextColor() {
-		return mAttrHelper.getItemTextColor();
+		return mPickerAttr.getItemTextColor();
 	}
 	
 	@Override
 	public void setItemTextColor(int color) {
-		mAttrHelper.setItemTextColor(color);
+		mPickerAttr.setItemTextColor(color);
 		invalidate();
 	}
 	
 	@Override
 	public int getItemTextSize() {
-		return mAttrHelper.getItemTextSize();
+		return mPickerAttr.getItemTextSize();
 	}
 	
 	@Override
 	public void setItemTextSize(int size) {
-		mAttrHelper.setItemTextSize(size);
+		mPickerAttr.setItemTextSize(size);
 		mPaint.setTextSize(size);
 		computeTextSize();
 		requestLayout();
@@ -860,120 +865,114 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	
 	@Override
 	public int getItemSpace() {
-		return mAttrHelper.getItemSpace();
+		return mPickerAttr.getItemSpace();
 	}
 	
 	@Override
 	public void setItemSpace(int space) {
-		mAttrHelper.setItemSpace(space);
+		mPickerAttr.setItemSpace(space);
 		requestLayout();
 		invalidate();
 	}
 	
 	@Override
 	public void setIndicator(boolean hasIndicator) {
-		mAttrHelper.setHasIndicator(hasIndicator);
+		mPickerAttr.setHasIndicator(hasIndicator);
 		computeIndicatorRect();
 		invalidate();
 	}
 	
 	@Override
 	public boolean hasIndicator() {
-		return mAttrHelper.isHasIndicator();
+		return mPickerAttr.isHasIndicator();
 	}
 	
 	@Override
 	public int getIndicatorSize() {
-		return mAttrHelper.getIndicatorSize();
+		return mPickerAttr.getIndicatorSize();
 	}
 	
 	@Override
 	public void setIndicatorSize(int size) {
-		mAttrHelper.setIndicatorSize(size);
+		mPickerAttr.setIndicatorSize(size);
 		computeIndicatorRect();
 		invalidate();
 	}
 	
 	@Override
 	public int getIndicatorColor() {
-		return mAttrHelper.getIndicatorColor();
+		return mPickerAttr.getIndicatorColor();
 	}
 	
 	@Override
 	public void setIndicatorColor(int color) {
-		mAttrHelper.setIndicatorColor(color);
+		mPickerAttr.setIndicatorColor(color);
 		invalidate();
 	}
 	
 	@Override
 	public void setCurtain(boolean hasCurtain) {
-		mAttrHelper.setHasCurtain(hasCurtain);
+		mPickerAttr.setHasCurtain(hasCurtain);
 		computeCurrentItemRect();
 		invalidate();
 	}
 	
 	@Override
 	public boolean hasCurtain() {
-		return mAttrHelper.isHasCurtain();
+		return mPickerAttr.isHasCurtain();
 	}
 	
 	@Override
 	public int getCurtainColor() {
-		return mAttrHelper.getCurtainColor();
+		return mPickerAttr.getCurtainColor();
 	}
 	
 	@Override
 	public void setCurtainColor(int color) {
-		mAttrHelper.setCurtainColor(color);
+		mPickerAttr.setCurtainColor(color);
 		invalidate();
 	}
 	
 	@Override
 	public void setAtmospheric(boolean hasAtmospheric) {
-		mAttrHelper.setHasAtmospheric(hasAtmospheric);
+		mPickerAttr.setHasAtmospheric(hasAtmospheric);
 		invalidate();
 	}
 	
 	@Override
 	public boolean hasAtmospheric() {
-		return mAttrHelper.isHasAtmospheric();
+		return mPickerAttr.isHasAtmospheric();
 	}
 	
 	@Override
 	public boolean isCurved() {
-		return mAttrHelper.isCurved();
+		return mPickerAttr.isCurved();
 	}
 	
 	@Override
 	public void setCurved(boolean isCurved) {
-		mAttrHelper.setCurved(isCurved);
+		mPickerAttr.setCurved(isCurved);
 		requestLayout();
 		invalidate();
 	}
 	
 	@Override
 	public int getItemAlign() {
-		return mAttrHelper.getItemAlign();
+		return mPickerAttr.getItemAlign();
 	}
 	
 	@Override
 	public void setItemAlign(int align) {
-		mAttrHelper.setItemAlign(align);
+		mPickerAttr.setItemAlign(align);
 		updateItemTextAlign();
 		computeDrawnCenter();
 		invalidate();
 	}
 	
-	@Override
-	public String valueOf(T t) {
-		return String.valueOf(t);
-	}
 	
 	/**
 	 * 滚轮选择器Item项被选中时监听接口
 	 *
-	 * @author AigeStudio 2016-06-17
-	 * 新项目结构
 	 * @version 1.1.0
 	 */
 	public interface OnItemSelectedListener<T> {
@@ -991,10 +990,6 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 	/**
 	 * 滚轮选择器滚动时监听接口
 	 *
-	 * @author AigeStudio 2016-06-17
-	 * 新项目结构
-	 * <p/>
-	 * New project structure
 	 * @since 2016-06-17
 	 */
 	public interface OnWheelChangeListener<T> {
@@ -1002,55 +997,38 @@ public class WheelPicker<T> extends View implements IDebug, IWheelPicker<T>, Run
 		 * 当滚轮选择器滚动时回调该方法
 		 * 滚轮选择器滚动时会将当前滚动位置与滚轮初始位置之间的偏移距离返回，该偏移距离有正负之分，正值表示
 		 * 滚轮正在往上滚动，负值则表示滚轮正在往下滚动
-		 * <p/>
-		 * Invoke when WheelPicker scroll stopped
-		 * WheelPicker will return a distance offset which between current scroll position and
-		 * initial position, this offset is a positive or a negative, positive means WheelPicker is
-		 * scrolling from bottom to top, negative means WheelPicker is scrolling from top to bottom
 		 *
 		 * @param offset 当前滚轮滚动距离上一次滚轮滚动停止后偏移的距离
-		 *               <p/>
-		 *               Distance offset which between current scroll position and initial position
 		 */
 		void onWheelScrolled(int offset);
 		
 		/**
 		 * 当滚轮选择器停止后回调该方法
 		 * 滚轮选择器停止后会回调该方法并将当前选中的数据项在数据列表中的位置返回
-		 * <p/>
-		 * Invoke when WheelPicker scroll stopped
-		 * This method will be called when WheelPicker stop and return current selected item data's
-		 * position in list
 		 *
 		 * @param t        当前选中的数据
 		 * @param position 当前选中的数据项在数据列表中的位置
-		 *                 <p/>
-		 *                 Current selected item data's position in list
 		 */
 		void onWheelSelected(T t, int position);
 		
 		/**
 		 * 当滚轮选择器滚动状态改变时回调该方法
 		 * 滚动选择器的状态总是会在静止、拖动和滑动三者之间切换，当状态改变时回调该方法
-		 * <p/>
-		 * Invoke when WheelPicker's scroll state changed
-		 * The state of WheelPicker always between idle, dragging, and scrolling, this method will
-		 * be called when they switch
 		 *
 		 * @param state 滚轮选择器滚动状态，其值仅可能为下列之一
-		 *              {@link WheelPicker#SCROLL_STATE_IDLE}
+		 *              {@link WheelPickerAdapter#SCROLL_STATE_IDLE}
 		 *              表示滚动选择器处于静止状态
-		 *              {@link WheelPicker#SCROLL_STATE_DRAGGING}
+		 *              {@link WheelPickerAdapter#SCROLL_STATE_DRAGGING}
 		 *              表示滚动选择器处于拖动状态
-		 *              {@link WheelPicker#SCROLL_STATE_SCROLLING}
+		 *              {@link WheelPickerAdapter#SCROLL_STATE_SCROLLING}
 		 *              表示滚动选择器处于滑动状态
 		 *              <p/>
 		 *              State of WheelPicker, only one of the following
-		 *              {@link WheelPicker#SCROLL_STATE_IDLE}
+		 *              {@link WheelPickerAdapter#SCROLL_STATE_IDLE}
 		 *              Express WheelPicker in state of idle
-		 *              {@link WheelPicker#SCROLL_STATE_DRAGGING}
+		 *              {@link WheelPickerAdapter#SCROLL_STATE_DRAGGING}
 		 *              Express WheelPicker in state of dragging
-		 *              {@link WheelPicker#SCROLL_STATE_SCROLLING}
+		 *              {@link WheelPickerAdapter#SCROLL_STATE_SCROLLING}
 		 *              Express WheelPicker in state of scrolling
 		 */
 		void onWheelScrollStateChanged(int state);

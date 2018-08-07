@@ -33,7 +33,7 @@ public class SingleActivity extends BaseAppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_single);
 		
-		WheelPicker<String> wheelPicker = findViewById(R.id.single_wheel_picker);
+		WheelPicker wheelPicker = findViewById(R.id.single_wheel_picker);
 		wheelPicker.setData(StrConstant.getListEnglish(10));
 		wheelPicker.setOnItemSelectedListener(new WheelPicker.OnItemSelectedListener<String>() {
 			@Override

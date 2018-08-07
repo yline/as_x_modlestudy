@@ -30,9 +30,9 @@ public class WheelAreaPicker extends LinearLayout {
 	
 	private LayoutParams mLayoutParams;
 	
-	private WheelPicker<Province> mProvinceWheelPicker;
-	private WheelPicker<City> mCityWheelPicker;
-	private WheelPicker<String> mAreaWheelPicker;
+	private WheelPicker mProvinceWheelPicker;
+	private WheelPicker mCityWheelPicker;
+	private WheelPicker mAreaWheelPicker;
 	
 	public WheelAreaPicker(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -47,19 +47,9 @@ public class WheelAreaPicker extends LinearLayout {
 		mLayoutParams.width = 0;
 		setOrientation(HORIZONTAL);
 		
-		mProvinceWheelPicker = new WheelPicker<Province>(context) {
-			@Override
-			public String valueOf(Province province) {
-				return province.getName();
-			}
-		};
-		mCityWheelPicker = new WheelPicker<City>(context) {
-			@Override
-			public String valueOf(City city) {
-				return city.getName();
-			}
-		};
-		mAreaWheelPicker = new WheelPicker<>(context);
+		mProvinceWheelPicker = new WheelPicker(context);
+		mCityWheelPicker = new WheelPicker(context);
+		mAreaWheelPicker = new WheelPicker(context);
 		
 		initWheelPicker(mProvinceWheelPicker, 1);
 		initWheelPicker(mCityWheelPicker, 1.5f);
@@ -120,20 +110,9 @@ public class WheelAreaPicker extends LinearLayout {
 	}
 	
 	private void setCityAndAreaData(int position) {
-		//		//获得该省所有城市的集合
-		//		mCityList = mProvinceList.get(position).getCity();
-		//		//获取所有city的名字
-		//		//重置先前的城市集合数据
-		//		mCityName.clear();
-		//		for (City city : mCityList) {
-		//			mCityName.add(city.getName());
-		//		}
-		//		mWPCity.setData(mCityName);
-		//		mWPCity.setSelectedItemPosition(0);
-		//		//获取第一个城市对应的城区的名字
-		//		//重置先前的城区集合的数据
-		//		mWPArea.setData(mCityList.get(0).getArea());
-		//		mWPArea.setSelectedItemPosition(0);
+		List<City> firstCityList = mProvinceList.get(position).getCity();
+		mCityWheelPicker.setData(firstCityList);
+		mAreaWheelPicker.setData(firstCityList.get(0).getArea());
 	}
 	
 	private int dip2px(Context context, float dpValue) {

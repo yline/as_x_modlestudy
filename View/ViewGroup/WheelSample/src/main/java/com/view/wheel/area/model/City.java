@@ -34,4 +34,9 @@ public class City implements Serializable {
     public void setArea(List<String> area) {
         this.area = area;
     }
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 }

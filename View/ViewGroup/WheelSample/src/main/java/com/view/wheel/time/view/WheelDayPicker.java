@@ -19,7 +19,7 @@ import java.util.Map;
  * @author AigeStudio 2016-07-12
  * @version 1
  */
-public class WheelDayPicker extends WheelPicker<Integer> {
+public class WheelDayPicker extends WheelPicker {
     private static final Map<Integer, List<Integer>> DAYS = new HashMap<>();
 
     private Calendar mCalendar;
@@ -77,7 +77,7 @@ public class WheelDayPicker extends WheelPicker<Integer> {
     }
 
     public int getCurrentDay() {
-        return Integer.valueOf(String.valueOf(getData().get(getCurrentItemPosition())));
+        return Integer.valueOf(String.valueOf(getDataValue(getCurrentItemPosition())));
     }
 
     public void setYearAndMonth(int year, int month) {
