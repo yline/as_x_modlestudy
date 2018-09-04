@@ -67,6 +67,7 @@ class IntentActivity : BaseTestActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        LogUtil.v("onActivityResult requestCode = $requestCode, resultCode = $resultCode")
         LogUtil.v("onActivityResult data is null ? -> " + (data == null))
         if (null != data) {
             when (requestCode) {
