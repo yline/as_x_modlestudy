@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 背景 -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="5dp" />
+            <gradient
+                android:angle="270"
+                android:centerColor="#ff5a5d5a"
+                android:centerY="0.75"
+                android:endColor="#ff747674"
+                android:startColor="#ff9d9e9d" />
+        </shape>
+    </item>
+    <!-- 第二层 ClipDrawable 可以做进度裁剪 -->
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="5dp" />
+                <gradient
+                    android:angle="270"
+                    android:centerColor="#80FF6094"
+                    android:centerY="0.45"
+                    android:endColor="#80FF4081"
+                    android:startColor="#80FF70A1" />
+            </shape>
+        </clip>
+    </item>
+    <!-- 最上层 -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="5dp" />
+                <gradient
+                    android:angle="270"
+                    android:centerColor="#FF6094"
+                    android:centerY="0.45"
+                    android:endColor="#FF4081"
+                    android:startColor="#FF70A1" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

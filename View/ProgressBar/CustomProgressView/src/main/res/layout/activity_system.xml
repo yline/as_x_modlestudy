@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 测试环境 - Build-27, 虚拟机-Nexus 5X API 25, Android-7.1.1  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 圆形、小型、顺时针 -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- 圆形、小型、顺时针 -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleSmallInverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- 圆形、小型、顺时针 -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleSmallTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- 圆形、中型、顺时针 -->
+        <ProgressBar
+            style="?android:attr/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- 圆形、中型、顺时针 -->
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- 圆形、中型、顺时针 -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleInverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- 圆形、大型、顺时针 -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- 圆形、大型、顺时针 -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleLargeInverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- 条状形、小型 -->
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progress="30" />
+    </LinearLayout>
+</ScrollView>

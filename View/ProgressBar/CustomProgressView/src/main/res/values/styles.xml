@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -8,4 +8,52 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- 实现系统的（找寻方法：AppTheme -> 一层层下去 -> 关键字"progressBarStyleHorizontal"） -->
+    <!-- 找到的Horizontal实现 -->
+    <style name="progress_horizontal_system">
+        <!-- 主要内容[内容是，背景、第一层、第二层] -->
+        <item name="android:progressDrawable">@android:drawable/progress_horizontal</item>
+        <!-- 运动的drawable[内容是，三张图片，每张时长200ms]，可不要 -->
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
+        <!-- 是否只展示  indeterminateDrawable -->
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:minHeight">16dp</item>
+        <item name="android:maxHeight">16dp</item>
+        <item name="android:mirrorForRtl" tools:targetApi="jelly_bean_mr2">true</item>
+    </style>
+    <!-- 自定义 Horizontal 实现 -->
+    <style name="progress_horizontal_custom">
+        <item name="android:progressDrawable">@drawable/progress_horizontal</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:minHeight">16dp</item>
+        <item name="android:maxHeight">16dp</item>
+    </style>
+    <!-- 实现系统的方式，不断重复，间隔350，仅仅显示动画 -->
+    <style name="progress_circle_system">
+        <item name="android:indeterminateDrawable">@drawable/system_progress_medium_holo</item>
+        <item name="android:interpolator">@android:anim/accelerate_decelerate_interpolator</item>
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:indeterminateBehavior">repeat</item>
+        <item name="android:indeterminateDuration">3500</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:maxHeight">48dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:maxWidth">48dp</item>
+        <item name="android:mirrorForRtl" tools:targetApi="jelly_bean_mr2">false</item>
+    </style>
+
+    <style name="progress_circle_custom_one">
+        <item name="android:indeterminateDrawable">@drawable/progress_circle_one</item>
+        <item name="android:interpolator">@android:anim/accelerate_decelerate_interpolator</item>
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:indeterminateBehavior">repeat</item>
+        <item name="android:indeterminateDuration">3500</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:maxHeight">48dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:maxWidth">48dp</item>
+        <item name="android:mirrorForRtl" tools:targetApi="jelly_bean_mr2">false</item>
+    </style>
 </resources>
