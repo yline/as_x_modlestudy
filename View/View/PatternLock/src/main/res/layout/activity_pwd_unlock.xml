@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_unlock_hint"
+        android:id="@+id/pwd_unlock_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="请绘制手势密码"
+        android:layout_above="@+id/pwd_unlock_pattern"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/view_pattern_lock"
         android:layout_marginBottom="40dp"
         android:shadowRadius="1.0"
-        android:textSize="16sp"/>
+        android:text="请绘制手势密码"
+        android:textSize="16sp" />
 
     <com.view.pattern.lock.view.LockPatternView
-        android:id="@+id/view_pattern_lock"
+        android:id="@+id/pwd_unlock_pattern"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
 </RelativeLayout>

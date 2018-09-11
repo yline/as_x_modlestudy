@@ -3,11 +3,6 @@
 
     <!-- LockPatternView class attributes -->
     <declare-styleable name="LockPatternView">
-
-        <!--
-             Aspect to use when drawing LockPatternView. Choices are "square"(default), "lock_width"
-             or "lock_height"
-        -->
         <attr name="aspect">
             <enum name="square" value="0" />
             <enum name="lockWidth" value="1" />

@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gesture_background"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_create_hint"
+        android:id="@+id/pwd_create_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/view_pattern_create"
+        android:layout_above="@+id/pwd_create_pattern"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
-        android:shadowColor="#b3000000"
-        android:shadowRadius="1.0"
         android:text="绘制解锁图案"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"/>
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
 
     <com.view.pattern.lock.view.LockPatternView
-        android:id="@+id/view_pattern_create"
+        android:id="@+id/pwd_create_pattern"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +28,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_reset"
+            android:id="@+id/pwd_create_reset"
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
             android:layout_margin="15dip"
@@ -41,10 +37,10 @@
             android:gravity="center"
             android:text="重绘"
             android:textColor="@drawable/skin_color_button"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <Button
-            android:id="@+id/btn_right"
+            android:id="@+id/pwd_create_right"
             android:layout_width="0.0dip"
             android:layout_height="wrap_content"
             android:layout_margin="15dip"
@@ -53,7 +49,7 @@
             android:gravity="center"
             android:text="保存"
             android:textColor="@drawable/skin_color_button"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
     </LinearLayout>
 
 </RelativeLayout>

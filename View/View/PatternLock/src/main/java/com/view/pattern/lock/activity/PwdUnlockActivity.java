@@ -7,180 +7,150 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.view.pattern.lock.MainApplication;
 import com.view.pattern.lock.R;
 import com.view.pattern.lock.view.LockPatternHelper;
 import com.view.pattern.lock.view.LockPatternView;
 import com.yline.base.BaseActivity;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 解锁页面
+ *
  * @author yline 2016/11/23 --> 21:00
  * @version 1.0.0
  */
-public class UnlockPwdActivity extends BaseActivity
-{
+public class PwdUnlockActivity extends BaseActivity {
 	private LockPatternView mLockPatternView;
-
+	
 	private int failedNumberSinceLastTimeOut = 0;
-
-	private CountDownTimer mCountdownTimer = null;
-
+	
+	private CountDownTimer mCountdownTimer = null; // 锁定之后，倒计时
+	
 	private TextView tvHint;
-
+	
 	private Animation mShakeAnim;
-
+	
 	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pwd_unlock);
-
-		mLockPatternView = (LockPatternView) this.findViewById(R.id.view_pattern_lock);
-		mLockPatternView.setOnPatternListener(mChooseNewLockPatternListener);
+		
+		mLockPatternView = findViewById(R.id.pwd_unlock_pattern);
 		mLockPatternView.setTactileFeedbackEnabled(true);
 		
-		tvHint = (TextView) findViewById(R.id.tv_unlock_hint);
+		tvHint = findViewById(R.id.pwd_unlock_hint);
 		mShakeAnim = AnimationUtils.loadAnimation(this, R.anim.shake_x);
+		
+		mLockPatternView.setOnPatternListener(mChooseNewLockPatternListener);
 	}
-
+	
 	@Override
-	protected void onResume()
-	{
+	protected void onResume() {
 		super.onResume();
-
-		if (!LockPatternHelper.getInstance().savedPatternExists())
-		{
-			CreateLockPwdActivity.actionStart(this);
+		
+		if (!LockPatternHelper.getInstance().savedPatternExists()) {
+			PwdCreateActivity.actionStart(this);
 			finish();
 		}
 	}
-
+	
 	@Override
-	protected void onDestroy()
-	{
+	protected void onDestroy() {
 		super.onDestroy();
-		if (mCountdownTimer != null)
-		{
+		if (mCountdownTimer != null) {
 			mCountdownTimer.cancel();
 		}
-
-		if (LockPatternHelper.getInstance().savedPatternExists())
-		{
+		
+		if (LockPatternHelper.getInstance().savedPatternExists()) {
 			LockPatternHelper.getInstance().clearLock();
 		}
 	}
-
-	private Runnable mClearPatternRunnable = new Runnable()
-	{
-		public void run()
-		{
+	
+	private Runnable mClearPatternRunnable = new Runnable() {
+		public void run() {
 			mLockPatternView.clearPattern();
 		}
 	};
-
-	protected LockPatternView.OnPatternListener mChooseNewLockPatternListener = new LockPatternView.OnPatternListener()
-	{
+	
+	protected LockPatternView.OnPatternListener mChooseNewLockPatternListener = new LockPatternView.OnPatternListener() {
 		@Override
-		public void onPatternStart()
-		{
+		public void onPatternStart() {
 			mLockPatternView.removeCallbacks(mClearPatternRunnable);
 		}
-
+		
 		@Override
-		public void onPatternCleared()
-		{
+		public void onPatternCleared() {
 			mLockPatternView.removeCallbacks(mClearPatternRunnable);
 		}
-
+		
 		@Override
-		public void onPatternDetected(List<LockPatternView.Cell> pattern)
-		{
-			if (null == pattern)
-			{
+		public void onPatternDetected(List<LockPatternView.Cell> pattern) {
+			if (null == pattern) {
 				return;
 			}
-
-			if (LockPatternHelper.getInstance().checkPattern(pattern))
-			{
+			
+			if (LockPatternHelper.getInstance().checkPattern(pattern)) {
 				mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Correct);
-
-				CreateLockPwdActivity.actionStart(UnlockPwdActivity.this);
+				
+				PwdCreateActivity.actionStart(PwdUnlockActivity.this);
 				MainApplication.toast("输入正确");
 				finish();
-			}
-			else
-			{
+			} else {
 				mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Wrong);
-				if (pattern.size() >= LockPatternHelper.MIN_PATTERN_REGISTER_FAIL)
-				{
+				if (pattern.size() >= LockPatternHelper.MIN_PATTERN_REGISTER_FAIL) {
 					failedNumberSinceLastTimeOut++;
 					int retry = LockPatternHelper.FAILED_ATTEMPTS_BEFORE_TIMEOUT - failedNumberSinceLastTimeOut;
-					if (retry >= 0)
-					{
-						if (retry == 0)
-						{
+					if (retry >= 0) {
+						if (retry == 0) {
 							MainApplication.toast("设备被锁定");
 						}
-						tvHint.setText("剩余次数：" + retry);
+						tvHint.setText(String.format(Locale.CHINA, "剩余次数：%d", retry));
 						tvHint.setTextColor(Color.RED);
 						tvHint.startAnimation(mShakeAnim);
 					}
-				}
-				else
-				{
+				} else {
 					MainApplication.toast("少于最少个数,请重新输入");
 				}
-
-				if (failedNumberSinceLastTimeOut >= LockPatternHelper.FAILED_ATTEMPTS_BEFORE_TIMEOUT)
-				{
+				
+				if (failedNumberSinceLastTimeOut >= LockPatternHelper.FAILED_ATTEMPTS_BEFORE_TIMEOUT) {
 					// 倒计时,重新输入
 					MainApplication.getHandler().postDelayed(attemptLockout, 2000);
-				}
-				else
-				{
+				} else {
 					// 开启清除线程
 					mLockPatternView.postDelayed(mClearPatternRunnable, 2000);
 				}
 			}
 		}
-
+		
 		@Override
-		public void onPatternCellAdded(List<LockPatternView.Cell> pattern)
-		{
-
+		public void onPatternCellAdded(List<LockPatternView.Cell> pattern) {
+		
 		}
 	};
 	
-	private Runnable attemptLockout = new Runnable()
-	{
-
+	private Runnable attemptLockout = new Runnable() {
+		
 		@Override
-		public void run()
-		{
+		public void run() {
 			mLockPatternView.clearPattern();
 			mLockPatternView.setEnabled(false);
-			mCountdownTimer = new CountDownTimer(LockPatternHelper.FAILED_ATTEMPT_TIMEOUT_MS + 1, 1000)
-			{
-
+			mCountdownTimer = new CountDownTimer(LockPatternHelper.FAILED_ATTEMPT_TIMEOUT_MS + 1, 1000) {
+				
 				@Override
-				public void onTick(long millisUntilFinished)
-				{
+				public void onTick(long millisUntilFinished) {
 					int secondsRemaining = (int) (millisUntilFinished / 1000) - 1;
-					if (secondsRemaining > 0)
-					{
+					if (secondsRemaining > 0) {
 						tvHint.setText(secondsRemaining + "秒后重新输入");
-					}
-					else
-					{
+					} else {
 						tvHint.setText("请重新输入");
 					}
 				}
-
+				
 				@Override
-				public void onFinish()
-				{
+				public void onFinish() {
 					mLockPatternView.setEnabled(true);
 					failedNumberSinceLastTimeOut = 0;
 				}
