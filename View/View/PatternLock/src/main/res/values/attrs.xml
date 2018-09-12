@@ -8,14 +8,16 @@
             <enum name="lockWidth" value="1" />
             <enum name="lockHeight" value="2" />
         </attr>
-        <attr name="line" format="color" />
-        <attr name="btnNormal" format="reference" />
-        <attr name="btnTouched" format="reference" />
-        <attr name="circleNormal" format="reference" />
-        <attr name="circleGreen" format="reference" />
-        <attr name="circleRed" format="reference" />
-        <attr name="arrowGreenUp" format="reference" />
-        <attr name="arrowRedUp" format="reference" />
+        <attr name="img_circle_bg" format="reference" />
+        <attr name="img_circle_normal" format="reference" />
+        <attr name="img_circle_error" format="reference" />
+        <attr name="color_path_normal" format="color" />
+        <attr name="color_path_error" format="color" />
+
+        <attr name="is_stealth_mode" format="boolean" />
+        <attr name="is_haptic_feedback" format="boolean" />
+        <attr name="is_input_enable" format="boolean" />
+        <attr name="diameter_factor" format="float" />
     </declare-styleable>
 
 </resources>

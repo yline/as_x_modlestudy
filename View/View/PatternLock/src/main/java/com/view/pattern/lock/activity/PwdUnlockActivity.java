@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.view.pattern.lock.MainApplication;
 import com.view.pattern.lock.R;
-import com.view.pattern.lock.view.LockPatternHelper;
+import com.view.pattern.lock.view.LockPatternUtils;
 import com.view.pattern.lock.view.LockPatternView;
 import com.yline.base.BaseActivity;
 
@@ -51,7 +51,7 @@ public class PwdUnlockActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		
-		if (!LockPatternHelper.getInstance().savedPatternExists()) {
+		if (!LockPatternUtils.savedPatternExists()) {
 			PwdCreateActivity.actionStart(this);
 			finish();
 		}
@@ -64,8 +64,8 @@ public class PwdUnlockActivity extends BaseActivity {
 			mCountdownTimer.cancel();
 		}
 		
-		if (LockPatternHelper.getInstance().savedPatternExists()) {
-			LockPatternHelper.getInstance().clearLock();
+		if (LockPatternUtils.savedPatternExists()) {
+			LockPatternUtils.clearLock();
 		}
 	}
 	
@@ -92,17 +92,17 @@ public class PwdUnlockActivity extends BaseActivity {
 				return;
 			}
 			
-			if (LockPatternHelper.getInstance().checkPattern(pattern)) {
-				mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Correct);
+			if (LockPatternUtils.checkPattern(pattern)) {
+				mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Normal);
 				
 				PwdCreateActivity.actionStart(PwdUnlockActivity.this);
 				MainApplication.toast("输入正确");
 				finish();
 			} else {
-				mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Wrong);
-				if (pattern.size() >= LockPatternHelper.MIN_PATTERN_REGISTER_FAIL) {
+				mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Error);
+				if (pattern.size() >= LockPatternUtils.MIN_LOCK_PATTERN_SIZE) {
 					failedNumberSinceLastTimeOut++;
-					int retry = LockPatternHelper.FAILED_ATTEMPTS_BEFORE_TIMEOUT - failedNumberSinceLastTimeOut;
+					int retry = LockPatternUtils.FAILED_ATTEMPTS_BEFORE_TIMEOUT - failedNumberSinceLastTimeOut;
 					if (retry >= 0) {
 						if (retry == 0) {
 							MainApplication.toast("设备被锁定");
@@ -115,7 +115,7 @@ public class PwdUnlockActivity extends BaseActivity {
 					MainApplication.toast("少于最少个数,请重新输入");
 				}
 				
-				if (failedNumberSinceLastTimeOut >= LockPatternHelper.FAILED_ATTEMPTS_BEFORE_TIMEOUT) {
+				if (failedNumberSinceLastTimeOut >= LockPatternUtils.FAILED_ATTEMPTS_BEFORE_TIMEOUT) {
 					// 倒计时,重新输入
 					MainApplication.getHandler().postDelayed(attemptLockout, 2000);
 				} else {
@@ -137,7 +137,7 @@ public class PwdUnlockActivity extends BaseActivity {
 		public void run() {
 			mLockPatternView.clearPattern();
 			mLockPatternView.setEnabled(false);
-			mCountdownTimer = new CountDownTimer(LockPatternHelper.FAILED_ATTEMPT_TIMEOUT_MS + 1, 1000) {
+			mCountdownTimer = new CountDownTimer(LockPatternUtils.FAILED_ATTEMPT_TIMEOUT_MS + 1, 1000) {
 				
 				@Override
 				public void onTick(long millisUntilFinished) {

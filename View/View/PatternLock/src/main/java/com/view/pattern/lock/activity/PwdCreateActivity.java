@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.view.pattern.lock.MainApplication;
 import com.view.pattern.lock.R;
-import com.view.pattern.lock.view.LockPatternHelper;
+import com.view.pattern.lock.view.LockPatternUtils;
 import com.view.pattern.lock.view.LockPatternView;
 import com.yline.base.BaseActivity;
 
@@ -29,6 +29,8 @@ public class PwdCreateActivity extends BaseActivity {
 	
 	protected List<LockPatternView.Cell> mChosenPattern = null;
 	
+	private LockPatternView mShowPatternView;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,7 +44,16 @@ public class PwdCreateActivity extends BaseActivity {
 		tvHint = findViewById(R.id.pwd_create_hint);
 		
 		mLockPatternView = findViewById(R.id.pwd_create_pattern);
-		mLockPatternView.setTactileFeedbackEnabled(true);
+		//		mLockPatternView.setTactileFeedbackEnabled(true);
+		
+		mShowPatternView = findViewById(R.id.pwd_create_show);
+		List<LockPatternView.Cell> showPattern = new ArrayList<>();
+		showPattern.add(LockPatternView.Cell.of(0, 0));
+		showPattern.add(LockPatternView.Cell.of(0, 1));
+		showPattern.add(LockPatternView.Cell.of(1, 1));
+		showPattern.add(LockPatternView.Cell.of(1, 2));
+		showPattern.add(LockPatternView.Cell.of(2, 2));
+		mShowPatternView.setPattern(LockPatternView.DisplayMode.Normal, showPattern);
 		
 		mFooterLeftButton = findViewById(R.id.pwd_create_reset);
 		mFooterRightButton = findViewById(R.id.pwd_create_right);
@@ -64,7 +75,7 @@ public class PwdCreateActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				mLockPatternView.clearPattern();
-				mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Correct);
+				mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Normal);
 				showUserFirstDraw();
 			}
 		});
@@ -75,7 +86,7 @@ public class PwdCreateActivity extends BaseActivity {
 		animatePattern.add(LockPatternView.Cell.of(1, 1));
 		animatePattern.add(LockPatternView.Cell.of(2, 1));
 		animatePattern.add(LockPatternView.Cell.of(2, 2));
-		mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Correct);
+		mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Normal);
 		mLockPatternView.setPattern(LockPatternView.DisplayMode.Animate, animatePattern);
 		
 		mLockPatternView.disableInput();
@@ -128,9 +139,9 @@ public class PwdCreateActivity extends BaseActivity {
 					return;
 				}
 				
-				if (pattern.size() < LockPatternHelper.MIN_LOCK_PATTERN_SIZE) {
+				if (pattern.size() < LockPatternUtils.MIN_LOCK_PATTERN_SIZE) {
 					tvHint.setText("至少连接4个点，请重试");
-					mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Wrong);
+					mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Error);
 					postClearPatternRunnable();
 					
 					mFooterLeftButton.setEnabled(true);
@@ -143,7 +154,7 @@ public class PwdCreateActivity extends BaseActivity {
 					mFooterRightButton.setEnabled(true);
 					
 					mLockPatternView.disableInput();
-					mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Correct);
+					mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Normal);
 				}
 			}
 		});
@@ -163,7 +174,7 @@ public class PwdCreateActivity extends BaseActivity {
 		mFooterRightButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LockPatternHelper.getInstance().saveLockPattern(mChosenPattern);
+				LockPatternUtils.saveLockPattern(mChosenPattern);
 				
 				MainApplication.toast("设置成功");
 				startActivity(new Intent(PwdCreateActivity.this, PwdUnlockActivity.class));
@@ -199,13 +210,13 @@ public class PwdCreateActivity extends BaseActivity {
 					mFooterRightButton.setText("确认");
 					
 					mLockPatternView.disableInput();
-					mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Correct);
+					mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Normal);
 				} else {
 					tvHint.setText("与上次输入不一致，请重试");
 					
 					mFooterLeftButton.setEnabled(true);
 					
-					mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Wrong);
+					mLockPatternView.setDisplayMode(LockPatternView.DisplayMode.Error);
 					postClearPatternRunnable();
 				}
 			}
