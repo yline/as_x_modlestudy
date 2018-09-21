@@ -44,7 +44,6 @@ public class PwdCreateActivity extends BaseActivity {
 		tvHint = findViewById(R.id.pwd_create_hint);
 		
 		mLockPatternView = findViewById(R.id.pwd_create_pattern);
-		//		mLockPatternView.setTactileFeedbackEnabled(true);
 		
 		mShowPatternView = findViewById(R.id.pwd_create_show);
 		List<LockPatternView.Cell> showPattern = new ArrayList<>();
@@ -138,6 +137,8 @@ public class PwdCreateActivity extends BaseActivity {
 				if (pattern == null) {
 					return;
 				}
+				
+				mShowPatternView.setPattern(LockPatternView.DisplayMode.Normal, pattern);
 				
 				if (pattern.size() < LockPatternUtils.MIN_LOCK_PATTERN_SIZE) {
 					tvHint.setText("至少连接4个点，请重试");

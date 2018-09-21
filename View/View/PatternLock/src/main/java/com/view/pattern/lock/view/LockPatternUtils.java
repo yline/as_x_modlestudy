@@ -48,7 +48,7 @@ public class LockPatternUtils {
 	 * @param pattern The new pattern to save.
 	 */
 	public static void saveLockPattern(List<LockPatternView.Cell> pattern) {
-		String patternString = patternToString(pattern);
+		String patternString = LockPatternView.patternToString(pattern);
 		SPUtil.put(MainApplication.getApplication(), KEY_PATTERN, patternString);
 	}
 	
@@ -61,42 +61,7 @@ public class LockPatternUtils {
 	 */
 	public static boolean checkPattern(List<LockPatternView.Cell> pattern) {
 		String oldPatternString = (String) SPUtil.get(MainApplication.getApplication(), KEY_PATTERN, null);
-		String newPatternString = patternToString(pattern);
+		String newPatternString = LockPatternView.patternToString(pattern);
 		return newPatternString.equalsIgnoreCase(oldPatternString);
-	}
-	
-	/**
-	 * Deserialize a pattern. 将String转成Pattern
-	 *
-	 * @return The pattern.
-	 */
-	public static List<LockPatternView.Cell> stringToPattern(String string) {
-		List<LockPatternView.Cell> result = new ArrayList<>();
-		
-		final byte[] bytes = string.getBytes();
-		for (byte b : bytes) {
-			result.add(LockPatternView.Cell.of(b / 3, b % 3));
-		}
-		return result;
-	}
-	
-	/**
-	 * Serialize a pattern. 将Pattern转成String
-	 *
-	 * @param pattern The pattern.
-	 * @return The pattern in string form.
-	 */
-	public static String patternToString(List<LockPatternView.Cell> pattern) {
-		if (pattern == null) {
-			return "";
-		}
-		final int patternSize = pattern.size();
-		
-		byte[] res = new byte[patternSize];
-		for (int i = 0; i < patternSize; i++) {
-			LockPatternView.Cell cell = pattern.get(i);
-			res[i] = (byte) (cell.getRow() * 3 + cell.getColumn());
-		}
-		return new String(res);
 	}
 }

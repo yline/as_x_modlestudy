@@ -51,8 +51,8 @@ public class LockPatternView extends View {
 	private static final float HIT_FACTOR = 0.6f; // 多少范围内，算是触摸成功
 	
 	/* ------------------------------临时变量---------------------------------- */
-	private float mSquareWidth; // 三分之一，宽度
-	private float mSquareHeight; // 三分之一，高度
+	private float mSquareWidth; // 三分之一，控件宽度
+	private float mSquareHeight; // 三分之一，控件高度
 	
 	private boolean mDrawingProfilingStarted = false; // 系统调试是否开始
 	
@@ -69,34 +69,47 @@ public class LockPatternView extends View {
 	
 	private boolean[][] mPatternDrawLookup = new boolean[3][3]; // 视图中，是否选中
 	
-	private Paint mPaint = new Paint();
-	private final Matrix mCircleMatrix = new Matrix();
-	
 	private final Path mCurrentPath = new Path();
 	private final Rect mInvalidate = new Rect();
 	
-	private Paint mPathPaint = new Paint(); // 绘制路径
+	private float lastLineX, lastLineY; // 绘制线条时，临时变量
 	
 	/* ------------------------------通过 attr 直接控制 或 间接控制---------------------------------- */
 	private OnPatternListener mOnPatternListener; // 监听器
 	
 	private int mAspect;
 	
-	private Bitmap mBitmapCircleBg; // 单个点，背景图片
-	private Bitmap mBitmapCircleNormal; // 单个点，正常绘制图片
-	private Bitmap mBitmapCircleError; // 单个点，异常绘制图片
+	private final Matrix mCircleBgMatrix = new Matrix();
+	private Bitmap mBitmapCircleBgStart; // 单个点，背景图片，未选中状态
+	private Bitmap mBitmapCircleBgNormal; // 单个点，背景图片，选中状态
+	private Bitmap mBitmapCircleBgError; // 单个点，背景图片，选中状态，但选错状态
 	
-	private int mColorPathNormal; // 单个点，正常绘制路径颜色
-	private int mColorPathError; // 单个点，异常绘制路径颜色
+	private int mBitmapCircleBgWidth; // 单个点，背景宽度
+	private int mBitmapCircleBgHeight; // 单个点，背景高度
 	
-	private float mDiameterFactor = 0.20f; // 中间路径，占中心圆圈的比例（0.5则等于中心圆圈大小）
+	private final Matrix mCircleMatrix = new Matrix();
+	private Bitmap mBitmapCircleStart; // 单个点，未选中状态
+	private Bitmap mBitmapCircleNormal; // 单个点，选中状态
+	private Bitmap mBitmapCircleError; // 单个点，选中状态，但选错状态
 	
-	private boolean mInStealthMode = false; // 是否隐身(path 和 cell将都不显示)
+	private Paint mPaint = new Paint();
+	
+	private int mBitmapCircleWidth; // 单个点，宽度
+	private int mBitmapCircleHeight; // 单个点，高度
+	
+	private Paint mLinePaint = new Paint(); // 绘制路径
+	private int mLineColorNormal; // 单个点，正常绘制路径颜色
+	private int mLineColorError; // 单个点，异常绘制路径颜色
+	private int mLineWidth = 2; // 线条宽度
+	
+	private boolean mIsDrawLine = true; // 是否绘制线条
+	private boolean mIsDrawBgCircle = true; // 是否绘制外圆圈
+	private boolean mIsLineThrough = true; // true(线条从中心 到 中心)， false(线条从边界到边界); 不通过中心点，则穿过时，必须穿过
+	
 	private boolean mEnableHapticFeedback = true; // 震动开关
 	private boolean mInputEnabled = true; // 是否允许手势绘制
 	
-	private int mBitmapWidth; // 单个点，宽度
-	private int mBitmapHeight; // 单个点，高度
+	private float mSquareFactor = 0.9f; // 当图片分辨率，大于屏幕上绘制的图案的分辨率时，设定间隔比率（用于调整点的大小）
 	
 	public LockPatternView(Context context) {
 		this(context, null);
@@ -110,36 +123,53 @@ public class LockPatternView extends View {
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LockPatternView);
 		mAspect = a.getInt(R.styleable.LockPatternView_aspect, ASPECT_SQUARE);
 		
-		final int circleBg = a.getResourceId(R.styleable.LockPatternView_img_circle_bg, R.drawable.gesture_pattern_item_bg);
-		mBitmapCircleBg = BitmapFactory.decodeResource(getResources(), circleBg);
+		/* ------------- 背景 ------------- */
+		final int circleBgStart = a.getResourceId(R.styleable.LockPatternView_img_circle_bg_start, -1);
+		mBitmapCircleBgStart = BitmapFactory.decodeResource(getResources(), circleBgStart);
 		
-		final int circleNormal = a.getResourceId(R.styleable.LockPatternView_img_circle_normal, R.drawable.gesture_pattern_selected);
+		final int circleBgNormal = a.getResourceId(R.styleable.LockPatternView_img_circle_bg_normal, R.drawable.pattern_circle_bg_normal);
+		mBitmapCircleBgNormal = BitmapFactory.decodeResource(getResources(), circleBgNormal);
+		
+		final int circleBgError = a.getResourceId(R.styleable.LockPatternView_img_circle_bg_error, R.drawable.pattern_circle_bg_error);
+		mBitmapCircleBgError = BitmapFactory.decodeResource(getResources(), circleBgError);
+		
+		mBitmapCircleBgWidth = Math.max(mBitmapCircleBgNormal.getWidth(), mBitmapCircleBgError.getWidth());
+		mBitmapCircleBgHeight = Math.max(mBitmapCircleBgNormal.getHeight(), mBitmapCircleBgError.getHeight());
+		
+		/* ------------- 内容 ------------- */
+		final int circleStart = a.getResourceId(R.styleable.LockPatternView_img_circle_start, R.drawable.pattern_circle_start);
+		mBitmapCircleStart = BitmapFactory.decodeResource(getResources(), circleStart);
+		
+		final int circleNormal = a.getResourceId(R.styleable.LockPatternView_img_circle_normal, R.drawable.pattern_circle_normal);
 		mBitmapCircleNormal = BitmapFactory.decodeResource(getResources(), circleNormal);
 		
-		final int circleError = a.getResourceId(R.styleable.LockPatternView_img_circle_error, R.drawable.gesture_pattern_selected_wrong);
+		final int circleError = a.getResourceId(R.styleable.LockPatternView_img_circle_error, R.drawable.pattern_circle_error);
 		mBitmapCircleError = BitmapFactory.decodeResource(getResources(), circleError);
 		
-		mColorPathNormal = a.getColor(R.styleable.LockPatternView_color_path_normal, Color.YELLOW);
-		mColorPathError = a.getColor(R.styleable.LockPatternView_color_path_error, Color.RED);
+		mBitmapCircleWidth = Math.max(mBitmapCircleNormal.getWidth(), mBitmapCircleError.getWidth());
+		mBitmapCircleHeight = Math.max(mBitmapCircleNormal.getHeight(), mBitmapCircleError.getHeight());
 		
-		mInStealthMode = a.getBoolean(R.styleable.LockPatternView_is_stealth_mode, false);
-		mEnableHapticFeedback = a.getBoolean(R.styleable.LockPatternView_is_haptic_feedback, false);
+		mSquareFactor = a.getFloat(R.styleable.LockPatternView_circle_bg_square_factor, 0.9f);
+		
+		/* ------------- 线条 ------------- */
+		mLineWidth = a.getInt(R.styleable.LockPatternView_line_width, 2); // 线条宽度
+		mLineColorNormal = a.getColor(R.styleable.LockPatternView_line_color_normal, Color.YELLOW);
+		mLineColorError = a.getColor(R.styleable.LockPatternView_line_color_error, Color.RED);
+		
+		/* ------------- 其他 ------------- */
+		mIsDrawLine = a.getBoolean(R.styleable.LockPatternView_is_draw_line, true);
 		mInputEnabled = a.getBoolean(R.styleable.LockPatternView_is_input_enable, true);
-		
-		mDiameterFactor = a.getFloat(R.styleable.LockPatternView_diameter_factor, 0.2f);
+		mIsLineThrough = a.getBoolean(R.styleable.LockPatternView_is_line_through, true);
+		mIsDrawBgCircle = a.getBoolean(R.styleable.LockPatternView_is_draw_circle_bg, true);
+		mEnableHapticFeedback = a.getBoolean(R.styleable.LockPatternView_is_haptic_feedback, false);
 		a.recycle();
 		
-		mBitmapWidth = Math.max(mBitmapCircleBg.getWidth(),
-				(Math.max(mBitmapCircleNormal.getWidth(), mBitmapCircleError.getWidth())));
-		mBitmapHeight = Math.max(mBitmapCircleBg.getHeight(),
-				(Math.max(mBitmapCircleNormal.getHeight(), mBitmapCircleError.getHeight())));
-		
-		mPathPaint.setAntiAlias(true); // 抗锯齿
-		mPathPaint.setDither(true); // 抗抖动
-		mPathPaint.setAlpha(128); // 半透明
-		mPathPaint.setStyle(Paint.Style.STROKE);
-		mPathPaint.setStrokeJoin(Paint.Join.ROUND);
-		mPathPaint.setStrokeCap(Paint.Cap.ROUND);
+		mLinePaint.setAntiAlias(true); // 抗锯齿
+		mLinePaint.setDither(true); // 抗抖动
+		mLinePaint.setAlpha(128); // 半透明
+		mLinePaint.setStyle(Paint.Style.STROKE);
+		mLinePaint.setStrokeJoin(Paint.Join.ROUND);
+		mLinePaint.setStrokeCap(Paint.Cap.ROUND);
 	}
 	
 	@Override
@@ -154,13 +184,13 @@ public class LockPatternView extends View {
 	@Override
 	protected int getSuggestedMinimumWidth() {
 		// View should be large enough to contain 3 side-by-side target bitmaps
-		return 3 * mBitmapWidth;
+		return 3 * mBitmapCircleBgWidth;
 	}
 	
 	@Override
 	protected int getSuggestedMinimumHeight() {
 		// View should be large enough to contain 3 side-by-side target bitmaps
-		return 3 * mBitmapWidth;
+		return 3 * mBitmapCircleBgHeight;
 	}
 	
 	@Override
@@ -286,7 +316,7 @@ public class LockPatternView extends View {
 				
 				if (mPatternInProgress && patternSize > 0) {
 					final ArrayList<Cell> pattern = mPattern;
-					final float radius = mSquareWidth * mDiameterFactor * 0.5f;
+					final float lineWidth = mLineWidth;
 					
 					final Cell lastCell = pattern.get(patternSize - 1);
 					
@@ -318,9 +348,9 @@ public class LockPatternView extends View {
 					
 					// Invalidate between the pattern's last cell and the
 					// current location
-					invalidateRect.set((int) (left - radius),
-							(int) (top - radius), (int) (right + radius),
-							(int) (bottom + radius));
+					invalidateRect.set((int) (left - lineWidth),
+							(int) (top - lineWidth), (int) (right + lineWidth),
+							(int) (bottom + lineWidth));
 					
 					if (startX < oldX) {
 						left = startX;
@@ -340,9 +370,9 @@ public class LockPatternView extends View {
 					
 					// Invalidate between the pattern's last cell and the
 					// previous location
-					invalidateRect.union((int) (left - radius),
-							(int) (top - radius), (int) (right + radius),
-							(int) (bottom + radius));
+					invalidateRect.union((int) (left - lineWidth),
+							(int) (top - lineWidth), (int) (right + lineWidth),
+							(int) (bottom + lineWidth));
 					
 					// Invalidate between the pattern's new cell and the
 					// pattern's previous cell
@@ -586,10 +616,8 @@ public class LockPatternView extends View {
 				final float centerY = getCenterYForRow(currentCell.row);
 				
 				final Cell nextCell = pattern.get(numCircles);
-				final float dx = percentageOfNextCircle
-						* (getCenterXForColumn(nextCell.column) - centerX);
-				final float dy = percentageOfNextCircle
-						* (getCenterYForRow(nextCell.row) - centerY);
+				final float dx = percentageOfNextCircle * (getCenterXForColumn(nextCell.column) - centerX);
+				final float dy = percentageOfNextCircle * (getCenterYForRow(nextCell.row) - centerY);
 				mInProgressX = centerX + dx;
 				mInProgressY = centerY + dy;
 			}
@@ -597,73 +625,23 @@ public class LockPatternView extends View {
 			invalidate();
 		}
 		
-		final float squareWidth = mSquareWidth;
-		final float squareHeight = mSquareHeight;
-		
-		float radius = (squareWidth * mDiameterFactor * 0.5f);
-		mPathPaint.setStrokeWidth(radius);
-		
-		final Path currentPath = mCurrentPath;
-		currentPath.rewind();
-		
-		// TODO: the path should be created and cached every time we hit-detect
-		// a cell
-		// only the last segment of the path should be computed here
-		// draw the path of the pattern (unless the user is in progress, and
-		// we are in stealth mode)
-		final boolean drawPath = (!mInStealthMode || mPatternDisplayMode == DisplayMode.Error);
-		
 		// draw the arrows associated with the path (unless the user is in
 		// progress, and
 		// we are in stealth mode)
 		boolean oldFlag = (mPaint.getFlags() & Paint.FILTER_BITMAP_FLAG) != 0;
 		mPaint.setFilterBitmap(true); // draw with higher quality since we
-		// render with transforms
-		// draw the lines
-		if (drawPath) {
-			boolean anyCircles = false;
-			for (int i = 0; i < count; i++) {
-				Cell cell = pattern.get(i);
-				
-				// only draw the part of the pattern stored in
-				// the lookup table (this is only different in the case
-				// of animation).
-				if (!drawLookup[cell.row][cell.column]) {
-					break;
-				}
-				anyCircles = true;
-				
-				float centerX = getCenterXForColumn(cell.column);
-				float centerY = getCenterYForRow(cell.row);
-				if (i == 0) {
-					currentPath.moveTo(centerX, centerY);
-				} else {
-					currentPath.lineTo(centerX, centerY);
-				}
-			}
-			
-			// add last in progress section
-			if ((mPatternInProgress || mPatternDisplayMode == DisplayMode.Animate)
-					&& anyCircles) {
-				currentPath.lineTo(mInProgressX, mInProgressY);
-			}
-			// chang the line color in different DisplayMode
-			if (mPatternDisplayMode == DisplayMode.Error) {
-				mPathPaint.setColor(mColorPathError);
-			} else {
-				mPathPaint.setColor(mColorPathNormal);
-			}
-			canvas.drawPath(currentPath, mPathPaint);
-		}
+		drawLine(canvas, pattern, drawLookup);
 		
 		// draw the circles
 		final int paddingTop = getPaddingTop();
 		final int paddingLeft = getPaddingLeft();
 		
+		final float squareWidth = mSquareWidth;
+		final float squareHeight = mSquareHeight;
+		
 		for (int i = 0; i < 3; i++) {
 			float topY = paddingTop + i * squareHeight;
-			// float centerY = mPaddingTop + i * mSquareHeight + (mSquareHeight
-			// / 2);
+			// float centerY = mPaddingTop + i * mSquareHeight + (mSquareHeight / 2);
 			for (int j = 0; j < 3; j++) {
 				float leftX = paddingLeft + j * squareWidth;
 				drawCircle(canvas, (int) leftX, (int) topY, drawLookup[i][j]);
@@ -674,54 +652,190 @@ public class LockPatternView extends View {
 	}
 	
 	/**
+	 * 绘制线条
+	 *
+	 * @param canvas     画布
+	 * @param pattern    图案
+	 * @param drawLookup 绘制的标志量
+	 */
+	private void drawLine(Canvas canvas, ArrayList<Cell> pattern, boolean[][] drawLookup) {
+		float lineWidth = mLineWidth;
+		mLinePaint.setStrokeWidth(lineWidth);
+		
+		final Path currentPath = mCurrentPath;
+		currentPath.rewind();
+		
+		// TODO: the path should be created and cached every time we hit-detect
+		// a cell
+		// only the last segment of the path should be computed here
+		// draw the path of the pattern (unless the user is in progress, and
+		// we are in stealth mode)
+		final boolean drawPath = (mIsDrawLine || mPatternDisplayMode == DisplayMode.Error);
+		
+		// render with transforms
+		// draw the lines
+		if (drawPath) {
+			// 不同模式，颜色不同
+			if (mPatternDisplayMode == DisplayMode.Error) {
+				mLinePaint.setColor(mLineColorError);
+			} else {
+				mLinePaint.setColor(mLineColorNormal);
+			}
+			
+			// 绘制已经确定的线条
+			boolean anyCircles = false;
+			for (int i = 0; i < pattern.size(); i++) {
+				Cell cell = pattern.get(i);
+				
+				// only draw the part of the pattern stored in
+				// the lookup table (this is only different in the case
+				// of animation).
+				if (!drawLookup[cell.row][cell.column]) {
+					break;
+				}
+				anyCircles = true;
+				
+				float centerX = getCenterXForColumn(cell.column); // 当前点的中心位置 X
+				float centerY = getCenterYForRow(cell.row); // 当前点的中心位置Y
+				if (i == 0) {
+					lastLineX = centerX;
+					lastLineY = centerY;
+					// currentPath.moveTo(centerX, centerY); // 移动到目标位置
+				} else {
+					drawSingleLine(canvas, lastLineX, lastLineY, centerX, centerY, false);
+					
+					lastLineX = centerX;
+					lastLineY = centerY;
+					// currentPath.lineTo(centerX, centerY); // 绘制直线
+				}
+			}
+			
+			// 还未确定位置时，手势的位置
+			if ((mPatternInProgress || mPatternDisplayMode == DisplayMode.Animate) && anyCircles) {
+				drawSingleLine(canvas, lastLineX, lastLineY, mInProgressX, mInProgressY, true);
+				// currentPath.lineTo(mInProgressX, mInProgressY);
+			}
+			// canvas.drawPath(currentPath, mLinePaint);
+		}
+	}
+	
+	/**
+	 * @param isProgress 是否是手势，从而判断结尾是否需要动态计算
+	 */
+	private void drawSingleLine(Canvas canvas, float startX, float startY, float endX, float endY, boolean isProgress) {
+		if (mIsLineThrough) {
+			canvas.drawLine(startX, startY, endX, endY, mLinePaint);
+		} else {
+			float sx = Math.min(mSquareFactor * mSquareWidth / mBitmapCircleBgWidth, 1.0f);
+			int radius = (int) (mBitmapCircleBgWidth * sx / 2);
+			
+			// 如果，还在圆圈内，则直接不绘制
+			if ((startX - endX) * (startX - endX) + (startY - endY) * (startY - endY) < radius * radius) {
+				return;
+			}
+			
+			if (Math.abs(startX - endX) < 10) {
+				boolean isDownArrow = (endY > startY);
+				
+				startY = isDownArrow ? (startY + radius) : (startY - radius);
+				endY = isProgress ? endY : (isDownArrow ? (endY - radius) : (endY + radius));
+				
+				canvas.drawLine(startX, startY, endX, endY, mLinePaint);
+			} else if (Math.abs(startY - endY) < 10) {
+				boolean isRightArrow = (endX > startX);
+				
+				startX = isRightArrow ? (startX + radius) : (startX - radius);
+				endX = isProgress ? endX : (isRightArrow ? endX - radius : endX + radius);
+				
+				canvas.drawLine(startX, startY, endX, endY, mLinePaint);
+			} else {
+				float tan = (endY - startY) / (endX - startX); // 求 tan
+				float cos = (float) (1.0f / Math.sqrt(1 + tan * tan)); // cos = 1 / [(1 + tan^2) ^ (1/2)]
+				float width = cos * radius; // width = cos * radius
+				float height = Math.abs(tan) * cos * radius; // height = sin * radius = |tan| * cos * radius
+				
+				boolean isDownArrow = (endY > startY);
+				boolean isRightArrow = (endX > startX);
+				
+				startX = isRightArrow ? (startX + width) : (startX - width);
+				endX = isProgress ? endX : (isRightArrow ? endX - width : endX + width);
+				
+				startY = isDownArrow ? (startY + height) : (startY - height);
+				endY = isProgress ? endY : (isDownArrow ? endY - height : endY + height);
+				
+				canvas.drawLine(startX, startY, endX, endY, mLinePaint);
+			}
+		}
+	}
+	
+	/**
 	 * @param canvas        画布
 	 * @param leftX         起始x坐标
 	 * @param topY          起始y坐标
-	 * @param partOfPattern Whether this circle is part of the pattern.
+	 * @param partOfPattern Whether this circle is part of the pattern.（圆是否被用户选中）
 	 */
 	private void drawCircle(Canvas canvas, int leftX, int topY, boolean partOfPattern) {
 		Bitmap outerCircle;
 		Bitmap innerCircle;
 		
-		if (!partOfPattern || (mInStealthMode && mPatternDisplayMode != DisplayMode.Error)) {
+		if (!partOfPattern) { // 未绘制状态
 			// unselected circle
-			outerCircle = mBitmapCircleBg;
-			innerCircle = null;
-		} else if (mPatternInProgress) {
+			outerCircle = mBitmapCircleBgStart;
+			innerCircle = mBitmapCircleStart;
+		} else if (mPatternInProgress) { // 正在绘制，用户选中状态
 			// user is in middle of drawing a pattern
-			outerCircle = mBitmapCircleBg;
+			outerCircle = mBitmapCircleBgNormal;
 			innerCircle = mBitmapCircleNormal;
-		} else if (mPatternDisplayMode == DisplayMode.Error) {
+		} else if (mPatternDisplayMode == DisplayMode.Error) { // 绘制结束，绘制错误状态
 			// the pattern is wrong
-			outerCircle = mBitmapCircleBg;
+			outerCircle = mBitmapCircleBgError;
 			innerCircle = mBitmapCircleError;
-		} else if (mPatternDisplayMode == DisplayMode.Normal || mPatternDisplayMode == DisplayMode.Animate) {
+		} else if (mPatternDisplayMode == DisplayMode.Normal || mPatternDisplayMode == DisplayMode.Animate) { // 绘制结束，绘制成功状态 + 绘制过程浏览状态
 			// the pattern is correct
-			outerCircle = mBitmapCircleBg;
+			outerCircle = mBitmapCircleBgNormal;
 			innerCircle = mBitmapCircleNormal;
 		} else {
 			throw new IllegalStateException("unknown display mode " + mPatternDisplayMode);
 		}
 		
-		final int width = mBitmapWidth;
-		final int height = mBitmapHeight;
-		
+		// 控件，1/3，宽高
 		final float squareWidth = mSquareWidth;
 		final float squareHeight = mSquareHeight;
+		
+		// Allow circles to shrink if the view is too small to hold them.
+		float sx = Math.min(mSquareFactor * mSquareWidth / mBitmapCircleBgWidth, 1.0f); // 图形很小，0.9f则保证留有间隔
+		float sy = Math.min(mSquareFactor * mSquareHeight / mBitmapCircleBgHeight, 1.0f);
+		
+		// 背景，宽高
+		final int bgWidth = mBitmapCircleBgWidth;
+		final int bgHeight = mBitmapCircleBgHeight;
+		
+		int bgOffsetX = (int) ((squareWidth - bgWidth) / 2.0f);
+		int bgOffsetY = (int) ((squareHeight - bgHeight) / 2.0f);
+		
+		mCircleBgMatrix.setTranslate(leftX + bgOffsetX, topY + bgOffsetY);
+		
+		mCircleBgMatrix.preTranslate(mBitmapCircleBgWidth / 2, mBitmapCircleBgHeight / 2);
+		mCircleBgMatrix.preScale(sx, sy);
+		mCircleBgMatrix.preTranslate(-mBitmapCircleBgWidth / 2, -mBitmapCircleBgHeight / 2);
+		
+		if (null != outerCircle && mIsDrawBgCircle) {
+			canvas.drawBitmap(outerCircle, mCircleBgMatrix, mPaint);
+		}
+		
+		// 小图标，宽高
+		final int width = mBitmapCircleWidth;
+		final int height = mBitmapCircleHeight;
 		
 		int offsetX = (int) ((squareWidth - width) / 2f);
 		int offsetY = (int) ((squareHeight - height) / 2f);
 		
-		// Allow circles to shrink if the view is too small to hold them.
-		float sx = Math.min(0.9f * mSquareWidth / mBitmapWidth, 1.0f); // 图形很小，0.9f则保证留有间隔
-		float sy = Math.min(0.9f * mSquareHeight / mBitmapHeight, 1.0f);
+		mCircleMatrix.setTranslate(leftX + offsetX, topY + offsetY); // x、y方向平移
 		
-		mCircleMatrix.setTranslate(leftX + offsetX, topY + offsetY);
-		mCircleMatrix.preTranslate(mBitmapWidth / 2, mBitmapHeight / 2);
+		mCircleMatrix.preTranslate(mBitmapCircleWidth / 2, mBitmapCircleHeight / 2);
 		mCircleMatrix.preScale(sx, sy);
-		mCircleMatrix.preTranslate(-mBitmapWidth / 2, -mBitmapHeight / 2);
+		mCircleMatrix.preTranslate(-mBitmapCircleWidth / 2, -mBitmapCircleHeight / 2);
 		
-		canvas.drawBitmap(outerCircle, mCircleMatrix, mPaint);
 		if (innerCircle != null) {
 			canvas.drawBitmap(innerCircle, mCircleMatrix, mPaint);
 		}
@@ -805,23 +919,6 @@ public class LockPatternView extends View {
 	 */
 	public void clearPattern() {
 		resetPattern();
-	}
-	
-	/**
-	 * @return Whether the view is in stealth mode.
-	 */
-	public boolean isInStealthMode() {
-		return mInStealthMode;
-	}
-	
-	/**
-	 * Set whether the view is in stealth mode. If true, there will be no
-	 * visible feedback as the user enters the pattern.
-	 *
-	 * @param inStealthMode Whether in stealth mode.
-	 */
-	public void setInStealthMode(boolean inStealthMode) {
-		mInStealthMode = inStealthMode;
 	}
 	
 	/**
@@ -970,11 +1067,11 @@ public class LockPatternView extends View {
 			return sCells[row][column];
 		}
 		
-		public int getRow() {
+		private int getRow() {
 			return row;
 		}
 		
-		public int getColumn() {
+		private int getColumn() {
 			return column;
 		}
 		
@@ -1019,12 +1116,12 @@ public class LockPatternView extends View {
 		Parcelable superState = super.onSaveInstanceState();
 		bundle.putParcelable(SAVE_SUPER_STATE, superState);
 		
-		String patternString = LockPatternUtils.patternToString(mPattern);
+		String patternString = LockPatternView.patternToString(mPattern);
 		bundle.putString(SAVE_PATTERN, patternString);
 		
 		bundle.putInt(SAVE_DISPLAY_MODE, mPatternDisplayMode.ordinal());
 		bundle.putBoolean(SAVE_INPUT_ENABLE, mInputEnabled);
-		bundle.putBoolean(SAVE_STEALTH_MODE, mInStealthMode);
+		bundle.putBoolean(SAVE_STEALTH_MODE, mIsDrawLine);
 		bundle.putBoolean(SAVE_FEEDBACK_ENABLE, mEnableHapticFeedback);
 		return bundle;
 	}
@@ -1034,15 +1131,53 @@ public class LockPatternView extends View {
 		final Bundle bundle = (Bundle) state;
 		
 		String patternString = bundle.getString(SAVE_PATTERN);
-		setPattern(DisplayMode.Normal, LockPatternUtils.stringToPattern(patternString));
+		setPattern(DisplayMode.Normal, LockPatternView.stringToPattern(patternString));
 		
 		int ordinal = bundle.getInt(SAVE_DISPLAY_MODE);
 		mPatternDisplayMode = DisplayMode.values()[ordinal];
 		
 		mInputEnabled = bundle.getBoolean(SAVE_INPUT_ENABLE);
-		mInStealthMode = bundle.getBoolean(SAVE_STEALTH_MODE);
+		mIsDrawLine = bundle.getBoolean(SAVE_STEALTH_MODE);
 		mEnableHapticFeedback = bundle.getBoolean(SAVE_FEEDBACK_ENABLE);
 		
 		super.onRestoreInstanceState(bundle.getParcelable(SAVE_SUPER_STATE));
+	}
+	
+	/* ------------------对外提供的工具类-------------- */
+	
+	/**
+	 * Deserialize a pattern. 将String转成Pattern
+	 *
+	 * @return The pattern.
+	 */
+	public static List<Cell> stringToPattern(String string) {
+		List<Cell> result = new ArrayList<>();
+		if (null != string) {
+			final byte[] bytes = string.getBytes();
+			for (byte b : bytes) {
+				result.add(LockPatternView.Cell.of(b / 3, b % 3));
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * Serialize a pattern. 将Pattern转成String
+	 *
+	 * @param pattern The pattern.
+	 * @return The pattern in string form.
+	 */
+	public static String patternToString(List<Cell> pattern) {
+		if (pattern == null) {
+			return "";
+		}
+		final int patternSize = pattern.size();
+		
+		byte[] res = new byte[patternSize];
+		for (int i = 0; i < patternSize; i++) {
+			LockPatternView.Cell cell = pattern.get(i);
+			res[i] = (byte) (cell.getRow() * 3 + cell.getColumn());
+		}
+		return new String(res);
 	}
 }
