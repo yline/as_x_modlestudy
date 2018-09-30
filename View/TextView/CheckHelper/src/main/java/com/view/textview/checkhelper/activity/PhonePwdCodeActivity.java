@@ -7,85 +7,88 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import com.view.textview.checkhelper.R;
-import com.view.textview.checkhelper.helper.PhonePwdCodeHelper;
+import com.view.textview.checkhelper.checker.CheckHelper;
+import com.view.textview.checkhelper.checker.TextDecorateUtil;
 import com.yline.application.SDKManager;
 import com.yline.base.BaseAppCompatActivity;
-import com.yline.log.LogFileUtil;
 import com.yline.view.recycler.holder.ViewHolder;
 
-public class PhonePwdCodeActivity extends BaseAppCompatActivity
-{
-	private ViewHolder viewHolder;
+import java.util.HashMap;
 
-	public static void launcher(Context context)
-	{
-		if (null != context)
-		{
+public class PhonePwdCodeActivity extends BaseAppCompatActivity {
+	private ViewHolder viewHolder;
+	
+	public static void launcher(Context context) {
+		if (null != context) {
 			Intent intent = new Intent(context, PhonePwdCodeActivity.class);
-			if (!(context instanceof Activity))
-			{
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);	
+			if (!(context instanceof Activity)) {
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			}
 			context.startActivity(intent);
 		}
 	}
 	
+	private CheckHelper checkHelper;
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_phone_pwd_code);
-
+		
 		viewHolder = new ViewHolder(this);
-
+		
 		EditText etPhone = viewHolder.get(R.id.et_username);
 		EditText etCode = viewHolder.get(R.id.et_code);
 		EditText etPwd = viewHolder.get(R.id.et_password);
-
+		
 		CheckBox checkBox = viewHolder.get(R.id.checkBox_phone);
-
-		final PhonePwdCodeHelper phonePwdCodeHelper = new PhonePwdCodeHelper(etPhone, etCode, etPwd, checkBox.isChecked());
-		phonePwdCodeHelper.setOnCheckResultListener(new PhonePwdCodeHelper.OnCheckResultListener()
-		{
+		
+		checkHelper = new CheckHelper();
+		checkHelper.addTextElement(etPhone, "phone", new CheckHelper.OnTextCheckCallback() {
 			@Override
-			public void onChecked(boolean isMatch)
-			{
-				if (isMatch)
-				{
+			public boolean isMatch(String text) {
+				return TextDecorateUtil.isPhoneMatch(text);
+			}
+		});
+		checkHelper.addTextElement(etCode, "code", new CheckHelper.OnTextCheckCallback() {
+			@Override
+			public boolean isMatch(String text) {
+				return TextDecorateUtil.isIdentifyCodeMatch6(text);
+			}
+		});
+		checkHelper.addTextElement(etPwd, "pwd", new CheckHelper.OnTextCheckCallback() {
+			@Override
+			public boolean isMatch(String text) {
+				return TextDecorateUtil.isPhonePwdMatch(text);
+			}
+		});
+		checkHelper.addCheckBoxElement(checkBox, "checkbox", true, new CheckHelper.OnCheckBoxCheckCallback() {
+			@Override
+			public boolean isMatch(boolean isChecked) {
+				return isChecked;
+			}
+		});
+		checkHelper.setOnCheckResultCallback(new CheckHelper.OnCheckResultCallback() {
+			@Override
+			public void onResult(HashMap<String, Boolean> arrayMap, boolean isAllMatch) {
+				if (isAllMatch) {
 					viewHolder.get(R.id.btn_login).setBackgroundColor(ContextCompat.getColor(PhonePwdCodeActivity.this, android.R.color.holo_red_light));
-				}
-				else
-				{
+				} else {
 					viewHolder.get(R.id.btn_login).setBackgroundColor(ContextCompat.getColor(PhonePwdCodeActivity.this, android.R.color.black));
 				}
 			}
 		});
-		checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-		{
-			@Override
-			public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked)
-			{
-				phonePwdCodeHelper.setProtocolChecked(isChecked);
-			}
-		});
-
+		
 		// 登录
-		viewHolder.setOnClickListener(R.id.btn_login, new View.OnClickListener()
-		{
+		viewHolder.setOnClickListener(R.id.btn_login, new View.OnClickListener() {
 			@Override
-			public void onClick(View view)
-			{
-				LogFileUtil.v("onClick = " + phonePwdCodeHelper.isPhoneMatch() + phonePwdCodeHelper.isIdentifyCodeMatch() + phonePwdCodeHelper.isPwdMatch() + phonePwdCodeHelper.isProtocolChecked());
-				if (phonePwdCodeHelper.isResultMatch())
-				{
+			public void onClick(View view) {
+				if (checkHelper.isAllMatch()) {
 					SDKManager.toast("手机号、验证码、密码、协议符合规则");
-				}
-				else
-				{
+				} else {
 					SDKManager.toast("Error");
 				}
 			}
