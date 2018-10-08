@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/AnnualProfitView" />
             <option value="$PROJECT_DIR$/DragBubble" />
             <option value="$PROJECT_DIR$/PatternLock" />
             <option value="$PROJECT_DIR$/SliderBar" />
