@@ -1,1 +1,1 @@
-include ':HScroll', ':KeyClearEditText', ':CheckHelper', ':VScroll'
+include ':HScroll', ':KeyClearEditText', ':CheckHelper', ':VScroll', ':BankCardTextView'

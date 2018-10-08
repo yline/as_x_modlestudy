@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/BankCardTextView" />
             <option value="$PROJECT_DIR$/CheckHelper" />
             <option value="$PROJECT_DIR$/HScroll" />
             <option value="$PROJECT_DIR$/KeyClearEditText" />
