@@ -15,10 +15,10 @@ import com.yline.base.BaseAppCompatActivity;
 import com.yline.log.LogFileUtil;
 import com.yline.test.StrConstant;
 import com.yline.view.recycler.holder.RecyclerViewHolder;
-import com.yline.view.recycler.simple.SimpleCommonRecyclerAdapter;
+import com.yline.view.recycler.test.SimpleRecyclerAdapter;
 
 public class DeleteMenuActivity extends BaseAppCompatActivity {
-    private SimpleCommonRecyclerAdapter recyclerAdapter;
+    private SimpleRecyclerAdapter recyclerAdapter;
 
     public static void launcher(Context context) {
         if (null != context) {
@@ -37,7 +37,7 @@ public class DeleteMenuActivity extends BaseAppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerAdapter = new SimpleCommonRecyclerAdapter() {
+        recyclerAdapter = new SimpleRecyclerAdapter() {
             @Override
             public void onBindViewHolder(final RecyclerViewHolder viewHolder, int position) {
                 super.onBindViewHolder(viewHolder, position);
