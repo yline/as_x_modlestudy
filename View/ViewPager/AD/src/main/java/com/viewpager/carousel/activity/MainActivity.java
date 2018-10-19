@@ -6,44 +6,44 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.view.viewpager.carousel.R;
-import com.viewpager.carousel.widget.ADWidget;
+import com.viewpager.carousel.widget.ADView;
 import com.yline.application.BaseApplication;
 import com.yline.base.BaseAppCompatActivity;
+import com.yline.test.UrlConstant;
+import com.yline.utils.LogUtil;
+import com.yline.view.fresco.FrescoManager;
+import com.yline.view.fresco.view.FrescoView;
 
-public class MainActivity extends BaseAppCompatActivity
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends BaseAppCompatActivity {
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ll_widget_ad);
-
-		// 通过重写的方式,直接设定好参数
-		ADWidget adWidget = new ADWidget()
-		{
+		
+		ADView adView = findViewById(R.id.main_ad);
+		adView.setOnPageListener(new ADView.OnPageListener<String>() {
 			@Override
-			public int getViewPagerHeight()
-			{
-				return 360;
-			}
-		};
-		adWidget.start(this, 8);
-		adWidget.attach(linearLayout);
-		adWidget.setListener(new ADWidget.OnPageListener()
-		{
-			@Override
-			public void onPageClick(View v, int position)
-			{
+			public void onPageClick(View v, String s, int position) {
 				BaseApplication.toast("position = " + position);
 			}
-
+			
 			@Override
-			public void onPageInstance(ImageView imageView, int position)
-			{
-				imageView.setImageResource(R.drawable.global_load_failed);
+			public void onPageInstance(FrescoView frescoView, String s) {
+				LogUtil.v("s = " + s);
+				FrescoManager.setImageUri(frescoView, s);
 			}
 		});
+		List<String> dataList = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			if (i % 2 == 0) {
+				dataList.add(UrlConstant.getJpg_960_640(i));
+			} else {
+				dataList.add(UrlConstant.getJpn_1920_1280(i));
+			}
+		}
+		adView.setData(dataList);
 	}
 }

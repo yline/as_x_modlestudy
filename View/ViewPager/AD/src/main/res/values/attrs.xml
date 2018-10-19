@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ADView">
+        <attr name="ad_point_size_before" format="integer" />
+        <attr name="ad_point_size_after" format="integer" />
+        <attr name="ad_point_left_margin" format="integer" />
+        <attr name="ad_point_right_margin" format="integer" />
+        <attr name="ad_point_top_margin" format="integer" />
+        <attr name="ad_point_bottom_margin" format="integer" />
+        <attr name="ad_point_bg" format="reference" />
+        <attr name="ad_recycle_enable" format="boolean" />
+        <attr name="ad_recycle_auto" format="boolean" />
+        <attr name="ad_recycle_auto_duration" format="integer" />
+        <attr name="ad_recycle_right" format="boolean" />
+        <attr name="ad_viewpager_aspect_ratio" format="float" />
+    </declare-styleable>
+</resources>

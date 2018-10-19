@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.view.viewpager.carousel"
@@ -29,4 +29,14 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.yline.lib:LibSDK:2.0.7'
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+
+    implementation 'com.yline.lib:LibViewFresco:1.1.0'
+
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.facebook.fresco:fresco:1.5.0' // 主依赖
+    implementation 'com.facebook.fresco:animated-gif:1.5.0' // 支持gif动图
+    implementation 'com.facebook.fresco:animated-webp:1.5.0' // 支持webp动态
+    implementation 'com.facebook.fresco:webpsupport:1.5.0' // 支持webp静态
+    implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 }
