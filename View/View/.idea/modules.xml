@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AnnualProfitView/AnnualProfitView.iml" filepath="$PROJECT_DIR$/AnnualProfitView/AnnualProfitView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BackgroundView/BackgroundView.iml" filepath="$PROJECT_DIR$/BackgroundView/BackgroundView.iml" />
       <module fileurl="file://$PROJECT_DIR$/DragBubble/DragBubble.iml" filepath="$PROJECT_DIR$/DragBubble/DragBubble.iml" />
       <module fileurl="file://$PROJECT_DIR$/PatternLock/PatternLock.iml" filepath="$PROJECT_DIR$/PatternLock/PatternLock.iml" />
       <module fileurl="file://$PROJECT_DIR$/SliderBar/SliderBar.iml" filepath="$PROJECT_DIR$/SliderBar/SliderBar.iml" />
