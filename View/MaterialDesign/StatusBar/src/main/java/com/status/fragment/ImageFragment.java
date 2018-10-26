@@ -9,11 +9,9 @@ import android.view.ViewGroup;
 import com.status.R;
 import com.yline.base.BaseFragment;
 
-public class ImageFragment extends BaseFragment
-{
+public class ImageFragment extends BaseFragment {
 	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-	{
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragement_image, container, false);
 	}
 }
