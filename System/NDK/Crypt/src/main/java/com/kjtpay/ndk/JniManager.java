@@ -35,16 +35,9 @@ public class JniManager {
 	public native String getRSAPublicKey();
 	
 	/**
-	 * 获取 RSA 的私钥
+	 * 获取 RSA 的公钥
 	 *
-	 * @return RSA私钥
+	 * @return RSA公钥(测试使用)
 	 */
-	public native String getRSAPrivateKey();
-	
-	/**
-	 * 获取 AES 秘钥
-	 *
-	 * @return AES秘钥
-	 */
-	public native String getAESKey();
+	public native String getRSAPublicKeyTest();
 }
