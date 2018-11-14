@@ -35,6 +35,13 @@ public class JniManager {
 	public native String getRSAPublicKey();
 	
 	/**
+	 * 获取 RSA 的公钥，提供给安全键盘使用
+	 *
+	 * @return RSA公钥
+	 */
+	public native String getRSABoardPublicKey();
+	
+	/**
 	 * 获取 RSA 的公钥
 	 *
 	 * @return RSA公钥(测试使用)
