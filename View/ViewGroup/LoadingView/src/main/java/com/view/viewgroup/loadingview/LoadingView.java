@@ -4,12 +4,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
- * 加载 蒙版
+ * 加载 蒙版；通过静态方法，可以实现动态添加
  *
  * @author yline 2017/10/19 -- 9:16
  * @version 1.0.0
@@ -18,6 +19,21 @@ public class LoadingView extends RelativeLayout {
     private View mLoadingLayout;
     private View mFailedLayout;
     private View.OnClickListener mOnRetryClickListener;
+	
+	public static LoadingView attachView(View rootView) {
+		if (rootView instanceof ViewGroup) {
+			LoadingView loadingView = new LoadingView(rootView.getContext());
+			((ViewGroup) rootView).addView(loadingView, -1);
+			return loadingView;
+		}
+		return null;
+	}
+	
+	public static void detach(View rootView, LoadingView loadingView) {
+		if (null != loadingView && rootView instanceof ViewGroup) {
+			((ViewGroup) rootView).removeView(loadingView);
+		}
+	}
 
     public LoadingView(Context context) {
         this(context, null);
