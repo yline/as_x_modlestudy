@@ -56,4 +56,26 @@
         <item name="android:maxWidth">48dp</item>
         <item name="android:mirrorForRtl" tools:targetApi="jelly_bean_mr2">false</item>
     </style>
+
+    <style name="progress_circle_loading">
+        <item name="android:indeterminateDrawable">@drawable/system_progress_medium_holo</item>
+        <item name="android:interpolator">@android:anim/accelerate_decelerate_interpolator</item>
+        <item name="android:indeterminateOnly">true</item>
+        <item name="android:indeterminateBehavior">repeat</item>
+        <item name="android:indeterminateDuration">2500</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:maxHeight">48dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:maxWidth">48dp</item>
+        <item name="android:mirrorForRtl" tools:targetApi="jelly_bean_mr2">false</item>
+    </style>
+
+    <style name="dialog_default_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

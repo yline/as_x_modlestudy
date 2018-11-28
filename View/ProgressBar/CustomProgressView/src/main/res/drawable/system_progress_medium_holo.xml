@@ -11,9 +11,9 @@
     <item>
         <rotate
             android:drawable="@drawable/spinner_48_inner_holo"
-            android:fromDegrees="720"
+            android:fromDegrees="630"
             android:pivotX="50%"
             android:pivotY="50%"
-            android:toDegrees="0" />
+            android:toDegrees="-90" />
     </item>
 </layer-list>
