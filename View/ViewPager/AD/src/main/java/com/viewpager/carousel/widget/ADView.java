@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.view.viewpager.carousel.R;
+import com.yline.utils.LogUtil;
 import com.yline.utils.UIResizeUtil;
 import com.yline.utils.UIScreenUtil;
 import com.yline.view.fresco.FrescoManager;
@@ -81,7 +82,7 @@ public class ADView extends RelativeLayout {
 		linearLayout = findViewById(R.id.ll_widget_ad);
 		
 		viewPager = findViewById(R.id.viewpager_widget_ad);
-		pagerAdapter = new AdPagerAdapter<>(context);
+		pagerAdapter = new AdPagerAdapter<>(context, recycleRight);
 		viewPager.setAdapter(pagerAdapter);
 		resizeViewPager(viewPager, viewPagerAspectRatio);
 		
@@ -140,13 +141,14 @@ public class ADView extends RelativeLayout {
 		viewPager.setCurrentItem(startPosition);
 		
 		initIndicatorPoint(getContext(), linearLayout, dataList.size());
+		selectIndicatorPoint(linearLayout, startPosition);
 		pagerAdapter.setDataList(dataList, recycleEnable);
 		
 		// 开始自动循环播放
 		// 这个必须在ViewPager等初始化完成之后,才能开始
 		if (recycleAuto) {
 			AdHandler handler = new AdHandler(viewPager, recycleAutoTime, recycleRight);
-			handler.sendEmptyMessageDelayed(1, recycleAutoTime);
+			handler.sendEmptyMessageDelayed(AdHandler.AUTO, recycleAutoTime);
 		}
 	}
 	
@@ -219,21 +221,24 @@ public class ADView extends RelativeLayout {
 	
 	// View适配器
 	private static class AdPagerAdapter<T> extends PagerAdapter {
+		private static final int COUNT_MAX = 5040; // 10以内所有数的公倍数  5040
 		private Context sContext;
 		
 		private boolean isRecycle; // 是否循环滚动
-		private List<T> mDataList; // 数据集
+		private List<T> sDataList; // 数据集
+		private boolean sIsRight;
 		
 		private OnPageListener<T> pageListener;
 		
-		private AdPagerAdapter(Context context) {
+		private AdPagerAdapter(Context context, boolean isRight) {
 			this.sContext = context;
-			this.mDataList = new ArrayList<>();
+			this.sDataList = new ArrayList<>();
+			this.sIsRight = isRight;
 		}
 		
 		private void setDataList(List<T> list, boolean isRecycle) {
 			if (null != list && !list.isEmpty()) {
-				this.mDataList = list;
+				this.sDataList = list;
 				this.isRecycle = isRecycle;
 				notifyDataSetChanged();
 			}
@@ -246,9 +251,9 @@ public class ADView extends RelativeLayout {
 		@Override
 		public int getCount() {
 			if (isRecycle) {
-				return Integer.MAX_VALUE;
+				return COUNT_MAX;
 			} else {
-				return mDataList.size();
+				return sDataList.size();
 			}
 		}
 		
@@ -259,14 +264,14 @@ public class ADView extends RelativeLayout {
 		
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
-			position = isRecycle ? position % mDataList.size() : position;
+			position = isRecycle ? position % sDataList.size() : position;
 			
 			View view = LayoutInflater.from(sContext).inflate(R.layout.view_ad_item, null);
 			
 			final FrescoView frescoView = view.findViewById(R.id.view_ad_item_fresco);
 			// FrescoManager.setImageUri(frescoView, (String) mDataList.get(position));
 			if (null != pageListener) {
-				pageListener.onPageInstance(frescoView, mDataList.get(position));
+				pageListener.onPageInstance(frescoView, sDataList.get(position));
 			}
 			
 			final int index = position;
@@ -274,7 +279,7 @@ public class ADView extends RelativeLayout {
 				@Override
 				public void onClick(View v) {
 					if (null != pageListener) {
-						pageListener.onPageClick(frescoView, mDataList.get(index), index);
+						pageListener.onPageClick(frescoView, sDataList.get(index), index);
 					}
 				}
 			});
@@ -295,10 +300,16 @@ public class ADView extends RelativeLayout {
 			if (isRecycle && container instanceof ViewPager) {
 				ViewPager viewPager = (ViewPager) container;
 				int position = viewPager.getCurrentItem();
-				if (0 == position) {
-					viewPager.setCurrentItem(mDataList.size(), false);
-				} else if (position == Integer.MAX_VALUE) {
-					viewPager.setCurrentItem(position % mDataList.size(), false);
+				
+				LogUtil.v("position = " + position + ", sIsRight = " + sIsRight);
+				if (sIsRight) { // 避免重复调用
+					if (position == COUNT_MAX - 1) {
+						viewPager.setCurrentItem(0, false);
+					}
+				} else {
+					if (0 == position) {
+						viewPager.setCurrentItem(sDataList.size(), false);
+					}
 				}
 			}
 		}
@@ -325,6 +336,8 @@ public class ADView extends RelativeLayout {
 	
 	// 自动播放
 	private static class AdHandler extends Handler {
+		private static final int AUTO = 100;
+		
 		private static final int Move = 0; // 用户正在滑动
 		private static final int Up = 1; // 用户 松开
 		private static final int Auto = 2; // 自动播放模式
@@ -340,7 +353,7 @@ public class ADView extends RelativeLayout {
 		 */
 		@SuppressLint("ClickableViewAccessibility")
 		private AdHandler(ViewPager viewPager, int oneTime, boolean scrollRight) {
-			autoTime = Math.max(oneTime, 1000);
+			autoTime = Math.max(oneTime, 1800);
 			isRight = scrollRight;
 			
 			reference = new WeakReference<>(viewPager);
@@ -369,15 +382,19 @@ public class ADView extends RelativeLayout {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
-			if (touchState == Move) {
-				touchState = Auto;
-				sendEmptyMessageDelayed(1, autoTime);
-			} else if (touchState == Auto) {
-				sendEmptyMessageDelayed(1, autoTime);
-				autoScroll();
-			} else {
-				touchState = Auto;
-				sendEmptyMessageDelayed(1, autoTime);
+			
+			LogUtil.v("msg.what = " + msg.what + ", autoTime = " + autoTime);
+			if (msg.what == AUTO) {
+				if (touchState == Move) {
+					touchState = Auto;
+					sendEmptyMessageDelayed(AUTO, autoTime);
+				} else if (touchState == Auto) {
+					sendEmptyMessageDelayed(AUTO, autoTime);
+					autoScroll();
+				} else {
+					touchState = Auto;
+					sendEmptyMessageDelayed(AUTO, autoTime);
+				}
 			}
 		}
 		
