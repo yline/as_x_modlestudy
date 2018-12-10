@@ -402,6 +402,7 @@ public class ADView extends RelativeLayout {
 			
 			LogUtil.v("msg.what = " + msg.what + ", autoTime = " + autoTime);
 			if (msg.what == AUTO) {
+				removeCallbacksAndMessages(null);
 				if (touchState == Move) {
 					touchState = Auto;
 					sendEmptyMessageDelayed(AUTO, autoTime);
