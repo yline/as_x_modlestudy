@@ -6,16 +6,21 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.yline.utils.UIScreenUtil;
+import com.yline.view.annual.model.RateModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -24,6 +29,8 @@ import java.util.Locale;
  * @author linjiang@kjtpay.com  2018/9/25 -- 20:46
  */
 public class AnnualProfitView extends View {
+	private OnPointSelectListener onPointSelectListener;
+	
 	public AnnualProfitView(Context context) {
 		this(context, null);
 	}
@@ -35,6 +42,7 @@ public class AnnualProfitView extends View {
 	public AnnualProfitView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		
+		setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 		initBgNet();
 		initCoordinate();
 		initCoordinateText();
@@ -42,55 +50,62 @@ public class AnnualProfitView extends View {
 		initPoint();
 	}
 	
+	public void setOnPointSelectListener(OnPointSelectListener onPointSelectListener) {
+		this.onPointSelectListener = onPointSelectListener;
+	}
+	
 	/* ---------------------------- 设置参数，并更新UI -------------------------- */
-	private final static int AXIS_Y_SIZE = 5; // Y轴文字个数
+	private final static int AXIS_Y_SIZE = 4; // Y轴文字个数
 	
-	private float yValueMax = 6.0f; // Y轴上限
-	private float[] yValueArray; // y的值
-	private String[] axisYValueArray = {"1.235", "2.043", "2.866", "3.729", "4.125"}; // Y轴 标注
-	private String[] axisXValueArray = {"12-30", "12-31", "01-01", "01-02", "01-03", "01-04", "01-05"}; // X轴 标注
+	private float yMaxLimit, yMinLimit; // Y轴上限和下限
+	private List<Float> yValueList; // Y 的值
+	private List<String> yAxisList; // Y轴标注
+	private List<String> xAxisList; // X轴标注
 	
-	/**
-	 * 设置参数，并更新UI
-	 *
-	 * @param yValueArray      每个点的值
-	 * @param xCoordinateArray X坐标的值
-	 */
-	public void setData(float[] yValueArray, String[] xCoordinateArray) {
-		if (null != yValueArray && yValueArray.length > 0) {
-			this.yValueArray = yValueArray; // 值的队列
+	public void setData(List<RateModel> rateModelList) {
+		if (null != rateModelList && !rateModelList.isEmpty()) {
+			int length = rateModelList.size();
 			
-			this.yValueMax = getMaxValue(yValueArray); // 计算Y的上限
+			yValueList = new ArrayList<>(length);
+			xAxisList = new ArrayList<>(length);
+			for (RateModel rateModel : rateModelList) {
+				yValueList.add(rateModel.getRatePerWeek()); // 七日年化收益
+				
+				String benefitDate = rateModel.getBenefitDate(); // 1125 这种格式
+				xAxisList.add(benefitDate); // X轴文字，初始化
+			}
 			
-			// 更新Y轴 坐标提示文字
-			float unit = yValueMax / (AXIS_Y_SIZE + 1);
+			updateYLimitValue(yValueList);
+			yAxisList = new ArrayList<>(AXIS_Y_SIZE);
+			float unit = (yMaxLimit - yMinLimit) / (AXIS_Y_SIZE + 1);
 			for (int i = 0; i < AXIS_Y_SIZE; i++) {
-				this.axisYValueArray[i] = String.format(Locale.CHINA, "%1.3f", (i + 1) * unit);
+				String yAxis = String.format(Locale.CHINA, "%1.3f", yMinLimit + (i + 1) * unit);
+				yAxisList.add(yAxis);
 			}
 			
-			if (null != xCoordinateArray && xCoordinateArray.length == yValueArray.length) {
-				this.axisXValueArray = xCoordinateArray;
-			}
+			contentPixelArray = null;
+			invalidate();
 		}
-		invalidate();
 	}
 	
 	/**
-	 * 一般情况是最大值的 3/2
+	 * 计算图标的上下值
 	 *
-	 * @param yValueArray 值的队列
-	 * @return 最大值的 5/4
+	 * @param yValueList 当前的内容
 	 */
-	private float getMaxValue(float[] yValueArray) {
-		float temp = yValueArray[0];
-		for (int i = 1; i < yValueArray.length; i++) {
-			temp = (temp > yValueArray[i] ? temp : yValueArray[i]);
+	private void updateYLimitValue(List<Float> yValueList) {
+		float max = yValueList.get(0), min = yValueList.get(0);
+		for (float yValue : yValueList) {
+			max = Math.max(max, yValue);
+			min = Math.min(min, yValue);
 		}
 		
-		return temp * 3 / 2.0f;
+		float diff = max - min;
+		yMaxLimit = max + diff;
+		yMinLimit = min - 2 * diff;
 	}
 	
-	private int touchIndex = -1; // 当前按住的位置
+	private int mTouchIndex = -1; // 当前按住的位置
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -98,12 +113,19 @@ public class AnnualProfitView extends View {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				x = event.getX();
-				touchIndex = getTouchIndex(xContentPixelArray, x);
+				
+				int touchIndex = getTouchIndex(contentPixelArray, x);
+				if (touchIndex >= 0 && touchIndex < yValueList.size() && mTouchIndex != touchIndex) { // touchIndex在范围内，并且有改变
+					mTouchIndex = touchIndex;
+					if (null != onPointSelectListener) { // 更新事件
+						onPointSelectListener.onSelect(touchIndex);
+					}
+				}
 				break;
 			//				滑动效果，暂时不要
 			//			case MotionEvent.ACTION_MOVE:
 			//				x = event.getX();
-			//				touchIndex = getTouchIndex(xContentPixelArray, x);
+			//				mTouchIndex = getTouchIndex(xContentPixelArray, x);
 			//				break;
 			default:
 				break;
@@ -116,53 +138,62 @@ public class AnnualProfitView extends View {
 	/**
 	 * 依据点击的位置，动态计算当前按下的 xArray的第几个
 	 *
-	 * @param xValueArray xArray的像素点值
-	 * @param xValue      点击的像素点
+	 * @param contentValueArray 当前内容点，像素点值
+	 * @param xValue            点击的像素点
 	 * @return 第几个
 	 */
-	private int getTouchIndex(int[] xValueArray, float xValue) {
-		if (null != xValueArray && xValueArray.length > 1) {
-			int xSpace = xValueArray[1] - xValueArray[0];
-			int relateValue = (int) xValue - xValueArray[0] + xSpace / 2;
+	private int getTouchIndex(Point[] contentValueArray, float xValue) {
+		if (null != contentValueArray && contentValueArray.length > 1) {
+			int xSpace = contentValueArray[1].x - contentValueArray[0].x;
+			int relateValue = (int) xValue - contentValueArray[0].x + xSpace / 2;
 			return relateValue / xSpace;
 		}
 		return -1;
 	}
 	
-	private Rect charRect = new Rect(); // 中心坐标，以内的位置
-	private Rect charOffsetRect = new Rect(); // 中心坐标，往两侧偏移的距离
+	private final Rect charRect = new Rect(); // 中心坐标，以内的位置
+	private final Rect charOffsetRect = new Rect(); // 中心坐标，往两侧偏移的距离
 	
 	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		
 		int width = getMeasuredWidth();
 		int height = getMeasuredHeight();
 		
 		// 主体定位坐标
-		int offsetLeft = coordinateTextYRect.width() + 10; // 左侧间距，10px
-		int offsetBottom = coordinateTextXRect.height() + 13; // 底部间距，13px
+		final int offsetLeft = coordinateTextYRect.width() + 10; // 左侧间距，10px
+		final int offsetBottom = coordinateTextXRect.height() + 13; // 底部间距，13px
 		charOffsetRect.set(offsetLeft, 0, 0, offsetBottom);
 		
 		// 图标X方向，开始与结束，位置
-		int startX = getPaddingLeft() + charOffsetRect.left, endX = width - getPaddingRight() - charOffsetRect.right;
+		final int startX = getPaddingLeft() + charOffsetRect.left, endX = width - getPaddingRight() - charOffsetRect.right;
 		// 图标Y方向，开始与结束，位置
-		int startY = getPaddingTop() + charOffsetRect.top, endY = height - getPaddingBottom() - charOffsetRect.bottom;
+		final int startY = getPaddingTop() + charOffsetRect.top, endY = height - getPaddingBottom() - charOffsetRect.bottom;
 		charRect.set(startX, startY, endX, endY);
+	}
+	
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
 		
-		int xSpace = (endX - startX) / (axisXValueArray.length - 1); // x坐标之间的间隔（像素）
-		int ySpace = (endY - startY) / (axisYValueArray.length + 1); // y坐标之间的间隔（像素）
-		
-		drawBgNet(canvas, charRect, ySpace, axisYValueArray.length);
-		if (null != yValueArray) {
-			drawContent(canvas, charRect, xSpace, yValueArray, yValueMax);
+		if (null != xAxisList && null != yAxisList) {
+			//int xSpace = (endX - startX) / (xAxisList.size() - 1); // x坐标之间的间隔（像素）
+			int xSpace = charRect.width() / (xAxisList.size() - 1); // x坐标之间的间隔（像素）
+			// int ySpace = (endY - startY) / (yAxisList.size() + 1); // y坐标之间的间隔（像素）
+			int ySpace = charRect.height() / (yAxisList.size() + 1); // y坐标之间的间隔（像素）
 			
-			int index = touchIndex > -1 ? touchIndex : yValueArray.length - 1; // 如果小于最小值，默认展示最后一个
-			index = Math.min(yValueArray.length - 1, index); // 不允许超过最大值
-			drawPoint(canvas, xContentPixelArray[index], yContentPixelArray[index], yValueArray[index]);
+			drawBgNet(canvas, charRect, ySpace, yAxisList.size());
+			if (null != yValueList && !yValueList.isEmpty()) {
+				drawContent(canvas, charRect, xSpace, yValueList, yMaxLimit, yMinLimit);
+				
+				int index = mTouchIndex > -1 ? mTouchIndex : yValueList.size() - 1; // 如果小于最小值，默认展示最后一个
+				index = Math.min(yValueList.size() - 1, index); // 不允许超过最大值
+				drawPoint(canvas, contentPixelArray[index].x, contentPixelArray[index].y, yValueList.get(index));
+			}
+			drawCoordinate(canvas, charRect);
+			drawCoordinateText(canvas, charRect, charOffsetRect, xSpace, ySpace, xAxisList, yAxisList);
 		}
-		drawCoordinate(canvas, charRect);
-		drawCoordinateText(canvas, charRect, charOffsetRect, xSpace, ySpace, axisXValueArray, axisYValueArray);
 	}
 	
 	/* ---------------------------- 绘制当前点（点 + 提示文字） -------------------------- */
@@ -219,7 +250,7 @@ public class AnnualProfitView extends View {
 			pointTextBgRect.offset(-bgWidth / 2 + pointTextOffsetRect.right, 0);
 		}
 		
-		canvas.drawRoundRect(pointTextBgRect, bgHeight, bgHeight, pointPaint);
+		canvas.drawRoundRect(pointTextBgRect, bgHeight / 2, bgHeight / 2, pointPaint);
 		
 		// 点对应的文字
 		pointPaint.setColor(ContextCompat.getColor(getContext(), android.R.color.white));
@@ -291,11 +322,11 @@ public class AnnualProfitView extends View {
 		coordinateTextPaint.getTextBounds(formatX, 0, formatX.length(), coordinateTextXRect);
 	}
 	
-	private void drawCoordinateText(Canvas canvas, Rect charRect, Rect charOffsetRect, int xSpace, int ySpace, String[] xTextArray, String[] yTextArray) {
+	private void drawCoordinateText(Canvas canvas, Rect charRect, Rect charOffsetRect, int xSpace, int ySpace, List<String> xTextList, List<String> yTextList) {
 		// X轴提示文字
 		int textEnd = charRect.bottom + charOffsetRect.bottom;
-		for (int i = 0; i < xTextArray.length; i++) {
-			String textXValue = xTextArray[i];
+		for (int i = 0; i < xTextList.size(); i++) {
+			String textXValue = xTextList.get(i);
 			
 			int textXCenter = charRect.left + xSpace * i;
 			canvas.drawText(textXValue, textXCenter - coordinateTextXRect.width() / 2, textEnd, coordinateTextPaint);
@@ -303,10 +334,10 @@ public class AnnualProfitView extends View {
 		
 		// Y轴提示文字
 		int textLeft = charRect.left - charOffsetRect.left;
-		for (int i = 0; i < yTextArray.length; i++) {
-			String textYValue = yTextArray[i];
+		for (int i = 0; i < yTextList.size(); i++) {
+			String textYValue = yTextList.get(i);
 			
-			int textYCenter = charRect.top + ySpace * (yTextArray.length - i);
+			int textYCenter = charRect.top + ySpace * (yTextList.size() - i);
 			canvas.drawText(textYValue, textLeft, textYCenter + coordinateTextYRect.height() / 2, coordinateTextPaint);
 		}
 	}
@@ -315,9 +346,8 @@ public class AnnualProfitView extends View {
 	private Paint contentPaint = new Paint(); // 内容绘制
 	private Path contentPath = new Path(); // 内容路径
 	
-	// 搭配起来就是每个点的位置了
-	private int[] xContentPixelArray; // X轴，轴点，像素位置
-	private int[] yContentPixelArray; // Y轴，值，像素位置
+	// 每个内容点的位置（像素点）
+	private Point[] contentPixelArray;
 	
 	private void initContent() {
 		contentPaint.setAntiAlias(true);
@@ -328,54 +358,63 @@ public class AnnualProfitView extends View {
 	}
 	
 	/**
-	 * @param yValueArray y坐标的值 队列
-	 * @param yValueMax   y坐标 最大值
+	 * @param yValueList y坐标的值  数组
+	 * @param yMaxLimit  y坐标 最大值
 	 */
-	private void drawContent(Canvas canvas, Rect charRect, int xSpace, float[] yValueArray, float yValueMax) {
-		updatePixelArray(charRect, xSpace, yValueArray, yValueMax);
+	private void drawContent(Canvas canvas, Rect charRect, int xSpace, List<Float> yValueList, float yMaxLimit, float yMinLimit) {
+		updatePixelArray(charRect, xSpace, yValueList, yMaxLimit, yMinLimit);
 		
 		// 绘制阴影
 		contentPaint.setColor(ContextCompat.getColor(getContext(), R.color.design_red_33));
 		
+		contentPath.reset(); // 必须清楚之前的路径，不然不会清除
 		contentPath.moveTo(charRect.left, charRect.bottom);
-		for (int i = 0; i < yContentPixelArray.length; i++) {
-			contentPath.lineTo(xContentPixelArray[i], yContentPixelArray[i]);
+		for (int i = 0; i < contentPixelArray.length; i++) {
+			contentPath.lineTo(contentPixelArray[i].x, contentPixelArray[i].y);
 		}
 		contentPath.lineTo(charRect.right, charRect.bottom);
 		contentPath.close();
 		canvas.drawPath(contentPath, contentPaint);
 		
-		// 绘制 折现
+		// 绘制 折线
 		contentPaint.setColor(ContextCompat.getColor(getContext(), R.color.design_red));
 		
-		int lastX = 0, lastY = 0;
-		for (int i = 0; i < yContentPixelArray.length; i++) {
+		Point lastPoint = new Point(0, 0);
+		for (int i = 0; i < contentPixelArray.length; i++) {
 			if (i != 0) {
-				canvas.drawLine(lastX, lastY, xContentPixelArray[i], yContentPixelArray[i], contentPaint);
+				canvas.drawLine(lastPoint.x, lastPoint.y, contentPixelArray[i].x, contentPixelArray[i].y, contentPaint);
 			}
-			lastX = xContentPixelArray[i];
-			lastY = yContentPixelArray[i];
+			lastPoint.set(contentPixelArray[i].x, contentPixelArray[i].y);
 		}
 	}
 	
-	private void updatePixelArray(Rect charRect, int xSpace, float[] yValueArray, float yValueMax) {
-		xContentPixelArray = new int[yValueArray.length];
-		yContentPixelArray = new int[yValueArray.length];
-		
-		float unit = charRect.height() / yValueMax; // 每个点的收益率，对应的像素个数
-		for (int i = 0; i < yValueArray.length; i++) {
-			// 计算坐标
-			int textXCenter;
-			if (i == yValueArray.length - 1) { // 解决计算误差导致的倾斜
-				textXCenter = charRect.right;
-			} else {
-				textXCenter = charRect.left + xSpace * i;
+	private void updatePixelArray(Rect charRect, int xSpace, List<Float> yValueList, float yMaxLimit, float yMinLimit) {
+		if (null == contentPixelArray || contentPixelArray.length != yValueList.size()) { // 数据变化了
+			int length = yValueList.size(); // 值的个数
+			contentPixelArray = new Point[length];
+			
+			float unit = charRect.height() / (yMaxLimit - yMinLimit); // 每个点的收益率，对应的像素个数
+			for (int i = 0; i < length; i++) {
+				// 计算坐标
+				int textXCenter;
+				if (i == length - 1) { // 解决计算误差导致的倾斜
+					textXCenter = charRect.right;
+				} else {
+					textXCenter = charRect.left + xSpace * i;
+				}
+				
+				int yValue = (int) ((yMaxLimit - yValueList.get(i)) * unit);
+				contentPixelArray[i] = new Point(textXCenter, yValue);
 			}
-			
-			int valueY = (int) ((yValueMax - yValueArray[i]) * unit);
-			
-			xContentPixelArray[i] = textXCenter;
-			yContentPixelArray[i] = valueY;
 		}
+	}
+	
+	public interface OnPointSelectListener {
+		/**
+		 * 选择 point
+		 *
+		 * @param index 选择的位置
+		 */
+		void onSelect(int index);
 	}
 }
