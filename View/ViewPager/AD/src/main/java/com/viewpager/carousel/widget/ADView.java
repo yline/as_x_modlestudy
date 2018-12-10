@@ -38,6 +38,8 @@ public class ADView extends RelativeLayout {
 	private ViewPager viewPager; // 内容
 	private AdPagerAdapter<String> pagerAdapter; // 内容的适配器
 	
+	private AdHandler adHandler; // 轮播器
+	
 	// 数据
 	private final int pointSizeBefore; // 指示点，未选中大小
 	private final int pointSizeAfter; // 指示点，选中大小
@@ -147,8 +149,23 @@ public class ADView extends RelativeLayout {
 		// 开始自动循环播放
 		// 这个必须在ViewPager等初始化完成之后,才能开始
 		if (recycleAuto) {
-			AdHandler handler = new AdHandler(viewPager, recycleAutoTime, recycleRight);
-			handler.sendEmptyMessageDelayed(AdHandler.AUTO, recycleAutoTime);
+			if (null == adHandler) { // 防止多次初始化
+				synchronized (AdHandler.class) {
+					if (null == adHandler) {
+						adHandler = new AdHandler(viewPager, recycleAutoTime, recycleRight);
+						adHandler.sendEmptyMessageDelayed(AdHandler.AUTO, recycleAutoTime);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 清除Handler
+	 */
+	public void stop() {
+		if (adHandler != null) {
+			adHandler.removeCallbacksAndMessages(null);
 		}
 	}
 	
