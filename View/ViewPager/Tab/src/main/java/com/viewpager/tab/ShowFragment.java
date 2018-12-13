@@ -23,7 +23,7 @@ public class ShowFragment extends BaseFragment {
 		Bundle bundle = new Bundle();
 		bundle.putString(KEY_TEXT, showText);
 		fragment.setArguments(bundle);
-		return new ShowFragment();
+		return fragment;
 	}
 	
 	private TextView showTv;
