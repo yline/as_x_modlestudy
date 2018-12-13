@@ -8,95 +8,78 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewPagerAdapter extends PagerAdapter
-{
-	private static final String TAG = "ViewPagerAdapter";
-
+public class ViewPagerAdapter extends PagerAdapter {
 	private Context context;
-
+	
 	private List<View> viewList;
-
-	public ViewPagerAdapter(Context context)
-	{
+	
+	public ViewPagerAdapter(Context context) {
 		this.context = context;
-		viewList = new ArrayList<View>();
+		viewList = new ArrayList<>();
 	}
-
+	
 	@Override
-	public int getCount()
-	{
+	public int getCount() {
 		return viewList.size();
 	}
-
+	
 	@Override
-	public boolean isViewFromObject(View view, Object object)
-	{
+	public boolean isViewFromObject(View view, Object object) {
 		return (view == object);
 	}
-
+	
 	@Override
-	public Object instantiateItem(ViewGroup container, final int position)
-	{
+	public Object instantiateItem(ViewGroup container, final int position) {
 		View view = viewList.get(position);
 		container.addView(view);
 		return view;
 	}
-
+	
 	/**
 	 * 这里不能重写原来的方法,因为一定环境下不支持
-	 *
-	 * @param container
-	 * @param position
-	 * @param object
 	 */
 	@Override
-	public void destroyItem(ViewGroup container, int position, Object object)
-	{
+	public void destroyItem(ViewGroup container, int position, Object object) {
 		container.removeView((View) object);
 	}
-
-	public void addView(View view)
-	{
+	
+	public void addView(View view) {
 		this.viewList.add(view);
 		notifyDataSetChanged();
 	}
-
+	
 	/**
 	 * 添加一个View
 	 *
 	 * @param postition the index at which to insert.
 	 * @param view
 	 */
-	public void addView(int postition, View view)
-	{
+	public void addView(int postition, View view) {
 		this.viewList.add(postition, view);
 		notifyDataSetChanged();
 	}
-
+	
 	/**
 	 * 移除一个View
 	 *
 	 * @param position the index at which to insert.
 	 */
-	public void removeView(int position)
-	{
+	public void removeView(int position) {
 		this.viewList.remove(position);
 		notifyDataSetChanged();
 	}
-
-	public void removeView(View view)
-	{
+	
+	public void removeView(View view) {
 		this.viewList.remove(view);
 		notifyDataSetChanged();
 	}
-
+	
 	/**
 	 * 替换所有的view
 	 *
 	 * @param viewList
 	 */
-	public void setViews(List<View> viewList)
-	{
+	public void setViews(List<View> viewList) {
 		this.viewList = viewList;
 		notifyDataSetChanged();
 	}

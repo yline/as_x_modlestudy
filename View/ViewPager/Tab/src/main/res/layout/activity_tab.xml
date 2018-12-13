@@ -4,14 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/include_main_bottom"
-        layout="@layout/activity_main_bottom"
+    <com.viewpager.tab.TabActivity.TabBottomView
+        android:id="@+id/tab_bottom_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></include>
+        android:layout_height="wrap_content" />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/content_viewpager"
+        android:id="@+id/tab_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
