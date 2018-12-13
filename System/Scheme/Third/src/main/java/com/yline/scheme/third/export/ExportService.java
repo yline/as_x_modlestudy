@@ -4,7 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.yline.scheme.third.util.Utils;
+import com.yline.scheme.third.util.UriUtils;
 import com.yline.utils.LogUtil;
 
 public class ExportService extends Service {
@@ -24,7 +24,7 @@ public class ExportService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		if (null != intent){
-			Utils.schemePrint(intent.getData());
+			UriUtils.schemePrint(intent.getData());
 		}else {
 			LogUtil.v("intent is null");
 		}

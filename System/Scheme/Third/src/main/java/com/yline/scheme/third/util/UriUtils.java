@@ -4,7 +4,7 @@ import android.net.Uri;
 
 import com.yline.utils.LogUtil;
 
-public class Utils {
+public class UriUtils {
 	/**
 	 * 解析一个 Scheme
 	 * [scheme]://[host]:[port][path]?[query]

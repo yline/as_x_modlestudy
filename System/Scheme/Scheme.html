@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Scheme</title>
+	<base target="_blank">
+</head>
+<body>
+
+	<h3>1,参考</h3>
+	<a href="https://www.cnblogs.com/whoislcj/p/5825333.html">Scheme URL使用</a>
+	<br>
+	
+	<h3>2，完整 Scheme格式</h3>
+	<div>[scheme]://[host]:[port][path]?[query]</div>
+	<table border="1" cellpadding="10" cellspacing="0">
+		<tr>
+			<th>api</th>
+			<th>案例</th>
+		</tr>
+		<tr>
+			<td>uri.toString()</td>
+			<td>https://blog.csdn.net/search?locationNum=1&fps=1</td>
+		</tr>
+		<tr>
+			<td>uri.getScheme()</td>
+			<td>https</td>
+		</tr>
+		<tr>
+			<td>uri.getHost()</td>
+			<td>blog.csdn.net</td>
+		</tr>
+		<tr>
+			<td>uri.getPort()</td>
+			<td>-1</td>
+		</tr>
+		<tr>
+			<td>uri.getPath()</td>
+			<td>/search</td>
+		</tr>
+		<tr>
+			<td>uri.getQuery()</td>
+			<td>locationNum=1&fps=1</td>
+		</tr>
+		<tr>
+			<td>uri.getAuthority()</td>
+			<td>blog.csdn.net</td>
+		</tr>
+	</table>
+
+	<h3>3,使用方法</h3>
+
+	<h4>1) activity</h4>
+	<div>提供者</div>
+	<xmp>
+	<activity android:name=".export.ExportActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="com.yline"
+                    android:scheme="activity" />
+            </intent-filter>
+        </activity>
+	</xmp>
+	<div>使用者</div>
+	<xmp>
+	public static void startActivity(Context context, String attach) {
+		String routerUrl = "activity://com.yline" + attach;
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setData(Uri.parse(routerUrl));
+		if (null != intent.resolveActivity(context.getPackageManager())) {
+			context.startActivity(intent);
+		} else {
+			LogUtil.v(routerUrl + " is not exist");
+		}
+	}
+	</xmp>
+	<div>Third关闭：Application -> 对应Activity【虽然进程不同，但后台只有一个应用；再从桌面打开Third，重复使用该进程】</div>
+	<div>Third活着：对应Activity</div>
+	<div>Third活着(非首次)：对应Activity</div>
+
+
+	<h4>2) service</h4>
+	<div>提供者</div>
+	<xmp>
+	<service android:name=".export.ExportService">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="com.yline"
+                    android:scheme="service" />
+            </intent-filter>
+        </service>
+	</xmp>
+	<div>使用者</div>
+	<xmp>
+	public static void startService(Context context, String attach) {
+		String routerUrl = "service://com.yline" + attach;
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setData(Uri.parse(routerUrl));
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+			boolean isExist = attachComponentName(context, intent);
+			if (isExist) {
+				context.startService(intent);
+			} else {
+				LogUtil.v(routerUrl + " is not exist");
+			}
+		} else {
+			context.startService(intent);
+		}
+	}
+	
+	/**
+	 * 如果不加，6.0以上报错：
+	 * Service Intent must be explicit
+	 */
+	private static boolean attachComponentName(Context context, Intent intent) {
+		ComponentName componentName = null;
+		PackageManager packageManager = context.getPackageManager();
+		if (null != packageManager) {
+			ResolveInfo resolveInfo = packageManager.resolveService(intent, 0);
+			if (null != resolveInfo) {
+				String packageName = resolveInfo.serviceInfo.packageName;
+				String className = resolveInfo.serviceInfo.name;
+				componentName = new ComponentName(packageName, className);
+			}
+		}
+		
+		if (null != componentName) {
+			intent.setComponent(componentName);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	</xmp>
+	<div>Service开启从外部开启，和从内部开启现象相同【onCraete一次，之后onStartCommand】</div>
+	
+	
+	<h4>3) receiver</h4>
+	<div>提供者</div>
+	<xmp>
+	<receiver android:name=".export.ExportReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="com.yline"
+                    android:scheme="receiver" />
+            </intent-filter>
+        </receiver>
+	</xmp>
+	<div>使用者</div>
+	<xmp>
+	public static void startReceiver(Context context, String attach) {
+		String routerUrl = "receiver://com.yline" + attach;
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setData(Uri.parse(routerUrl));
+		context.sendBroadcast(intent);
+	}
+	</xmp>
+	<div>Service开启从外部开启，和从内部开启现象相同【onReceive】</div>
+
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+	<br>	
+</body>
+</html>
