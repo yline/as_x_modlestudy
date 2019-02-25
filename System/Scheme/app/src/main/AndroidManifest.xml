@@ -3,7 +3,7 @@
     package="com.yline.scheme">
 
     <application
-        android:name="com.yline.application.BaseApplication"
+        android:name=".SchemeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

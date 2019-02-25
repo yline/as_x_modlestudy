@@ -80,6 +80,20 @@ public class BankCardTextWatcher implements TextWatcher {
 	}
 	
 	/**
+	 * 输出清除空格的内容
+	 *
+	 * @param editText 银行卡内容控件
+	 * @return 已删除空格的字符串
+	 */
+	public static String getString(EditText editText) {
+		if (null == editText) {
+			return "";
+		}
+		String stringWithSpace = editText.getText().toString();
+		return clearSpace(stringWithSpace);
+	}
+	
+	/**
 	 * 因为空格，所以提供一个删除空格的函数
 	 *
 	 * @param stringWithSpace 输入字符串

@@ -26,4 +26,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.yline.lib:LibSDK:2.3.4'
+    implementation 'com.android.support:multidex:1.0.3'
+
+    implementation 'com.yline.lib:LibViewFresco:1.1.0'
+    implementation 'com.facebook.fresco:fresco:1.5.0' // 主依赖
+    implementation 'com.facebook.fresco:animated-gif:1.5.0' // 支持gif动图
+    implementation 'com.facebook.fresco:animated-webp:1.5.0' // 支持webp动态
+    implementation 'com.facebook.fresco:webpsupport:1.5.0' // 支持webp静态
+    implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 }
