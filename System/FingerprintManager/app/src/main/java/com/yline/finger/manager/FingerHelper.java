@@ -4,8 +4,16 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.security.keystore.KeyProperties;
 import android.support.annotation.RequiresApi;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
+import android.util.Base64;
+
+import com.yline.utils.LogUtil;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 
 /**
  * 指纹识别，小工具帮助
@@ -88,5 +96,37 @@ class FingerHelper {
             return true;
         }
         return false;
+    }
+
+    public static void encryptByFinger(Cipher cipher, String sourceData) {
+        try {
+            byte[] encryptBytes = cipher.doFinal(sourceData.getBytes());
+            byte[] initVectorBytes = cipher.getIV();
+
+            String encryptStr = Base64.encodeToString(encryptBytes, Base64.NO_WRAP);
+            String initVectorStr = Base64.encodeToString(initVectorBytes, Base64.NO_WRAP);
+
+            // 这里保存起来
+            LogUtil.v("encryptStr = " + encryptStr + ", initVectorStr = " + initVectorStr);
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void decryptByFinger(Cipher cipher, String encryptData, String initVectorStr) {
+        try {
+            byte[] initVectorBytes = Base64.decode(initVectorStr, Base64.NO_WRAP);
+            byte[] encryptBytes = Base64.decode(encryptData, Base64.NO_WRAP);
+
+            byte[] sourceBytes = cipher.doFinal(encryptBytes);
+
+
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
     }
 }
