@@ -1,138 +1,78 @@
 package com.yline.finger.service;
 
-import android.text.TextUtils;
-
 import com.yline.utils.LogUtil;
 
-import java.util.HashSet;
-import java.util.Objects;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.SignatureException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 模拟服务器
+ * 默认密码默认，都通过
  *
  * @author yline 2019/2/28 -- 9:54
  */
-public class MockService {
-    // 模拟数据库表，单个数据
-    private static final HashSet<SingleValue> hashSet = new HashSet<>();
-    private static int value = 0;
+public class MockService implements IMockService {
+    private final Map<String, PublicKey> mPublicKeyMap = new HashMap<>();
+    private final List<String> mSoldList = new ArrayList<>(); // 已销售的商品
 
-    public static SingleValue getSingleValue() {
-        SingleValue[] valueArray = new SingleValue[hashSet.size()];
-        hashSet.toArray(valueArray);
-        if (valueArray.length == 0) {
-            return new SingleValue("null", "null");
-        }
+    @Override
+    public boolean verifyByFinger(String goodsInfo, String userId, String signatureValue) {
+        LogUtil.v("goodsInfo = " + goodsInfo + ", userId = " + userId + ", signatureValue = " + signatureValue);
 
-        value++;
-        return valueArray[value % hashSet.size()];
-    }
-
-    /**
-     * 服务器，新增指纹签名
-     *
-     * @param value 指纹签名
-     */
-    public static void fingerAdd(String encrypt, String iv, OnCallback callback) {
-        SingleValue value = new SingleValue(encrypt, iv);
-        if (hashSet.contains(value)) {
-            if (null != callback) {
-                callback.onFailure("value 已存在");
-            }
+        PublicKey publicKey = mPublicKeyMap.get(userId);
+        if (null == publicKey) {
+            LogUtil.v("指纹方式，销售失败，还未开通指纹支付");
+            return false;
         } else {
-            boolean isSuccess = hashSet.add(value);
-            if (null != callback) {
-                if (isSuccess) {
-                    callback.onResponse();
+            try {
+                // 校验签名方式
+                Signature verifySignature = Signature.getInstance("SHA256withECDSA");
+                verifySignature.initVerify(publicKey); // 使用公钥初始化
+                verifySignature.update(goodsInfo.getBytes()); // 校验商品信息
+
+                // 校验签名成功
+                if (verifySignature.verify(signatureValue.getBytes())) {
+                    mSoldList.add(goodsInfo);
+                    LogUtil.v("指纹方式，销售成功，总量 = " + mSoldList.size());
+                    return true;
                 } else {
-                    callback.onFailure("value 添加失败");
+                    LogUtil.v("指纹方式，销售失败，签名校验失败");
+                    return false;
                 }
+            } catch (NoSuchAlgorithmException e) {
+                LogUtil.e("NoSuchAlgorithmException", e);
+            } catch (InvalidKeyException e) {
+                LogUtil.e("InvalidKeyException", e);
+            } catch (SignatureException e) {
+                LogUtil.e("SignatureException", e);
             }
-        }
-        hashSet.add(value);
-    }
-
-    /**
-     * 服务器，指纹校验签名
-     *
-     * @param value
-     */
-    public static void fingerVerify(String encrypt, String iv, OnCallback callback) {
-        SingleValue value = new SingleValue(encrypt, iv);
-        if (hashSet.contains(value)) {
-            if (null != callback) {
-                callback.onResponse();
-            }
-        } else {
-            if (null != callback) {
-                callback.onFailure("value 校验失败");
-            }
+            return false;
         }
     }
 
-    /**
-     * 服务器，密码校验成功之后，新增指纹
-     *
-     * @param value 指纹签名
-     * @param pwd   密码
-     */
-    public static void fingerAndPwdVerify(String encrypt, String iv, String pwd, OnCallback callback) {
-        SingleValue value = new SingleValue(encrypt, iv);
-
-        if (TextUtils.isEmpty(pwd) || pwd.length() < 11) { // 密码基本都给过[虚拟]
-            boolean isSuccess = hashSet.add(value);
-            if (null != callback) {
-                if (isSuccess) {
-                    callback.onResponse();
-                } else {
-                    LogUtil.e("value 添加失败");
-                    callback.onResponse();
-                }
-            }
-        } else {
-            if (null != callback) {
-                callback.onFailure("密码 校验失败");
-            }
-        }
+    @Override
+    public boolean verifyByPwd(String goodsInfo, String userId, String payPwd) {
+        LogUtil.v("goodsInfo = " + goodsInfo + ", userId = " + userId + ", payPwd = " + payPwd);
+        mSoldList.add(goodsInfo);
+        LogUtil.v("密码方式，销售成功，总量 = " + mSoldList.size());
+        return true;
     }
 
-    public static class SingleValue {
-        private String encryptStr;
-        private String initVector;
-
-        public SingleValue(String encryptStr, String initVector) {
-            this.encryptStr = encryptStr;
-            this.initVector = initVector;
+    @Override
+    public boolean enroll(String userId, String payPwd, PublicKey publicKey) {
+        LogUtil.v("userId = " + userId + ", payPwd = " + payPwd + ", publicKey = " + publicKey);
+        if (null != publicKey && null != userId) {
+            LogUtil.v(mPublicKeyMap.containsKey(userId) ? "初次上传公钥" : "覆盖上传公钥");
+            mPublicKeyMap.put(userId, publicKey);
+            return true;
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            SingleValue that = (SingleValue) o;
-            return Objects.equals(encryptStr, that.encryptStr) &&
-                    Objects.equals(initVector, that.initVector);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(encryptStr, initVector);
-        }
-
-        public String getEncryptStr() {
-            return encryptStr;
-        }
-
-        public String getInitVector() {
-            return initVector;
-        }
-    }
-
-    public abstract static class OnCallback {
-        void onFailure(String msg) {
-            LogUtil.v("msg = " + msg);
-        }
-
-        public abstract void onResponse();
+        return false;
     }
 }
