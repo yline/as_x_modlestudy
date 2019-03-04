@@ -1,17 +1,23 @@
 package com.yline.finger;
 
+import android.Manifest;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.yline.application.SDKManager;
+import com.yline.finger.manager.Finger23Crypt;
+import com.yline.finger.manager.Finger23Impl;
 import com.yline.finger.manager.FingerManager;
+import com.yline.finger.manager.FingerOldManager;
 import com.yline.finger.manager.OnAuthCallback;
 import com.yline.finger.service.HttpUtils;
-import com.yline.finger.service.MockService;
 import com.yline.finger.service.OnJsonCallback;
 import com.yline.test.BaseTestActivity;
 import com.yline.utils.LogUtil;
 
+import java.security.Key;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 
 /**
@@ -51,6 +57,11 @@ import java.security.PublicKey;
  * @author yline 2019/2/25 -- 18:02
  */
 public class MainActivity extends BaseTestActivity {
+
+    @Override
+    protected String[] initRequestPermission() {
+        return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    }
 
     private OnAuthCallback authCallback = new OnAuthCallback() {
         @Override
@@ -111,27 +122,51 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
+        addButton("23，指纹校验，无加密、无签名", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FingerManager.authSimple(MainActivity.this);
+            }
+        });
+
+        addButton("23，指纹校验，加密、可取消、无签名", new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                final String goodsInfo = System.currentTimeMillis() + "0yline";
+                FingerManager.authWithCrypt(MainActivity.this, goodsInfo, new Finger23Crypt.OnCryptCallback() {
+                    @Override
+                    public void onEncrypt(final Finger23Crypt crypt, String encryptStr, String vectorStr) {
+                        HttpUtils.verifyByFingerWithDecrypt(goodsInfo, encryptStr, vectorStr, new OnJsonCallback<String>() {
+                            @Override
+                            public void onResponse(String s) {
+                                crypt.cancel();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
         addButton("指纹校验开始, 23", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkValid()) {
-                    SDKManager.toast("指纹识别不支持或未开启");
-                    return;
-                }
-
                 SDKManager.toast("等待校验");
-                FingerManager.authenticate23(MainActivity.this, authCallback);
+                FingerOldManager.authenticate23(MainActivity.this, authCallback);
             }
         });
 
         addButton("23，指纹录入", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PublicKey publicKey = null; // 公钥
-                HttpUtils.enroll(publicKey, new OnJsonCallback<String>() {
+                FingerOldManager.authenticate23Add(MainActivity.this, new Finger23Impl.OnEnrollCallback() {
                     @Override
-                    public void onResponse(String s) {
-
+                    public void onEnroll(final Finger23Impl finger23, @NonNull PublicKey publicKey) {
+                        HttpUtils.enroll(publicKey, new OnJsonCallback<String>() {
+                            @Override
+                            public void onResponse(String s) {
+                                finger23.cancel();
+                            }
+                        });
                     }
                 });
             }
@@ -140,12 +175,16 @@ public class MainActivity extends BaseTestActivity {
         addButton("23，指纹校验", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String goodsInfo = ""; // 商品
-                String signValue = ""; // 使用公钥签名后的信息
-                HttpUtils.verifyByFinger("", "", new OnJsonCallback<String>() {
+                final String goodsInfo = System.currentTimeMillis() + "-yline"; // 商品
+                FingerOldManager.authenticate23Verify(MainActivity.this, goodsInfo, new Finger23Impl.OnVerifyCallback() {
                     @Override
-                    public void onResponse(String s) {
-
+                    public void onVerify(final Finger23Impl finger23, String signValue) {
+                        HttpUtils.verifyByFinger(goodsInfo, signValue, new OnJsonCallback<String>() {
+                            @Override
+                            public void onResponse(String s) {
+                                finger23.cancel();
+                            }
+                        });
                     }
                 });
             }
@@ -162,22 +201,9 @@ public class MainActivity extends BaseTestActivity {
         addButton("指纹校验开始, 28", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkValid()) {
-                    SDKManager.toast("指纹识别不支持或未开启");
-                    return;
-                }
-
                 SDKManager.toast("等待校验");
-                FingerManager.authenticate28(MainActivity.this, authCallback);
+                FingerOldManager.authenticate28(MainActivity.this, authCallback);
             }
         });
-    }
-
-    private boolean checkValid() {
-        boolean isEnable = FingerManager.isFingerEnable(MainActivity.this);
-        if (!isEnable) {
-            FingerManager.openFingerSetting(MainActivity.this);
-        }
-        return isEnable;
     }
 }

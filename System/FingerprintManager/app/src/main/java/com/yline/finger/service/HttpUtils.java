@@ -2,6 +2,8 @@ package com.yline.finger.service;
 
 import com.yline.application.SDKManager;
 
+import java.security.Key;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 
 /**
@@ -14,14 +16,29 @@ public class HttpUtils {
     private static final String GOODS_INFO = "彩虹"; // 商品
     private static final String USER_ID = "137****8709"; // 用户ID
 
+    private static IMockService mockService;
+
+    private static IMockService getMockService() {
+        if (null == mockService) {
+            synchronized (MockService.class) {
+                mockService = new MockService();
+            }
+        }
+        return mockService;
+    }
+
+    public static void verifyByFingerWithDecrypt(String goodsInfo, String encryptStr, String vectorStr, OnJsonCallback<String> callback) {
+        boolean result = getMockService().verifyByFingerWithDecrypt(goodsInfo, encryptStr, vectorStr);
+        callback(callback, result);
+    }
+
     /**
      * 上传公钥【开通指纹支付】
      *
      * @param publicKey 公钥
      */
     public static void enroll(PublicKey publicKey, OnJsonCallback<String> callback) {
-        IMockService service = new MockService();
-        boolean result = service.enroll(USER_ID, PAY_PWD, publicKey);
+        boolean result = getMockService().enroll(USER_ID, PAY_PWD, publicKey);
         callback(callback, result);
     }
 
@@ -29,8 +46,7 @@ public class HttpUtils {
      * 使用密码，购买商品
      */
     public static void verifyByPwd(OnJsonCallback<String> callback) {
-        IMockService service = new MockService();
-        callback(callback, service.verifyByPwd(GOODS_INFO, USER_ID, PAY_PWD));
+        callback(callback, getMockService().verifyByPwd(GOODS_INFO, USER_ID, PAY_PWD));
     }
 
     /**
@@ -40,8 +56,7 @@ public class HttpUtils {
      * @param signValue 使用私钥对商品签名，后的信息
      */
     public static void verifyByFinger(String goodsInfo, String signValue, OnJsonCallback<String> callback) {
-        IMockService service = new MockService();
-        callback(callback, service.verifyByFinger(goodsInfo, USER_ID, signValue));
+        callback(callback, getMockService().verifyByFinger(goodsInfo, USER_ID, signValue));
     }
 
     /**

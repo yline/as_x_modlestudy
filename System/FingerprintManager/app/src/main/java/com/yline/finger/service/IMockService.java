@@ -1,5 +1,7 @@
 package com.yline.finger.service;
 
+import java.security.Key;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 
 /**
@@ -8,6 +10,14 @@ import java.security.PublicKey;
  * @author yline 2019/3/1 -- 15:35
  */
 public interface IMockService {
+    /**
+     * 使用指纹校验，理论上，私钥要分开的。这里就省了
+     *
+     * @param goodsInfo  商品信息
+     * @param encryptStr 商品加密信息
+     * @param vectorStr  偏移量
+     */
+    boolean verifyByFingerWithDecrypt(String goodsInfo, String encryptStr, String vectorStr);
 
     /**
      * 使用指纹 校验

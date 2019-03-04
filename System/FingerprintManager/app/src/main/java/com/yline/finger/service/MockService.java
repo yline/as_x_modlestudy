@@ -1,9 +1,15 @@
 package com.yline.finger.service;
 
+import android.os.Build;
+import android.util.Base64;
+
+import com.yline.finger.manager.Finger23Crypt;
 import com.yline.utils.LogUtil;
 
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.SignatureException;
@@ -23,6 +29,20 @@ public class MockService implements IMockService {
     private final List<String> mSoldList = new ArrayList<>(); // 已销售的商品
 
     @Override
+    public boolean verifyByFingerWithDecrypt(String goodsInfo, String encryptStr, String vectorStr) {
+        LogUtil.v("goodsInfo = " + goodsInfo + ", encryptStr = " + encryptStr + ", vectorStr = " + vectorStr);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            String decryptInfo = Finger23Crypt.doDecrypt(encryptStr, vectorStr);
+            boolean result = goodsInfo.equals(decryptInfo);
+            LogUtil.v("decryptInfo = " + decryptInfo + ", result = " + (result ? "成功" : "失败"));
+            return result;
+        }
+
+        return false;
+    }
+
+    @Override
     public boolean verifyByFinger(String goodsInfo, String userId, String signatureValue) {
         LogUtil.v("goodsInfo = " + goodsInfo + ", userId = " + userId + ", signatureValue = " + signatureValue);
 
@@ -38,7 +58,8 @@ public class MockService implements IMockService {
                 verifySignature.update(goodsInfo.getBytes()); // 校验商品信息
 
                 // 校验签名成功
-                if (verifySignature.verify(signatureValue.getBytes())) {
+                byte[] signBytes = Base64.decode(signatureValue, Base64.NO_WRAP);
+                if (verifySignature.verify(signBytes)) {
                     mSoldList.add(goodsInfo);
                     LogUtil.v("指纹方式，销售成功，总量 = " + mSoldList.size());
                     return true;
