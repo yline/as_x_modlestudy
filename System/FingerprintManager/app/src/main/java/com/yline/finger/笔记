@@ -1,0 +1,112 @@
+测试：[微信现象]
+背景：设置中无指纹[无指纹情况]
+1，点击开始校验
+---> 直接弹出密码支付
+
+背景：录入 A 指纹，未录入 B 指纹；未使用A、B指纹支付过[首次新增指纹场景]
+1，点击开始校验
+2，输入 A 指纹
+---> 提示本次支付需要支付密码
+
+背景：录入 A 指纹，未录入 B 指纹；已使用 A 指纹支付过[正确指纹场景]
+1，点击开始校验
+2，输入 A 指纹
+---> 提示校验成功
+
+背景：录入 A 指纹，未录入 B 指纹；已使用 A 指纹支付过[错误指纹场景]
+1，点击开始校验
+2，输入 B 指纹
+---> 提示校验失败，以及原因【再试一次】
+
+背景：录入 A、B 指纹；已使用A支付过，未使用B支付过[再次新增指纹场景]
+1，APP，输入 A 指纹
+---> 提示校验成功
+2，APP，输入 B 指纹
+---> 提示本次支付需要支付密码
+
+背景：录入 A、B 指纹；已使用A、B支付过[删除某个指纹、删除全部指纹场景]
+1，设置中，删除 A 指纹
+2，回APP，输入 A 指纹
+---> 提示校验失败，以及原有【再试一次】
+3，输入 B 指纹
+---> 提示支付成功
+4，设置中，删除 B 指纹，本地再无指纹
+5，回APP，输入 B 指纹
+---> 直接弹出密码支付
+
+背景：录入 A 指纹，已使用 A 指纹支付[删除某个手指指纹，再新增该手指指纹场景]
+1，APP，输入 A 指纹
+---> 提示支付成功
+2，会设置中，删除 A 指纹
+3，设置中，新增 A 指纹
+4，APP，输入 A 指纹[手指相同，但id已经不同了]
+---> 提示本次支付需要支付密码
+
+资料：
+https://github.com/gaoyangcr7/BiometricPromptDemo   // FingerManager + Biometric 适配，但是没有考虑安全问题
+https://www.jianshu.com/p/1eae12582a31  // 对应的blog
+
+https://github.com/PopFisher/FingerprintRecognition // demo写的特别乱，很多没必要的乱转[估计官网直接转的]，没有考虑安全问题
+https://www.cnblogs.com/popfisher/p/6063835.html // 对应的blog
+
+https://github.com/feelschaotic/FingerPrintAuth // 有加密和解密；是本地加密和解密的。有逻辑：新录入的指纹，重新生成密钥对【相对最好了，虽然框架不好】
+https://www.jianshu.com/p/ed880f35f97f // 对应的blog
+
+https://github.com/googlesamples/android-FingerprintDialog // 官方的demo
+https://android-developers.googleblog.com/2015/10/new-in-android-samples-authenticating.html // 官方的文案，有与后台的交互。但是没有id
+
+https://blog.csdn.net/u011339364/article/details/78667701  // 无demo，但是是将加密说的最透彻的文章了，也有反射获取fingerId
+https://github.com/googlesamples/android-AsymmetricFingerprintDialog // 官方demo，非对称加密
+https://github.com/googlesamples/android-FingerprintDialog // 官方demo，对称加密
+
+/////////////////// 异常情况处理
+https://www.programcreek.com/java-api-examples/index.php?api=android.security.keystore.KeyPermanentlyInvalidatedException
+// 指纹识别异常，针对新增情况处理
+
+https://developer.android.google.cn/reference/android/security/keystore/KeyPermanentlyInvalidatedException
+// KeyPermanentlyInvalidatedException
+
+https://blog.csdn.net/hpp_1225/article/details/79272248 // api：specBuilder.setInvalidatedByBiometricEnrollment(true);
+// android.security.KeyStoreException: Key user not authenticated
+
+笔记：
+1，CryptoObject crypto是可以为null，若为null，则表示没有进行秘钥验证
+2，当指纹识别失败后，会调用onAuthenticationFailed()方法；系统给我们提供了5次重试机会，
+也就是说，连续调用了5次onAuthenticationFailed()方法后，会调用onAuthenticationError()方法
+3，当系统调用了onAuthenticationError()和onAuthenticationSucceeded()后，传感器会关闭，
+只有我们重新授权，再次调用authenticate()方法后才能继续使用指纹识别功能。
+4，当系统回调了onAuthenticationError()方法关闭传感器后，这种情况下再次调用authenticate()会有一段时间的禁用期，
+也就是说这段时间里是无法再次使用指纹识别的。当然，具体的禁用时间由手机厂商的系统不同而有略微差别，有的是1分钟，有的是30秒等等。
+而且，由于手机厂商的系统区别，有些系统上调用了onAuthenticationError()后，在禁用时间内，其他APP里面的指纹识别功能也无法使用，
+甚至系统的指纹解锁功能也无法使用。而有的系统上，在禁用时间内调用其他APP的指纹解锁功能，或者系统的指纹解锁功能，就能立即重置指纹识别功能。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

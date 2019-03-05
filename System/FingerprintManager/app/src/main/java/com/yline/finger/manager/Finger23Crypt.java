@@ -331,6 +331,10 @@ public class Finger23Crypt {
             specBuilder.setBlockModes(KeyProperties.BLOCK_MODE_CBC);
             specBuilder.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7);
             specBuilder.setUserAuthenticationRequired(true); // 每次使用这个秘钥，需要指纹验证
+
+            // true的话，注册新指纹，秘钥将失效；false则不会
+            // specBuilder.setInvalidatedByBiometricEnrollment(true); ??? 调研一下这个方法
+
             keyGenerator.init(specBuilder.build());
 
             keyGenerator.generateKey();
