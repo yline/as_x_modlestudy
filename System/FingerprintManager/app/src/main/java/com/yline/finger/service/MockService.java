@@ -29,20 +29,6 @@ public class MockService implements IMockService {
     private final List<String> mSoldList = new ArrayList<>(); // 已销售的商品
 
     @Override
-    public boolean verifyByFingerWithDecrypt(String goodsInfo, String encryptStr, String vectorStr) {
-        LogUtil.v("goodsInfo = " + goodsInfo + ", encryptStr = " + encryptStr + ", vectorStr = " + vectorStr);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            String decryptInfo = Finger23Crypt.doDecrypt(encryptStr, vectorStr);
-            boolean result = goodsInfo.equals(decryptInfo);
-            LogUtil.v("decryptInfo = " + decryptInfo + ", result = " + (result ? "成功" : "失败"));
-            return result;
-        }
-
-        return false;
-    }
-
-    @Override
     public boolean verifyByFinger(String goodsInfo, String userId, String signatureValue) {
         LogUtil.v("goodsInfo = " + goodsInfo + ", userId = " + userId + ", signatureValue = " + signatureValue);
 

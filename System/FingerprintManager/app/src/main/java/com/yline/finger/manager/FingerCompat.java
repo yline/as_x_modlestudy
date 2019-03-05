@@ -29,7 +29,7 @@ class FingerCompat {
     }
 
     public boolean isFingerEnable(Context context) {
-        FingerCompat compat = new FingerCompat();
+        FingerCompat compat = from();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             LogUtil.v("Android 版本低");
             return false;

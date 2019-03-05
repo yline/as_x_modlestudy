@@ -27,11 +27,6 @@ public class HttpUtils {
         return mockService;
     }
 
-    public static void verifyByFingerWithDecrypt(String goodsInfo, String encryptStr, String vectorStr, OnJsonCallback<String> callback) {
-        boolean result = getMockService().verifyByFingerWithDecrypt(goodsInfo, encryptStr, vectorStr);
-        callback(callback, result);
-    }
-
     /**
      * 上传公钥【开通指纹支付】
      *

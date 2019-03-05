@@ -2,6 +2,9 @@ package com.yline.finger.manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+
+import com.yline.utils.LogUtil;
 
 /**
  * 依据测试情况，提供API
@@ -10,17 +13,53 @@ import android.content.Intent;
  */
 public class FingerManager {
     /**
-     * 指纹校验，前后有加密、有取消
+     * 指纹校验，创建签名、有取消
      */
-    public static void authWithCrypt(Context context, final String goodsInfo, final Finger23Crypt.OnCryptCallback callback) {
-        Finger23Crypt.from().authenticate(context, goodsInfo, callback);
+    public static void auth23WithSignCreate(Context context, Finger23Sign.OnEnrollCallback callback) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            LogUtil.v("Android 版本低");
+            return;
+        }
+        Finger23Sign.from().authenticateEnroll(context, callback);
+    }
+
+    /**
+     * 指纹校验，验证签名、有取消
+     */
+    public static void auth23WithSignVerify(Context context, String goodsInfo, final Finger23Sign.OnVerifyCallback callback) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            LogUtil.v("Android 版本低");
+            return;
+        }
+        Finger23Sign.from().authenticateVerify(context, goodsInfo, callback);
+    }
+
+    /**
+     * 指纹校验，加密、有取消
+     */
+    public static void auth23WithEncrypt(Context context, final String goodsInfo, final Finger23Crypt.OnEncryptCallback callback) {
+        Finger23Crypt.from().authenticateEncrypt(context, goodsInfo, callback);
+    }
+
+    /**
+     * 指纹校验，解密、又取消
+     */
+    public static void auth23WithDecrypt(Context context, final Finger23Crypt.OnDecryptCallback callback) {
+        Finger23Crypt.from().authenticateDecrypt(context, callback);
     }
 
     /**
      * 指纹简单校验；无签名、无加密、无取消
      */
-    public static void authSimple(Context context) {
+    public static void auth23Simple(Context context) {
         Finger23Simple.from().authenticate(context);
+    }
+
+    /**
+     * 指纹简单校验；无签名、无加密、无取消
+     */
+    public static void auth28Simple(Context context) {
+        Finger28Simple.from().authenticate(context);
     }
 
     /**

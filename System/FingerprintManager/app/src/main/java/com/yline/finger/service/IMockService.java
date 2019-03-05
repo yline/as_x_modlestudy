@@ -11,15 +11,6 @@ import java.security.PublicKey;
  */
 public interface IMockService {
     /**
-     * 使用指纹校验，理论上，私钥要分开的。这里就省了
-     *
-     * @param goodsInfo  商品信息
-     * @param encryptStr 商品加密信息
-     * @param vectorStr  偏移量
-     */
-    boolean verifyByFingerWithDecrypt(String goodsInfo, String encryptStr, String vectorStr);
-
-    /**
      * 使用指纹 校验
      *
      * @param goodsInfo      商品信息

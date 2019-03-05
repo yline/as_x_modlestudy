@@ -10,6 +10,9 @@ import android.security.keystore.KeyProperties;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 
+import com.yline.application.SDKManager;
+import com.yline.utils.LogUtil;
+
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.Signature;
@@ -22,7 +25,7 @@ import java.security.spec.ECGenParameterSpec;
  *
  * @author yline 2019/2/25 -- 16:00
  */
-class FingerApi28Impl {
+class Finger28Simple {
     private static final String KEY_NAME = "FingerApi28Impl";
 
     private CancellationSignal mSignal;
@@ -31,9 +34,20 @@ class FingerApi28Impl {
     private String mSubTitle;
     private String mNegativeText;
     private DialogInterface.OnClickListener mClickListener;
-    private OnAuthCallback mOnAuthCallback;
 
-    FingerApi28Impl() {
+    public static Finger28Simple from() {
+        return new Finger28Simple();
+    }
+
+    Finger28Simple() {
+    }
+
+    public void authenticate(Context context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            LogUtil.e("Android 版本低");
+            return;
+        }
+        authenticateInner(context);
     }
 
     /**
@@ -42,7 +56,9 @@ class FingerApi28Impl {
      * @param context 上下文
      */
     @RequiresApi(Build.VERSION_CODES.N)
-    void authenticate(Context context) {
+    private void authenticateInner(Context context) {
+        LogUtil.v("开始校验");
+
         try {
             BiometricPrompt.Builder promptBuilder = new BiometricPrompt.Builder(context);
             promptBuilder.setTitle(TextUtils.isEmpty(mTitle) ? "fingerprint identification" : mTitle);
@@ -62,33 +78,29 @@ class FingerApi28Impl {
                 @Override
                 public void onAuthenticationError(int errorCode, CharSequence errString) {
                     super.onAuthenticationError(errorCode, errString);
-                    if (null != mOnAuthCallback) {
-                        mOnAuthCallback.onAuthError(errorCode, errString);
-                    }
+                    SDKManager.toast("校验Error");
+                    LogUtil.v("errorCode = " + errorCode + ", errString = " + errString);
                 }
 
                 @Override
                 public void onAuthenticationFailed() {
                     super.onAuthenticationFailed();
-                    if (null != mOnAuthCallback) {
-                        mOnAuthCallback.onAuthFailed();
-                    }
+                    SDKManager.toast("校验Failed");
+                    LogUtil.v("");
                 }
 
                 @Override
                 public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
                     super.onAuthenticationHelp(helpCode, helpString);
-                    if (null != mOnAuthCallback) {
-                        mOnAuthCallback.onAuthHelp(helpCode, helpString);
-                    }
+                    SDKManager.toast("校验help");
+                    LogUtil.v("helpCode = " + helpCode + ", helpString = " + helpString);
                 }
 
                 @Override
                 public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
                     super.onAuthenticationSucceeded(result);
-                    if (null != mOnAuthCallback) {
-                        mOnAuthCallback.onAuthSucceeded();
-                    }
+                    LogUtil.v("");
+                    SDKManager.toast("验证成功");
                     if (null != mSignal) {
                         mSignal.cancel();
                     }
@@ -97,10 +109,6 @@ class FingerApi28Impl {
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
-    }
-
-    void setOnAuthCallback(OnAuthCallback mOnAuthCallback) {
-        this.mOnAuthCallback = mOnAuthCallback;
     }
 
     void setTitle(String title) {

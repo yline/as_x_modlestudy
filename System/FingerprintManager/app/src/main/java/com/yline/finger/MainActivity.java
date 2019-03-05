@@ -7,17 +7,13 @@ import android.view.View;
 
 import com.yline.application.SDKManager;
 import com.yline.finger.manager.Finger23Crypt;
-import com.yline.finger.manager.Finger23Impl;
+import com.yline.finger.manager.Finger23Sign;
 import com.yline.finger.manager.FingerManager;
-import com.yline.finger.manager.FingerOldManager;
-import com.yline.finger.manager.OnAuthCallback;
 import com.yline.finger.service.HttpUtils;
 import com.yline.finger.service.OnJsonCallback;
 import com.yline.test.BaseTestActivity;
 import com.yline.utils.LogUtil;
 
-import java.security.Key;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 
 /**
@@ -63,36 +59,6 @@ public class MainActivity extends BaseTestActivity {
         return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
     }
 
-    private OnAuthCallback authCallback = new OnAuthCallback() {
-        @Override
-        public void onAuthError(int errorCode, CharSequence errString) {
-            super.onAuthError(errorCode, errString);
-            SDKManager.toast("校验Error");
-            LogUtil.v("errorCode = " + errorCode + ", errString = " + errString);
-        }
-
-        @Override
-        public void onAuthFailed() {
-            super.onAuthFailed();
-            SDKManager.toast("校验Failed");
-            LogUtil.v("");
-        }
-
-        @Override
-        public void onAuthHelp(int helpCode, CharSequence helpString) {
-            super.onAuthHelp(helpCode, helpString);
-            SDKManager.toast("校验help");
-            LogUtil.v("helpCode = " + helpCode + ", helpString = " + helpString);
-        }
-
-        @Override
-        public void onAuthSucceeded() {
-            super.onAuthSucceeded();
-            LogUtil.v("");
-            SDKManager.toast("验证成功");
-        }
-    };
-
     @Override
     public void testStart(View view, Bundle savedInstanceState) {
         addButton("硬件和软件校验", new View.OnClickListener() {
@@ -125,7 +91,7 @@ public class MainActivity extends BaseTestActivity {
         addButton("23，指纹校验，无加密、无签名", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FingerManager.authSimple(MainActivity.this);
+                FingerManager.auth23Simple(MainActivity.this);
             }
         });
 
@@ -133,34 +99,37 @@ public class MainActivity extends BaseTestActivity {
             @Override
             public void onClick(final View v) {
                 final String goodsInfo = System.currentTimeMillis() + "0yline";
-                FingerManager.authWithCrypt(MainActivity.this, goodsInfo, new Finger23Crypt.OnCryptCallback() {
+                FingerManager.auth23WithEncrypt(MainActivity.this, goodsInfo, new Finger23Crypt.OnEncryptCallback() {
                     @Override
-                    public void onEncrypt(final Finger23Crypt crypt, String encryptStr, String vectorStr) {
-                        HttpUtils.verifyByFingerWithDecrypt(goodsInfo, encryptStr, vectorStr, new OnJsonCallback<String>() {
-                            @Override
-                            public void onResponse(String s) {
-                                crypt.cancel();
-                            }
-                        });
+                    public void onEncrypt(final Finger23Crypt crypt) {
+                        LogUtil.v("加密成功");
+                        SDKManager.toast("加密成功");
+                        crypt.cancel();
                     }
                 });
             }
         });
 
-        addButton("指纹校验开始, 23", new View.OnClickListener() {
+        addButton("23，指纹校验，解密、可取消、无签名", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SDKManager.toast("等待校验");
-                FingerOldManager.authenticate23(MainActivity.this, authCallback);
+                FingerManager.auth23WithDecrypt(MainActivity.this, new Finger23Crypt.OnDecryptCallback() {
+                    @Override
+                    public void onDecrypt(Finger23Crypt crypt, String goodsInfo) {
+                        LogUtil.v("解密成功， goodsInfo = " + goodsInfo);
+                        SDKManager.toast("解密成功");
+                        crypt.cancel();
+                    }
+                });
             }
         });
 
-        addButton("23，指纹录入", new View.OnClickListener() {
+        addButton("23，指纹录入，签名创建、可取消", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FingerOldManager.authenticate23Add(MainActivity.this, new Finger23Impl.OnEnrollCallback() {
+                FingerManager.auth23WithSignCreate(MainActivity.this, new Finger23Sign.OnEnrollCallback() {
                     @Override
-                    public void onEnroll(final Finger23Impl finger23, @NonNull PublicKey publicKey) {
+                    public void onEnroll(final Finger23Sign finger23, @NonNull PublicKey publicKey) {
                         HttpUtils.enroll(publicKey, new OnJsonCallback<String>() {
                             @Override
                             public void onResponse(String s) {
@@ -172,13 +141,13 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
-        addButton("23，指纹校验", new View.OnClickListener() {
+        addButton("23，指纹校验，签名验证、可取消", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String goodsInfo = System.currentTimeMillis() + "-yline"; // 商品
-                FingerOldManager.authenticate23Verify(MainActivity.this, goodsInfo, new Finger23Impl.OnVerifyCallback() {
+                FingerManager.auth23WithSignVerify(MainActivity.this, goodsInfo, new Finger23Sign.OnVerifyCallback() {
                     @Override
-                    public void onVerify(final Finger23Impl finger23, String signValue) {
+                    public void onVerify(final Finger23Sign finger23, String signValue) {
                         HttpUtils.verifyByFinger(goodsInfo, signValue, new OnJsonCallback<String>() {
                             @Override
                             public void onResponse(String s) {
@@ -191,18 +160,17 @@ public class MainActivity extends BaseTestActivity {
         });
 
         // 指纹购买，直接成功的
-        addButton("23，密码校验", new View.OnClickListener() {
+        addButton("密码校验", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HttpUtils.verifyByPwd(null);
             }
         });
 
-        addButton("指纹校验开始, 28", new View.OnClickListener() {
+        addButton("28，指纹校验，无加密、无签名", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SDKManager.toast("等待校验");
-                FingerOldManager.authenticate28(MainActivity.this, authCallback);
+                FingerManager.auth28Simple(MainActivity.this);
             }
         });
     }

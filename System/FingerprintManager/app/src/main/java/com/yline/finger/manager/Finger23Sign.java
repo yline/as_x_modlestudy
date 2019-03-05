@@ -31,8 +31,12 @@ import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 
-public class Finger23Impl {
+public class Finger23Sign {
     private static final String ECC_KEY_NAME = "Yline_Finger_Pay";
+
+    public static Finger23Sign from() {
+        return new Finger23Sign();
+    }
 
     private CancellationSignal mSignal;
 
@@ -71,8 +75,7 @@ public class Finger23Impl {
             }
             signature.initSign(privateKey);
             FingerprintManagerCompat.CryptoObject cryptoObject = new FingerprintManagerCompat.CryptoObject(signature);
-
-            new FingerCompat().authenticate(context, cryptoObject, mSignal, new FingerprintManagerCompat.AuthenticationCallback() {
+            FingerCompat.from().authenticate(context, cryptoObject, mSignal, new FingerprintManagerCompat.AuthenticationCallback() {
                 @Override
                 public void onAuthenticationError(int errMsgId, CharSequence errString) {
                     super.onAuthenticationError(errMsgId, errString);
@@ -98,7 +101,7 @@ public class Finger23Impl {
 
                     // 创建成功，将公钥传出
                     if (null != callback) {
-                        callback.onEnroll(Finger23Impl.this, finalPublicKey);
+                        callback.onEnroll(Finger23Sign.this, finalPublicKey);
                     }
                 }
             });
@@ -127,7 +130,7 @@ public class Finger23Impl {
             }
             signature.initSign(privateKey);
             FingerprintManagerCompat.CryptoObject cryptoObject = new FingerprintManagerCompat.CryptoObject(signature);
-            new FingerCompat().authenticate(context, cryptoObject, mSignal, new FingerprintManagerCompat.AuthenticationCallback() {
+            FingerCompat.from().authenticate(context, cryptoObject, mSignal, new FingerprintManagerCompat.AuthenticationCallback() {
                 @Override
                 public void onAuthenticationError(int errMsgId, CharSequence errString) {
                     super.onAuthenticationError(errMsgId, errString);
@@ -163,7 +166,7 @@ public class Finger23Impl {
                         String signValue = Base64.encodeToString(signBytes, Base64.NO_WRAP);
                         LogUtil.v("signValue = " + signValue);
                         if (null != callback) {
-                            callback.onVerify(Finger23Impl.this, signValue);
+                            callback.onVerify(Finger23Sign.this, signValue);
                         }
                     } catch (SignatureException e) {
                         LogUtil.e("SignatureException", e);
@@ -184,11 +187,11 @@ public class Finger23Impl {
     }
 
     public interface OnVerifyCallback {
-        void onVerify(Finger23Impl finger23, String signValue);
+        void onVerify(Finger23Sign finger23, String signValue);
     }
 
     public interface OnEnrollCallback {
-        void onEnroll(Finger23Impl finger23, @NonNull PublicKey publicKey);
+        void onEnroll(Finger23Sign finger23, @NonNull PublicKey publicKey);
     }
 
     /**
