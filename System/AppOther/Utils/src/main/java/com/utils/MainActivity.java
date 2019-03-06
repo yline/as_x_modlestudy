@@ -1,11 +1,14 @@
 package com.utils;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.utils.utils.NetworkUtil;
 import com.utils.utils.RootUtil;
+import com.utils.utils.WechatSignUtil;
 import com.yline.log.LogFileUtil;
 import com.yline.test.BaseTestActivity;
 import com.yline.utils.LogUtil;
@@ -18,7 +21,7 @@ public class MainActivity extends BaseTestActivity {
             @Override
             public void onClick(View v) {
                 NetworkUtil.NetType netType = NetworkUtil.getNetType(MainActivity.this);
-                LogFileUtil.v(MainApplication.TAG, "netType = " + netType);
+                LogUtil.v("netType = " + netType);
             }
         });
 
@@ -34,6 +37,15 @@ public class MainActivity extends BaseTestActivity {
                 LogUtil.v("rootByExecute = " + rootByExecute + ", diffTime = " + (System.currentTimeMillis() - startTime));
                 value += ("rootByExecute = " + rootByExecute + ", diffTime = " + (System.currentTimeMillis() - startTime));
                 rootTextView.setText(value);
+            }
+        });
+
+        final EditText packageEditText = addEditText("输入包名");
+        addButton("计算签名", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String packageName = packageEditText.getText().toString().trim();
+                WechatSignUtil.sign(MainActivity.this, packageName);
             }
         });
     }

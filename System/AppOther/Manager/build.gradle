@@ -32,7 +32,7 @@ dependencies {
     compile 'com.facebook.fresco:webpsupport:1.5.0' // 支持webp静态
     compile 'com.facebook.fresco:imagepipeline-okhttp3:1.5.0'
 
-    compile 'com.yline.lib:LibSDK:2.2.0'
+    compile 'com.yline.lib:LibSDK:2.3.7'
     compile 'com.yline.lib:LibViewRecycler:1.2.0'
     compile 'com.yline.lib:LibViewFresco:1.1.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
