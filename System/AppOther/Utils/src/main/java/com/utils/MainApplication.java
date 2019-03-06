@@ -1,4 +1,4 @@
-package com.utils.activity;
+package com.utils;
 
 import com.yline.application.BaseApplication;
 import com.yline.application.SDKConfig;

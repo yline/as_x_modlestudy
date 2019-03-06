@@ -1,4 +1,4 @@
-package com.utils;
+package com.utils.utils;
 
 import com.yline.log.LogFileUtil;
 
@@ -16,7 +16,7 @@ import java.io.IOException;
  * @author yline 2016/10/31 --> 20:51
  * @version 1.0.0
  */
-public class ByteUtil {
+public class Mp3ByteUtil {
     /**
      * mp3格式文件转成byte格式
      *

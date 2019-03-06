@@ -1,4 +1,4 @@
-package com.utils;
+package com.utils.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -19,8 +19,8 @@ public class NetworkUtil {
      * 判断网络类型(同时也依据这个判断是否可用)
      * <uses-permission Android:name="android.permission.ACCESS_NETWORK_STATE"
      *
-     * @param context
-     * @return
+     * @param context 上下文
+     * @return 网络类型
      */
     public static NetType getNetType(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
