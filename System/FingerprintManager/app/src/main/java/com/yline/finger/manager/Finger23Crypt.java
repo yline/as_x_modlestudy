@@ -284,6 +284,10 @@ public class Finger23Crypt {
                 LogUtil.v("创建 对称秘钥，name = " + KEY_NAME);
                 createKeyInner();
             }
+            /*else {
+                // 如果已创建，则不允许重复创建 android.security.keystore.KeyPermanentlyInvalidatedException: Key permanently invalidated
+                return null;
+            }*/
 
             // 获取最终的 key
             Key secretKey = keyStore.getKey(KEY_NAME, null);

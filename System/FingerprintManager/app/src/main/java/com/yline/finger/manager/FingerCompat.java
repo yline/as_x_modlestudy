@@ -1,5 +1,6 @@
 package com.yline.finger.manager;
 
+import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.hardware.fingerprint.FingerprintManager;
@@ -11,6 +12,10 @@ import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.os.CancellationSignal;
 
 import com.yline.utils.LogUtil;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * 自己做的兼容类
@@ -208,6 +213,7 @@ class FingerCompat {
             }
 
             public void onAuthenticationSucceeded(android.hardware.fingerprint.FingerprintManager.AuthenticationResult result) {
+                printFingerInfo(result);
                 callback.onAuthenticationSucceeded(new FingerprintManagerCompat.AuthenticationResult(unwrapCryptoObject(result.getCryptoObject())));
             }
 
@@ -215,5 +221,38 @@ class FingerCompat {
                 callback.onAuthenticationFailed();
             }
         };
+    }
+
+    @SuppressLint("PrivateApi")
+    private static void printFingerInfo(android.hardware.fingerprint.FingerprintManager.AuthenticationResult result) {
+        try {
+            Field field = result.getClass().getDeclaredField("mFingerprint");
+            field.setAccessible(true);
+            Object fingerprint = field.get(result);
+
+            Class<?> clzz = Class.forName("android.hardware.fingerprint.Fingerprint");
+            Method getName = clzz.getDeclaredMethod("getName");
+            Method getFingerId = clzz.getDeclaredMethod("getFingerId");
+            Method getGroupId = clzz.getDeclaredMethod("getGroupId");
+            Method getDeviceId = clzz.getDeclaredMethod("getDeviceId");
+
+            CharSequence name = (CharSequence) getName.invoke(fingerprint);
+            int fingerId = (int) getFingerId.invoke(fingerprint);
+            int groupId = (int) getGroupId.invoke(fingerprint);
+            long deviceId = (long) getDeviceId.invoke(fingerprint);
+
+            LogUtil.v("name = " + name + ", fingerId = " + fingerId
+                    + ", groupId = " + groupId + ", deviceId = " + deviceId);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 }
