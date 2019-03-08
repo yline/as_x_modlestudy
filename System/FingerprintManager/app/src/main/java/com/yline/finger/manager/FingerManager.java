@@ -15,23 +15,15 @@ public class FingerManager {
     /**
      * 指纹校验，创建签名、有取消
      */
-    public static void auth23WithSignCreate(Context context, Finger23Sign.OnEnrollCallback callback) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            LogUtil.v("Android 版本低");
-            return;
-        }
-        Finger23Sign.from().authenticateEnroll(context, callback);
+    public static void auth23WithSignCreate(Context context, Finger23Sign.OnOpenCallback callback) {
+        Finger23Sign.open(context, callback);
     }
 
     /**
      * 指纹校验，验证签名、有取消
      */
     public static void auth23WithSignVerify(Context context, String goodsInfo, final Finger23Sign.OnVerifyCallback callback) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            LogUtil.v("Android 版本低");
-            return;
-        }
-        Finger23Sign.from().authenticateVerify(context, goodsInfo, callback);
+        Finger23Sign.verify(context, goodsInfo, callback);
     }
 
     /**

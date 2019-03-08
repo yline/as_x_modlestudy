@@ -36,4 +36,14 @@ public interface IMockService {
      * @param publicKey 公钥
      */
     boolean enroll(String userId, String payPwd, PublicKey publicKey);
+
+    /**
+     * 发送公钥到服务器
+     *
+     * @param userId    用户id
+     * @param payPwd    用户支付密码
+     * @param publicKey 公钥
+     * @param goodsInfo 商品
+     */
+    boolean enrollAndVerify(String userId, String payPwd, PublicKey publicKey, String goodsInfo);
 }

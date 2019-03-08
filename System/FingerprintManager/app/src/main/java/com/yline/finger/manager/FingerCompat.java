@@ -229,6 +229,10 @@ class FingerCompat {
             Field field = result.getClass().getDeclaredField("mFingerprint");
             field.setAccessible(true);
             Object fingerprint = field.get(result);
+            if (null == fingerprint) {
+                LogUtil.e("fingerprint is null");
+                return;
+            }
 
             Class<?> clzz = Class.forName("android.hardware.fingerprint.Fingerprint");
             Method getName = clzz.getDeclaredMethod("getName");
@@ -236,10 +240,17 @@ class FingerCompat {
             Method getGroupId = clzz.getDeclaredMethod("getGroupId");
             Method getDeviceId = clzz.getDeclaredMethod("getDeviceId");
 
-            CharSequence name = (CharSequence) getName.invoke(fingerprint);
-            int fingerId = (int) getFingerId.invoke(fingerprint);
-            int groupId = (int) getGroupId.invoke(fingerprint);
-            long deviceId = (long) getDeviceId.invoke(fingerprint);
+            Object nameObj = getName.invoke(fingerprint);
+            CharSequence name = nameObj instanceof CharSequence ? (CharSequence) nameObj : "null";
+
+            Object fingerIdObj = getFingerId.invoke(fingerprint);
+            int fingerId = fingerIdObj instanceof Integer ? (int) fingerIdObj : -1;
+
+            Object groupIdObj = getGroupId.invoke(fingerprint);
+            int groupId = groupIdObj instanceof Integer ? (int) groupIdObj : -1;
+
+            Object deviceIdObj = getDeviceId.invoke(fingerprint);
+            long deviceId = deviceIdObj instanceof Long ? (long) deviceIdObj : -1L;
 
             LogUtil.v("name = " + name + ", fingerId = " + fingerId
                     + ", groupId = " + groupId + ", deviceId = " + deviceId);

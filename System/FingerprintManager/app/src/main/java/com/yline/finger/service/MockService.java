@@ -1,15 +1,11 @@
 package com.yline.finger.service;
 
-import android.os.Build;
 import android.util.Base64;
 
-import com.yline.finger.manager.Finger23Crypt;
 import com.yline.utils.LogUtil;
 
 import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.SignatureException;
@@ -78,6 +74,20 @@ public class MockService implements IMockService {
         if (null != publicKey && null != userId) {
             LogUtil.v(mPublicKeyMap.containsKey(userId) ? "初次上传公钥" : "覆盖上传公钥");
             mPublicKeyMap.put(userId, publicKey);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean enrollAndVerify(String userId, String payPwd, PublicKey publicKey, String goodsInfo) {
+        LogUtil.v("userId = " + userId + ", payPwd = " + payPwd + ", publicKey = " + publicKey);
+        if (null != publicKey && null != userId) {
+            LogUtil.v(mPublicKeyMap.containsKey(userId) ? "初次上传公钥" : "覆盖上传公钥");
+            mPublicKeyMap.put(userId, publicKey);
+
+            mSoldList.add(goodsInfo);
+            LogUtil.v("密码方式，销售成功，总量 = " + mSoldList.size());
             return true;
         }
         return false;

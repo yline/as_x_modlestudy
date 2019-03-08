@@ -6,8 +6,11 @@ import android.security.keystore.KeyInfo;
 import android.security.keystore.KeyProperties;
 import android.support.annotation.RequiresApi;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.security.Key;
 import java.security.KeyStore;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;

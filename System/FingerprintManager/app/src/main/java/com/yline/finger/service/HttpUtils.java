@@ -38,6 +38,16 @@ public class HttpUtils {
     }
 
     /**
+     * 上传公钥【更新指纹支付】
+     *
+     * @param publicKey 公钥
+     */
+    public static void enrollAndVerify(PublicKey publicKey, OnJsonCallback<String> callback) {
+        boolean result = getMockService().enrollAndVerify(USER_ID, PAY_PWD, publicKey, GOODS_INFO);
+        callback(callback, result);
+    }
+
+    /**
      * 使用密码，购买商品
      */
     public static void verifyByPwd(OnJsonCallback<String> callback) {

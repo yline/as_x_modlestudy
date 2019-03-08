@@ -17,7 +17,6 @@ import com.yline.utils.LogUtil;
 import java.security.PublicKey;
 
 /**
- *
  * @author yline 2019/2/25 -- 18:02
  */
 public class MainActivity extends BaseTestActivity {
@@ -95,13 +94,12 @@ public class MainActivity extends BaseTestActivity {
         addButton("23，指纹录入，签名创建、可取消", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FingerManager.auth23WithSignCreate(MainActivity.this, new Finger23Sign.OnEnrollCallback() {
+                FingerManager.auth23WithSignCreate(MainActivity.this, new Finger23Sign.OnOpenCallback() {
                     @Override
-                    public void onEnroll(final Finger23Sign finger23, @NonNull PublicKey publicKey) {
+                    public void onOpen(PublicKey publicKey) {
                         HttpUtils.enroll(publicKey, new OnJsonCallback<String>() {
                             @Override
                             public void onResponse(String s) {
-                                finger23.cancel();
                             }
                         });
                     }
@@ -115,11 +113,30 @@ public class MainActivity extends BaseTestActivity {
                 final String goodsInfo = System.currentTimeMillis() + "-yline"; // 商品
                 FingerManager.auth23WithSignVerify(MainActivity.this, goodsInfo, new Finger23Sign.OnVerifyCallback() {
                     @Override
-                    public void onVerify(final Finger23Sign finger23, String signValue) {
+                    public void onOpen(PublicKey publicKey) {
+                        HttpUtils.enroll(publicKey, new OnJsonCallback<String>() {
+                            @Override
+                            public void onResponse(String s) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onReopen(PublicKey publicKey) {
+                        HttpUtils.enrollAndVerify(publicKey, new OnJsonCallback<String>() {
+                            @Override
+                            public void onResponse(String s) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onSuccess(String signValue) {
                         HttpUtils.verifyByFinger(goodsInfo, signValue, new OnJsonCallback<String>() {
                             @Override
                             public void onResponse(String s) {
-                                finger23.cancel();
                             }
                         });
                     }

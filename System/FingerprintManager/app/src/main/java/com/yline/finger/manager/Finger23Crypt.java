@@ -75,6 +75,11 @@ public class Finger23Crypt {
 
         mSignal = new CancellationSignal();
         FingerprintManagerCompat.CryptoObject cryptoObject = providerEncryptObject();
+        if (null == cryptoObject) {
+            SDKManager.toast("秘钥不能重复创建");
+            return;
+        }
+
         FingerCompat.from().authenticate(context, cryptoObject, mSignal, new FingerprintManagerCompat.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errMsgId, CharSequence errString) {
@@ -226,7 +231,7 @@ public class Finger23Crypt {
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    public static FingerprintManagerCompat.CryptoObject providerDecryptObject(byte[] vectorBytes) {
+    private static FingerprintManagerCompat.CryptoObject providerDecryptObject(byte[] vectorBytes) {
         try {
             KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
             keyStore.load(null);
@@ -283,11 +288,11 @@ public class Finger23Crypt {
             if (!keyStore.isKeyEntry(KEY_NAME)) {
                 LogUtil.v("创建 对称秘钥，name = " + KEY_NAME);
                 createKeyInner();
-            }
-            /*else {
-                // 如果已创建，则不允许重复创建 android.security.keystore.KeyPermanentlyInvalidatedException: Key permanently invalidated
+            } else {
+                // 如果已创建，未经过指纹校验直接init会报 android.security.keystore.KeyPermanentlyInvalidatedException: Key permanently invalidated
+                LogUtil.v("秘钥，已经创建过了");
                 return null;
-            }*/
+            }
 
             // 获取最终的 key
             Key secretKey = keyStore.getKey(KEY_NAME, null);
