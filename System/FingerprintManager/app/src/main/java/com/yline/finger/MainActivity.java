@@ -2,7 +2,6 @@ package com.yline.finger;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.yline.application.SDKManager;
@@ -65,13 +64,12 @@ public class MainActivity extends BaseTestActivity {
         addButton("23，指纹校验，加密、可取消、无签名", new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                final String goodsInfo = System.currentTimeMillis() + "0yline";
-                FingerManager.auth23WithEncrypt(MainActivity.this, goodsInfo, new Finger23Crypt.OnEncryptCallback() {
+                final String valueInfo = System.currentTimeMillis() + "0yline";
+                FingerManager.auth23WithCryptCreate(MainActivity.this, valueInfo, new Finger23Crypt.OnOpenCallback() {
                     @Override
-                    public void onEncrypt(final Finger23Crypt crypt) {
+                    public void onSuccess() {
                         LogUtil.v("加密成功");
                         SDKManager.toast("加密成功");
-                        crypt.cancel();
                     }
                 });
             }
@@ -80,12 +78,24 @@ public class MainActivity extends BaseTestActivity {
         addButton("23，指纹校验，解密、可取消、无签名", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FingerManager.auth23WithDecrypt(MainActivity.this, new Finger23Crypt.OnDecryptCallback() {
+                final String valueInfo = System.currentTimeMillis() + "0yline";
+                FingerManager.auth23WithCryptVerify(MainActivity.this, valueInfo, new Finger23Crypt.OnVerifyCallback() {
                     @Override
-                    public void onDecrypt(Finger23Crypt crypt, String goodsInfo) {
-                        LogUtil.v("解密成功， goodsInfo = " + goodsInfo);
+                    public void onOpen() {
+                        LogUtil.v("加密成功");
+                        SDKManager.toast("加密成功");
+                    }
+
+                    @Override
+                    public void onReopen() {
+                        LogUtil.v("加密成功");
+                        SDKManager.toast("加密成功");
+                    }
+
+                    @Override
+                    public void onSuccess(String valueInfo) {
+                        LogUtil.v("解密成功， valueInfo = " + valueInfo);
                         SDKManager.toast("解密成功");
-                        crypt.cancel();
                     }
                 });
             }
@@ -133,8 +143,8 @@ public class MainActivity extends BaseTestActivity {
                     }
 
                     @Override
-                    public void onSuccess(String signValue) {
-                        HttpUtils.verifyByFinger(goodsInfo, signValue, new OnJsonCallback<String>() {
+                    public void onSuccess(PublicKey publicKey, String signValue) {
+                        HttpUtils.verifyByFinger(publicKey, goodsInfo, signValue, new OnJsonCallback<String>() {
                             @Override
                             public void onResponse(String s) {
                             }

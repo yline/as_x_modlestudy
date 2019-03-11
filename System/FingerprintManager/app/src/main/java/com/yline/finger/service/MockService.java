@@ -25,9 +25,16 @@ public class MockService implements IMockService {
     private final List<String> mSoldList = new ArrayList<>(); // 已销售的商品
 
     @Override
-    public boolean verifyByFinger(String goodsInfo, String userId, String signatureValue) {
+    public boolean verifyByFinger(PublicKey mockPublicKey, String goodsInfo, String userId, String signatureValue) {
         LogUtil.v("goodsInfo = " + goodsInfo + ", userId = " + userId + ", signatureValue = " + signatureValue);
 
+        // 为了解决，demo是static数据，导致重开APP数据丢失的问题，因此这里再次储存
+        if (!mPublicKeyMap.containsKey(userId) && mockPublicKey != null) {
+            LogUtil.v("重新填充上传公钥");
+            mPublicKeyMap.put(userId, mockPublicKey);
+        }
+
+        // 实际情况服务器会做的校验
         PublicKey publicKey = mPublicKeyMap.get(userId);
         if (null == publicKey) {
             LogUtil.v("指纹方式，销售失败，还未开通指纹支付");

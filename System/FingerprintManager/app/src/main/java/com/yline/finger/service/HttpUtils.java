@@ -57,11 +57,12 @@ public class HttpUtils {
     /**
      * 使用指纹，购买商品
      *
+     * @param publicKey 公钥，实际情况不需要，由于demo是static数据，导致重开APP数据丢失，因此这里再次上传
      * @param goodsInfo 商品信息
      * @param signValue 使用私钥对商品签名，后的信息
      */
-    public static void verifyByFinger(String goodsInfo, String signValue, OnJsonCallback<String> callback) {
-        callback(callback, getMockService().verifyByFinger(goodsInfo, USER_ID, signValue));
+    public static void verifyByFinger(PublicKey publicKey, String goodsInfo, String signValue, OnJsonCallback<String> callback) {
+        callback(callback, getMockService().verifyByFinger(publicKey, goodsInfo, USER_ID, signValue));
     }
 
     /**
@@ -75,9 +76,9 @@ public class HttpUtils {
                 @Override
                 public void run() {
                     if (result) {
-                        callback.onFailure("");
-                    } else {
                         callback.onResponse("");
+                    } else {
+                        callback.onFailure("");
                     }
                 }
             }, 1500);

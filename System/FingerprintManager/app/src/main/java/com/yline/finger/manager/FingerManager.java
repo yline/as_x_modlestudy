@@ -2,9 +2,8 @@ package com.yline.finger.manager;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 
-import com.yline.utils.LogUtil;
+import com.yline.finger.helper.KeyStoreUtil;
 
 /**
  * 依据测试情况，提供API
@@ -29,15 +28,15 @@ public class FingerManager {
     /**
      * 指纹校验，加密、有取消
      */
-    public static void auth23WithEncrypt(Context context, final String goodsInfo, final Finger23Crypt.OnEncryptCallback callback) {
-        Finger23Crypt.from().authenticateEncrypt(context, goodsInfo, callback);
+    public static void auth23WithCryptCreate(Context context, final String goodsInfo, final Finger23Crypt.OnOpenCallback callback) {
+        Finger23Crypt.open(context, goodsInfo, callback);
     }
 
     /**
-     * 指纹校验，解密、又取消
+     * 指纹校验，解密、有取消
      */
-    public static void auth23WithDecrypt(Context context, final Finger23Crypt.OnDecryptCallback callback) {
-        Finger23Crypt.from().authenticateDecrypt(context, callback);
+    public static void auth23WithCryptVerify(Context context, String value, final Finger23Crypt.OnVerifyCallback callback) {
+        Finger23Crypt.verify(context, value, callback);
     }
 
     /**
@@ -70,7 +69,7 @@ public class FingerManager {
      * @return true(是的)
      */
     public static boolean isSecureByHardware() {
-        return KeyStoreCompat.from().isKeyProtectByHardware();
+        return KeyStoreUtil.isKeyProtectByHardware();
     }
 
     /**

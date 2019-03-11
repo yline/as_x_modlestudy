@@ -13,11 +13,12 @@ public interface IMockService {
     /**
      * 使用指纹 校验
      *
+     * @param publicKey      公钥，实际情况不需要，由于demo是static数据，导致重开APP数据丢失，因此这里再次上传
      * @param goodsInfo      商品信息
      * @param userId         用户ID
      * @param signatureValue 指纹对商品信息的签名后，的信息
      */
-    boolean verifyByFinger(String goodsInfo, String userId, String signatureValue);
+    boolean verifyByFinger(PublicKey publicKey, String goodsInfo, String userId, String signatureValue);
 
     /**
      * 使用支付密码 校验

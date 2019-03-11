@@ -45,7 +45,7 @@ public class Finger23Sign {
 
         final KeyStore keyStore = SignUtil.getKeyStore();
         if (null == keyStore) {
-            LogUtil.e("keystore is null");
+            LogUtil.e("open failed, keystore is null");
             return;
         }
 
@@ -217,7 +217,8 @@ public class Finger23Sign {
                         String signValue = Base64.encodeToString(signBytes, Base64.NO_WRAP);
                         LogUtil.v("verify, signValue = " + signValue);
                         if (null != callback) {
-                            callback.onSuccess(signValue);
+                            PublicKey publicKey = SignUtil.getPublicKey(keyStore);
+                            callback.onSuccess(publicKey, signValue);
                         }
                     } catch (SignatureException e) {
                         e.printStackTrace();
@@ -245,9 +246,10 @@ public class Finger23Sign {
         /**
          * 秘钥存在，并有效；对商品生成签名
          *
+         * @param publicKey 本来不需要的，但是MockService无法常量储存，导致重开APP，就再也无法校验了
          * @param signValue 签名信息
          */
-        void onSuccess(String signValue);
+        void onSuccess(PublicKey publicKey, String signValue);
     }
 
     /**
