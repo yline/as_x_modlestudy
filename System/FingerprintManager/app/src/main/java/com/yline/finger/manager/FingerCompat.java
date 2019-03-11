@@ -66,12 +66,10 @@ class FingerCompat {
      * @param cancel   取消控制
      * @param callback 回调
      */
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void authenticate(Context context, @Nullable FingerprintManagerCompat.CryptoObject crypto, @Nullable CancellationSignal cancel,
                              @NonNull FingerprintManagerCompat.AuthenticationCallback callback) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            LogUtil.e("Android 版本低");
-            return;
-        }
+        LogUtil.v("请输入指纹-----------");
         authenticateInner(context, crypto, cancel, callback);
     }
 

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.os.CancellationSignal;
+import android.text.TextUtils;
 import android.util.Base64;
 
 import com.yline.application.SDKManager;
@@ -46,7 +47,7 @@ public class Finger23Crypt {
     private static byte[] getEncryptStr() {
         String encryptStr = (String) SPUtil.get(SDKManager.getApplication(), KEY_ENCRYPT, "");
         LogUtil.v("getEncryptStr = " + encryptStr);
-        return (null == encryptStr ? null : Base64.decode(encryptStr, Base64.NO_WRAP));
+        return (TextUtils.isEmpty(encryptStr) ? null : Base64.decode(encryptStr, Base64.NO_WRAP));
     }
 
     private static void setVectorStr(byte[] vectorBytes) {
@@ -58,7 +59,7 @@ public class Finger23Crypt {
     private static byte[] getVectorStr() {
         String vectorStr = (String) SPUtil.get(SDKManager.getApplication(), KEY_ENCRYPT_VECTOR, "");
         LogUtil.v("getVectorStr = " + vectorStr);
-        return (null == vectorStr ? null : Base64.decode(vectorStr, Base64.NO_WRAP));
+        return (TextUtils.isEmpty(vectorStr) ? null : Base64.decode(vectorStr, Base64.NO_WRAP));
     }
 
     /**
@@ -209,8 +210,20 @@ public class Finger23Crypt {
             }
         } else {
             byte[] vectorBytes = getVectorStr();
-            Cipher cipher = providerCipher(keyStore, Cipher.DECRYPT_MODE, vectorBytes);
-            if (null == cipher) { // 秘钥存在，但是秘钥失效
+
+            boolean isReopen = true;
+            Cipher cipher;
+            if (null != vectorBytes) { // 未储存，Vector时，解密直接失败[AES解密要求]
+                cipher = providerCipher(keyStore, Cipher.DECRYPT_MODE, vectorBytes);
+                if (null != cipher) {
+                    cryptoObject = new FingerprintManagerCompat.CryptoObject(cipher);
+                    state = STATE_SUCCESS; // 秘钥存在，并有效
+                    isReopen = false;
+                }
+            }
+
+            // 秘钥存在，但是秘钥失效
+            if (isReopen) {
                 CryptUtil.deleteKey(keyStore); // 删除秘钥
                 CryptUtil.createKey(); // 重新创建秘钥
                 cipher = providerCipher(keyStore, Cipher.ENCRYPT_MODE, null);
@@ -220,9 +233,6 @@ public class Finger23Crypt {
                     cryptoObject = new FingerprintManagerCompat.CryptoObject(cipher);
                     state = STATE_REOPEN; // 秘钥存在，但失效；创建秘钥成功
                 }
-            } else { // 秘钥存在，并有效
-                cryptoObject = new FingerprintManagerCompat.CryptoObject(cipher);
-                state = STATE_SUCCESS; // 秘钥存在，并有效
             }
         }
 
@@ -351,6 +361,7 @@ public class Finger23Crypt {
             } else {
                 cipher.init(opmode, secretKey, new IvParameterSpec(vectorBytes));
             }
+            return cipher;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {

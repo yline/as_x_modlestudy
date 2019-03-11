@@ -54,14 +54,14 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
-        addButton("23，指纹校验，无加密、无签名", new View.OnClickListener() {
+        addButton("Finger23Simple", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FingerManager.auth23Simple(MainActivity.this);
             }
         });
 
-        addButton("23，指纹校验，加密、可取消、无签名", new View.OnClickListener() {
+        addButton("Finger23Crypt Create", new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 final String valueInfo = System.currentTimeMillis() + "0yline";
@@ -75,7 +75,7 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
-        addButton("23，指纹校验，解密、可取消、无签名", new View.OnClickListener() {
+        addButton("Finger23Crypt Verify", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String valueInfo = System.currentTimeMillis() + "0yline";
@@ -101,7 +101,7 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
-        addButton("23，指纹录入，签名创建、可取消", new View.OnClickListener() {
+        addButton("Finger23Sign open", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FingerManager.auth23WithSignCreate(MainActivity.this, new Finger23Sign.OnOpenCallback() {
@@ -117,7 +117,7 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
-        addButton("23，指纹校验，签名验证、可取消", new View.OnClickListener() {
+        addButton("Finger23Sign verify", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String goodsInfo = System.currentTimeMillis() + "-yline"; // 商品
@@ -162,7 +162,7 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
-        addButton("28，指纹校验，无加密、无签名", new View.OnClickListener() {
+        addButton("Finger28Simple", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FingerManager.auth28Simple(MainActivity.this);

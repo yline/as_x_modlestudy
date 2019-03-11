@@ -5,7 +5,7 @@ https://www.jianshu.com/p/1eae12582a31  // 对应的blog
 https://github.com/PopFisher/FingerprintRecognition // demo写的特别乱，很多没必要的乱转[估计官网直接转的]，没有考虑安全问题
 https://www.cnblogs.com/popfisher/p/6063835.html // 对应的blog
 
-https://github.com/feelschaotic/FingerPrintAuth // 有加密和解密；是本地加密和解密的。有逻辑：新录入的指纹，重新生成密钥对【相对最好了，虽然框架不好】
+https://github.com/feelschaotic/FingerPrintAuth // 有加密和解密；是本地加密和解密的。有逻辑：新录入的指纹，重新生成密钥对【相对可以了，虽然代码写的不好[不够简洁，过度封装]】
 https://www.jianshu.com/p/ed880f35f97f // 对应的blog
 
 https://github.com/googlesamples/android-FingerprintDialog // 官方的demo

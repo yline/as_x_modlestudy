@@ -2,8 +2,6 @@ package com.yline.finger.service;
 
 import com.yline.application.SDKManager;
 
-import java.security.Key;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 
 /**
