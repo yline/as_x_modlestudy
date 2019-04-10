@@ -11,6 +11,7 @@ import com.system.broadcast.receiver.unactivemanager.R;
 import com.unactive.windowmanager.receiver.PassViewReceiver;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
+import com.yline.utils.LogUtil;
 
 /**
  * 利用DeviceAdminReceiver 实现防卸载功能,通过windowManager的方式
@@ -18,53 +19,46 @@ import com.yline.log.LogFileUtil;
  * @author YLine 2016/8/8 --> 22:44
  * @version 1.0.0
  */
-public class MainActivity extends BaseActivity
-{
-	private DevicePolicyManager mDevicePolicyManager;
+public class MainActivity extends BaseActivity {
+    private DevicePolicyManager mDevicePolicyManager;
 
-	private ComponentName mComponentName;
+    private ComponentName mComponentName;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-		initData();
+        initData();
 
-		// 激活
-		findViewById(R.id.btn_active).setOnClickListener(new View.OnClickListener()
-		{
+        // 激活
+        findViewById(R.id.btn_active).setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v)
-			{
-				boolean isActive = mDevicePolicyManager.isAdminActive(mComponentName);
-				LogFileUtil.v(MainApplication.TAG, "btn_active onClicked, isActive = " + isActive);
+            @Override
+            public void onClick(View v) {
+                boolean isActive = mDevicePolicyManager.isAdminActive(mComponentName);
+                LogUtil.v("btn_active onClicked, isActive = " + isActive);
 
-				Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-				intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mComponentName);
-				MainActivity.this.startActivity(intent);
-			}
-		});
+                Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mComponentName);
+                MainActivity.this.startActivity(intent);
+            }
+        });
 
-		// 取消激活
-		findViewById(R.id.btn_unactive).setOnClickListener(new View.OnClickListener()
-		{
+        // 取消激活
+        findViewById(R.id.btn_unactive).setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v)
-			{
-				LogFileUtil.v(MainApplication.TAG, "btn_unactive onClicked");
-				mDevicePolicyManager.removeActiveAdmin(mComponentName);
-				LogFileUtil.v(MainApplication.TAG, "removeActiveAdmin isActive = " + mDevicePolicyManager.isAdminActive(mComponentName));
-			}
-		});
-	}
+            @Override
+            public void onClick(View v) {
+                LogUtil.v("btn_unactive onClicked");
+                mDevicePolicyManager.removeActiveAdmin(mComponentName);
+                LogUtil.v("removeActiveAdmin isActive = " + mDevicePolicyManager.isAdminActive(mComponentName));
+            }
+        });
+    }
 
-	private void initData()
-	{
-		mDevicePolicyManager = (DevicePolicyManager) MainApplication.getApplication().getSystemService(Context.DEVICE_POLICY_SERVICE);
-		mComponentName = new ComponentName(MainApplication.getApplication(), PassViewReceiver.class);
-	}
+    private void initData() {
+        mDevicePolicyManager = (DevicePolicyManager) MainApplication.getApplication().getSystemService(Context.DEVICE_POLICY_SERVICE);
+        mComponentName = new ComponentName(MainApplication.getApplication(), PassViewReceiver.class);
+    }
 }

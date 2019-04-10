@@ -11,6 +11,7 @@ import com.system.broadcast.receiver.R;
 import com.unactive.lock.receiver.LockReceiver;
 import com.yline.base.BaseActivity;
 import com.yline.log.LogFileUtil;
+import com.yline.utils.LogUtil;
 
 /**
  * 利用DeviceAdminReceiver广播,实现防卸载
@@ -36,7 +37,7 @@ public class MainActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				boolean isActive = mDevicePolicyManager.isAdminActive(mComponentName);
-				LogFileUtil.v(MainApplication.TAG, "btn_active onClicked, isActive = " + isActive);
+				LogUtil.v( "btn_active onClicked, isActive = " + isActive);
 				
 				Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
 				intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mComponentName);
@@ -49,9 +50,9 @@ public class MainActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View v) {
-				LogFileUtil.v(MainApplication.TAG, "btn_unactive onClicked");
+				LogUtil.v( "btn_unactive onClicked");
 				mDevicePolicyManager.removeActiveAdmin(mComponentName);
-				LogFileUtil.v(MainApplication.TAG, "removeActiveAdmin isActive = " + mDevicePolicyManager.isAdminActive(mComponentName));
+				LogUtil.v( "removeActiveAdmin isActive = " + mDevicePolicyManager.isAdminActive(mComponentName));
 			}
 		});
 	}

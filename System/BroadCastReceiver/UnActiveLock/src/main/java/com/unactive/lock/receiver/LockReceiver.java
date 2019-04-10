@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import com.unactive.lock.activity.MainApplication;
 import com.yline.log.LogFileUtil;
+import com.yline.utils.LogUtil;
 
 /**
  * 方式1:某作者,在4.0 & 5.0均测试失败,可以正常取消激活;个人没有验证
@@ -42,40 +43,40 @@ public class LockReceiver extends DeviceAdminReceiver {
         return ""; // 这是一个可选的消息,警告有关禁止用户的请求
     }
     */
-	
-	@Override
-	public CharSequence onDisableRequested(Context context, Intent intent) {
-		LogFileUtil.v(MainApplication.TAG, "onDisableRequested is runned");
-		// 跳离当前询问是否取消激活的 dialog
-		Intent outOfDailog = context.getPackageManager().getLaunchIntentForPackage("com.android.settings");
-		outOfDailog.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		context.startActivity(outOfDailog);
-		
-		// 调用设备管理器本身的功能,每100ms锁屏一次,用户即使解锁,也会立即被锁,直至7s后
-		final DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-		dpm.lockNow();
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				int i = 0;
-				while (i < 70) {
-					dpm.lockNow();
-					try {
-						Thread.sleep(100);
-						i++;
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();
-		return "";
-	}
-	
-	@Override
-	public void onDisabled(Context context, Intent intent) {
-		super.onDisabled(context, intent);
-		LogFileUtil.v(MainApplication.TAG, "onDisabled is runned");
-	}
+
+    @Override
+    public CharSequence onDisableRequested(Context context, Intent intent) {
+        LogUtil.v("onDisableRequested is runned");
+        // 跳离当前询问是否取消激活的 dialog
+        Intent outOfDailog = context.getPackageManager().getLaunchIntentForPackage("com.android.settings");
+        outOfDailog.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(outOfDailog);
+
+        // 调用设备管理器本身的功能,每100ms锁屏一次,用户即使解锁,也会立即被锁,直至7s后
+        final DevicePolicyManager dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+        dpm.lockNow();
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                int i = 0;
+                while (i < 70) {
+                    dpm.lockNow();
+                    try {
+                        Thread.sleep(100);
+                        i++;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+        return "";
+    }
+
+    @Override
+    public void onDisabled(Context context, Intent intent) {
+        super.onDisabled(context, intent);
+        LogUtil.v("onDisabled is runned");
+    }
 }
