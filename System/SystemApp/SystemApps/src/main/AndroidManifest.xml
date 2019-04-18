@@ -15,6 +15,8 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <!-- 读取短信 -->
     <uses-permission android:name="android.permission.READ_SMS" />
+    <!-- 接受短信 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <!-- 往本地写入短信 -->
     <uses-permission android:name="android.permission.WRITE_SMS" />
 
