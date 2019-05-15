@@ -25,7 +25,18 @@ public class AESUtils {
 	
 	/* 使用CBC模式，需要一个向量iv，可增加加密算法的强度 */
 	private static final String PARAMETER_SPEC = "1234567890123456";
-	
+
+	/**
+	 * AES 加密
+	 *
+	 * @param srcBytes      原始数据（待加密的数据）
+	 * @param keyBytes      秘钥，要求16位
+	 * @return 加密后的byte数组
+	 */
+	public static byte[] encrypt(byte[] srcBytes, byte[] keyBytes) {
+		return encryptInner(srcBytes, keyBytes, PARAMETER_SPEC.getBytes(), METHOD);
+	}
+
 	/**
 	 * AES 加密
 	 *
@@ -53,6 +64,17 @@ public class AESUtils {
 		byte[] baseBytes = Base64.decode(sSrc, Base64.DEFAULT); // base64转码并解密
 		byte[] decryptedBytes = decryptInner(baseBytes, sKey.getBytes(), PARAMETER_SPEC.getBytes(), METHOD); // AES解密
 		return (null == decryptedBytes ? null : new String(decryptedBytes));
+	}
+
+	/**
+	 * AES 解密
+	 *
+	 * @param srcBytes 原始数据（待解密的数据）
+	 * @param keyBytes 秘钥，要求16位
+	 * @return 解密后的byte数组
+	 */
+	public static byte[] decrypt(byte[] srcBytes, byte[] keyBytes) {
+		return decryptInner(srcBytes, keyBytes, PARAMETER_SPEC.getBytes(), METHOD);
 	}
 	
 	/**

@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kjtpay.ndk.AESUtils;
+import com.kjtpay.ndk.HmacUtils;
 import com.kjtpay.ndk.JniManager;
 import com.kjtpay.ndk.KjtEncryptUtils;
 import com.kjtpay.ndk.RSAUtils;
@@ -21,7 +22,10 @@ import java.util.Locale;
 public class MainActivity extends BaseTestActivity {
 	private static final int AES_KEY_LENGTH = 16 * 8;
 	// 私钥 - 自己生成
+	private static final String RSA_PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDQkiFAp5GHuW8koHAw2H5xl7IZU0tyME8xUpeCagNPB8MJZeKuXnqwy/J06Sp6ClbR0QqUVyCT8NCEoRJWOky3wDbTR9T3/rcPpXSZYFC+zIkLOMZz/aKNKXfesw4Vmpf5OD2IQQGZOuKXNJnsaQvEPzhoc55NQUf1pK0UmmN/uwIDAQAB";
 	private static final String RSA_PRIVATE_KEY = "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANCSIUCnkYe5bySgcDDYfnGXshlTS3IwTzFSl4JqA08Hwwll4q5eerDL8nTpKnoKVtHRCpRXIJPw0IShElY6TLfANtNH1Pf+tw+ldJlgUL7MiQs4xnP9oo0pd96zDhWal/k4PYhBAZk64pc0mexpC8Q/OGhznk1BR/WkrRSaY3+7AgMBAAECgYEAjScoa/o76m/bwRz3cIdD45p3RN5zQ99f6RBtSyx1+slU/IpAhCOawwXzm52lSpyurybbExN4D8c9R1U+9K5V9hd1/hpVLi9X8kh9Jw6VJXExotJ99LY6PYBAs4TqTwfE7oPP/Y+79u2wI240QIJkSwTEtIV4LyKdHQzRmLllSeECQQD9qgtyilj3f4HFC47xswdYrXKC3d/CWjTuD/YqM94LrEWYHeVWlFTnXX3Af+/YjjXQq2Go1Wbww1aHhrYR5MirAkEA0n3JrCpNLhKQfR64C74gJBEi5+Zm4AeOkkhyeRuT+53six3nFUqgRLnpUeM980V/X2a79usQ0GMCETorYIlFMQJAOHK2yW5wDeOaBTdlP/QPFnTCnsyxFpbsYG284fdY2lAjzI4akwG/Qx1S9puBzDcZUq5QtTmIBtvxTYd0zNaUsQJBAM7qqF1+F/C6fx8AG5wvghjyX4XnkCmaRCS44w76dTZbwDPhaVAc0/+7YgkFgdiq8NMvgobv/M9dBKM6s3lqd4ECQQCGfie3P1D40ZPGTgJImm/ly4leWloV7NjxMEBem1xIGGEHht+9bV4qexbTReAIHyYeMK2WGtzCq2oy6rYnJ/Cj";
+	// 私钥 - KJT
+
 	private static final String RSA_PRIVATE_KJT = "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAJ0WSFQkEoj0kNDNJPDmHfzu6Nu797ozp9GXVYxjuP/JRa0SldWyZOuNuEZGvtI7h128ior5Snj+kGo/YeY8kvgDRMeQr118ifpo5MjlOp1Kck3xJKoFtpXr+97c8wumH1zCF7Qhq8ieogV0mvhy8L2hhGhYCznYDL+TvwMEa2gnAgMBAAECgYAxyyxmL4EIlK2K4lxBWFBNKtX5QR4HkfQyRcxCUiIEQqKpd+iy8nd3C1dMP4ShU2lXVzp7TwZCUD8qzqiTuMPFBsFg6ADB9BM2cf4tEQET1mkwaZfapjCWDw9NhSOUaWTsQ3NTEERX03S/7EyDCf9SV8bpBDjzrXLVq2CczsWEAQJBANPNaFyvOJmUB/BO/RK5f7GHgTx1uVOhcc8I1Ixd4g8wb5k/8Iks8EXHthNcitb7THYCdZBgjpr2FSi3jV+AeQECQQC93fQZMIy8QHiIDie2oLOgAKzgv1oCHkHQ7Hotq4v3FhfqhIcLhs3/hyMHR6dsQ5D5gnsVhj45PMeSaQgTJ/knAkBf15taFZAvLuVIwPWT+4zk8MRyb3MlfPDbFsvXmMQqy2g0mNJnwIYZjX2+1SmejqjS3doFMyxUwvZgLm8ywBgBAkAjvFXIM/IZMI0/FmL1JbQJRndDaeCYC3fZydiJJgOXAuqHcmA0lC/Li3TVVvA1GVZ9D8j42SZ3AXCSpwAlEt37AkB4Nd5qGLk4dUdPN/lMi6q3yhEy5D+9W+W0671+70IHqQpC8R/CUtzcOv+rTKLoOXyFwWrosJBacMlBSd6PptS7";
 	
 	private byte[] AESKey;
@@ -34,7 +38,7 @@ public class MainActivity extends BaseTestActivity {
 		//		KeyPair keyPair = RSAUtils.createKeyPair();
 		//		rsaPrivateKey = RSAUtils.getPrivateKey(keyPair);
 		//		rsaPublicKey = RSAUtils.getPublicKey(keyPair);
-		
+
 		rsaPublicKey = JniManager.getInstance().getRSAPublicKey();
 		rsaPrivateKey = RSA_PRIVATE_KJT;
 		
