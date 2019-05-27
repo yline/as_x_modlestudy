@@ -3,6 +3,9 @@ package com.view.recycler.multi;
 import android.os.Bundle;
 import android.view.View;
 
+import com.yline.application.BaseApplication;
+import com.yline.application.SDKConfig;
+import com.yline.application.SDKManager;
 import com.yline.test.BaseTestActivity;
 
 public class MainActivity extends BaseTestActivity {
