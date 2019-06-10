@@ -16,6 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 这里面的三个meta-data标签的name不能错误，不然xposed框架apk无法识别自定义编写的xposed模块。 -->
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true"/>
+        <meta-data
+            android:name="xposeddescription"
+            android:value="这是一个xposed应用"/>
+        <meta-data
+            android:name="xposedminversion"
+            android:value="54"/>
     </application>
 
 </manifest>

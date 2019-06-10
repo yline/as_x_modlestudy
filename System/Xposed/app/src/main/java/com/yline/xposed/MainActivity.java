@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private String getXposedString() {
+    public String getXposedString() {
         return "native _ android";
     }
 }
