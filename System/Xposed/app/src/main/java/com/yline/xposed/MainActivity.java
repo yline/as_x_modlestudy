@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.yline.utils.LogUtil;
+
 public class MainActivity extends AppCompatActivity {
     private TextView mTextView;
 
@@ -19,13 +21,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String str = getXposedString();
-                Log.v("xxx-", "str = " + str);
+                LogUtil.v("str = " + str);
                 mTextView.setText(str);
             }
         });
     }
 
     public String getXposedString() {
+        LogUtil.v("getXposedString");
         return "native _ android";
     }
 }
