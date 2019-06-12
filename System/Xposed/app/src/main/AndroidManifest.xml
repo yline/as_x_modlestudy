@@ -10,13 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <!-- 这里面的三个meta-data标签的name不能错误，不然xposed框架apk无法识别自定义编写的xposed模块。 -->
         <meta-data
@@ -24,10 +17,18 @@
             android:value="true"/>
         <meta-data
             android:name="xposeddescription"
-            android:value="这是一个xposed应用"/>
+            android:value="xposed test"/>
         <meta-data
             android:name="xposedminversion"
-            android:value="54"/>
+            android:value="82"/>
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

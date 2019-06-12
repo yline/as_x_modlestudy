@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
                 mTextView.setText(str);
             }
         });
+
+        LogUtil.v("" + getClass().getName());
     }
 
     public String getXposedString() {
