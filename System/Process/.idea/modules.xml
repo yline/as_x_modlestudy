@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MultiProcess/app.iml" filepath="$PROJECT_DIR$/MultiProcess/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KeepAliveProcess/KeepAliveProcess.iml" filepath="$PROJECT_DIR$/KeepAliveProcess/KeepAliveProcess.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MultiProcess/MultiProcess.iml" filepath="$PROJECT_DIR$/MultiProcess/MultiProcess.iml" />
       <module fileurl="file://$PROJECT_DIR$/Process.iml" filepath="$PROJECT_DIR$/Process.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Process.iml" filepath="$PROJECT_DIR$/Process.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MultiProcess/app.iml" filepath="$PROJECT_DIR$/MultiProcess/app.iml" />
     </modules>
   </component>
 </project>
