@@ -16,6 +16,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".receiver.KeepAliveReceiver">
+            <intent-filter>
+                <!-- 包含Intent的action即可 -->
+                <!-- 开机 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!-- 亮屏 -->
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <!-- 灭屏 -->
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <!-- 插拔有线耳机 -->
+                <action android:name="android.intent.action.HEADSET_PLUG" />
+                <!-- 电量充足 -->
+                <action android:name="android.intent.action.BATTERY_OKAY" />
+                <!-- 同类型的广播 -->
+                <action android:name="com.yline.KEEP_ALIVE" />
+
+                <!-- 包含Intent的category即可 -->
+                <category android:name="android.intent.category.HOME" />
+
+                <!-- data 【包含Intent的action即可】 -->
+            </intent-filter>
+        </receiver>
+        <service android:name=".service.DaemonService" />
     </application>
 
 </manifest>
