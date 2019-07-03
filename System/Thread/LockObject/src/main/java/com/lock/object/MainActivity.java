@@ -3,7 +3,6 @@ package com.lock.object;
 import android.os.Bundle;
 import android.view.View;
 
-import com.lock.object.custom.Custom;
 import com.lock.object.reen.ReenTest;
 import com.lock.object.sync.SynchronizedLock;
 import com.lock.object.sync.SynchronizedLockSimple;
@@ -84,22 +83,5 @@ public class MainActivity extends BaseTestActivity {
                 SynchronizedLock.testNotify("notify", 1000, 1, 3000, true);
             }
         });
-
-        // 测试，自定义 锁；可重入锁含义
-        addButton("testRepeatable", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Custom.testRepeatable();
-            }
-        });
-
-        // 测试，自定义 锁；不可重入锁含义
-        addButton("testNonRepeatable", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Custom.testNonRepeatable();
-            }
-        });
-
     }
 }

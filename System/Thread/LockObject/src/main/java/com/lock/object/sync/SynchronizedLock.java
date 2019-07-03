@@ -2,6 +2,8 @@ package com.lock.object.sync;
 
 import com.lock.object.utils.Utils;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * wait(): 导致当前线程等待,直到其它线程调用该同步监视器的notify()方法或者notifyAll()方法来唤醒该线程.
  * 该方法可带  倒计时功能
