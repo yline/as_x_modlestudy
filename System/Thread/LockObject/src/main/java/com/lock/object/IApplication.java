@@ -1,4 +1,4 @@
-package com.lock.object.activity;
+package com.lock.object;
 
 import com.yline.application.BaseApplication;
 

@@ -1,10 +1,10 @@
-package com.lock.object.activity;
+package com.lock.object;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.lock.object.custom.Custom;
-import com.lock.object.reen.Reentrant;
+import com.lock.object.reen.ReenTest;
 import com.lock.object.sync.SynchronizedLock;
 import com.lock.object.sync.SynchronizedLockSimple;
 import com.yline.test.BaseTestActivity;
@@ -12,6 +12,28 @@ import com.yline.test.BaseTestActivity;
 public class MainActivity extends BaseTestActivity {
     @Override
     public void testStart(View view, Bundle savedInstanceState) {
+        /* ---------------------- 可重入性 ---------------------- */
+        addButton("reenLock", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReenTest.reenSample();
+            }
+        });
+
+        addButton("unreenLock", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReenTest.unreenSample();
+            }
+        });
+
+        addButton("synchronized 可重入性测试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReenTest.synchronizedSample();
+            }
+        });
+
         // 单纯的 synchronized 关键词
         addButton("synchronized", new View.OnClickListener() {
             @Override
@@ -79,20 +101,5 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
-        // ReentrantLock简单测试
-        addButton("testReentrantSimple", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Reentrant.testSimple(100, 500, 200, 100);
-            }
-        });
-
-        // ReentrantLock LockInterruptibly，没有实际效果
-        addButton("", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Reentrant.testLockInterruptibly(300, 200, 200, 300);
-            }
-        });
     }
 }
