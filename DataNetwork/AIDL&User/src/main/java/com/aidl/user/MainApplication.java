@@ -1,7 +1,6 @@
-package com.aidl.user.activity;
+package com.aidl.user;
 
 import com.yline.application.BaseApplication;
 
 public class MainApplication extends BaseApplication {
-    public static final String TAG = "AIDL&User";
 }

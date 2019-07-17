@@ -1,1 +1,1 @@
-include ':Json', ':AIDL&Provider', ':AIDL&User', ':XML', ':SharePeference', ':UDPSample', ':lrucache'
+include ':Json', ':AIDL&Provider', ':AIDL&User', ':XML', ':SharePeference', ':UDPSample', ':lrucache', ':AIDL_Binder'

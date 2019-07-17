@@ -3,20 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AIDL&amp;Provider/AIDL&amp;Provider.iml" filepath="$PROJECT_DIR$/AIDL&amp;Provider/AIDL&amp;Provider.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AIDL&amp;Provider/AIDL&amp;Provider.iml" filepath="$PROJECT_DIR$/AIDL&amp;Provider/AIDL&amp;Provider.iml" />
       <module fileurl="file://$PROJECT_DIR$/AIDL&amp;User/AIDL&amp;User.iml" filepath="$PROJECT_DIR$/AIDL&amp;User/AIDL&amp;User.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AIDL&amp;User/AIDL&amp;User.iml" filepath="$PROJECT_DIR$/AIDL&amp;User/AIDL&amp;User.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DataNetwork.iml" filepath="$PROJECT_DIR$/DataNetwork.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AIDL_Binder/AIDL_Binder.iml" filepath="$PROJECT_DIR$/AIDL_Binder/AIDL_Binder.iml" />
       <module fileurl="file://$PROJECT_DIR$/DataNetwork.iml" filepath="$PROJECT_DIR$/DataNetwork.iml" />
       <module fileurl="file://$PROJECT_DIR$/Json/Json.iml" filepath="$PROJECT_DIR$/Json/Json.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Json/Json.iml" filepath="$PROJECT_DIR$/Json/Json.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SharePeference/SharePeference.iml" filepath="$PROJECT_DIR$/SharePeference/SharePeference.iml" />
       <module fileurl="file://$PROJECT_DIR$/SharePeference/SharePeference.iml" filepath="$PROJECT_DIR$/SharePeference/SharePeference.iml" />
       <module fileurl="file://$PROJECT_DIR$/UDPSample/UDPSample.iml" filepath="$PROJECT_DIR$/UDPSample/UDPSample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/UDPSample/UDPSample.iml" filepath="$PROJECT_DIR$/UDPSample/UDPSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/XML/XML.iml" filepath="$PROJECT_DIR$/XML/XML.iml" />
-      <module fileurl="file://$PROJECT_DIR$/XML/XML.iml" filepath="$PROJECT_DIR$/XML/XML.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lrucache/lrucache.iml" filepath="$PROJECT_DIR$/lrucache/lrucache.iml" />
       <module fileurl="file://$PROJECT_DIR$/lrucache/lrucache.iml" filepath="$PROJECT_DIR$/lrucache/lrucache.iml" />
     </modules>
   </component>

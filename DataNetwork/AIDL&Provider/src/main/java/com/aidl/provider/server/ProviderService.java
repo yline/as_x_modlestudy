@@ -1,13 +1,11 @@
-package com.aidl.provider.provider;
+package com.aidl.provider.server;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.RemoteException;
 
 import com.aidl.IService;
-import com.aidl.provider.activity.MainApplication;
-import com.yline.log.LogFileUtil;
+import com.yline.utils.LogUtil;
 
 /**
  * 提供一个绑定的服务
@@ -19,26 +17,26 @@ import com.yline.log.LogFileUtil;
 public class ProviderService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
-        LogFileUtil.v(MainApplication.TAG, "ProviderService -> onBind");
+        LogUtil.v("onBind");
         return new ServiceBinder();
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        LogFileUtil.v(MainApplication.TAG, "ProviderService -> onCreate success");
+        LogUtil.v("onCreate success");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        LogFileUtil.v(MainApplication.TAG, "ProviderService -> onStartCommand success");
+        LogUtil.v("onStartCommand success");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LogFileUtil.v(MainApplication.TAG, "ProviderService -> destroyed");
+        LogUtil.v("destroyed");
     }
 
     /**
@@ -49,12 +47,12 @@ public class ProviderService extends Service {
      */
     private class ServiceBinder extends IService.Stub {
         @Override
-        public void callMethodInService() throws RemoteException {
-            method("ProviderService -> ServiceBinder -> ServiceBinder is called");
+        public void callMethodInService() {
+            method("callMethodInService");
         }
     }
 
     private void method(String content) {
-        LogFileUtil.v(MainApplication.TAG, "ProviderService -> " + content);
+        LogUtil.v("method called -> " + content);
     }
 }

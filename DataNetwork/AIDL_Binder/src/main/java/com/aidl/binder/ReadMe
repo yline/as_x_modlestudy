@@ -1,0 +1,4 @@
+AIDL&Provider : AIDL使用时，的服务端
+AIDL&User : AIDL使用时，的客户端
+
+AIDL_Binder : 直接使用IBinder来实现跨进程通信，本质和AIDL是一样的。但它自己通过Binder实现了AIDL
