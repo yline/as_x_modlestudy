@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SwipeMenuLayout">
-        <attr name="leftSwipe" format="boolean"/>
+    <declare-styleable name="EasySwipeMenuLayout">
+        <attr name="leftMenuView" format="reference" />
+        <attr name="rightMenuView" format="reference" />
+        <attr name="contentView" format="reference" />
+        <attr name="fraction" format="float" />
     </declare-styleable>
 </resources>
