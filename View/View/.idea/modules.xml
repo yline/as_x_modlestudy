@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/SliderBar/SliderBar.iml" filepath="$PROJECT_DIR$/SliderBar/SliderBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/View.iml" filepath="$PROJECT_DIR$/View.iml" />
       <module fileurl="file://$PROJECT_DIR$/WaveView/WaveView.iml" filepath="$PROJECT_DIR$/WaveView/WaveView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/_TestTouchEvent/_TestTouchEvent.iml" filepath="$PROJECT_DIR$/_TestTouchEvent/_TestTouchEvent.iml" />
     </modules>
   </component>
 </project>

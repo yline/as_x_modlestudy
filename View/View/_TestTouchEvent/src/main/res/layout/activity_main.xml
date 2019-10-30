@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.view.test.touchevent.view.A100
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@android:color/holo_red_light">
+
+        <com.view.test.touchevent.view.B110
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="20dp"
+            android:background="@android:color/holo_blue_bright">
+
+            <com.view.test.touchevent.view.C111
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="top"
+                android:layout_margin="10dp"
+                android:background="@android:color/white" />
+
+            <com.view.test.touchevent.view.C112
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom"
+                android:layout_margin="10dp"
+                android:background="@android:color/holo_purple" />
+        </com.view.test.touchevent.view.B110>
+
+        <com.view.test.touchevent.view.B120
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="20dp"
+            android:background="@android:color/holo_blue_bright">
+
+        </com.view.test.touchevent.view.B120>
+    </com.view.test.touchevent.view.A100>
+
+    <com.view.test.touchevent.view.A200
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/holo_red_light">
+
+        <com.view.test.touchevent.view.B210
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="20dp"
+            android:background="@android:color/holo_blue_bright">
+
+            <com.view.test.touchevent.view.C211
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:background="@android:color/holo_purple" />
+        </com.view.test.touchevent.view.B210>
+
+        <com.view.test.touchevent.view.B220
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="20dp"
+            android:background="@android:color/holo_blue_bright">
+
+        </com.view.test.touchevent.view.B220>
+    </com.view.test.touchevent.view.A200>
+
+    <com.view.test.touchevent.view.A300
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/holo_red_light">
+
+        <com.view.test.touchevent.view.B310
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:background="@android:color/holo_blue_bright" />
+    </com.view.test.touchevent.view.A300>
+</LinearLayout>
