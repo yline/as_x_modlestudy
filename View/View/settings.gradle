@@ -1,1 +1,1 @@
-include ':WaveView', ':SliderBar', ':PatternLock', ':DragBubble', ':AnnualProfitView', ':BackgroundView'
+include ':WaveView', ':SliderBar', ':PatternLock', ':DragBubble', ':AnnualProfitView', ':BackgroundView', ':_TestTouchEvent'

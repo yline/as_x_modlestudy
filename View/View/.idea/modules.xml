@@ -16,6 +16,7 @@
       <module fileurl="file://$PROJECT_DIR$/View-View.iml" filepath="$PROJECT_DIR$/View-View.iml" />
       <module fileurl="file://$PROJECT_DIR$/WaveView/View-WaveView.iml" filepath="$PROJECT_DIR$/WaveView/View-WaveView.iml" />
       <module fileurl="file://$PROJECT_DIR$/WaveView/WaveView.iml" filepath="$PROJECT_DIR$/WaveView/WaveView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/_TestTouchEvent/_TestTouchEvent.iml" filepath="$PROJECT_DIR$/_TestTouchEvent/_TestTouchEvent.iml" />
     </modules>
   </component>
 </project>
