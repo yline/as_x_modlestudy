@@ -8,6 +8,13 @@
       <module fileurl="file://$PROJECT_DIR$/PatternLock/PatternLock.iml" filepath="$PROJECT_DIR$/PatternLock/PatternLock.iml" />
       <module fileurl="file://$PROJECT_DIR$/SliderBar/SliderBar.iml" filepath="$PROJECT_DIR$/SliderBar/SliderBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/View.iml" filepath="$PROJECT_DIR$/View.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AnnualProfitView/View-AnnualProfitView.iml" filepath="$PROJECT_DIR$/AnnualProfitView/View-AnnualProfitView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BackgroundView/View-BackgroundView.iml" filepath="$PROJECT_DIR$/BackgroundView/View-BackgroundView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DragBubble/View-DragBubble.iml" filepath="$PROJECT_DIR$/DragBubble/View-DragBubble.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PatternLock/View-PatternLock.iml" filepath="$PROJECT_DIR$/PatternLock/View-PatternLock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SliderBar/View-SliderBar.iml" filepath="$PROJECT_DIR$/SliderBar/View-SliderBar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/View-View.iml" filepath="$PROJECT_DIR$/View-View.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WaveView/View-WaveView.iml" filepath="$PROJECT_DIR$/WaveView/View-WaveView.iml" />
       <module fileurl="file://$PROJECT_DIR$/WaveView/WaveView.iml" filepath="$PROJECT_DIR$/WaveView/WaveView.iml" />
     </modules>
   </component>
