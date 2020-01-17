@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/webview_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/webview_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/webview_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:padding="10dp"
+            android:src="@drawable/icon_title_back" />
+
+        <ImageView
+            android:id="@+id/webview_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/webview_back"
+            android:padding="10dp"
+            android:src="@drawable/web_close"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/webview_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/grey_33"
+            android:textSize="18dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/grey_alpha_33" />
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/webview_web"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/webview_title_bar" />
+
+    <ProgressBar
+        android:id="@+id/webview_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:max="100"
+        android:progressDrawable="@drawable/webview_progressbar_bg"
+        app:layout_constraintTop_toBottomOf="@id/webview_title_bar" />
+</android.support.constraint.ConstraintLayout>
