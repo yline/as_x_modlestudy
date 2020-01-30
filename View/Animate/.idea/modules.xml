@@ -3,10 +3,15 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Animate.iml" filepath="$PROJECT_DIR$/Animate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EasyTransition/Animate-EasyTransition.iml" filepath="$PROJECT_DIR$/EasyTransition/Animate-EasyTransition.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FrameAnimation/Animate-FrameAnimation.iml" filepath="$PROJECT_DIR$/FrameAnimation/Animate-FrameAnimation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TweenAnimation/Animate-TweenAnimation.iml" filepath="$PROJECT_DIR$/TweenAnimation/Animate-TweenAnimation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ValueAnimator/Animate-ValueAnimator.iml" filepath="$PROJECT_DIR$/ValueAnimator/Animate-ValueAnimator.iml" />
       <module fileurl="file://$PROJECT_DIR$/EasyTransition/EasyTransition.iml" filepath="$PROJECT_DIR$/EasyTransition/EasyTransition.iml" />
       <module fileurl="file://$PROJECT_DIR$/FrameAnimation/FrameAnimation.iml" filepath="$PROJECT_DIR$/FrameAnimation/FrameAnimation.iml" />
       <module fileurl="file://$PROJECT_DIR$/TweenAnimation/TweenAnimation.iml" filepath="$PROJECT_DIR$/TweenAnimation/TweenAnimation.iml" />
       <module fileurl="file://$PROJECT_DIR$/ValueAnimator/ValueAnimator.iml" filepath="$PROJECT_DIR$/ValueAnimator/ValueAnimator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/View-Animate.iml" filepath="$PROJECT_DIR$/View-Animate.iml" />
     </modules>
   </component>
 </project>
