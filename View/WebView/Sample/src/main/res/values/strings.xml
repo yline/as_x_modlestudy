@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WebView</string>
+
+    <string name="cancel">取消</string>
+
+    <string name="picture_camera">相机</string>
+    <string name="picture_album">相册</string>
+    <string name="picture_file">文件</string>
+    <string name="picture_permission_deny">未授予权限，拍照功能不能使用</string>
 </resources>

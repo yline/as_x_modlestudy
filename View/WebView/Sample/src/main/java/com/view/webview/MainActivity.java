@@ -3,42 +3,21 @@ package com.view.webview;
 import android.os.Bundle;
 import android.view.View;
 
-import com.view.webview.activity.BaiduUrlActivity;
-import com.view.webview.activity.HokolUrlActivity;
-import com.view.webview.activity.LocalUrlActivity;
+import com.view.webview.webview.WebviewActivity;
 import com.yline.test.BaseTestActivity;
 
-public class MainActivity extends BaseTestActivity
-{
+public class MainActivity extends BaseTestActivity {
 
-	@Override
-	public void testStart(View view, Bundle savedInstanceState)
-	{
-		addButton("Hokol Url", new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				HokolUrlActivity.actionStart(MainActivity.this);
-			}
-		});
+    @Override
+    public void testStart(View view, Bundle savedInstanceState) {
+        addButton("Webview", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://fanyi.baidu.com/";
+                String title = "baidu";
 
-		addButton("Baidu Url", new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				BaiduUrlActivity.actionStart(MainActivity.this);
-			}
-		});
-
-		addButton("Local Html", new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				LocalUrlActivity.actionStart(MainActivity.this);
-			}
-		});
-	}
+                WebviewActivity.launch(MainActivity.this, title, url);
+            }
+        });
+    }
 }

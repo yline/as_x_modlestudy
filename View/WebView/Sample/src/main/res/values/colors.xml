@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- 灰色统一放置 -->
+    <color name="grey_d9">#d9d9d9</color>
+    <color name="grey_a0">#a0a0a0</color>
+    <color name="grey_33">#333333</color>
+
+    <!-- 透明度 灰色 -->
+    <color name="grey_alpha_33">#33000000</color>  <!--20-->
+
 </resources>
