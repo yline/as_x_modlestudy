@@ -1,1 +1,1 @@
-include ':Utils', ':Manager'
+include ':Utils', ':Manager', ':Plugins'

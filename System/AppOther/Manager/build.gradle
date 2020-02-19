@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.2"
 
     defaultConfig {
         applicationId "com.manager"
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -21,21 +21,22 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile 'com.android.support:recyclerview-v7:27.1.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.facebook.fresco:fresco:1.5.0' // 主依赖
-    compile 'com.facebook.fresco:animated-gif:1.5.0' // 支持gif动图
-    compile 'com.facebook.fresco:animated-webp:1.5.0' // 支持webp动态
-    compile 'com.facebook.fresco:webpsupport:1.5.0' // 支持webp静态
-    compile 'com.facebook.fresco:imagepipeline-okhttp3:1.5.0'
+    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
-    compile 'com.yline.lib:LibSDK:2.3.7'
-    compile 'com.yline.lib:LibViewRecycler:1.2.0'
-    compile 'com.yline.lib:LibViewFresco:1.1.0'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.facebook.fresco:fresco:1.5.0' // 主依赖
+    implementation 'com.facebook.fresco:animated-gif:1.5.0' // 支持gif动图
+    implementation 'com.facebook.fresco:animated-webp:1.5.0' // 支持webp动态
+    implementation 'com.facebook.fresco:webpsupport:1.5.0' // 支持webp静态
+    implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.5.0'
+
+    implementation 'com.yline.lib:LibSDK:2.3.8'
+    implementation 'com.yline.lib:LibViewRecycler:1.3.0'
+    implementation 'com.yline.lib:LibViewFresco:1.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50"
 }
 repositories {
     mavenCentral()

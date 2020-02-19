@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.manager.R
 import com.yline.base.BaseActivity
 import com.yline.view.fresco.FrescoManager
@@ -47,8 +47,8 @@ class CompressResultActivity : BaseActivity() {
     private fun initView() {
         mRecyclerAdapter = CompressResultRecyclerAdapter()
 
-        val recyclerView = findViewById(R.id.compress_result_recycler) as RecyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this@CompressResultActivity)
+        val recyclerView = findViewById(R.id.compress_result_recycler) as androidx.recyclerview.widget.RecyclerView
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this@CompressResultActivity)
         recyclerView.adapter = mRecyclerAdapter
     }
 

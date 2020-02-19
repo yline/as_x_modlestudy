@@ -1,6 +1,5 @@
 package com.utils;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 import com.utils.utils.NetworkUtil;
 import com.utils.utils.RootUtil;
 import com.utils.utils.WechatSignUtil;
-import com.yline.log.LogFileUtil;
 import com.yline.test.BaseTestActivity;
 import com.yline.utils.LogUtil;
 
