@@ -1,1 +1,1 @@
-include ':EventTouch', ':GestureListener', ':Style&Theme', ':AttributeSet'
+include ':EventTouch', ':GestureListener', ':Style&Theme', ':AttributeSet', ':ScreenAdapation'
