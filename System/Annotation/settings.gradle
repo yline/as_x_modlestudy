@@ -1,1 +1,1 @@
-include ':app', ':ReflexSample', ':Compile'
+include ':ReflexSample', ':Compile', ':RuntimeAnnotationSample'

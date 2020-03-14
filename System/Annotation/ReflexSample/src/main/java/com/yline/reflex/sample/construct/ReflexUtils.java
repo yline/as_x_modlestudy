@@ -148,6 +148,7 @@ public class ReflexUtils {
         }
 
         try {
+            // 这个会因为权限，因此走异常流程
             Method methodB = clazz.getDeclaredMethod("testProtect", String.class);
             Object objectB = methodB.invoke(obj, "Jay Zhou");
             LogUtil.v("" + objectB);
