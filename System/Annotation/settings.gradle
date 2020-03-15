@@ -1,1 +1,1 @@
-include ':ReflexSample', ':Compile', ':RuntimeAnnotationSample'
+include ':ReflexSample', ':Compile', ':RuntimeAnnotationSample', ':RuntimeXUtils', ':RuntimeXUtilsLib'
