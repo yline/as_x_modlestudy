@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.CLASS)
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
-public @interface ClassTag {
+public @interface CompileAnnotation {
     String value() default "hello";
 }
