@@ -17,8 +17,6 @@ import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
@@ -89,7 +87,7 @@ public class CompileAnnotationProcessor extends AbstractProcessor {
         // roundEnv.getElementsAnnotatedWith()
         System.out.println("xxx - process start");
         if (null != annotations && !annotations.isEmpty()) {
-            processInner(annotations, roundEnv);
+            processInner(processingEnv, annotations, roundEnv);
             return true;
         }
         return false;
@@ -100,7 +98,7 @@ public class CompileAnnotationProcessor extends AbstractProcessor {
      * 1，遍历得到源码中，需要解析的元素列表
      * 2，输入 生成java文件
      */
-    private void processInner(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+    private static void processInner(ProcessingEnvironment processingEnv, Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         // set of track
         Map<String, String> trackMap = new HashMap<>();
         // print on gradle console

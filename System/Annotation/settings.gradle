@@ -1,1 +1,1 @@
-include ':ReflexSample', ':CompileAnnotationSampleLib', ':RuntimeAnnotationSample', ':RuntimeXUtils', ':RuntimeXUtilsLib', ':CompileAnnotationSample'
+include ':ReflexSample', ':CompileAnnotationSampleLib', ':RuntimeAnnotationSample', ':RuntimeXUtils', ':RuntimeXUtilsLib', ':CompileAnnotationSample', ':CompileButterKnife', ':CompileButterKnifeLib'
