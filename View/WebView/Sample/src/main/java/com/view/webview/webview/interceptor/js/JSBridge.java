@@ -1,4 +1,4 @@
-package com.view.webview.webview;
+package com.view.webview.webview.interceptor.js;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -10,10 +10,8 @@ import java.io.InputStreamReader;
  * js与java桥接
  */
 public class JSBridge {
-
     private static String JS_CODE = null;
     protected static final String HEAD = "kjtpayApp://";
-
 
     public synchronized static String loadInitJS(Context context) {
         if (!TextUtils.isEmpty(JS_CODE)) {
@@ -36,6 +34,4 @@ public class JSBridge {
         JS_CODE = sb.toString();
         return JS_CODE;
     }
-
-
 }

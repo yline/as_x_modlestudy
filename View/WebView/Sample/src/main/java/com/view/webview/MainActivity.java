@@ -14,7 +14,7 @@ public class MainActivity extends BaseTestActivity {
             @Override
             public void onClick(View v) {
                 String url = "https://fanyi.baidu.com/";
-                String title = "baidu";
+                String title = "";
 
                 WebviewActivity.launch(MainActivity.this, title, url);
             }

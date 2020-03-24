@@ -1,48 +1,50 @@
-package com.view.webview.webview.plugin;
+package com.view.webview.webview.interceptor.file;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
-import androidx.annotation.RequiresApi;
 import android.view.View;
 import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.view.webview.R;
 import com.view.webview.utils.IntentUtils;
-import com.view.webview.webview.view.PictureSelectDialog;
+import com.view.webview.webview.interceptor.OnWebInterceptor;
 import com.yline.utils.PermissionUtil;
+
+import androidx.annotation.NonNull;
 
 /**
  * 文件选择支持【作为组件存在】
  *
  * @author yline 2019/10/23 -- 9:39
  */
-public class FileChooserPlugin {
+public class FileChooserInterceptor extends OnWebInterceptor {
     private final int CODE_PERMISSION;
 
     private final int CODE_CAMERA_FILE;
     private final int CODE_ALBUM_FILE;
     private final int CODE_ALL_FILE;
 
-    private FileChooserPlugin(int codePermission, int codeCameraFile, int codeAlbumFile, int codeAllFile) {
+    public FileChooserInterceptor(int codePermission, int codeCameraFile, int codeAlbumFile, int codeAllFile) {
         this.CODE_PERMISSION = codePermission;
         this.CODE_CAMERA_FILE = codeCameraFile;
         this.CODE_ALBUM_FILE = codeAlbumFile;
         this.CODE_ALL_FILE = codeAllFile;
     }
 
-    public static FileChooserPlugin create(int codePermission, int codeCameraFile, int codeAlbumFile, int codeAllFile) {
-        return new FileChooserPlugin(codePermission, codeCameraFile, codeAlbumFile, codeAllFile);
-    }
-
     private ValueCallback<Uri[]> mFilePathCallback;
     private Uri mCameraUri; // 拍照，保存的路径
 
-    public void showFileChooser(final Activity activity, ValueCallback<Uri[]> filePathCallback) {
+    @Override
+    public boolean onShowFileChooser(Context context, WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
+        final Activity activity = (Activity) context;
+
         mFilePathCallback = filePathCallback;
 
         final PictureSelectDialog selectDialog = new PictureSelectDialog(activity);
@@ -88,14 +90,16 @@ public class FileChooserPlugin {
             }
         });
         selectDialog.show();
+        return true;
     }
 
-    public void onRequestPermissionsResult(final Activity activity, int requestCode, int[] grantResults) {
+    @Override
+    public void onRequestPermissionsResult(Context context, int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         boolean isPermissionGranted = PermissionUtil.isPermissionGranted(grantResults);
         if (isPermissionGranted) {
-            mCameraUri = IntentUtils.openCamera(activity, "temp" + System.currentTimeMillis() + ".jpg", CODE_CAMERA_FILE);
+            mCameraUri = IntentUtils.openCamera((Activity) context, "temp" + System.currentTimeMillis() + ".jpg", CODE_CAMERA_FILE);
         } else {
-            Toast.makeText(activity, R.string.picture_permission_deny, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.picture_permission_deny, Toast.LENGTH_LONG).show();
 
             if (null != mFilePathCallback) {
                 mFilePathCallback.onReceiveValue(null);
@@ -104,9 +108,9 @@ public class FileChooserPlugin {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //图片上传
+    @Override
+    public void onActivityResult(Context context, int requestCode, int resultCode, Intent data) {
+        // 图片上传
         if (requestCode == CODE_ALBUM_FILE || requestCode == CODE_CAMERA_FILE || requestCode == CODE_ALL_FILE) {
             if (null == mFilePathCallback) {
                 return;
