@@ -90,6 +90,7 @@ public class WebviewActivity extends BaseActivity implements JSInterceptor.OnJSB
 
         String realUrl = toRealUrl(url);
         webView.loadUrl(realUrl);
+        // mWebView.loadUrl("file:///android_asset/bbtuanJsBridgeTest.html");
     }
 
     @Override

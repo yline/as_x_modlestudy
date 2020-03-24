@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
+  	<meta name="apple-mobile-web-app-capable" content="yes">
+  	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+  	<meta name="format-detection" content="telephone=no, email=no">
+	<title>jsBridge Test</title>
+	<style type="text/css">
+		.product{
+			margin:20px auto 0;
+			width: 80%;
+			font:1.2rem/1.5 "Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB",\5FAE\8F6F\96C5\9ED1,tahoma,simsun,sans-serif;
+			font-size: 14px;
+		}
+		.product b{
+			color:#d22147;
+		}
+		.product img{
+			width: 100%;
+		}
+		.product a{
+			display: block;
+			margin:0 auto;
+			width: 100px;
+			height:30px;
+			line-height: 30px;
+			text-align: center;
+			border-radius: 5px;
+			-webkit-border-radius: 5px;
+			border:1px solid #d22147;
+			color:#d22147;
+			text-decoration: none;
+		}
+	</style>
+</head>
+<body>
+<article class="product">
+	<img title="Nature Republic 自然乐园 舒缓保湿凝胶 300ml*3" alt="Nature Republic 自然乐园 舒缓保湿凝胶 300ml*3" src="http://haitao.nos.netease.com/onlineic5tpm7610933.jpg?imageView&amp;thumbnail=640x0&amp;quality=85&amp;">
+	<p><b>三件装</b> | Nature Republic 自然乐园 舒缓保湿凝胶 300ml*3</p>
+	<a href="javascript:;" onclick="buyNow()">立即购买</a>
+	<input id="buyFormParams" type="hidden" name="confirm_params" value="goods[0].tempBuyAmount=1&goods[0].selected=1&goods[0].goodsId=9523&goods[0].tempCurrentPrice=79&goods[0].tempGoodsActivityType=&s=2&goods[0].skuId='13907-68a3e5516d7a7dc21fbe0e7ee13bfc1c'&goods[0].innerSource=DETAIL" />
+</article>
+<script type="text/javascript">
+	function buyNow(){
+	if(window.sendMessageToApp){
+		 sendMessageToApp.call('share','{\"title\":\"title\",\"desc\":\"desc\",\"link\":\"link\"}');
+      // postMessage.call('share');
+}else{
+    prompt("123");
+}
+window.WebViewJavascriptBridge.test();
+		// {"goods":[{"goodsId":"9523","innerSource":"DETAIL#132456","isHuanGou":0,"selected":"1","skuId":"13907-68a3e5516d7a7dc21fbe0e7ee13bfc1c","tempBuyAmount":1,"tempCurrentPrice":79,"tempGoodsActivityType":""}],"type":"123456","s":"2"}
+
+		// window.location.href = "http://m.kaola.com/order/confirm.html?from=detailfp&"+document.querySelector("#buyFormParams").value;
+
+	}
+</script>
+</body>
+</html>				

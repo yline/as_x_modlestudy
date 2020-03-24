@@ -33,4 +33,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
     implementation 'com.yline.lib:LibSDK:2.3.8'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

@@ -89,6 +89,10 @@ public class JSInterceptor extends OnWebInterceptor {
             mHandler = null;
         }
 
+        // 清除cookie
+        // CookieSyncManager.createInstance(this);
+        // CookieManager.getInstance().removeAllCookie();
+
         super.onDestroy(context);
     }
 

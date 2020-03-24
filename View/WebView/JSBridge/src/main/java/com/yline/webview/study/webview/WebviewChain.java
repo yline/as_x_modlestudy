@@ -1,4 +1,4 @@
-package com.view.webview.webview;
+package com.yline.webview.study.webview;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +15,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.view.webview.webview.interceptor.OnWebInterceptor;
 import com.yline.utils.LogUtil;
+import com.yline.webview.study.webview.interceptor.OnWebInterceptor;
 
 import java.util.ArrayList;
 import java.util.Collections;
