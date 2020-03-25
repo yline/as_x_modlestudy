@@ -11,7 +11,6 @@
     var receiveMessageQueue = [];
     var messageHandlers = {};
 
-    var CUSTOM_PROTOCOL_SCHEME = 'yy';
     var QUEUE_HAS_MESSAGE = '__QUEUE_MESSAGE__/';
 
     var responseCallbacks = {};
@@ -78,7 +77,7 @@
         return false;
     }
 
-    //set default messageHandler
+    // set default messageHandler
     function init(messageHandler) {
         if (WebViewJavascriptBridge._messageHandler) {
             throw new Error('WebViewJavascriptBridge.init called twice');
@@ -117,7 +116,8 @@
         }
 
         sendMessageQueue.push(message);
-        messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://' + QUEUE_HAS_MESSAGE;
+        // 这段话，会调用 android:shouldOverrideUrlLoading
+        messagingIframe.src = 'yy://' + QUEUE_HAS_MESSAGE;
     }
 
     // 提供给native调用,该函数作用:获取sendMessageQueue返回给native,由于android不能直接获取返回的内容,所以使用url shouldOverrideUrlLoading 的方式返回内容
@@ -129,16 +129,19 @@
             return messageQueueString;
             //android can't read directly the return data, so we can reload iframe src to communicate with java
         } else if (isAndroid()) {
-            messagingIframe.src = CUSTOM_PROTOCOL_SCHEME + '://return/_fetchQueue/' + encodeURIComponent(messageQueueString);
+            console.log("messageQueueString = ", messageQueueString);
+            // 这段话，会调用 android:shouldOverrideUrlLoading
+            messagingIframe.src = 'yy://return/_fetchQueue/' + encodeURIComponent(messageQueueString);
         }
     }
 
-    //提供给native使用,
+    // 提供给native使用,
     function _dispatchMessageFromNative(messageJSON) {
         setTimeout(function() {
             var message = JSON.parse(messageJSON);
+
             var responseCallback;
-            //java call finished, now need to call js callback function
+            // java call finished, now need to call js callback function
             if (message.responseId) {
                 responseCallback = responseCallbacks[message.responseId];
                 if (!responseCallback) {
@@ -147,7 +150,7 @@
                 responseCallback(message.responseData);
                 delete responseCallbacks[message.responseId];
             } else {
-                //直接发送
+                // 直接发送
                 if (message.callbackId) {
                     var callbackResponseId = message.callbackId;
                     responseCallback = function(responseData) {
@@ -158,11 +161,13 @@
                     };
                 }
 
+                // 这里的handler 是一个函数
                 var handler = WebViewJavascriptBridge._messageHandler;
                 if (message.handlerName) {
                     handler = messageHandlers[message.handlerName];
                 }
-                //查找指定handler
+
+                // 查找指定handler
                 try {
                     handler(message.data, responseCallback);
                 } catch (exception) {
@@ -174,7 +179,7 @@
         });
     }
 
-    //提供给native调用,receiveMessageQueue 在会在页面加载完后赋值为null,所以
+    // 提供给native调用,receiveMessageQueue 在会在页面加载完后赋值为null,所以
     function _handleMessageFromNative(messageJSON) {
         console.log(messageJSON);
         if (receiveMessageQueue) {

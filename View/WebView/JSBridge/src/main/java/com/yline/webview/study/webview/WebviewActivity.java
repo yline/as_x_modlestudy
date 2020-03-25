@@ -12,9 +12,9 @@ import com.yline.base.BaseActivity;
 import com.yline.utils.LogUtil;
 import com.yline.webview.study.R;
 import com.yline.webview.study.jsbridge.BridgeHandler;
-import com.yline.webview.study.webview.file.FileInterceptor;
+import com.yline.webview.study.webview.interceptor.file.FileInterceptor;
 import com.yline.webview.study.webview.interceptor.OnWebInterceptor;
-import com.yline.webview.study.webview.js.JsInterceptor;
+import com.yline.webview.study.webview.interceptor.js.JsInterceptor;
 import com.yline.webview.study.jsbridge.CallBackFunction;
 
 import java.util.ArrayList;

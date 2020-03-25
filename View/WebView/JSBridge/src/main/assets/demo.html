@@ -89,6 +89,7 @@
         }
 
         connectWebViewJavascriptBridge(function(bridge) {
+            console.log('js init!!!');
             bridge.init(function(message, responseCallback) {
                 console.log('JS got a message', message);
                 var data = {
@@ -98,6 +99,7 @@
                 responseCallback(data);
             });
 
+            console.log('js registerHandler!!!');
             bridge.registerHandler("functionInJs", function(data, responseCallback) {
                 document.getElementById("show").innerHTML = ("data from Java: = " + data);
                 var responseData = "Javascript Says Right back aka!";
