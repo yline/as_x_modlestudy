@@ -3,11 +3,8 @@ package com.yline.webview.study.webview;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import com.google.gson.Gson;
@@ -15,8 +12,13 @@ import com.yline.base.BaseActivity;
 import com.yline.utils.LogUtil;
 import com.yline.webview.study.R;
 import com.yline.webview.study.jsbridge.BridgeHandler;
+import com.yline.webview.study.webview.file.FileInterceptor;
+import com.yline.webview.study.webview.interceptor.OnWebInterceptor;
 import com.yline.webview.study.webview.js.JsInterceptor;
 import com.yline.webview.study.jsbridge.CallBackFunction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WebviewActivity extends BaseActivity {
     public static void launch(Context context, String httpUrl) {
@@ -32,10 +34,6 @@ public class WebviewActivity extends BaseActivity {
 
     private JsInterceptor mJsInterceptor;
 
-    int RESULT_CODE = 0;
-
-    ValueCallback<Uri> mUploadMessage;
-
     static class Location {
         String address;
     }
@@ -46,6 +44,8 @@ public class WebviewActivity extends BaseActivity {
         String testStr;
     }
 
+    private WebviewChain mWebviewChain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +53,13 @@ public class WebviewActivity extends BaseActivity {
 
         WebView webView = findViewById(R.id.webview_content);
 
+        List<OnWebInterceptor> interceptorList = new ArrayList<>();
         mJsInterceptor = new JsInterceptor(webView);
+        interceptorList.add(mJsInterceptor);
+        interceptorList.add(new FileInterceptor());
+
+        mWebviewChain = new WebviewChain(this, webView, interceptorList);
+        mWebviewChain.onCreate(this, savedInstanceState);
 
         findViewById(R.id.webview_java_send).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,25 +108,6 @@ public class WebviewActivity extends BaseActivity {
             }
         });
 
-        webView.setWebChromeClient(new WebChromeClient() {
-
-            @SuppressWarnings("unused")
-            public void openFileChooser(ValueCallback<Uri> uploadMsg, String AcceptType, String capture) {
-                this.openFileChooser(uploadMsg);
-            }
-
-            @SuppressWarnings("unused")
-            public void openFileChooser(ValueCallback<Uri> uploadMsg, String AcceptType) {
-                this.openFileChooser(uploadMsg);
-            }
-
-            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
-                mUploadMessage = uploadMsg;
-                pickFile();
-            }
-        });
-
-        webView.loadUrl("file:///android_asset/demo.html");
         mJsInterceptor.registerHandler(new BridgeHandler() {
 
             @Override
@@ -133,23 +120,24 @@ public class WebviewActivity extends BaseActivity {
                 }
             }
         });
-    }
 
-    public void pickFile() {
-        Intent chooserIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        chooserIntent.setType("image/*");
-        startActivityForResult(chooserIntent, RESULT_CODE);
+        webView.loadUrl("file:///android_asset/demo.html");
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == RESULT_CODE) {
-            if (null == mUploadMessage) {
-                return;
-            }
-            Uri result = intent == null || resultCode != RESULT_OK ? null : intent.getData();
-            mUploadMessage.onReceiveValue(result);
-            mUploadMessage = null;
-        }
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mWebviewChain.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mWebviewChain.onActivityResult(this, requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mWebviewChain.onDestroy(this);
+        super.onDestroy();
     }
 }

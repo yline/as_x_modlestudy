@@ -3,6 +3,7 @@ package com.yline.webview.study.webview.js;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
@@ -31,7 +32,6 @@ public class JsInterceptor extends OnWebInterceptor { // implements WebViewJavas
     public static final String toLoadJs = "WebViewJavascriptBridge.js";
     private Map<String, CallBackFunction> responseCallbacks = new HashMap<String, CallBackFunction>();
 
-
     private List<Message> startupMessage = new ArrayList<>();
 
     public List<Message> getStartupMessage() {
@@ -48,71 +48,47 @@ public class JsInterceptor extends OnWebInterceptor { // implements WebViewJavas
 
     public JsInterceptor(WebView webView) {
         this.mWebView = webView;
-        init();
     }
 
-    private void init() {
+    @Override
+    public void onCreate(Context context, Bundle savedInstanceState) {
+        super.onCreate(context, savedInstanceState);
+
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(true);
-        }
-        mWebView.setWebViewClient(generateBridgeWebViewClient());
     }
 
-    protected WebViewClient generateBridgeWebViewClient() {
-        new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return super.shouldOverrideUrlLoading(view, request);
+    @Override
+    public boolean shouldOverrideUrlLoading(Context context, WebView view, String url) {
+        try {
+            url = URLDecoder.decode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        if (url.startsWith(BridgeUtil.YY_RETURN_DATA)) { // 如果是返回数据adb adb
+            handlerReturnData(url);
+            return true;
+        } else if (url.startsWith(BridgeUtil.YY_OVERRIDE_SCHEMA)) { //
+            flushMessageQueue();
+            return true;
+        } else {
+            return super.shouldOverrideUrlLoading(context, view, url);
+        }
+    }
+
+    @Override
+    public void onPageFinished(Context context, WebView view, String url) {
+        if (JsInterceptor.toLoadJs != null) {
+            BridgeUtil.webViewLoadLocalJs(view, JsInterceptor.toLoadJs);
+        }
+
+        if (getStartupMessage() != null) {
+            for (Message m : getStartupMessage()) {
+                dispatchMessage(m);
             }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-        };
-
-        return new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.v("-----");
-
-                try {
-                    url = URLDecoder.decode(url, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-
-                if (url.startsWith(BridgeUtil.YY_RETURN_DATA)) { // 如果是返回数据adb adb
-                    handlerReturnData(url);
-                    return true;
-                } else if (url.startsWith(BridgeUtil.YY_OVERRIDE_SCHEMA)) { //
-                    flushMessageQueue();
-                    return true;
-                } else {
-                    return super.shouldOverrideUrlLoading(view, url);
-                }
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-
-                if (JsInterceptor.toLoadJs != null) {
-                    BridgeUtil.webViewLoadLocalJs(view, JsInterceptor.toLoadJs);
-                }
-
-                if (getStartupMessage() != null) {
-                    for (Message m : getStartupMessage()) {
-                        dispatchMessage(m);
-                    }
-                    setStartupMessage(null);
-                }
-            }
-        };
+            setStartupMessage(null);
+        }
     }
 
     void handlerReturnData(String url) {
