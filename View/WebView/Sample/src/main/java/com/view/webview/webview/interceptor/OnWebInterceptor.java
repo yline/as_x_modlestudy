@@ -21,7 +21,7 @@ import androidx.annotation.NonNull;
  */
 public abstract class OnWebInterceptor {
     /* ---------------------------- WebViewClient 相关 --------------------------- */
-    public boolean shouldOverrideUrlLoading(Context context, WebView view, WebResourceRequest request) {
+    public boolean shouldOverrideUrlLoading(Context context, WebView view, String url) {
         return false;
     }
 

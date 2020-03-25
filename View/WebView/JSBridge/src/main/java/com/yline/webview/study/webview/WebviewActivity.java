@@ -9,10 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.yline.base.BaseActivity;
+import com.yline.utils.LogUtil;
 import com.yline.webview.study.R;
 import com.yline.webview.study.jsbridge.BridgeHandler;
 import com.yline.webview.study.jsbridge.BridgeWebView;
@@ -35,8 +35,6 @@ public class WebviewActivity extends BaseActivity {
 
     BridgeWebView webView;
 
-    Button button;
-
     int RESULT_CODE = 0;
 
     ValueCallback<Uri> mUploadMessage;
@@ -57,24 +55,56 @@ public class WebviewActivity extends BaseActivity {
         setContentView(R.layout.activity_webview);
 
         webView = findViewById(R.id.webview_content);
-        button = findViewById(R.id.webview_button);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.webview_java_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.callHandler("functionInJs", "data from Java", new CallBackFunction() {
+                webView.send("hello");
+            }
+        });
+        findViewById(R.id.webview_java_send2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webView.send("hello", new CallBackFunction() {
+                    @Override
+                    public void onCallBack(String data) {
+                        LogUtil.v("hello 2 back");
+                    }
+                });
+            }
+        });
+        findViewById(R.id.webview_java_str).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                webView.send("functionInJs", "data from Java", new CallBackFunction() {
 
                     @Override
                     public void onCallBack(String data) {
-                        // TODO Auto-generated method stub
-                        Log.i(TAG, "reponse data from js " + data);
+                        LogUtil.v("response data from js " + data);
+                    }
+                });
+            }
+        });
+        findViewById(R.id.webview_java_json).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User user = new User();
+                Location location = new Location();
+                location.address = "SDU";
+                user.location = location;
+                user.name = "大头鬼";
+
+                webView.send("functionInJs", new Gson().toJson(user), new CallBackFunction() {
+                    @Override
+                    public void onCallBack(String data) {
+
                     }
                 });
             }
         });
 
-        webView.setDefaultHandler(new DefaultHandler());
 
+//        webView.setDefaultHandler(new DefaultHandler());
         webView.setWebChromeClient(new WebChromeClient() {
 
             @SuppressWarnings("unused")
@@ -94,31 +124,18 @@ public class WebviewActivity extends BaseActivity {
         });
 
         webView.loadUrl("file:///android_asset/demo.html");
-
-        webView.registerHandler("submitFromWeb", new BridgeHandler() {
+        webView.registerHandler(new BridgeHandler() {
 
             @Override
             public void handler(String data, CallBackFunction function) {
-                Log.i(TAG, "handler = submitFromWeb, data from web = " + data);
-                function.onCallBack("submitFromWeb exe, response data 中文 from Java");
-            }
+                // 这里可以通过data 分发不同的情况
+                LogUtil.v("data = " + data);
 
-        });
-
-        User user = new User();
-        Location location = new Location();
-        location.address = "SDU";
-        user.location = location;
-        user.name = "大头鬼";
-
-        webView.callHandler("functionInJs", new Gson().toJson(user), new CallBackFunction() {
-            @Override
-            public void onCallBack(String data) {
-
+                if (null != function) {
+                    function.onCallBack("submitFromWeb exe, response data 中文 from Java");
+                }
             }
         });
-
-        webView.send("hello");
     }
 
     public void pickFile() {

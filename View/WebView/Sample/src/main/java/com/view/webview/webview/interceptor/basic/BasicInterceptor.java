@@ -104,7 +104,7 @@ public class BasicInterceptor extends OnWebInterceptor {
     }
 
     @Override
-    public boolean shouldOverrideUrlLoading(Context context, WebView view, WebResourceRequest request) {
+    public boolean shouldOverrideUrlLoading(Context context, WebView view, String requestUrl) {
         String url = view.getUrl();
         if (!(url.startsWith("http:") || url.startsWith("https:"))) {
             try {
@@ -117,7 +117,7 @@ public class BasicInterceptor extends OnWebInterceptor {
                 e.printStackTrace();
             }
         }
-        return super.shouldOverrideUrlLoading(context, view, request);
+        return super.shouldOverrideUrlLoading(context, view, requestUrl);
     }
 
     @Override

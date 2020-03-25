@@ -6,10 +6,28 @@
 
     <!-- button 演示Java调用web -->
     <Button
-        android:id="@+id/webview_button"
+        android:id="@+id/webview_java_send"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="Java调用Web" />
+        android:text="Java调用Web - send"/>
+
+    <Button
+        android:id="@+id/webview_java_send2"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Java调用Web - send2"/>
+
+    <Button
+        android:id="@+id/webview_java_str"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Java调用Web - 字符串" />
+
+    <Button
+        android:id="@+id/webview_java_json"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Java调用Web - json"/>
 
     <!-- webview 演示web调用Java -->
     <com.yline.webview.study.jsbridge.BridgeWebView

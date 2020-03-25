@@ -84,8 +84,18 @@ public class WebviewChain extends OnWebInterceptor {
     private WebViewClient mWebViewClient = new WebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            mClientChain.shouldOverrideUrlLoading(mContext, view, request);
-            return super.shouldOverrideUrlLoading(view, request);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                String url = request.getUrl().toString();
+
+                return mClientChain.shouldOverrideUrlLoading(mContext, view, url);
+            } else {
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return mClientChain.shouldOverrideUrlLoading(mContext, view, url);
         }
 
         @Override
@@ -217,12 +227,12 @@ public class WebviewChain extends OnWebInterceptor {
         }
 
         @Override
-        public boolean shouldOverrideUrlLoading(Context context, WebView view, WebResourceRequest request) {
+        public boolean shouldOverrideUrlLoading(Context context, WebView view, String url) {
             for (OnWebInterceptor interceptor : mInterceptorList) {
-                interceptor.shouldOverrideUrlLoading(context, view, request);
+                interceptor.shouldOverrideUrlLoading(context, view, url);
             }
             LogUtil.v("");
-            return super.shouldOverrideUrlLoading(context, view, request);
+            return super.shouldOverrideUrlLoading(context, view, url);
         }
 
         @Override

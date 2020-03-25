@@ -9,7 +9,6 @@ import android.webkit.JsPromptResult;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +20,7 @@ import androidx.annotation.NonNull;
  */
 public abstract class OnWebInterceptor {
     /* ---------------------------- WebViewClient 相关 --------------------------- */
-    public boolean shouldOverrideUrlLoading(Context context, WebView view, WebResourceRequest request) {
+    public boolean shouldOverrideUrlLoading(Context context, WebView view, String url) {
         return false;
     }
 
