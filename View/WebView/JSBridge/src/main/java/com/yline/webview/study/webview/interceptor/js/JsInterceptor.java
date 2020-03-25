@@ -22,9 +22,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 交互原理：
+ *
+ * java调用js:
+ * java：javascript:WebViewJavascriptBridge._handleMessageFromNative('{\"data\":\"hello\"}');
+ * js: 在相应的文件中，实现对应的方法 + 参数
+ *
+ * js调用java: 【本文的方法，不如 onJsPrompt() 方法】，
+ * js : messagingIframe.src = 'yy://' + QUEUE_HAS_MESSAGE;
+ * java: shouldOverrideUrlLoading 方法，url作为参数
+ * 缺陷：经过测试，刚刚加载完成，return的内容不能触发 shouldOverrideUrlLoading 方法
+ *
+ * 值得参考的是：利用{string-callback} 的映射关系，实现java调用js，js的回调
+ *
+ * @author yline 2020/3/25 -- 14:19
+ */
 @SuppressLint("SetJavaScriptEnabled")
 public class JsInterceptor extends OnWebInterceptor { // implements WebViewJavascriptBridge
-    private static final String toLoadJs = "WebViewJavascriptBridge.js";
     private Map<String, CallBackFunction> responseCallbacks = new HashMap<String, CallBackFunction>();
 
     private long uniqueId = 0;
@@ -86,13 +101,14 @@ public class JsInterceptor extends OnWebInterceptor { // implements WebViewJavas
     }
 
     private void handlerReturnData(String url) {
-        String functionName = JsBridgeUtil.getFunctionFromReturnUrl(url);
-        CallBackFunction f = responseCallbacks.get(functionName);
+        // url 中带有数据
+        // 案例：[{"responseId":"JAVA_CB_4_811","responseData":{"Javascript Responds":"测试中文!"}}]
+        String functionName = JsBridgeUtil.getFunctionFromReturnUrl(url); // 这是key
+        CallBackFunction function = responseCallbacks.get(functionName);
         String data = JsBridgeUtil.getDataFromReturnUrl(url);
-        if (f != null) {
-            f.onCallBack(data);
+        if (function != null) {
+            function.onCallBack(data);
             responseCallbacks.remove(functionName);
-            return;
         }
     }
 
@@ -117,19 +133,20 @@ public class JsInterceptor extends OnWebInterceptor { // implements WebViewJavas
                     return;
                 }
 
+                // 多个消息，这才是 分发js回来的内容
                 for (int i = 0; i < list.size(); i++) {
-                    Message m = list.get(i);
-                    String responseId = m.getResponseId();
+                    Message message = list.get(i);
+                    String responseId = message.getResponseId();
                     // 是否是response
                     if (!TextUtils.isEmpty(responseId)) {
                         CallBackFunction function = responseCallbacks.get(responseId);
-                        String responseData = m.getResponseData();
+                        String responseData = message.getResponseData();
                         function.onCallBack(responseData);
                         responseCallbacks.remove(responseId);
                     } else {
                         CallBackFunction responseFunction = null;
                         // if had callbackId
-                        final String callbackId = m.getCallbackId();
+                        final String callbackId = message.getCallbackId();
                         if (!TextUtils.isEmpty(callbackId)) {
                             responseFunction = new CallBackFunction() {
                                 @Override
@@ -149,7 +166,7 @@ public class JsInterceptor extends OnWebInterceptor { // implements WebViewJavas
                             };
                         }
 
-                        getBridgeHandler().handler(m.getData(), responseFunction);
+                        getBridgeHandler().handler(message.getData(), responseFunction);
                     }
                 }
             }

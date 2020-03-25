@@ -72,6 +72,7 @@ public class WebviewChain extends OnWebInterceptor {
 
         @Override
         public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
+            LogUtil.v("message = " + message);
             return mClientChain.onJsPrompt(mContext, view, url, message, defaultValue, result);
         }
 
@@ -173,7 +174,6 @@ public class WebviewChain extends OnWebInterceptor {
         } else {
             settings.setLoadsImagesAutomatically(false);
         }
-
 
         settings.setAllowContentAccess(true);
 

@@ -15,6 +15,18 @@ import com.yline.utils.LogUtil;
 
 import org.json.JSONObject;
 
+/**
+ * 交互原理：
+ * 可以看的文章：
+ * https://blog.csdn.net/u012971339/article/details/50770854
+ * https://github.com/pedant/safe-java-js-webview-bridge
+ *
+ * js调用java
+ * js :  prompt('kjtpayApp://{\"type\":\"'+type+'\"}'); 调用这个
+ * java: onJsPrompt() 方法的实现，message作为内容
+ *
+ * @author yline 2020/3/25 -- 14:17
+ */
 public class JSInterceptor extends OnWebInterceptor {
     private static final int JS_CODE = 1000;
 

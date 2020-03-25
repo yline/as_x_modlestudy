@@ -19,5 +19,13 @@ public class MainActivity extends BaseTestActivity {
                 WebviewActivity.launch(MainActivity.this, title, url);
             }
         });
+
+        addButton("本地js调试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "file:///android_asset/bbtuanJsBridgeTest.html";
+                WebviewActivity.launch(MainActivity.this, "", url);
+            }
+        });
     }
 }
