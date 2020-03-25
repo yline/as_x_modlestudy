@@ -5,19 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 
 import com.google.gson.Gson;
 import com.yline.base.BaseActivity;
 import com.yline.utils.LogUtil;
 import com.yline.webview.study.R;
 import com.yline.webview.study.jsbridge.BridgeHandler;
-import com.yline.webview.study.jsbridge.BridgeWebView;
+import com.yline.webview.study.webview.js.JsInterceptor;
 import com.yline.webview.study.jsbridge.CallBackFunction;
-import com.yline.webview.study.jsbridge.DefaultHandler;
 
 public class WebviewActivity extends BaseActivity {
     public static void launch(Context context, String httpUrl) {
@@ -31,9 +30,7 @@ public class WebviewActivity extends BaseActivity {
         }
     }
 
-    private final String TAG = "MainActivity";
-
-    BridgeWebView webView;
+    private JsInterceptor mJsInterceptor;
 
     int RESULT_CODE = 0;
 
@@ -54,18 +51,20 @@ public class WebviewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
 
-        webView = findViewById(R.id.webview_content);
+        WebView webView = findViewById(R.id.webview_content);
+
+        mJsInterceptor = new JsInterceptor(webView);
 
         findViewById(R.id.webview_java_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.send("hello");
+                mJsInterceptor.send("hello");
             }
         });
         findViewById(R.id.webview_java_send2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.send("hello", new CallBackFunction() {
+                mJsInterceptor.send("hello", new CallBackFunction() {
                     @Override
                     public void onCallBack(String data) {
                         LogUtil.v("hello 2 back");
@@ -76,7 +75,7 @@ public class WebviewActivity extends BaseActivity {
         findViewById(R.id.webview_java_str).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.send("functionInJs", "data from Java", new CallBackFunction() {
+                mJsInterceptor.send("functionInJs", "data from Java", new CallBackFunction() {
 
                     @Override
                     public void onCallBack(String data) {
@@ -94,7 +93,7 @@ public class WebviewActivity extends BaseActivity {
                 user.location = location;
                 user.name = "大头鬼";
 
-                webView.send("functionInJs", new Gson().toJson(user), new CallBackFunction() {
+                mJsInterceptor.send("functionInJs", new Gson().toJson(user), new CallBackFunction() {
                     @Override
                     public void onCallBack(String data) {
 
@@ -103,8 +102,6 @@ public class WebviewActivity extends BaseActivity {
             }
         });
 
-
-//        webView.setDefaultHandler(new DefaultHandler());
         webView.setWebChromeClient(new WebChromeClient() {
 
             @SuppressWarnings("unused")
@@ -124,7 +121,7 @@ public class WebviewActivity extends BaseActivity {
         });
 
         webView.loadUrl("file:///android_asset/demo.html");
-        webView.registerHandler(new BridgeHandler() {
+        mJsInterceptor.registerHandler(new BridgeHandler() {
 
             @Override
             public void handler(String data, CallBackFunction function) {

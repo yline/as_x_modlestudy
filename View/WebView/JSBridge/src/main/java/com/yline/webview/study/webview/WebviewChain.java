@@ -159,7 +159,7 @@ public class WebviewChain extends OnWebInterceptor {
         settings.setUserAgentString(settings.getUserAgentString() + " kjtApp/" + "1.0.0");
 
         // 移除部分系统JavaScript接口
-        // KaolaWebViewSecurity.removeJavascriptInterfaces(webView);
+        // KaolaWebViewSecurity.removeJavascriptInterfaces(mJsInterceptor);
 
         /*WebView是否下载图片资源，默认为true。注意，该方法控制所有图片的下载，包括使用URI嵌入的图片（使用setBlockNetworkImage(boolean) 只控制使用网络URI的图片的下载）*/
         if (Build.VERSION.SDK_INT >= 19) {

@@ -9,16 +9,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class BridgeUtil {
-	final static String YY_OVERRIDE_SCHEMA = "yy://";
-	final static String YY_RETURN_DATA = YY_OVERRIDE_SCHEMA + "return/";//格式为   yy://return/{function}/returncontent
+	public final static String YY_OVERRIDE_SCHEMA = "yy://";
+	public final static String YY_RETURN_DATA = YY_OVERRIDE_SCHEMA + "return/";//格式为   yy://return/{function}/returncontent
 	final static String YY_FETCH_QUEUE = YY_RETURN_DATA + "_fetchQueue/";
 	final static String EMPTY_STR = "";
 	final static String UNDERLINE_STR = "_";
 	final static String SPLIT_MARK = "/";
 	
 	final static String CALLBACK_ID_FORMAT = "JAVA_CB_%s";
-	final static String JS_HANDLE_MESSAGE_FROM_JAVA = "javascript:WebViewJavascriptBridge._handleMessageFromNative('%s');";
-	final static String JS_FETCH_QUEUE_FROM_JAVA = "javascript:WebViewJavascriptBridge._fetchQueue();";
+	public final static String JS_HANDLE_MESSAGE_FROM_JAVA = "javascript:WebViewJavascriptBridge._handleMessageFromNative('%s');";
+	public final static String JS_FETCH_QUEUE_FROM_JAVA = "javascript:WebViewJavascriptBridge._fetchQueue();";
 	public final static String JAVASCRIPT_STR = "javascript:";
 	
 	public static String parseFunctionName(String jsUrl){

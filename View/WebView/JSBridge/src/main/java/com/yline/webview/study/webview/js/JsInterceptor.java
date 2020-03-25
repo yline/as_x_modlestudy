@@ -1,4 +1,4 @@
-package com.yline.webview.study.jsbridge;
+package com.yline.webview.study.webview.js;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +12,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.yline.utils.LogUtil;
+import com.yline.webview.study.jsbridge.BridgeHandler;
+import com.yline.webview.study.jsbridge.BridgeUtil;
+import com.yline.webview.study.jsbridge.CallBackFunction;
+import com.yline.webview.study.jsbridge.Message;
+import com.yline.webview.study.webview.interceptor.OnWebInterceptor;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -21,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class BridgeWebView extends WebView { // implements WebViewJavascriptBridge
+public class JsInterceptor extends OnWebInterceptor { // implements WebViewJavascriptBridge
 
     public static final String toLoadJs = "WebViewJavascriptBridge.js";
     private Map<String, CallBackFunction> responseCallbacks = new HashMap<String, CallBackFunction>();
@@ -39,30 +44,21 @@ public class BridgeWebView extends WebView { // implements WebViewJavascriptBrid
 
     private long uniqueId = 0;
 
-    public BridgeWebView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    private WebView mWebView;
+
+    public JsInterceptor(WebView webView) {
+        this.mWebView = webView;
         init();
     }
-
-    public BridgeWebView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init();
-    }
-
-    public BridgeWebView(Context context) {
-        super(context);
-        init();
-    }
-
 
     private void init() {
-        this.setVerticalScrollBarEnabled(false);
-        this.setHorizontalScrollBarEnabled(false);
-        this.getSettings().setJavaScriptEnabled(true);
+        mWebView.setVerticalScrollBarEnabled(false);
+        mWebView.setHorizontalScrollBarEnabled(false);
+        mWebView.getSettings().setJavaScriptEnabled(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
-        this.setWebViewClient(generateBridgeWebViewClient());
+        mWebView.setWebViewClient(generateBridgeWebViewClient());
     }
 
     protected WebViewClient generateBridgeWebViewClient() {
@@ -105,8 +101,8 @@ public class BridgeWebView extends WebView { // implements WebViewJavascriptBrid
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
 
-                if (BridgeWebView.toLoadJs != null) {
-                    BridgeUtil.webViewLoadLocalJs(view, BridgeWebView.toLoadJs);
+                if (JsInterceptor.toLoadJs != null) {
+                    BridgeUtil.webViewLoadLocalJs(view, JsInterceptor.toLoadJs);
                 }
 
                 if (getStartupMessage() != null) {
@@ -202,7 +198,7 @@ public class BridgeWebView extends WebView { // implements WebViewJavascriptBrid
         messageJson = messageJson.replaceAll("(\\\\)([^utrn])", "\\\\\\\\$1$2");
         messageJson = messageJson.replaceAll("(?<=[^\\\\])(\")", "\\\\\"");
         String javascriptCommand = String.format(BridgeUtil.JS_HANDLE_MESSAGE_FROM_JAVA, messageJson);
-        this.loadUrl(javascriptCommand);
+        mWebView.loadUrl(javascriptCommand);
     }
 
     void flushMessageQueue() {
@@ -211,7 +207,7 @@ public class BridgeWebView extends WebView { // implements WebViewJavascriptBrid
         }
 
         String jsUrl = BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA;
-        this.loadUrl(jsUrl);
+        mWebView.loadUrl(jsUrl);
         responseCallbacks.put(BridgeUtil.parseFunctionName(jsUrl), new CallBackFunction() {
 
             @Override
