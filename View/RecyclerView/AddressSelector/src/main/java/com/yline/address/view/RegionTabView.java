@@ -1,6 +1,7 @@
 package com.yline.address.view;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,9 +48,9 @@ public class RegionTabView extends RelativeLayout {
     /**
      * 初始状态，开始选择省份
      */
-    public void selectOneState() {
+    public void selectOneState(String province) {
         mOneTextView.setTextColor(getContext().getResources().getColor(R.color.ff5000));
-        mOneTextView.setText("请选择");
+        mOneTextView.setText(getCheckTitle(province));
         mOneLine.setVisibility(VISIBLE);
 
         mTwoTextView.setText("");
@@ -67,13 +68,13 @@ public class RegionTabView extends RelativeLayout {
      *
      * @param province 省份
      */
-    public void selectTwoState(String province) {
+    public void selectTwoState(String province, String city) {
         mOneTextView.setTextColor(getContext().getResources().getColor(R.color.v333333));
         mOneTextView.setText(province);
         mOneLine.setVisibility(GONE);
 
         mTwoTextView.setTextColor(getContext().getResources().getColor(R.color.ff5000));
-        mTwoTextView.setText("请选择");
+        mTwoTextView.setText(getCheckTitle(city));
         mTwoLine.setVisibility(VISIBLE);
 
         mThreeTextView.setText("");
@@ -84,30 +85,7 @@ public class RegionTabView extends RelativeLayout {
     }
 
     /**
-     * 已经选择了省份、城市，开始选择
-     *
-     * @param province 省份
-     * @param city     城市
-     */
-    public void selectThreeState(String province, String city) {
-        mOneTextView.setTextColor(getContext().getResources().getColor(R.color.v333333));
-        mOneTextView.setText(province);
-        mOneLine.setVisibility(GONE);
-
-        mTwoTextView.setTextColor(getContext().getResources().getColor(R.color.v333333));
-        mTwoTextView.setText(city);
-        mTwoLine.setVisibility(GONE);
-
-        mThreeTextView.setTextColor(getContext().getResources().getColor(R.color.ff5000));
-        mThreeTextView.setText("请选择");
-        mThreeLine.setVisibility(VISIBLE);
-
-        mFourTextView.setText("");
-        mFourLine.setVisibility(GONE);
-    }
-
-    /**
-     * 已经选择了省份、城市、地区。并且已经结束了
+     * 已经选择了省份、城市，开始选择地区
      *
      * @param province 省份
      * @param city     城市
@@ -123,37 +101,12 @@ public class RegionTabView extends RelativeLayout {
         mTwoLine.setVisibility(GONE);
 
         mThreeTextView.setTextColor(getContext().getResources().getColor(R.color.ff5000));
-        mThreeTextView.setText(area);
+        mThreeTextView.setText(getCheckTitle(area));
         mThreeLine.setVisibility(VISIBLE);
     }
 
     /**
-     * 已经选择了省份、城市、地区，开始选择
-     *
-     * @param province 省份
-     * @param city     城市
-     * @param area     地区
-     */
-    public void selectFourState(String province, String city, String area) {
-        mOneTextView.setTextColor(getContext().getResources().getColor(R.color.v333333));
-        mOneTextView.setText(province);
-        mOneLine.setVisibility(GONE);
-
-        mTwoTextView.setTextColor(getContext().getResources().getColor(R.color.v333333));
-        mTwoTextView.setText(city);
-        mTwoLine.setVisibility(GONE);
-
-        mThreeTextView.setTextColor(getContext().getResources().getColor(R.color.v333333));
-        mThreeTextView.setText(area);
-        mThreeLine.setVisibility(GONE);
-
-        mFourTextView.setTextColor(getContext().getResources().getColor(R.color.ff5000));
-        mFourTextView.setText("请选择");
-        mFourLine.setVisibility(VISIBLE);
-    }
-
-    /**
-     * 已经选择了省份、城市、地区、街道。并且已经结束了
+     * 已经选择了省份、城市、地区，开始选择街道
      *
      * @param province 省份
      * @param city     城市
@@ -173,8 +126,12 @@ public class RegionTabView extends RelativeLayout {
         mThreeLine.setVisibility(GONE);
 
         mFourTextView.setTextColor(getContext().getResources().getColor(R.color.ff5000));
-        mFourTextView.setText(street);
+        mFourTextView.setText(getCheckTitle(street));
         mFourLine.setVisibility(VISIBLE);
+    }
+
+    private String getCheckTitle(String title) {
+        return TextUtils.isEmpty(title) ? "请选择" : title;
     }
 
     public void setOnOneClickListener(final OnClickListener listener) {

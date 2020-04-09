@@ -13,6 +13,7 @@ public class MainActivity extends BaseAppCompatActivity {
     private String selectedArea;
 
     private TextView resultTextView;
+    private AddressSelectDialog mSelectDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,10 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     private void showRegionDialog() {
-        AddressSelectDialog selectDialog = new AddressSelectDialog(this);
-        selectDialog.setOnRegionListener(new AddressSelectDialog.OnRegionListener() {
+        if (null == mSelectDialog) {
+            mSelectDialog = new AddressSelectDialog(this);
+        }
+        mSelectDialog.setOnRegionListener(new AddressSelectDialog.OnRegionListener() {
             @Override
             public void onRegionListener(String province, String city, String area) {
                 // 选择完回调结果赋值给当前
@@ -41,7 +44,7 @@ public class MainActivity extends BaseAppCompatActivity {
                 resultTextView.setText(selectedProvince + " " + selectedCity + " " + selectedArea);
             }
         });
-        selectDialog.setData(selectedProvince, selectedCity, selectedArea, null);
-        selectDialog.show();
+        mSelectDialog.setData(selectedProvince, selectedCity, selectedArea, null);
+        mSelectDialog.show();
     }
 }

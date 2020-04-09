@@ -72,8 +72,15 @@ public class RegionDataManager {
         }
     }
 
+    /**
+     * 第四层数据，数据内容为空。则这就是最后一个
+     */
     public static void getStreetList(String province, String city, String area, OnDataResultCallback callback) {
-        // todo mock 数据
+        List<String> streetList = new ArrayList<>();
+
+        if (null != callback) {
+            callback.onResult(streetList);
+        }
     }
 
     public interface OnDataResultCallback {

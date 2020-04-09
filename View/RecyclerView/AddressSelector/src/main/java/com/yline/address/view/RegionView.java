@@ -22,7 +22,6 @@ import com.yline.view.recycler.holder.RecyclerViewHolder;
 import java.util.List;
 
 /**
- *
  * @author yline 2020-04-09 -- 08:38
  */
 public class RegionView extends LinearLayout {
@@ -32,13 +31,11 @@ public class RegionView extends LinearLayout {
     private static final int TAB_FOUR = 40;
 
     private int mTabValue;
-
     private RegionTabView mRegionTabView;
 
-    private OnRpwItemClickListener onRpwItemClickListener;
-
-    private RegionAdapter regionAdapter;
-    private LinearLayoutManager recycleManager;
+    private OnLastItemClickListener mOnLastItemClickListener;
+    private RegionAdapter mRegionAdapter;
+    private LinearLayoutManager mRecycleManager;
     private String checkProvince;
     private String checkCity;
     private String checkArea;
@@ -61,10 +58,10 @@ public class RegionView extends LinearLayout {
         mRegionTabView = findViewById(R.id.view_region_tab);
         RecyclerView recycleView = findViewById(R.id.recycleView);
 
-        recycleManager = new LinearLayoutManager(getContext());
-        regionAdapter = new RegionAdapter(getContext());
-        recycleView.setLayoutManager(recycleManager);
-        recycleView.setAdapter(regionAdapter);
+        mRecycleManager = new LinearLayoutManager(getContext());
+        mRegionAdapter = new RegionAdapter(getContext());
+        recycleView.setLayoutManager(mRecycleManager);
+        recycleView.setAdapter(mRegionAdapter);
     }
 
     private void bindListeners() {
@@ -76,7 +73,7 @@ public class RegionView extends LinearLayout {
                     @Override
                     public void onResult(List<String> dataList) {
                         mTabValue = TAB_ONE;
-                        regionAdapter.setDataList(dataList, checkProvince);
+                        mRegionAdapter.setDataList(dataList, checkProvince);
 
                         // 定位到已选项，若不存在，则置顶
                         int index = dataList.indexOf(checkProvince);
@@ -94,7 +91,7 @@ public class RegionView extends LinearLayout {
                     @Override
                     public void onResult(List<String> dataList) {
                         mTabValue = TAB_TWO;
-                        regionAdapter.setDataList(dataList, checkCity);
+                        mRegionAdapter.setDataList(dataList, checkCity);
 
                         // 定位到已选项，若不存在，则置顶
                         int index = dataList.indexOf(checkCity);
@@ -112,7 +109,7 @@ public class RegionView extends LinearLayout {
                     @Override
                     public void onResult(List<String> dataList) {
                         mTabValue = TAB_THREE;
-                        regionAdapter.setDataList(dataList, checkArea);
+                        mRegionAdapter.setDataList(dataList, checkArea);
 
                         // 定位到已选项，若不存在，则置顶
                         int index = dataList.indexOf(checkArea);
@@ -130,7 +127,7 @@ public class RegionView extends LinearLayout {
                     @Override
                     public void onResult(List<String> dataList) {
                         mTabValue = TAB_FOUR;
-                        regionAdapter.setDataList(dataList, checkStreet);
+                        mRegionAdapter.setDataList(dataList, checkStreet);
 
                         // 定位到已选项，若不存在，则置顶
                         int index = dataList.indexOf(checkStreet);
@@ -140,36 +137,54 @@ public class RegionView extends LinearLayout {
             }
         });
 
-        regionAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener<String>() {
+        mRegionAdapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener<String>() {
             @Override
             public void onItemClick(RecyclerViewHolder viewHolder, String value, int position) {
                 if (mTabValue == TAB_ONE) {
                     checkProvince = value;
                     mTabValue = TAB_TWO;
+
+                    checkCity = null;
+                    checkArea = null;
+                    checkStreet = null;
+                    updateData();
                 } else if (mTabValue == TAB_TWO) {
                     checkCity = value;
                     mTabValue = TAB_THREE;
+
+                    checkArea = null;
+                    checkStreet = null;
+                    updateData();
                 } else if (mTabValue == TAB_THREE) {
                     checkArea = value;
                     mTabValue = TAB_FOUR;
+
+                    checkStreet = null;
+                    updateData();
                 } else {
                     checkStreet = value;
                     mTabValue = TAB_FOUR;
-                }
 
-                updateData();
+                    // 选择四层结束
+                    if (null != mOnLastItemClickListener) {
+                        mOnLastItemClickListener.onItemClick(checkProvince, checkCity, checkArea, checkStreet);
+                    }
+                }
             }
         });
     }
 
     private void scrollToPosition(int position) {
         if (position == -1) {
-            recycleManager.scrollToPositionWithOffset(0, 0);
+            mRecycleManager.scrollToPositionWithOffset(0, 0);
         } else {
-            recycleManager.scrollToPositionWithOffset(position, 0);
+            mRecycleManager.scrollToPositionWithOffset(position, 0);
         }
     }
 
+    /**
+     * 这个是设置初始数据
+     */
     public void setData(String province, String city, final String area, final String street) {
         this.checkProvince = province;
         this.checkCity = city;
@@ -177,15 +192,18 @@ public class RegionView extends LinearLayout {
         this.checkStreet = street;
 
         // 依据province、city、area、street的值确定tabValue的值
-        if (!TextUtils.isEmpty(checkStreet) || !TextUtils.isEmpty(checkArea)) {
-            mTabValue = TAB_FOUR;
-        } else if (!TextUtils.isEmpty(checkCity)) {
-            mTabValue = TAB_THREE;
-        } else if (!TextUtils.isEmpty(checkProvince)) {
+        mTabValue = TAB_ONE;
+        if (!TextUtils.isEmpty(checkProvince)) {
             mTabValue = TAB_TWO;
-            return;
-        } else {
-            mTabValue = TAB_ONE;
+        }
+        if (!TextUtils.isEmpty(checkCity)) {
+            mTabValue = TAB_THREE;
+        }
+        if (!TextUtils.isEmpty(checkArea)) {
+            mTabValue = TAB_THREE;
+        }
+        if (!TextUtils.isEmpty(checkStreet)) {
+            mTabValue = TAB_FOUR;
         }
 
         updateData();
@@ -201,19 +219,12 @@ public class RegionView extends LinearLayout {
             RegionDataManager.getProvinceList(new RegionDataManager.OnDataResultCallback() {
                 @Override
                 public void onResult(List<String> dataList) {
-                    if (TextUtils.isEmpty(checkProvince)) {
-                        mRegionTabView.selectOneState();
-                        regionAdapter.setDataList(dataList, null);
+                    mRegionTabView.selectOneState(checkProvince);
+                    mRegionAdapter.setDataList(dataList, checkProvince);
 
-                        scrollToPosition(-1);
-                    } else {
-                        mRegionTabView.selectOneState();
-                        regionAdapter.setDataList(dataList, checkProvince);
-
-                        // 定位到已选项
-                        int index = dataList.indexOf(checkProvince);
-                        scrollToPosition(index);
-                    }
+                    // 定位到已选项
+                    int index = dataList.indexOf(checkProvince);
+                    scrollToPosition(index);
                 }
             });
         } else if (mTabValue == TAB_TWO) {
@@ -221,34 +232,47 @@ public class RegionView extends LinearLayout {
             RegionDataManager.getCityList(checkProvince, new RegionDataManager.OnDataResultCallback() {
                 @Override
                 public void onResult(List<String> dataList) {
-                    if (TextUtils.isEmpty(checkCity)) {
-                        mRegionTabView.selectTwoState(checkProvince);
-                        regionAdapter.setDataList(dataList, null);
+                    mRegionTabView.selectTwoState(checkProvince, checkCity);
+                    mRegionAdapter.setDataList(dataList, checkCity);
 
-                        scrollToPosition(-1);
+                    // 定位到已选项
+                    int index = dataList.indexOf(checkCity);
+                    scrollToPosition(index);
+                }
+            });
+        } else if (mTabValue == TAB_THREE) {
+            // 地区，还未选择 或 已经选择
+            RegionDataManager.getAreaList(checkProvince, checkCity, new RegionDataManager.OnDataResultCallback() {
+                @Override
+                public void onResult(List<String> dataList) {
+                    if (null == dataList || dataList.isEmpty()) {
+                        // 已经结束了，就不再选择了
+                        mRegionTabView.selectTwoState(checkProvince, checkCity);
                     } else {
-                        mRegionTabView.selectTwoState(checkProvince);
-                        regionAdapter.setDataList(dataList, checkCity);
+                        mRegionTabView.selectThreeState(checkProvince, checkCity, checkArea);
+                        mRegionAdapter.setDataList(dataList, checkArea);
 
                         // 定位到已选项
-                        int index = dataList.indexOf(checkCity);
+                        int index = dataList.indexOf(checkArea);
                         scrollToPosition(index);
                     }
                 }
             });
         } else {
-            // 地区，还未选择 或 已经选择
-            RegionDataManager.getAreaList(checkProvince, checkCity, new RegionDataManager.OnDataResultCallback() {
+            RegionDataManager.getStreetList(checkProvince, checkCity, checkArea, new RegionDataManager.OnDataResultCallback() {
                 @Override
                 public void onResult(List<String> dataList) {
-                    if (TextUtils.isEmpty(checkArea)) {
-                        mRegionTabView.selectThreeState(checkProvince, checkCity);
-                        regionAdapter.setDataList(dataList, null);
-
-                        scrollToPosition(-1);
-                    } else {
+                    if (null == dataList || dataList.isEmpty()) {
+                        // 已经结束了，就不再选择了
                         mRegionTabView.selectThreeState(checkProvince, checkCity, checkArea);
-                        regionAdapter.setDataList(dataList, checkArea);
+
+                        // 选择三层就结束了
+                        if (null != mOnLastItemClickListener) {
+                            mOnLastItemClickListener.onItemClick(checkProvince, checkCity, checkArea, null);
+                        }
+                    } else {
+                        mRegionTabView.selectFourState(checkProvince, checkCity, checkArea, checkStreet);
+                        mRegionAdapter.setDataList(dataList, checkStreet);
 
                         // 定位到已选项
                         int index = dataList.indexOf(checkArea);
@@ -266,13 +290,20 @@ public class RegionView extends LinearLayout {
         findViewById(R.id.view_region_close).setOnClickListener(listener);
     }
 
-    public void setOnRpwItemClickListener(OnRpwItemClickListener onRpwItemClickListener) {
-        this.onRpwItemClickListener = onRpwItemClickListener;
+    public void setOnLastItemClickListener(OnLastItemClickListener listener) {
+        this.mOnLastItemClickListener = listener;
     }
 
-    // 城市/县/区列表item点击回调
-    public interface OnRpwItemClickListener {
-        void onRpwItemClick(String selectedProvince, String selectedCity, String selectedArea);
+    public interface OnLastItemClickListener {
+        /**
+         * 最后的选择
+         *
+         * @param province 省
+         * @param city     市
+         * @param area     区/县
+         * @param street   可能为null
+         */
+        void onItemClick(String province, String city, String area, String street);
     }
 
     private static class RegionAdapter extends AbstractRecyclerAdapter<String> {

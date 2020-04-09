@@ -28,11 +28,11 @@ public class AddressSelectDialog {
             }
         });
         // 设置item监听，回调传回结果
-        mRegionView.setOnRpwItemClickListener(new RegionView.OnRpwItemClickListener() {
+        mRegionView.setOnLastItemClickListener(new RegionView.OnLastItemClickListener() {
             @Override
-            public void onRpwItemClick(String selectedProvince, String selectedCity, String selectedArea) {
+            public void onItemClick(String province, String city, String area, String street) {
                 if (null != mOnRegionListener) {
-                    mOnRegionListener.onRegionListener(selectedProvince, selectedCity, selectedArea);
+                    mOnRegionListener.onRegionListener(province, city, area);
                 }
                 dismiss();
             }
