@@ -6,13 +6,13 @@
     android:orientation="vertical">
 
     <!--RecyclerView 本身不支持 divider-->
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/tab_recycler" />
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,1 +1,1 @@
-include ':HeadFootAdapter&ItemDecoration', ':GroupRecyclerAdapter', ':FloatGroupRecycler', ':ChoiceRecycler', ':MultiTreeRecycler', ':SnapHelper'
+include ':HeadFootAdapter&ItemDecoration', ':GroupRecyclerAdapter', ':FloatGroupRecycler', ':ChoiceRecycler', ':MultiTreeRecycler', ':SnapHelper', ':AddressSelector'
