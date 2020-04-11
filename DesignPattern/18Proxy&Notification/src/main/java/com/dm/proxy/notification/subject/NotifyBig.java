@@ -7,31 +7,27 @@ import android.widget.RemoteViews;
 
 import com.design.pattern.proxy.notification.R;
 
-public class NotifyBig extends Notify
-{
+public class NotifyBig extends Notify {
 
-	public NotifyBig(Context context)
-	{
-		super(context);
-	}
+    public NotifyBig(Context context) {
+        super(context);
+    }
 
-	@SuppressLint("NewApi")
-	@Override
-	public void send()
-	{
-		Notification n = builder.build();
-		
-		n.contentView = new RemoteViews(context.getPackageName(), R.layout.remote_notify_proxy_normal);
-		n.bigContentView = new RemoteViews(context.getPackageName(), R.layout.remote_notify_proxy_big);
-		//	n.headsUpContentView = ;  5.0以上才有
+    @SuppressLint("NewApi")
+    @Override
+    public void send() {
+        Notification n = builder.build();
 
-		nm.notify(0, n);
-	}
+        n.contentView = new RemoteViews(context.getPackageName(), R.layout.remote_notify_proxy_normal);
+        n.bigContentView = new RemoteViews(context.getPackageName(), R.layout.remote_notify_proxy_big);
+        //	n.headsUpContentView = ;  5.0以上才有
 
-	@Override
-	public void cancel()
-	{
-		nm.cancel(0);
-	}
+        nm.notify(0, n);
+    }
+
+    @Override
+    public void cancel() {
+        nm.cancel(0);
+    }
 
 }
