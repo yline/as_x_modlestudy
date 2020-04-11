@@ -19,10 +19,14 @@
 
 
 工程介绍:
+lazy        懒汉模式
+dcl         double check lock模式
+statics     静态内部类模式
+enums       枚举单例
+manager     使用容器实现单例模式
 
-package com.dm.singleton.activity;		入口Activity
 
-其他:									每个包名对应单例模式一个方法
+
 
 
 
