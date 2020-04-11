@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/07Strategy/07Strategy.iml" filepath="$PROJECT_DIR$/07Strategy/07Strategy.iml" />
       <module fileurl="file://$PROJECT_DIR$/08State/08State.iml" filepath="$PROJECT_DIR$/08State/08State.iml" />
       <module fileurl="file://$PROJECT_DIR$/09DutyChain/09DutyChain.iml" filepath="$PROJECT_DIR$/09DutyChain/09DutyChain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/101ProductorCustomor/101ProductorCustomor.iml" filepath="$PROJECT_DIR$/101ProductorCustomor/101ProductorCustomor.iml" />
       <module fileurl="file://$PROJECT_DIR$/10Interpreter/10Interpreter.iml" filepath="$PROJECT_DIR$/10Interpreter/10Interpreter.iml" />
       <module fileurl="file://$PROJECT_DIR$/11Command/11Command.iml" filepath="$PROJECT_DIR$/11Command/11Command.iml" />
       <module fileurl="file://$PROJECT_DIR$/11Command&amp;Draw/11Command&amp;Draw.iml" filepath="$PROJECT_DIR$/11Command&amp;Draw/11Command&amp;Draw.iml" />
