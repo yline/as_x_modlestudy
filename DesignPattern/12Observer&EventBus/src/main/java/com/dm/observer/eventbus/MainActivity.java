@@ -1,7 +1,7 @@
 package com.dm.observer.eventbus;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 
 import com.design.pattern.observer.eventbus.R;
 import com.yline.base.BaseFragmentActivity;

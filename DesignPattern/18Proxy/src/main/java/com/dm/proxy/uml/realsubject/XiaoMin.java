@@ -1,34 +1,33 @@
 package com.dm.proxy.uml.realsubject;
 
-import com.dm.proxy.uml.activity.MainApplication;
 import com.dm.proxy.uml.subject.ILawsuit;
-import com.yline.log.LogFileUtil;
+import com.yline.utils.LogUtil;
 
-public class XiaoMin implements ILawsuit
-{
-    
+/**
+ * 具体逻辑的执行
+ *
+ * @author yline 2020-04-11 -- 12:55
+ */
+public class XiaoMin implements ILawsuit {
+
     @Override
-    public void submit()
-    {
-        LogFileUtil.v(MainApplication.TAG, "xiaomin" + "申请 submit");
+    public void submit() {
+        LogUtil.v("xiaomin" + "申请 submit");
     }
-    
+
     @Override
-    public void burden()
-    {
-        LogFileUtil.v(MainApplication.TAG, "xiaomin" + "申请 burden");
+    public void burden() {
+        LogUtil.v("xiaomin" + "申请 burden");
     }
-    
+
     @Override
-    public void defend()
-    {
-        LogFileUtil.v(MainApplication.TAG, "xiaomin" + "申请 defend");
+    public void defend() {
+        LogUtil.v("xiaomin" + "申请 defend");
     }
-    
+
     @Override
-    public void finish()
-    {
-        LogFileUtil.v(MainApplication.TAG, "xiaomin" + "申请 finish");
+    public void finish() {
+        LogUtil.v("xiaomin" + "申请 finish");
     }
-    
+
 }

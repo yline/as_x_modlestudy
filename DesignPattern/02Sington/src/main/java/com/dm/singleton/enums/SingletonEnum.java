@@ -1,17 +1,14 @@
 package com.dm.singleton.enums;
 
-import com.dm.singleton.activity.IApplication;
-import com.yline.log.LogFileUtil;
+import com.yline.utils.LogUtil;
 
 /**
  * 即使反序列化,也不会重新生成对象
  */
-public enum SingletonEnum
-{
+public enum SingletonEnum {
     INSTANCE;
-    
-    public void doSome()
-    {
-        LogFileUtil.i(IApplication.TAG, "SingletonEnum -> doSome");
+
+    public void doSome() {
+        LogUtil.v("SingletonEnum -> doSome");
     }
 }

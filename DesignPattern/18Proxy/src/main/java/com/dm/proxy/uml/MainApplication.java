@@ -1,4 +1,4 @@
-package com.dm.proxy.uml.activity;
+package com.dm.proxy.uml;
 
 import com.yline.application.BaseApplication;
 
