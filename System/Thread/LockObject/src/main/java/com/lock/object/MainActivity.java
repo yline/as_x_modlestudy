@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.lock.object.reen.ReenTest;
+import com.lock.object.semaphore.SemaphoreTest;
 import com.lock.object.sync.SynchronizedLock;
 import com.lock.object.sync.SynchronizedLockSimple;
 import com.yline.test.BaseTestActivity;
@@ -81,6 +82,13 @@ public class MainActivity extends BaseTestActivity {
                 SynchronizedLock.testWait("wait CC", 400, -1, 600);
 
                 SynchronizedLock.testNotify("notify", 1000, 1, 3000, true);
+            }
+        });
+
+        addButton("Semaphore", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SemaphoreTest.test();
             }
         });
     }

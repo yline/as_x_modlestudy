@@ -1,6 +1,7 @@
-reen --> 锁的可重入性的研究
 fair --> 公平锁
 readwrite --> 读写锁
+reen --> 锁的可重入性的研究
+semaphore --> 信号量(特殊功能的实现)
 
 基本总结点:
 1,synchronized会阻塞 内部代码块以及后部代码块
