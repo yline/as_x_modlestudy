@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AddressSelector/AddressSelector.iml" filepath="$PROJECT_DIR$/AddressSelector/AddressSelector.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AddressSelector/AddressSelector.iml" filepath="$PROJECT_DIR$/AddressSelector/AddressSelector.iml" />
       <module fileurl="file://$PROJECT_DIR$/ChoiceRecycler/ChoiceRecycler.iml" filepath="$PROJECT_DIR$/ChoiceRecycler/ChoiceRecycler.iml" />
       <module fileurl="file://$PROJECT_DIR$/FloatGroupRecycler/FloatGroupRecycler.iml" filepath="$PROJECT_DIR$/FloatGroupRecycler/FloatGroupRecycler.iml" />
       <module fileurl="file://$PROJECT_DIR$/GroupRecyclerAdapter/GroupRecyclerAdapter.iml" filepath="$PROJECT_DIR$/GroupRecyclerAdapter/GroupRecyclerAdapter.iml" />
