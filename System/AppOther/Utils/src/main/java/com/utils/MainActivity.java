@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.utils.utils.DeviceUtil;
 import com.utils.utils.NetworkUtil;
 import com.utils.utils.RootUtil;
 import com.utils.utils.WechatSignUtil;
@@ -38,7 +39,15 @@ public class MainActivity extends BaseTestActivity {
             }
         });
 
-        final EditText packageEditText = addEditText("输入包名");
+        addButton("获取设备号", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String deviceId = DeviceUtil.getDevicesId(MainActivity.this);
+                LogUtil.v("deviceId = " + deviceId);
+            }
+        });
+
+       final EditText packageEditText = addEditText("输入包名");
         addButton("计算签名", new View.OnClickListener() {
             @Override
             public void onClick(View v) {

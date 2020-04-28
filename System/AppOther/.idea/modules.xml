@@ -3,11 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AppOther.iml" filepath="$PROJECT_DIR$/AppOther.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Manager/AppOther-Manager.iml" filepath="$PROJECT_DIR$/Manager/AppOther-Manager.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Utils/AppOther-Utils.iml" filepath="$PROJECT_DIR$/Utils/AppOther-Utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/Manager/Manager.iml" filepath="$PROJECT_DIR$/Manager/Manager.iml" />
       <module fileurl="file://$PROJECT_DIR$/Plugins/Plugins.iml" filepath="$PROJECT_DIR$/Plugins/Plugins.iml" />
-      <module fileurl="file://$PROJECT_DIR$/System-AppOther.iml" filepath="$PROJECT_DIR$/System-AppOther.iml" />
       <module fileurl="file://$PROJECT_DIR$/Utils/Utils.iml" filepath="$PROJECT_DIR$/Utils/Utils.iml" />
     </modules>
   </component>
