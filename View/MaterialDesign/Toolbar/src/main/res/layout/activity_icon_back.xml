@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <!--大致规则,相差不大-->
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar_icon_back"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -20,5 +20,5 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="Icon Back"/>
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 </RelativeLayout>
