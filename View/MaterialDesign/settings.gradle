@@ -1,1 +1,1 @@
-include ':TabLayout', ':Toolbar', ':DrawerLayout', ':StatusBar', ':CoordinatorLayout', ':Button', ':FloatingActionButton'
+include ':TabLayout', ':Toolbar', ':DrawerLayout', ':StatusBar', ':CoordinatorLayout', ':Button', ':FloatingActionButton', ':Coor_Behavior'
