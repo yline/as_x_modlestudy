@@ -21,6 +21,7 @@
         <activity
             android:name=".type3.Type3Activity"
             android:theme="@style/NoBarTheme" />
+        <activity android:name=".type4.Type4Activity" />
     </application>
 
 </manifest>

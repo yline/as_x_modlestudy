@@ -41,7 +41,7 @@ public class Type3Activity extends AppCompatActivity implements Type3HeaderBehav
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test3);
+        setContentView(R.layout.activity_type3);
 
 //        mHeaderBehavior = (HeaderBehavior) ((CoordinatorLayout.LayoutParams) (findViewById(R.id.header)).getLayoutParams()).getBehavior();
 //
