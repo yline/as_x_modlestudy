@@ -4,43 +4,51 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.tabs.TabLayout;
-import com.yline.base.BaseAppCompatActivity;
-import com.yline.coor.behavior.R;
-import com.yline.coor.behavior.common.SimpleFragment;
-import com.yline.coor.behavior.type3.behavior.MainHeaderBehavior;
-import com.yline.utils.LogUtil;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-public class Type3Activity extends BaseAppCompatActivity implements MainHeaderBehavior.OnHeaderStateListener {
-    public static void launch(Context context) {
-        if (null != context) {
+import com.google.android.material.tabs.TabLayout;
+import com.yline.coor.behavior.R;
+import com.yline.coor.behavior.common.SimpleFragment;
+import com.yline.coor.behavior.type3.behavior.Type3HeaderBehavior;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Type3Activity extends AppCompatActivity implements Type3HeaderBehavior.OnHeaderStateListener {
+    public static void launch(Context context){
+        if (null != context){
             Intent intent = new Intent();
             intent.setClass(context, Type3Activity.class);
-            if (!(context instanceof Activity)) {
+            if (!(context instanceof Activity)){
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
             context.startActivity(intent);
         }
     }
 
-    private MainHeaderBehavior mHeaderBehavior;
     private ViewPager mViewPager;
+
+    private Type3HeaderBehavior mHeaderBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_type3);
+        setContentView(R.layout.activity_test3);
+
+//        mHeaderBehavior = (HeaderBehavior) ((CoordinatorLayout.LayoutParams) (findViewById(R.id.header)).getLayoutParams()).getBehavior();
+//
+//        if (mHeaderBehavior != null) {
+//            mHeaderBehavior.setTabSuspension(true);
+//            mHeaderBehavior.setHeaderStateListener(this);
+//        }
 
         initView();
     }
@@ -49,9 +57,9 @@ public class Type3Activity extends BaseAppCompatActivity implements MainHeaderBe
         List<Fragment> fragmentList = new ArrayList<>();
         List<String> titleList = new ArrayList<>();
 
-        fragmentList.add(SimpleFragment.create(20));
-        fragmentList.add(SimpleFragment.create(30));
-        fragmentList.add(SimpleFragment.create(40));
+        fragmentList.add(SimpleFragment.newInstance());
+        fragmentList.add(SimpleFragment.newInstance());
+        fragmentList.add(SimpleFragment.newInstance());
 
         titleList.add("tab20");
         titleList.add("tab30");
@@ -60,7 +68,7 @@ public class Type3Activity extends BaseAppCompatActivity implements MainHeaderBe
         mViewPager = findViewById(R.id.type3_view_pager);
         TabLayout tabLayout = findViewById(R.id.type3_tab_layout);
 
-        TypePageAdapter typePageAdapter = new TypePageAdapter(getSupportFragmentManager());
+        TypeInnerPageAdapter typePageAdapter = new TypeInnerPageAdapter(getSupportFragmentManager());
         typePageAdapter.setData(fragmentList, titleList);
 
         mViewPager.setAdapter(typePageAdapter);
@@ -87,12 +95,12 @@ public class Type3Activity extends BaseAppCompatActivity implements MainHeaderBe
 
     @Override
     public void onHeaderClosed() {
-        LogUtil.v("closed");
+        Log.e("status", "closed");
     }
 
     @Override
     public void onHeaderOpened() {
-        LogUtil.v("opened");
+        Log.e("status", "opened");
     }
 
     @Override
@@ -104,11 +112,11 @@ public class Type3Activity extends BaseAppCompatActivity implements MainHeaderBe
         }
     }
 
-    private static class TypePageAdapter extends FragmentPagerAdapter {
+    private static class TypeInnerPageAdapter extends FragmentPagerAdapter {
         private List<Fragment> mFragmentList;
         private List<String> mTitleList;
 
-        public TypePageAdapter(@NonNull FragmentManager fm) {
+        public TypeInnerPageAdapter(@NonNull FragmentManager fm) {
             super(fm);
         }
 

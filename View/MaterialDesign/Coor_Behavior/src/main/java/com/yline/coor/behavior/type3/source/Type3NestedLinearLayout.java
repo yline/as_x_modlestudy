@@ -1,4 +1,4 @@
-package com.yline.coor.behavior.type3;
+package com.yline.coor.behavior.type3.source;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -13,7 +13,7 @@ import androidx.core.view.ViewCompat;
 /**
  * 实现header跟随手指触发整体滑动
  */
-public class NestedLinearLayout extends LinearLayout implements NestedScrollingChild {
+public class Type3NestedLinearLayout extends LinearLayout implements NestedScrollingChild {
 
     private final int[] offset = new int[2];
     private final int[] consumed = new int[2];
@@ -21,15 +21,15 @@ public class NestedLinearLayout extends LinearLayout implements NestedScrollingC
     private NestedScrollingChildHelper mScrollingChildHelper;
     private int lastY;
 
-    public NestedLinearLayout(Context context) {
+    public Type3NestedLinearLayout(Context context) {
         this(context, null);
     }
 
-    public NestedLinearLayout(Context context, @Nullable AttributeSet attrs) {
+    public Type3NestedLinearLayout(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public NestedLinearLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public Type3NestedLinearLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setNestedScrollingEnabled(true);
     }

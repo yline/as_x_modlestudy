@@ -33,12 +33,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    // 这个千万不能改成 1.1.0 否则，type3 会出现滚动到一半的情况。其实不是滑动卡顿，应该是事件冲突。没细细研究源码。坑啊
 
     implementation 'com.yline.lib:LibSDK:2.3.8'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.yline.lib:LibViewRecycler:1.3.0'
 
-    debugCompile 'com.github.markzhai:blockcanary-android:1.5.0'
-    releaseCompile 'com.github.markzhai:blockcanary-no-op:1.5.0'
+    //debugCompile 'com.github.markzhai:blockcanary-android:1.5.0'
+    //releaseCompile 'com.github.markzhai:blockcanary-no-op:1.5.0'
 }

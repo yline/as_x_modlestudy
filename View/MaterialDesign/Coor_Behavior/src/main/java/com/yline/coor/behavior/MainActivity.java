@@ -1,7 +1,5 @@
 package com.yline.coor.behavior;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,5 +32,12 @@ public class MainActivity extends BaseTestActivity {
                 Type3Activity.launch(MainActivity.this);
             }
         });
+
+//        addButton("Type3", new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Type3Activity.launch(MainActivity.this);
+//            }
+//        });
     }
 }

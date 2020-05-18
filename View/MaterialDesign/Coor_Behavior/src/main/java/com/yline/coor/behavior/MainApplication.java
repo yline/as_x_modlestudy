@@ -4,8 +4,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import com.github.moduth.blockcanary.BlockCanary;
-import com.github.moduth.blockcanary.BlockCanaryContext;
 import com.yline.application.BaseApplication;
 
 public class MainApplication extends BaseApplication {
@@ -13,9 +11,9 @@ public class MainApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
 
-        BlockCanary.install(this, new BlockCanaryContext()).start();
+        // BlockCanary.install(this, new BlockCanaryContext()).start();
     }
-
+/*
     public class AppContext extends BlockCanaryContext {
         private static final String TAG = "AppContext";
 
@@ -46,5 +44,5 @@ public class MainApplication extends BaseApplication {
         public boolean stopWhenDebugging() {
             return false;
         }
-    }
+    }*/
 }

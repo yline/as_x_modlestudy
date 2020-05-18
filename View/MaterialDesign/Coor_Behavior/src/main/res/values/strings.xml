@@ -6,9 +6,6 @@
 
     <string name="behavior_type2_title">com.yline.coor.behavior.type2.Type2TitleBehavior</string>
     <string name="behavior_type2_recycler">com.yline.coor.behavior.type2.Type2RecyclerBehavior</string>
-<!--
-    <string name="behavior_type3_header">com.yline.coor.behavior.type3.behavior.Type3HeaderBehavior</string>
-    <string name="behavior_type3_title">com.yline.coor.behavior.type3.behavior.Type3TitleBehavior</string>
-    <string name="behavior_type3_tab_layout">com.yline.coor.behavior.type3.behavior.Type3TabLayoutBehavior</string>
-    <string name="behavior_type3_view_pager">com.yline.coor.behavior.type3.behavior.Type3ViewPagerBehavior</string>-->
+
+
 </resources>

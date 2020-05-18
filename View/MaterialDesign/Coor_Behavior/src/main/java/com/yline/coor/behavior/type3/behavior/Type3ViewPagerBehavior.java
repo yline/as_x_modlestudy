@@ -4,23 +4,23 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import com.yline.coor.behavior.R;
 import com.yline.coor.behavior.type3.source.HeaderScrollingViewBehavior;
 
 import java.util.List;
 
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 /**
  * 列表Behavior
  */
-public class MainContentBehavior extends HeaderScrollingViewBehavior {
+public class Type3ViewPagerBehavior extends HeaderScrollingViewBehavior {
     private Context mContext;
 
-    public MainContentBehavior() {
+    public Type3ViewPagerBehavior() {
     }
 
-    public MainContentBehavior(Context context, AttributeSet attrs) {
+    public Type3ViewPagerBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
     }

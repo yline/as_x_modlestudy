@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SimpleFragment extends Fragment {
 
-    public static SimpleFragment create(int size) {
+    public static SimpleFragment newInstance() {
         SimpleFragment simpleFragment = new SimpleFragment();
         return simpleFragment;
     }

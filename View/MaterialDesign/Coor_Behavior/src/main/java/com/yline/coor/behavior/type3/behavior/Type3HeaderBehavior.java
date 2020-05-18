@@ -6,19 +6,20 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.OverScroller;
 
-import com.yline.coor.behavior.R;
-import com.yline.coor.behavior.type3.NestedLinearLayout;
-import com.yline.coor.behavior.type3.source.ViewOffsetBehavior;
-
-import java.lang.ref.WeakReference;
-
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainHeaderBehavior extends ViewOffsetBehavior<View> {
+
+import com.yline.coor.behavior.R;
+import com.yline.coor.behavior.type3.source.Type3NestedLinearLayout;
+import com.yline.coor.behavior.type3.source.ViewOffsetBehavior;
+
+import java.lang.ref.WeakReference;
+
+public class Type3HeaderBehavior extends ViewOffsetBehavior<View> {
     private static final int STATE_OPENED = 0;
     private static final int STATE_CLOSED = 1;
     private static final int DURATION_SHORT = 300;
@@ -46,11 +47,11 @@ public class MainHeaderBehavior extends ViewOffsetBehavior<View> {
     //tab上移结束后是否悬浮在固定位置
     private boolean tabSuspension = false;
 
-    public MainHeaderBehavior() {
+    public Type3HeaderBehavior() {
         init();
     }
 
-    public MainHeaderBehavior(Context context, AttributeSet attrs) {
+    public Type3HeaderBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         init();
@@ -112,7 +113,7 @@ public class MainHeaderBehavior extends ViewOffsetBehavior<View> {
         //制造滑动视察，使header的移动比手指滑动慢
         float scrollY = dy / 4.0f;
 
-        if (target instanceof NestedLinearLayout) {//处理header滑动
+        if (target instanceof Type3NestedLinearLayout) {//处理header滑动
             float finalY = child.getTranslationY() - scrollY;
             if (finalY < getHeaderOffset()) {
                 finalY = getHeaderOffset();

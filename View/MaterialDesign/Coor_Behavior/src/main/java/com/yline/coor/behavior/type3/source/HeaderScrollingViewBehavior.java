@@ -7,14 +7,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.reflect.Method;
-import java.util.List;
-
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.math.MathUtils;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.appbar.AppBarLayout;
+
+import java.lang.reflect.Method;
+import java.util.List;
 
 public abstract class HeaderScrollingViewBehavior extends ViewOffsetBehavior<View> {
     final Rect mTempRect1 = new Rect();
