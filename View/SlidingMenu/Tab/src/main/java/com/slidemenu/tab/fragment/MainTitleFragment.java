@@ -54,12 +54,12 @@ public class MainTitleFragment extends BaseFragment
 	private void initMenu()
 	{
 		mSlidingMenu = new SlidingMenu(getActivity());
-		mSlidingMenu.setMode(SlidingMenu.LEFT);
+		mSlidingMenu.setMode(SlidingMenu.RIGHT);
 		mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
 		mSlidingMenu.setShadowWidth(10);
 		mSlidingMenu.setShadowDrawable(R.drawable.slidingmenu_shadow);
-		mSlidingMenu.setBehindWidth(480);
+		// mSlidingMenu.setBehindWidth(480);
 		mSlidingMenu.attachToActivity(getActivity(), SlidingMenu.SLIDING_WINDOW);
 		mSlidingMenu.setMenu(R.layout.fragment_main_menu);
 	}

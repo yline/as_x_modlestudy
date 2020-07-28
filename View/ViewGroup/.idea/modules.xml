@@ -6,7 +6,14 @@
       <module fileurl="file://$PROJECT_DIR$/NumberPicker/NumberPicker.iml" filepath="$PROJECT_DIR$/NumberPicker/NumberPicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeBackLayout/SwipeBackLayout.iml" filepath="$PROJECT_DIR$/SwipeBackLayout/SwipeBackLayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/SwipeMenuLayout/SwipeMenuLayout.iml" filepath="$PROJECT_DIR$/SwipeMenuLayout/SwipeMenuLayout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/View-ViewGroup.iml" filepath="$PROJECT_DIR$/View-ViewGroup.iml" />
       <module fileurl="file://$PROJECT_DIR$/ViewGroup.iml" filepath="$PROJECT_DIR$/ViewGroup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LoadingView/ViewGroup-LoadingView.iml" filepath="$PROJECT_DIR$/LoadingView/ViewGroup-LoadingView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NumberPicker/ViewGroup-NumberPicker.iml" filepath="$PROJECT_DIR$/NumberPicker/ViewGroup-NumberPicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SwipeBackLayout/ViewGroup-SwipeBackLayout.iml" filepath="$PROJECT_DIR$/SwipeBackLayout/ViewGroup-SwipeBackLayout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SwipeMenuLayout/ViewGroup-SwipeMenuLayout.iml" filepath="$PROJECT_DIR$/SwipeMenuLayout/ViewGroup-SwipeMenuLayout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WheelLib/ViewGroup-WheelLib.iml" filepath="$PROJECT_DIR$/WheelLib/ViewGroup-WheelLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WheelSample/ViewGroup-WheelSample.iml" filepath="$PROJECT_DIR$/WheelSample/ViewGroup-WheelSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/WheelLib/WheelLib.iml" filepath="$PROJECT_DIR$/WheelLib/WheelLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/WheelSample/WheelSample.iml" filepath="$PROJECT_DIR$/WheelSample/WheelSample.iml" />
     </modules>

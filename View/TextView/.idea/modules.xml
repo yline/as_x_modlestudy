@@ -7,7 +7,13 @@
       <module fileurl="file://$PROJECT_DIR$/HScroll/HScroll.iml" filepath="$PROJECT_DIR$/HScroll/HScroll.iml" />
       <module fileurl="file://$PROJECT_DIR$/KeyClearEditText/KeyClearEditText.iml" filepath="$PROJECT_DIR$/KeyClearEditText/KeyClearEditText.iml" />
       <module fileurl="file://$PROJECT_DIR$/TextView.iml" filepath="$PROJECT_DIR$/TextView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BankCardTextView/TextView-BankCardTextView.iml" filepath="$PROJECT_DIR$/BankCardTextView/TextView-BankCardTextView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CheckHelper/TextView-CheckHelper.iml" filepath="$PROJECT_DIR$/CheckHelper/TextView-CheckHelper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HScroll/TextView-HScroll.iml" filepath="$PROJECT_DIR$/HScroll/TextView-HScroll.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KeyClearEditText/TextView-KeyClearEditText.iml" filepath="$PROJECT_DIR$/KeyClearEditText/TextView-KeyClearEditText.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VScroll/TextView-VScroll.iml" filepath="$PROJECT_DIR$/VScroll/TextView-VScroll.iml" />
       <module fileurl="file://$PROJECT_DIR$/VScroll/VScroll.iml" filepath="$PROJECT_DIR$/VScroll/VScroll.iml" />
+      <module fileurl="file://$PROJECT_DIR$/View-TextView.iml" filepath="$PROJECT_DIR$/View-TextView.iml" />
     </modules>
   </component>
 </project>

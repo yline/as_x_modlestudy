@@ -3,15 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HScroll/HScroll.iml" filepath="$PROJECT_DIR$/HScroll/HScroll.iml" />
-      <module fileurl="file://F:\git_space\as_x_modlestudy\View\SlidingMenu\HScroll\HScroll.iml" filepath="F:\git_space\as_x_modlestudy\View\SlidingMenu\HScroll\HScroll.iml" />
       <module fileurl="file://$PROJECT_DIR$/Lib/Lib.iml" filepath="$PROJECT_DIR$/Lib/Lib.iml" />
-      <module fileurl="file://F:\git_space\as_x_modlestudy\View\SlidingMenu\Lib\Lib.iml" filepath="F:\git_space\as_x_modlestudy\View\SlidingMenu\Lib\Lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/LibDemo/LibDemo.iml" filepath="$PROJECT_DIR$/LibDemo/LibDemo.iml" />
-      <module fileurl="file://F:\git_space\as_x_modlestudy\View\SlidingMenu\LibDemo\LibDemo.iml" filepath="F:\git_space\as_x_modlestudy\View\SlidingMenu\LibDemo\LibDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/SlidingMenu.iml" filepath="$PROJECT_DIR$/SlidingMenu.iml" />
-      <module fileurl="file://F:\git_space\as_x_modlestudy\View\SlidingMenu\SlidingMenu.iml" filepath="F:\git_space\as_x_modlestudy\View\SlidingMenu\SlidingMenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tab/Tab.iml" filepath="$PROJECT_DIR$/Tab/Tab.iml" />
-      <module fileurl="file://F:\git_space\as_x_modlestudy\View\SlidingMenu\Tab\Tab.iml" filepath="F:\git_space\as_x_modlestudy\View\SlidingMenu\Tab\Tab.iml" />
     </modules>
   </component>
 </project>
