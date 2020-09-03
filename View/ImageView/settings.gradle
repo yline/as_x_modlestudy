@@ -1,1 +1,1 @@
-include ':Circle', ':Plus'
+include ':Circle', ':Plus', ':NinePatch'
