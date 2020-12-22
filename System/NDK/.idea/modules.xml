@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Crypt/Crypt.iml" filepath="$PROJECT_DIR$/Crypt/Crypt.iml" />
       <module fileurl="file://$PROJECT_DIR$/NDK.iml" filepath="$PROJECT_DIR$/NDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Crypt/NDK-Crypt.iml" filepath="$PROJECT_DIR$/Crypt/NDK-Crypt.iml" group="NDK/Crypt" />
+      <module fileurl="file://$PROJECT_DIR$/app/NDK-app.iml" filepath="$PROJECT_DIR$/app/NDK-app.iml" group="NDK/app" />
+      <module fileurl="file://$PROJECT_DIR$/System-NDK.iml" filepath="$PROJECT_DIR$/System-NDK.iml" group="NDK" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
