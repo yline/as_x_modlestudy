@@ -95,4 +95,16 @@ jstring Java_com_ndk_jni_JniManager_decode(JNIEnv *env, jobject, jstring msg, ji
     return env->NewStringUTF((const char *) result);
 }
 
+
+/* ----------------------------------------------------- */
+void willCrash() {
+    // 将会发生一次 Crash, 空指针异常
+    std::string boolKey = NULL;
+}
+
+JNIEXPORT void Java_com_ndk_jni_JniManager_doCrash(JNIEnv *env, jobject, jstring msg) {
+    willCrash();
+}
+
+
 }

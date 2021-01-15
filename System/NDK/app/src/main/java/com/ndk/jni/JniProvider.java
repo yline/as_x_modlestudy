@@ -14,6 +14,19 @@ public class JniProvider {
         System.loadLibrary("native-provider");
     }
 
+    private static JniProvider mJniProvider;
+
+    public static JniProvider getInstance() {
+        if (null == mJniProvider) {
+            synchronized (JniProvider.class) {
+                if (null == mJniProvider) {
+                    mJniProvider = new JniProvider();
+                }
+            }
+        }
+        return mJniProvider;
+    }
+
     /**
      * 测试 C层调用Java，普通方法
      */

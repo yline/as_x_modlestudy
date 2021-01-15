@@ -12,6 +12,19 @@ public class JniManager {
         System.loadLibrary("native-manager");
     }
 
+    private static JniManager mJniManager;
+
+    public static JniManager getInstance() {
+        if (null == mJniManager) {
+            synchronized (JniManager.class) {
+                if (null == mJniManager) {
+                    mJniManager = new JniManager();
+                }
+            }
+        }
+        return mJniManager;
+    }
+
     /**
      * 获取Jni 中定义的 String字符串
      *
@@ -44,4 +57,10 @@ public class JniManager {
      * @return 解密后的数据
      */
     public native String decode(String msg, int type);
+
+    /**
+     * 发生一次 Crash
+     * @param msg 崩溃信息
+     */
+    public native void doCrash(String msg);
 }
