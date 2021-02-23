@@ -32,10 +32,13 @@ public class VertexArray {
      * @param componentCount
      * @param stride
      */
-    public void setVertexAttribPointer(int dataOffset, int attributeLocation, int componentCount, int stride) {
+    public void setVertexAttrPointer(int dataOffset, int attributeLocation, int componentCount, int stride) {
         floatBuffer.position(dataOffset);
 
+        // 方法来绑定值
         glVertexAttribPointer(attributeLocation, componentCount, GL_FLOAT, false, stride, floatBuffer);
+
+        // 开启使用
         glEnableVertexAttribArray(attributeLocation);
 
         floatBuffer.position(0);
